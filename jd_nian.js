@@ -88,12 +88,18 @@ async function jdNian() {
   try {
     await getHomeData()
     if(!$.secretp) return
+    await $.wait(2000)
+    await killCouponList()
+    await $.wait(2000)
     await map()
+    await $.wait(2000)
     await queryMaterials()
     await getTaskList()
     await $.wait(1000)
     await doTask()
+    await $.wait(2000)
     await helpFriends()
+    await $.wait(2000)
     await getHomeData(true)
     await showMsg()
   } catch (e) {
@@ -538,7 +544,11 @@ function queryMaterials() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if(data.code==='0') {
-              for(let vo of data.data.viewLogo.list){
+              let shopList = data.data.viewLogo.list.concat(data.data.bottomLogo.list)
+              let nameList = []
+              for(let vo of shopList){
+                if(nameList.includes(vo.name)) continue
+                nameList.push(vo.name)
                 console.log(`去做${vo.name}店铺任务`)
                 await shopLotteryInfo(vo.desc)
                 await $.wait(2000)
@@ -554,6 +564,7 @@ function queryMaterials() {
     })
   })
 }
+
 function shopLotteryInfo(shopSign) {
   let body = {"shopSign":shopSign}
   return new Promise(resolve => {
@@ -627,72 +638,6 @@ function doShopLottery(shopSign) {
                 console.log(`抽奖成功，获得${JSON.stringify(result)}`)
             }else{
               console.log(`抽奖失败`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function signInRead(shopSign) {
-  let body = {"shopSign":shopSign}
-  return new Promise(resolve => {
-    $.post(taskPostUrl("nian_shopSignInRead", body, "nian_shopSignInRead"), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if(data.code===0 && data.data && data.data.result && data.data.result.signInTag) {
-              await signInWrite(shopSign)
-            } else{
-              console.log(`店铺已签到过`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function signInWrite(shopSign) {
-  let temp = {
-    "shopSign": shopSign,
-  }
-  const extraData = {
-    "jj": 6,
-    "buttonid": "jmdd-react-smash_0",
-    "sceneid": "homePageh5",
-    "appid": '50073'
-  }
-  let body = {
-    ...encode(temp, $.secretp, extraData),
-    shopSign:shopSign
-  }
-  return new Promise(resolve => {
-    $.post(taskPostUrl("nian_shopSignInWrite", body, "nian_shopSignInWrite"), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.data.bizCode === 0) {
-              if(data.data.result.score)
-                console.log(`签到成功，获得${data.data.result.score}爆竹🧨`)
-            }
-            else{
-              console.log(data.data.bizMsg)
             }
           }
         }
@@ -793,6 +738,75 @@ function pkAssignGroup(inviteId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             console.log(data)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function killCouponList() {
+  return new Promise(resolve => {
+    $.post(taskPostUrl("nian_killCouponList", {}, "nian_killCouponList"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data && data.data.bizCode === 0) {
+              await $.wait(2000)
+              for(let vo of data.data.result){
+                if(!vo.status){
+                  console.log(`去领取${vo['productName']}优惠券`)
+                  await killCoupon(vo['skuId'])
+                  await $.wait(2000)
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function killCoupon(skuId) {
+  let temp = {
+    "skuId": skuId,
+    "rnd": getRnd(),
+    "inviteId": "-1",
+    "stealId": "-1"
+  }
+  const extraData = {
+    "jj": 6,
+    "buttonid": "jmdd-react-smash_0",
+    "sceneid": "homePageh5",
+    "appid": '50073'
+  }
+  let body = encode(temp, $.secretp, extraData);
+  body['skuId'] = skuId
+  return new Promise(resolve => {
+    $.post(taskPostUrl("nian_killCoupon", body, "nian_killCoupon"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data && data.data.bizCode === 0) {
+              console.log(`领取成功，获得${data.data.result.score}爆竹🧨`)
+            }else{
+              console.log(data.data.bizMsg)
+            }
           }
         }
       } catch (e) {
