@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2021-1-17
+更新时间：2021-1-19
 活动入口 :京东APP->游戏与互动->查看更多->京喜工厂
 或者: 京东APP首页搜索 "玩一玩" ,造物工厂即可
 
@@ -894,7 +894,7 @@ async function tuanActivity() {
       const QueryTuanRes = await QueryTuan(activeId, tuanId);
       if (QueryTuanRes && QueryTuanRes.ret === 0) {
         const { tuanInfo } = QueryTuanRes.data;
-        if ((tuanInfo && tuanInfo[0]['endTime']) <= QueryTuanRes['nowTime']) {
+        if ((tuanInfo && tuanInfo[0]['endTime']) <= QueryTuanRes['nowTime'] && surplusOpenTuanNum > 0) {
           $.log(`之前的团已过期，准备重新开团\n`)
           await CreateTuan();
         }
