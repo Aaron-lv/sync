@@ -121,7 +121,7 @@ async function deskGoodsTask() {
        }
      }
    } else {
-     console.log(`限时商品货架已下架`);
+     console.log(`\n限时商品货架已下架`);
    }
  }
 }
@@ -220,13 +220,50 @@ async function petTask() {
     //每日签到
     if (item['taskType'] === 'SignEveryDay') {
       if (item['receiveStatus'] === 'chance_left') {
-        console.log('未完成,需要自己手动去微信小程序【来客有礼】签到，可获得京豆奖励')
+        console.log('每日签到未完成,需要自己手动去微信小程序【来客有礼】签到，可获得京豆奖励')
       } else if (item['receiveStatus'] === 'unreceive') {
         //已签到，领取签到后的狗粮
         const res = await getFood('SignEveryDay');
         console.log(`领取每日签到狗粮结果：${res.data}`);
       }
     }
+    //每日赛跑
+    if (item['taskType'] === 'race') {
+      if (item['receiveStatus'] === 'chance_left') {
+        console.log('每日赛跑未完成')
+      } else if (item['receiveStatus'] === 'unreceive') {
+        const res = await getFood('race');
+        console.log(`领取每日赛跑狗粮结果：${res.data}`);
+      }
+    }
+    //每日兑换
+    if (item['taskType'] === 'exchange') {
+      if (item['receiveStatus'] === 'chance_left') {
+        console.log('每日兑换未完成')
+      } else if (item['receiveStatus'] === 'unreceive') {
+        const res = await getFood('exchange');
+        console.log(`领取每日兑换狗粮结果：${res.data}`);
+      }
+    }
+    //每日帮好友喂一次狗粮
+    if (item['taskType'] === 'HelpFeed') {
+      if (item['receiveStatus'] === 'chance_left') {
+        console.log('每日帮好友喂一次狗粮未完成')
+      } else if (item['receiveStatus'] === 'unreceive') {
+        const res = await getFood('HelpFeed');
+        console.log(`领取每日帮好友喂一次狗粮 狗粮结果：${res.data}`);
+      }
+    }
+    //每日喂狗粮
+    if (item['taskType'] === 'FeedEveryDay') {
+      if (item['taskStatus'] === 'processing') {
+        console.log(`\n${item['taskName']}任务进行中\n`)
+      } else if (item['receiveStatus'] === 'unreceive') {
+        const res = await getFood('FeedEveryDay');
+        console.log(`领取每日帮好友喂一次狗粮 狗粮结果：${res.data}`);
+      }
+    }
+    //
     //邀请用户助力,领狗粮.(需手动去做任务)
     if (item['taskType'] === 'InviteUser') {
       if (item['receiveStatus'] === 'chance_left') {
