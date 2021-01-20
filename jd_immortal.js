@@ -312,7 +312,7 @@ function shareCodesFormat() {
   })
 }
 function requireConfig() {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
     let shareCodes = []
@@ -331,7 +331,7 @@ function requireConfig() {
           $.shareCodesArr.push(shareCodes[item])
         }
       })
-      $.cor = process.env.JD_IMMORTAL_LATLON?JSON.parse(process.env.JD_IMMORTAL_LATLON):{}
+      $.cor = process.env.JD_IMMORTAL_LATLON?JSON.parse(process.env.JD_IMMORTAL_LATLON):(await getLatLng())
     }else{
       $.cor = $.getdata("IMMORTAL_LATLON")?JSON.parse($.getdata("IMMORTAL_LATLON")):{}
     }
@@ -339,6 +339,39 @@ function requireConfig() {
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
     resolve()
   })
+}
+
+// 自动获取经纬度
+function getLatLng() {
+  return new Promise(resolve => {
+    try {
+      console.log('开始自动获取经纬度 lat lng ……');
+      $.get({
+        url: 'https://jingweidu.bmcx.com/web_system/bmcx_com_www/system/file/jingweidu/api/?v=20031911',
+        headers: {
+          "referer": "https://jingweidu.bmcx.com/",
+          'Content-Type': 'text/html; charset=utf-8',
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+        }
+      }, async (err, resp, data) => {
+        const res = data.match(/qq\.maps\.LatLng\(([\d\.]+), ([\d\.]+)\)/);
+        let lat = res[1];
+        let lng = res[2];
+        if (lat > 0 && lng > 0) {
+          resolve({
+            'lng': lng,
+            'lat': lat
+          });
+          return;
+        }
+        console.log('自动获取经纬度 lat lng 失败，返回经纬度结果错误');
+        resolve({});
+      });
+    } catch (e) {
+      console.log('自动获取经纬度 lat lng 失败，触发异常');
+      resolve({});
+    }
+  });
 }
 
 function taskPostUrl(function_id, body = {}, function_id2) {
