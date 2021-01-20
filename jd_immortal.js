@@ -335,7 +335,7 @@ function requireConfig() {
     }else{
       $.cor = $.getdata("IMMORTAL_LATLON")?JSON.parse($.getdata("IMMORTAL_LATLON")):{}
     }
-    console.log(`您提供的地理位置信息为${$.cor}`)
+    console.log(`您提供的地理位置信息为${JSON.stringify($.cor)}`)
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
     resolve()
   })
