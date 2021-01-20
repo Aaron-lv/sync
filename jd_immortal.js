@@ -92,7 +92,7 @@ async function jdNian() {
     if($.risk) return
     await getTaskList($.cor)
     await $.wait(2000)
-    // await helpFriends()
+    await helpFriends()
     await $.wait(2000)
     await getHomeData(true)
     await showMsg()
