@@ -2,7 +2,8 @@
 京东神仙书院
 活动时间:2021-1-20至2021-2-5
 暂不加入品牌会员，需要自行填写坐标，用于做逛身边好店任务
-环境变量JD_IMMORTAL_LATLON
+环境变量JD_IMMORTAL_LATLON(经纬度)
+示例：D_IMMORTAL_LATLON={"lat":33.1"lng":118.1}
 boxjs IMMORTAL_LATLON
 活动入口: 京东app-我的-神仙书院
 活动地址：https://h5.m.jd.com//babelDiy//Zeus//4XjemYYyPScjmGyjej78M6nsjZvj//index.html?babelChannel=ttt9
