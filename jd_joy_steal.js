@@ -1,4 +1,5 @@
 /*
+最近经常出现给偷好友积分与狗粮失败的情况，故建议cron设置为多次
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
 偷好友积分上限是20个好友(即获得100积分)，帮好友喂食上限是20个好友(即获得200积分)，偷好友狗粮上限也是20个好友(最多获得120g狗粮)
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
@@ -10,12 +11,12 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 // quantumultx
 // [task_local]
 // #宠汪汪偷好友积分与狗粮
-// 0 0,6 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+// 0 0-10/2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 // Loon
 // [Script]
-// cron "0 0,6 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
+// cron "0 0-10/2 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
 // Surge
-// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp="0 0,6 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js
+// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp="0 0-10/2 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js
 const $ = new Env('宠汪汪偷好友积分与狗粮');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -73,6 +74,8 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      $.HelpFeed = ctrTemp;
+      if (!ctrTemp) $.HelpFeed = true
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -148,7 +151,7 @@ async function jdJoySteal() {
             console.log('帮好友喂食失败，狗粮不足10g 跳出\n');
             break
           }
-          if (!ctrTemp) {
+          if (!$.HelpFeed) {
             console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处');
             break
           }
@@ -217,7 +220,7 @@ async function stealFriendCoinFun() {
 //给好友喂食
 async function helpFriendsFeed() {
   if ($.help_feed !== 200) {
-    if (ctrTemp) {
+    if ($.HelpFeed) {
       console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
@@ -228,6 +231,11 @@ async function helpFriendsFeed() {
           $.helpFeedStatus = helpFeedRes.errorCode;
           if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
             console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
+            if (!ctrTemp) {
+              $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
+              $.HelpFeed = false;
+              break
+            }
             $.helpFood += 10;
           } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
             console.log('喂食已达上限,不再喂食\n')
@@ -253,7 +261,7 @@ async function helpFriendsFeed() {
 function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     const options = {
-      url: `${JD_API_HOST}/getFriends?itemsPerPage=20&currentPage=${currentPage}`,
+      url: `${JD_API_HOST}/getFriends?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=h5`,
       headers: {
         'Cookie': cookie,
         'reqSource': 'h5',
@@ -264,7 +272,8 @@ function getFriends(currentPage = '1') {
         'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
-      }
+      },
+      timeout: 10000
     }
     $.get(options, (err, resp, data) => {
       try {
@@ -485,13 +494,13 @@ function showMsg() {
     message += $.stealFriendCoin;
     message += $.stealFood;
     message += $.helpFood;
-    let ctrTemp;
+    let flag;
     if ($.getdata('jdJoyStealNotify')) {
-      ctrTemp = `${$.getdata('jdJoyStealNotify')}` === 'false';
+      flag = `${$.getdata('jdJoyStealNotify')}` === 'false';
     } else {
-      ctrTemp = `${jdNotify}` === 'false';
+      flag = `${jdNotify}` === 'false';
     }
-    if (ctrTemp) {
+    if (flag) {
       $.msg($.name, '', message);
     } else {
       $.log(`\n${message}\n`);
