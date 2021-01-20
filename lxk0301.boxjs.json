@@ -898,6 +898,33 @@
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png"
       ]
+    },
+    {
+      "id": "jd_immortal",
+      "name": "神仙书院",
+      "keys": [
+        "IMMORTAL_LATLON"
+      ],
+      "descs_html": [
+        "地理位置示例如下",
+        "{'lat':33.1, 'lng':118.1}"
+      ],
+      "settings": [
+        {
+          "id": "IMMORTAL_LATLON",
+          "name": "地理位置",
+          "val": "",
+          "type": "text",
+          "desc": "示例：{'lat':33.1, 'lng':118.1}"
+        }
+      ],
+      "author": "@LXK9301",
+      "repo": "https://github.com/LXK9301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png"
+      ]
     }
   ]
 }
