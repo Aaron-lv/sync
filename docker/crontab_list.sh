@@ -6,6 +6,10 @@
 ##############短期活动##############
 #年货节(活动时间：2021年1月9日-2021年2月9日)
 10 8 * * * node /scripts/jd_nh.js >> /scripts/logs/jd_nh.log 2>&1
+#京东炸年兽集爆竹(活动时间:2021-1-18至2021-2-11)怕有遗漏故多运行几次
+0 * * * * node /scripts/jd_nian.js >> /scripts/logs/jd_nian.log 2>&1
+#专门收集每秒产生的爆竹(1小时运行一次)
+30 * * * * node /scripts/jd_nianCollect.js >> /scripts/logs/jd_nianCollect.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -22,7 +26,7 @@
 # 宠汪汪积分兑换奖品
 0 0-16/8 * * * node /scripts/jd_joy_reward.js >> /scripts/logs/jd_joy_reward.log 2>&1
 # 宠汪汪偷好友积分与狗粮
-0 0,6 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
+0 0-10/2 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
 # 摇钱树
 0 */2 * * * node /scripts/jd_moneyTree.js >> /scripts/logs/jd_moneyTree.log 2>&1
 # 东东萌宠
