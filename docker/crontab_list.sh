@@ -10,6 +10,8 @@
 0 * * * * node /scripts/jd_nian.js >> /scripts/logs/jd_nian.log 2>&1
 #专门收集每秒产生的爆竹(1小时运行一次)
 30 * * * * node /scripts/jd_nianCollect.js >> /scripts/logs/jd_nianCollect.log 2>&1
+#京东神仙书院(活动时间:2021-1-20至2021-2-5)
+30 6 * * * node /scripts/jd_immortal.js >> /scripts/logs/jd_immortal.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -26,7 +28,7 @@
 # 宠汪汪积分兑换奖品
 0 0-16/8 * * * node /scripts/jd_joy_reward.js >> /scripts/logs/jd_joy_reward.log 2>&1
 # 宠汪汪偷好友积分与狗粮
-0 0,6 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
+0 0-10/2 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
 # 摇钱树
 0 */2 * * * node /scripts/jd_moneyTree.js >> /scripts/logs/jd_moneyTree.log 2>&1
 # 东东萌宠
@@ -92,4 +94,4 @@
 # 京喜app签到
 39 7 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
 #京东家庭号(暂不知最佳cron)
-*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
+#*/20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
