@@ -17,21 +17,24 @@ FileSurge=$WorkDir/Surge/lxk0301_Task.sgmodule.sgmodule
 CommentsLoon="# IOS Loon Task&Cookies配置 By LXK9301\n# GitHub主页(https://github.com/LXK9301/jd_scripts)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Loon的Task&Cookies脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf\n# 使用方法:打开APP，顶部的配置 -> 脚本 -> 订阅脚本- > 点击右上角+号 -> 添加url链接 (https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf)\n\nhostname = api.m.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
 CommentsQx='{\n  "name": "LXK9301 task gallery",\n  "description": "https://github.com/LXK9301/jd_scripts",\n  "task": ['
 CommentsQxRe="hostname = api.m.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
-CommentsSurge="#!name=LXK9301 iOS Tasks Module\n#!desc=iOS Tasks&Cookies 模块配置\n\n# Task&Cookies模块配置 By LXK9301\n# GitHub主页(https://github.com/LXK9301/jd_scripts)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Surge的Task脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule\n\n[Script]\n"
+
+CommentsSurgeHead="#!name=LXK9301 iOS Tasks Module\n#!desc=iOS Tasks 模块配置\n\n# Task模块配置 By LXK9301\n# GitHub主页(https://github.com/LXK9301/jd_scripts)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Surge的Task脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule\n\n[Script]"
+CommentsSurgeTail="\n[MITM]\nhostname = %APPEND% wq.jd.com, draw.jdfcloud.com, jdjoy.jd.com,"
+
 
 ## 执行写入
 cd $WorkDir
 echo -e $CommentsLoon > $FileLoon
 echo -e $CommentsQx > $FileQx
 echo -e $CommentsQxRe > $FileQxRe
-echo -e $CommentsSurge > $FileSurge
+echo -e $CommentsSurgeHead > $FileSurge
 for file in $JsList
 do
   TaskName=$(grep "new Env" $file | awk -F "'|\"" '{print $2}')
   if [[ -n $TaskName ]]; then
     echo -e "\n# $TaskName" >> $FileLoon
     grep -E "cron.+script-path.+https://raw\.githubusercontent\.com.+tag" $file >> $FileLoon
-    grep -E "https://raw\.githubusercontent\.com.+tag.+enabled" $file | perl -pe '{s|(.+)|\1\",|; s|^|    \"|}' >> $FileQx
+    grep -E "https://raw\.githubusercontent\.com.+tag.+enabled" $file | perl -pe 's|(.+)|\1",|' | perl -pe 's|^|    \"|' >> $FileQx
     grep -E "type.+cronexp.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
   fi
   grep -E "http-(request|response).+script-path.+https://raw\.githubusercontent\.com.+tag" $file | perl -pe "s|(.+tag=)(.+)|\n# \2\n\1\2|">> $FileLoon
@@ -39,5 +42,6 @@ do
   grep -E "type=http-(request|response).+pattern.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
 done
 echo -e "  ]\n}" >> $FileQx
+echo -e $CommentsSurgeTail >> $FileSurge
 perl -0777 -i -pe "s|,(\n  \])|\1|" $FileQx
 perl -0777 -i -pe "s|# .+\n{2}(# .+)|\1|g" $FileLoon
