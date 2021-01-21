@@ -13,10 +13,10 @@
 cron "10 8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdh.js,tag=京东健康
 
 ===============Surge=================
-京东健康 = type=cron,cronexp="10 8 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdh.js
+京东健康 = type=cron,cronexp="10 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdh.js
 
 ============小火箭=========
-京东健康 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdh.js, cronexpr="10 8 * * *", timeout=200, enable=true
+京东健康 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdh.js, cronexpr="10 8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东健康');
 const notify = $.isNode() ? require('./sendNotify') : '';

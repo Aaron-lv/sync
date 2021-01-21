@@ -20,10 +20,10 @@
 cron "1 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js,tag=京东年货节
 
 ===============Surge=================
-京东年货节 = type=cron,cronexp="1 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js
+京东年货节 = type=cron,cronexp="1 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js
 
 ============小火箭=========
-京东年货节 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js, cronexpr="1 7 * * *", timeout=200, enable=true
+京东年货节 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js, cronexpr="1 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东年货节');
 

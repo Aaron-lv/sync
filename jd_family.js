@@ -20,10 +20,10 @@
 cron "1 * * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js,tag=京东家庭号
 
 ===============Surge=================
-京东家庭号 = type=cron,cronexp="1 * * * *",wake-system=1,timeout=2220,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js
+京东家庭号 = type=cron,cronexp="1 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js
 
 ============小火箭=========
-京东家庭号 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js, cronexpr="1 * * * *", timeout=2200, enable=true
+京东家庭号 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js, cronexpr="1 * * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东家庭号');
 const notify = $.isNode() ? require('./sendNotify') : '';

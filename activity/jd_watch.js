@@ -18,10 +18,10 @@
 cron "10 9 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_watch.js,tag=京东看一看
 
 ===============Surge=================
-京东看一看 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_watch.js
+京东看一看 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_watch.js
 
 ============小火箭=========
-京东看一看 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_watch.js, cronexpr="10 9 * * *", timeout=900, enable=true
+京东看一看 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_watch.js, cronexpr="10 9 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东看一看');
 let acceptBody = [

@@ -11,9 +11,9 @@
 [Script]
 cron "55 23 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js,tag=注销京东会员卡
 ========Surge==========
-注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=620,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js
+注销京东会员卡 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js
 =======小火箭=====
-注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=200, enable=true
+注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * *", timeout=3600, enable=true
  */
 const $ = new Env('注销京东会员卡');
 //Node.js用户请在jdCookie.js处填写京东ck;
