@@ -25,7 +25,7 @@ https://h5.m.jd.com/babelDiy/Zeus/2HFSytEAN99VPmMGZ6V4EYWus1x/index.html
 ===============Quantumultx===============
 [task_local]
 #东东小窝
-16 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png  enabled=true
+16 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png, enabled=true
 
 ================Loon==============
 [Script]

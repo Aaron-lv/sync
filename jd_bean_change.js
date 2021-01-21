@@ -10,15 +10,19 @@
 网页查看地址 : https://bean.m.jd.com/bean/signIndex.actionbeanDetail/index.action?resourceValue=bean
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-quantumultx
+============QuantumultX==============
 [task_local]
 #京豆变动通知
 2 9 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知, enabled=true
-Loon
+================Loon===============
 [Script]
 cron "2 9 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知
-Surge
+=============Surge===========
+[Script]
 京豆变动通知 = type=cron,cronexp=2 9 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js
+
+============小火箭=========
+京豆变动通知 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, cronexpr="2 9 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京豆变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';

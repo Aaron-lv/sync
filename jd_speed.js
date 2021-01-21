@@ -6,16 +6,22 @@
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
+=================QuantumultX==============
+[task_local]
+#天天加速
+8 0-23/3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
+
+============Loon================
+[Script]
+cron "8 0-23/3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js,tag=京东天天加速
+
+===========Surge============
+天天加速 = type=cron,cronexp="8 0-23/3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
+
+==============小火箭=============
+天天加速 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, cronexpr="11 0-23/3 * * *", timeout=3600, enable=true
 */
-// quantumultx
-// [task_local]
-// #天天加速
-// 8 */3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true
-// Loon
-// [Script]
-// cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js,tag=京东天天加速
-// Surge
-//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
+
 const $ = new Env('✈️天天加速');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

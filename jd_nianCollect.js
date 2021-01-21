@@ -6,7 +6,7 @@
 ============Quantumultx===============
 [task_local]
 #京东炸年兽🧨
-20 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js, tag=京东收🧨, enabled=true
+20 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js, tag=京东收🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nianCollect.png, enabled=true
 
 ================Loon==============
 [Script]
