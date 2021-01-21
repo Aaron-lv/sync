@@ -1,6 +1,10 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/lxk0301/jd_scripts?style=for-the-badge)
 ### Usage
 ```diff
++ 2021-01-21更新 增加 DO_NOT_RUN_SCRIPTS 参数配置不执行的脚本
++ 例:DO_NOT_RUN_SCRIPTS=jd_family&jd_dreamFactory&jd_jxnc
+
+
 + 2021-01-03更新 增加 CUSTOM_SHELL_FILE 参数配置执行自定义shell脚本
 + 例1:配置远程shell脚本, 我自己写了一个shell脚本https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh 内容很简单下载惊喜农场并添加定时任务
 + CUSTOM_SHELL_FILE=https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh
