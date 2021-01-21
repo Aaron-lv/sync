@@ -709,7 +709,7 @@
     },
     {
       "id": "jd_SuperMarket",
-      "name": "京小超",
+      "name": "东东超市",
       "keys": [],
       "settings": [
         {
@@ -745,7 +745,7 @@
       "repo": "https://github.com/LXK9301/jd_scripts",
       "scripts":[
         {
-          "name" : "京小超",
+          "name" : "东东超市",
           "script" : "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js"
         }
       ],
@@ -756,11 +756,11 @@
     },
     {
       "id": "jd_SuperMarket_Reawrd",
-      "name": "京小超兑换奖品",
+      "name": "东东超市兑换奖品",
       "keys": [
         "coinToBeans"
       ],
-      "desc": "默认不兑换奖品,例如:兑换20京豆输入20,兑换1000京豆输入1000,兑换 柠檬果香洗手液， 输入 柠檬果香洗手液。其他详细的奖品名称去京小超活动页面查看",
+      "desc": "默认不兑换奖品,例如:兑换20京豆输入20,兑换1000京豆输入1000,兑换 柠檬果香洗手液， 输入 柠檬果香洗手液。其他详细的奖品名称去东东超市活动页面查看",
       "settings": [
         {
           "id": "jdSuperMarketRewardNotify",
@@ -781,7 +781,7 @@
       "repo": "https://github.com/LXK9301/jd_scripts",
       "scripts": [
         {
-          "name" : "京小超兑换奖品",
+          "name" : "东东超市兑换奖品",
           "script" : "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js"
         }
       ],
