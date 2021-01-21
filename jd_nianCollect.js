@@ -13,10 +13,10 @@
 cron "20 * * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js,tag=京东收🧨
 
 ===============Surge=================
-京东收🧨 = type=cron,cronexp="20 * * * *",wake-system=1,timeout=200,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js
+京东收🧨 = type=cron,cronexp="20 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js
 
 ============小火箭=========
-京东收🧨 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js, cronexpr="20 * * * *", timeout=200, enable=true
+京东收🧨 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js, cronexpr="20 * * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东炸年兽领爆竹🧨');
 //Node.js用户请在jdCookie.js处填写京东ck;

@@ -15,10 +15,10 @@ PUBG ,运行时间会比较久,Surge请加大timeout时间
 cron "10 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pubg.js,tag=PUBG
 
 ===============Surge=================
-PUBG = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pubg.js
+PUBG = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pubg.js
 
 ============小火箭=========
-PUBG = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pubg.js, cronexpr="10 0 * * *", timeout=200, enable=true
+PUBG = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pubg.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('PUBG');
 !function(n) {
