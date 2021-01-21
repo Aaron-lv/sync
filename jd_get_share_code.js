@@ -15,10 +15,10 @@
 cron "20 13 * * 6" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
+获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=200, enable=true
+获取互助码 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=3600, enable=true
  */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";

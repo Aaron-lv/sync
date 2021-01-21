@@ -13,7 +13,7 @@
 [Script]
 cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js,tag=热8超级盲盒
 // Surge
-热8超级盲盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js
+热8超级盲盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mohe.js
  */
 const $ = new Env('热8超级盲盒');
 //Node.js用户请在jdCookie.js处填写京东ck;
