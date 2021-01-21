@@ -57,10 +57,8 @@ $.allTask = []; // 任务列表
 $.info = {}; // 用户信息
 $.answer = 3;
 $.drip = 0;
-$.maxHelpNum = $.isNode() ? 8 : 3; // 助力 ret 1011 错误最大计数
-$.helpNum = 0; // 当前账号 助力 ret 1011 次数
-$.maxHelpSelfNum = 3; // 助力 自身 ret 1021 cannot help self 最大次数限制（防止随机API不停返回自身 code 导致死循环）
-$.helpSelfNum = 0; // 当前账号 助力 ret 1021 cannot help self 次数
+$.maxHelpNum = $.isNode() ? 8 : 4; // 随机助力最大执行次数
+$.helpNum = 0; // 当前账号 随机助力次数
 let assistUserShareCode = 0; // 随机助力用户 share code
 
 !(async () => {
@@ -92,7 +90,6 @@ let assistUserShareCode = 0; // 随机助力用户 share code
             option = {};
             $.answer = 3;
             $.helpNum = 0;
-            $.helpSelfNum = 0;
             notifyBool = notifyLevel > 0; // 初始化是否推送
             await tokenFormat(); // 处理当前账号 token
             await shareCodesFormat(); // 处理当前账号 助力码
@@ -137,7 +134,7 @@ function requireConfig() {
                 tokenArr.push(jdTokenNode[item] ? JSON.parse(jdTokenNode[item]) : tokenNull)
             })
         } else {
-            tokenArr.push(...[$.getdata('jxnc_token1') || tokenNull, $.getdata('jxnc_token2') || tokenNull]);
+            tokenArr.push(...[JSON.parse($.getdata('jxnc_token1')) || tokenNull, JSON.parse($.getdata('jxnc_token2')) || tokenNull])
         }
 
         if ($.isNode()) {
@@ -247,7 +244,8 @@ async function jdJXNC() {
             await $.wait(500);
             let next = await helpFriends();
             if (next) {
-                while (true) {
+                while ($.helpNum < $.maxHelpNum) {
+                    $.helpNum++;
                     assistUserShareCode = await getAssistUser();
                     if (assistUserShareCode) {
                         await $.wait(300);
@@ -496,20 +494,11 @@ function helpShareCode(code) {
                     const res = data.match(/try\{whyour\(([\s\S]*)\)\;\}catch\(e\)\{\}/)[1];
                     const {ret, retmsg = ''} = JSON.parse(res);
                     $.log(`助力结果：ret=${ret} retmsg="${retmsg ? retmsg : 'OK'}"`);
-                    if (ret === 0) { // 0 助力成功
+                    // ret=0 助力成功
+                    // ret=1021 cannot help self 不能助力自己
+                    // ret=1011 active 不同
+                    if (ret === 0 || ret === 1021 || ret === 1011) { // 0 助力成功
                         resolve(true);
-                    }
-                    if (ret === 1021) { // 1021 cannot help self 不能助力自己
-                        $.helpSelfNum++;
-                        if ($.helpSelfNum <= $.maxHelpSelfNum) {
-                            resolve(true);
-                        }
-                    }
-                    if (ret === 1011) { // 1011 active 不同
-                        $.helpNum++;
-                        if ($.helpNum <= $.maxHelpNum) {
-                            resolve(true);
-                        }
                     }
                     // ret 1016 助力上限
                 } catch (e) {
