@@ -14,10 +14,10 @@
 cron "10-20/5 12 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js,tag=京东直播
 
 ===============Surge=================
-京东直播 = type=cron,cronexp="10-20/5 12 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js
+京东直播 = type=cron,cronexp="10-20/5 12 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js
 
 ============小火箭=========
-京东直播 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, cronexpr="10-20/5 12 * * *", timeout=200, enable=true
+京东直播 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, cronexpr="10-20/5 12 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东直播');
 

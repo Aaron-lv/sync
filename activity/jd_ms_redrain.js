@@ -15,10 +15,10 @@
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms_redrain.js, tag=秒杀红包雨
 
 ===============Surge=================
-秒杀红包雨 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms_redrain.js
+秒杀红包雨 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms_redrain.js
 
 ============小火箭=========
-秒杀红包雨 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms_redrain.js, cronexpr="10 7 * * *", timeout=200, enable=true
+秒杀红包雨 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms_redrain.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('秒杀红包雨');
 

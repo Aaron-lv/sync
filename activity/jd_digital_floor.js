@@ -17,10 +17,10 @@
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_digital_floor.js, tag=数码加购京豆
 
 ===============Surge=================
-数码加购京豆 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_digital_floor.js
+数码加购京豆 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_digital_floor.js
 
 ============小火箭=========
-数码加购京豆 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_digital_floor.js, cronexpr="10 7 * * *", timeout=200, enable=true
+数码加购京豆 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_digital_floor.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('数码加购京豆');
 
