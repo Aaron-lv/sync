@@ -125,8 +125,17 @@
 
 ### 4. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
+##### 获取京东cookie
 - [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js)
 
+##### 订阅链接：
+- Surge：Task&Cookies脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
+
+- Loon：Task&Cookies脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf
+
+- QuantumultX Task脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_gallery.json
+
+- QuantumultX cookie脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_cookies.conf
 ## 赞赏码(开发维护不易,请赏杯茶水费)
 
 <div align=center><img width="250" height="250" src="./icon/thanks.jpg"/></div>
