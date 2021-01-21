@@ -37,7 +37,7 @@ cron "0 9,12,18 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_
 
 const $ = new Env('京喜农场');
 let notify = ''; // nodejs 发送通知脚本
-let notifyLevel = $.isNode() ? process.env.JXNC_NOTIFY_LEVEL || 3 : 3; // 通知级别 0=不通知;1=本次获得水滴>0;2=任务执行;3=任务执行+未种植种子;
+let notifyLevel = $.isNode() ? process.env.JXNC_NOTIFY_LEVEL || 3 : 3; // 通知级别 0=只通知成熟;1=本次获得水滴>0;2=任务执行;3=任务执行+未种植种子;
 let notifyBool = true; // 代码内部使用，控制是否通知
 let cookieArr = []; // 用户 cookie 数组
 let currentCookie = ''; // 当前用户 cookie
@@ -226,36 +226,39 @@ async function jdJXNC() {
     subTitle = `【京东账号${$.index}】${$.nickName}`;
     $.log(`获取用户信息 & 任务列表`);
     const startInfo = await getTaskList();
-    if (startInfo.prizename) {
-        message += `【水果名称】${startInfo.prizename}\n`;
-    }
     if (startInfo) {
-        $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】 ${$.info.smp}`);
-        $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}种子active】 ${$.info.active}`);
-        await $.wait(500);
-        const isOk = await browserTask();
-        if (isOk) {
+        message += `【水果名称】${startInfo.prizename}\n`;
+        if (startInfo.target <= startInfo.score) {
+            notifyBool = true;
+            message += `【成熟】水果已成熟请及时收取，deliverState：${startInfo.deliverState}\n`;
+        } else {
+            $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】 ${$.info.smp}`);
+            $.log(`【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}种子active】 ${$.info.active}`);
             await $.wait(500);
-            await answerTask();
-            await $.wait(500);
-            const endInfo = await getTaskList();
-            getMessage(endInfo, startInfo);
-            await submitInviteId($.UserName);
-            await $.wait(500);
-            let next = await helpFriends();
-            if (next) {
-                while ($.helpNum < $.maxHelpNum) {
-                    $.helpNum++;
-                    assistUserShareCode = await getAssistUser();
-                    if (assistUserShareCode) {
-                        await $.wait(300);
-                        next = await helpShareCode(assistUserShareCode);
-                        if (next) {
-                            await $.wait(200);
-                            continue;
+            const isOk = await browserTask();
+            if (isOk) {
+                await $.wait(500);
+                await answerTask();
+                await $.wait(500);
+                const endInfo = await getTaskList();
+                getMessage(endInfo, startInfo);
+                await submitInviteId($.UserName);
+                await $.wait(500);
+                let next = await helpFriends();
+                if (next) {
+                    while ($.helpNum < $.maxHelpNum) {
+                        $.helpNum++;
+                        assistUserShareCode = await getAssistUser();
+                        if (assistUserShareCode) {
+                            await $.wait(500);
+                            next = await helpShareCode(assistUserShareCode);
+                            if (next) {
+                                await $.wait(1000);
+                                continue;
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
             }
         }
@@ -355,7 +358,9 @@ function answerTask() {
                     if (ret === 0 && right === 1) {
                         $.drip += eachtimeget;
                     }
-                    if (ret === 1017) { // ret:1017 retmsg:"score full" 水滴已满，果实成熟，跳过答题
+                    // ret:1017 retmsg:"score full" 水滴已满，果实成熟，跳过答题
+                    // ret:1012 retmsg:"has complte" 已完成，跳过答题
+                    if (ret === 1017 || ret === 1012) {
                         resolve();
                         return;
                     }
@@ -390,7 +395,7 @@ function getMessage(endInfo, startInfo) {
     message += `【水滴】本次获得${get} 离线获得${leaveGet} 今日获得${dayGet} 还需水滴${need}\n`;
     if (need <= 0) {
         notifyBool = true;
-        message += `【成熟】水果已成熟请及时收取\n`;
+        message += `【成熟】水果已成熟请及时收取，deliverState：${endInfo.deliverState}\n`;
         return;
     }
     if (get > 0 || leaveGet > 0 || dayGet > 0) {
@@ -475,6 +480,7 @@ async function helpFriends() {
         if (!next) {
             return false;
         }
+        await $.wait(1000);
     }
     return true;
 }
