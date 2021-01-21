@@ -4,7 +4,7 @@ name: update_ios_task
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 4,16 * * *'
   #push:
   #  branches: [ master ]
 jobs:
@@ -16,11 +16,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: "更新iOS端3大订阅软件订阅配置"
         run: |
