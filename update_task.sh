@@ -18,8 +18,8 @@ CommentsLoon="# IOS Loon Task&Cookies配置 By LXK9301\n# GitHub主页(https://g
 CommentsQx='{\n  "name": "LXK9301 task gallery",\n  "description": "https://github.com/LXK9301/jd_scripts",\n  "task": ['
 CommentsQxRe="hostname = api.m.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
 
-CommentsSurgeHead="#!name=LXK9301 iOS Tasks Module\n#!desc=iOS Tasks 模块配置\n\n# Task模块配置 By LXK9301\n# GitHub主页(https://github.com/LXK9301/jd_scripts)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Surge的Task脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule\n\n[Script]"
-CommentsSurgeTail="\n[MITM]\nhostname = %APPEND% wq.jd.com, draw.jdfcloud.com, jdjoy.jd.com,"
+CommentsSurgeHead="#!name=LXK9301 iOS Tasks&Cookies Module\n#!desc=iOS Tasks&Cookies 模块配置\n\n# Task&Cookies模块配置 By LXK9301\n# GitHub主页(https://github.com/LXK9301/jd_scripts)\n# TG讨论组 (https://t.me/JD_fruit_pet)\n# TG通知频道 (https://t.me/jdfruit)\n# Surge的Task&Cookies脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule\n\n[Script]"
+CommentsSurgeTail="\n[MITM]\nhostname = %APPEND% wq.jd.com, draw.jdfcloud.com, jdjoy.jd.com, account.huami.com"
 
 
 ## 执行写入
@@ -34,7 +34,7 @@ do
   if [[ -n $TaskName ]]; then
     echo -e "\n# $TaskName" >> $FileLoon
     grep -E "cron.+script-path.+https://raw\.githubusercontent\.com.+tag" $file >> $FileLoon
-    grep -E "https://raw\.githubusercontent\.com.+tag.+enabled" $file | perl -pe 's|(.+)|\1",|' | perl -pe 's|^|    \"|' >> $FileQx
+    grep -E "https://raw\.githubusercontent\.com.+tag.+enabled" $file | perl -pe 's|(.+\w)|\1",|' | perl -pe 's|^|    \"|' >> $FileQx
     grep -E "type.+cronexp.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
   fi
   grep -E "http-(request|response).+script-path.+https://raw\.githubusercontent\.com.+tag" $file | perl -pe "s|(.+tag=)(.+)|\n# \2\n\1\2|">> $FileLoon
