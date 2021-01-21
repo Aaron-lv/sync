@@ -14,10 +14,10 @@
 cron "10 6 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jr_sign.js, tag=金融打卡领年终奖
 
 ===============Surge=================
-金融打卡领年终奖 = type=cron,cronexp="10 6 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jr_sign.js
+金融打卡领年终奖 = type=cron,cronexp="10 6 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jr_sign.js
 
 ============小火箭=========
-金融打卡领年终奖 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jr_sign.js, cronexpr="10 6 * * *", timeout=200, enable=true
+金融打卡领年终奖 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jr_sign.js, cronexpr="10 6 * * *", timeout=3600, enable=true
  */
 const $ = new Env('金融打卡领年终奖');
 
