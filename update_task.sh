@@ -37,7 +37,7 @@ do
     grep -E "https://raw\.githubusercontent\.com.+tag.+enabled" $file | perl -pe 's|(.+\w)|\1",|' | perl -pe 's|^|    \"|' >> $FileQx
     grep -E "type.+cronexp.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
   fi
-  grep -E "http-(request|response).+script-path.+https://raw\.githubusercontent\.com.+tag" $file | perl -pe "s|(.+tag=)(.+)|\n# \2\n\1\2|">> $FileLoon
+  grep -E "http-(request|response).+script-path.+https://raw\.githubusercontent\.com.+tag" $file | perl -pe "s|(.+tag=)(.+)|\n# \2\n\1\2|" >> $FileLoon
   grep -E "script-(request|response)-.+https://raw\.githubusercontent\.com" $file | perl -pe "s|(.+)|\n# $TaskName\n\1|" >> $FileQxRe
   grep -E "type=http-(request|response).+pattern.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
 done
