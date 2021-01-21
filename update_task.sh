@@ -36,7 +36,6 @@ do
   fi
   grep -E "http-(request|response).+script-path.+https://raw\.githubusercontent\.com.+tag" $file | perl -pe "s|(.+tag=)(.+)|\n# \2\n\1\2|">> $FileLoon
   grep -E "script-(request|response)-.+https://raw\.githubusercontent\.com" $file | perl -pe "s|(.+)|\n# $TaskName\n\1|" >> $FileQxRe
-  tmp=$(grep -E "script-(request|response)-.+https://raw\.githubusercontent\.com" $file)
   grep -E "type=http-(request|response).+pattern.+script-path.+https://raw\.githubusercontent\.com" $file >> $FileSurge
 done
 echo -e "  ]\n}" >> $FileQx
