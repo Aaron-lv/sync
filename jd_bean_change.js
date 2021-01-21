@@ -13,7 +13,7 @@
 ============QuantumultX==============
 [task_local]
 #京豆变动通知
-2 9 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知, enabled=true
+2 9 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 ================Loon===============
 [Script]
 cron "2 9 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js, tag=京豆变动通知
