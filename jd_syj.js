@@ -20,10 +20,10 @@
 cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, tag=十元街
 
 ===============Surge=================
-十元街 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js
+十元街 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js
 
 ============小火箭=========
-十元街 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, cronexpr="10 7 * * *", timeout=200, enable=true
+十元街 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
 const $ = new Env('十元街');
 
