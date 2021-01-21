@@ -7,7 +7,7 @@
 ============Quantumultx===============
 [task_local]
 #签到领现金
-2 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, tag=签到领现金, enabled=true
+2 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js, tag=签到领现金, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]

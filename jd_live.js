@@ -7,7 +7,7 @@
 ============Quantumultx===============
 [task_local]
 #京东直播
-10-20/5 12 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, tag=京东直播, enabled=true
+10-20/5 12 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, tag=京东直播, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]

@@ -7,16 +7,23 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 feedCount:自定义 每次喂养数量; 等级只和喂养次数有关，与数量无关
 推荐每次投喂10个，积累狗粮，然后去玩聚宝盆赌
 Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
+==========Quantumult X==========
+[task_local]
+#京东宠汪汪
+15 0-23/2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+
+============Loon===========
+[Script]
+cron "15 0-23/2 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js,tag=京东宠汪汪
+
+============Surge==========
+[Script]
+京东宠汪汪 = type=cron,cronexp="15 0-23/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js
+
+===============小火箭==========
+京东宠汪汪 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js, cronexpr="15 0-23/2 * * *", timeout=3600, enable=true
 */
-// quantumultx
-// [task_local]
-// #京东宠汪汪
-// 15 */2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
-// Loon
-// [Script]
-// cron "15 */2 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js,tag=京东宠汪汪
-// Surge
-// 京东宠汪汪 = type=cron,cronexp="15 */2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js
+
 const $ = new Env('宠汪汪');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

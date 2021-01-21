@@ -6,15 +6,20 @@
 每日京豆库存会在0:00、8:00、16:00更新，经测试发现中午12:00也会有补发京豆。
 支持京东双账号
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
-// Quantumult X
+==============Quantumult X==============
 [task_local]
 #宠汪汪积分兑换奖品
 0 0-16/8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js, tag=宠汪汪积分兑换奖品, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
-// Loon
+
+==============Loon==============
 [Script]
 cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js,tag=宠汪汪积分兑换奖品
-// Surge
+
+================Surge===============
 宠汪汪积分兑换奖品 = type=cron,cronexp="0 0-16/8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js
+
+===============小火箭==========
+宠汪汪积分兑换奖品 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js, cronexpr="0 0-16/8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('宠汪汪积分兑换奖品');
 let joyRewardName = 20;//是否兑换京豆，默认开启兑换功能，其中20为兑换20京豆,500为兑换500京豆，0为不兑换京豆.数量有限先到先得
