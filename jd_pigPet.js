@@ -11,7 +11,22 @@
 喂食
 每日签到
 完成分享任务得猪粮
-12 * * * *
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+===============Quantumultx===============
+[task_local]
+#京东金融养猪猪
+12 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js, tag=京东金融养猪猪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyz.png, enabled=true
+
+================Loon==============
+[Script]
+cron "12 * * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js, tag=京东金融养猪猪
+
+===============Surge=================
+京东金融养猪猪 = type=cron,cronexp="12 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js
+
+============小火箭=========
+京东金融养猪猪 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js, cronexpr="12 * * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('金融养猪');
