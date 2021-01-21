@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 4,16 * * *'
+  repository_dispatch:
+    types: update_ios_task
   #push:
   #  branches: [ master ]
 jobs:
