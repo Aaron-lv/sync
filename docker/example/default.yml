@@ -46,7 +46,7 @@ jd_scripts:
     - PETSHARECODES=
     # 宠汪汪的喂食数量
     - JOY_FEED_COUNT=
-    #京小超
+    #东东超市
     # - SUPERMARKET_SHARECODES=
     #兑换多少数量的京豆（20，或者1000京豆,或者其他奖品的文字）
     # 例: MARKET_COIN_TO_BEANS=1000
