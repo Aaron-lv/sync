@@ -9,7 +9,7 @@
 ============Quantumultx===============
 [task_local]
 #京东炸年兽小程序🧨
-50 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js, tag=京东炸年兽小程序🧨, enabled=true
+50 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js, tag=京东炸年兽小程序🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true
 
 ================Loon==============
 [Script]
