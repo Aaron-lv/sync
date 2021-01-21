@@ -1,18 +1,19 @@
-/**
- 进店领豆(京东APP首页-领京豆-进店领豆),每天可拿四京豆
- 更新时间：2020-11-03
- 已支持IOS双京东账号,Node.js支持N个京东账号
- 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
- // quantumultx
- [task_local]
- #进店领豆
- 10 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js, tag=进店领豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_shop.png, enabled=true
- //Loon
- [Script]
- cron "10 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js,tag=进店领豆
- //Surge
- 进店领豆 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js
-* */
+/*
+进店领豆(京东APP首页-领京豆-进店领豆),每天可拿四京豆
+更新时间：2020-11-03
+已支持IOS双京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+===============Quantumultx===============
+[task_local]
+#进店领豆
+10 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js, tag=进店领豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_shop.png, enabled=true
+================Loon============
+[Script]
+cron "10 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js,tag=进店领豆
+==============Surge===============
+[Script]
+进店领豆 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js
+*/
 const $ = new Env('进店领豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
