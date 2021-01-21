@@ -28,6 +28,7 @@ http-request https:\/\/wq\.jd\.com\/user_new\/info\/GetJDUserInfoUnion tag=获�
 
 ===================Quantumult X=====================
 [rewrite_local]
+# 获取多账号京东Cookie
 https:\/\/wq\.jd\.com\/user_new\/info\/GetJDUserInfoUnion url script-request-header https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js
 
  */
