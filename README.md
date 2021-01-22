@@ -1,4 +1,4 @@
-## 请勿使用github action、滥用github资源会封我仓库以及账号，[详见](https://github.com/LXK9301/jd_scripts/issues/3)
+## 请勿使用github action、滥用github资源会封我仓库以及账号，如再被封，则金盆洗手。[详见](https://github.com/LXK9301/jd_scripts/issues/3)
 
 ## 特别声明: 
 
