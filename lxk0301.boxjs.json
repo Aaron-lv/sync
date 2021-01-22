@@ -720,18 +720,11 @@
           "desc": "运行此脚本时不发出系统弹窗通知"
         },
         {
-          "id": "jdSuperMarketUpgrade",
-          "name": "自动升级(商品/货架)",
+          "id": "JOIN_PK_TEAM",
+          "name": "自动参加作者PK队伍",
           "val": true,
           "type": "boolean",
-          "desc": "自动升级,顺序:解锁升级商品、升级货架"
-        },
-        {
-          "id": "jdBusinessCircleJump",
-          "name": "自动更换商圈",
-          "val": true,
-          "type": "boolean",
-          "desc": "小于对方300热力值自动更换商圈队伍"
+          "desc": "每次pk活动自动参加作者PK队伍，默认参加"
         },
         {
           "id": "jdSuperMarketLottery",
