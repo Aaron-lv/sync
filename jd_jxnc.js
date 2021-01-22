@@ -162,7 +162,8 @@ function requireConfig() {
         // 检查互助码是否为 json [smp,active,joinnum] 格式，否则进行通知
         for (let i = 0; i < jxncShareCodeArr.length; i++) {
             if (jxncShareCodeArr[i]) {
-                let tmpjsonShareCodeArr = jxncShareCodeArr.splice('@');
+                let tmpJxncShareStr = jxncShareCodeArr[i];
+                let tmpjsonShareCodeArr = tmpJxncShareStr.split('@');
                 if (!changeShareCodeJson(tmpjsonShareCodeArr[0])) {
                     $.log('互助码格式已变更，请重新填写互助码');
                     $.msg($.name, '互助码格式变更通知', '互助码格式变更，请重新填写 ‼️‼️', option);
@@ -570,7 +571,8 @@ function helpShareCode(smp, active, joinnum) {
                     // ret=1021 cannot help self 不能助力自己
                     // ret=1011 active 不同
                     // ret=1009 retmsg="today has help p2p" 今天已助力过
-                    if (ret === 0 || ret === 1009 || ret === 1021 || ret === 1011) { // 0 助力成功
+                    // ret=1032 retmsg="err operate env" 被助力者为 APP 专属种子，当前助力账号未配置 TOKEN
+                    if (ret === 0 || ret === 1009 || ret === 1011 || ret === 1021 || ret === 1032) {
                         resolve(true);
                         return;
                     }
