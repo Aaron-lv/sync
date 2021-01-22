@@ -569,7 +569,8 @@ function helpShareCode(smp, active, joinnum) {
                     // ret=0 助力成功
                     // ret=1021 cannot help self 不能助力自己
                     // ret=1011 active 不同
-                    if (ret === 0 || ret === 1021 || ret === 1011) { // 0 助力成功
+                    // ret=1009 retmsg="today has help p2p" 今天已助力过
+                    if (ret === 0 || ret === 1009 || ret === 1021 || ret === 1011) { // 0 助力成功
                         resolve(true);
                         return;
                     }
