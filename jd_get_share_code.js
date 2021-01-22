@@ -327,6 +327,7 @@ function getJxNc(){
                     'active': data.active,
                     'joinnum': data.joinnum,
                   };
+                  console.log(`注意：京喜农场 种植种子发生变化的时候，互助码也会变！！`);
                   console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场】` + JSON.stringify(shareCodeJson));
                 } else {
                   console.log(`【账号${$.index}（${$.nickName || $.UserName}）京喜农场】未选择种子，请先去京喜农场选择种子`);
