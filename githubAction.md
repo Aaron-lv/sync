@@ -85,6 +85,7 @@
 |     `JD_IMMORTAL_LATLON`     |    京东神仙书院<br>地理位置变量     | 非必须 | 京东神仙书院地理位置，示例格式：{"lat":33.1, "lng":118.1} |
 |     `JD_WECHAT_USER_AGENT`   |    京东炸年兽<br>小程序<br>自定义UA     | 非必须 | 强烈推荐使用自定义的小程序UA防止黑号，UA示例：<br>Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15A148 MicroMessenger/7.0.20(0x17001320) NetType/WIFI Language/zh_CN |
 | `DREAMFACTORY_FORBID_ACCOUNT`|    京喜工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行京喜工厂脚本，注：输入`0`，代表全部账号不运行京喜工厂脚本 |
+| `JDFACTORY_FORBID_ACCOUNT`|    东东工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行东东工厂脚本，注：输入`0`，代表全部账号不运行东东工厂脚本 |
 
 ##### 互助码的填写规则
 
