@@ -84,8 +84,8 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
-      $.HelpFeed = ctrTemp;
-      if (!ctrTemp) $.HelpFeed = true
+      $.HelpFeedFlag = ctrTemp;
+      if (!ctrTemp) $.HelpFeedFlag = true
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -163,7 +163,8 @@ async function jdJoySteal() {
             console.log('帮好友喂食失败，狗粮不足10g 跳出\n');
             break
           }
-          if (!$.HelpFeed) {
+          if ($.help_feed >= 10) $.HelpFeedFlag = false;//修复每次运行都会给好友喂食一次的bug
+          if (!$.HelpFeedFlag) {
             console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处');
             break
           }
@@ -232,7 +233,7 @@ async function stealFriendCoinFun() {
 //给好友喂食
 async function helpFriendsFeed() {
   if ($.help_feed !== 200) {
-    if ($.HelpFeed) {
+    if ($.HelpFeedFlag) {
       console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
@@ -245,7 +246,7 @@ async function helpFriendsFeed() {
             console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
             if (!ctrTemp) {
               $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
-              $.HelpFeed = false;
+              $.HelpFeedFlag = false;
               break
             }
             $.helpFood += 10;
