@@ -96,7 +96,7 @@ function showMsg() {
   $.log(`\n${message}\n`);
   jdNotify = $.getdata('jdJoyNotify') ? $.getdata('jdJoyNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle, `【京东账号${$.index}】${$.UserName}\n` + message);
+    //$.msg($.name, subTitle, `【京东账号${$.index}】${$.UserName}\n` + message);
   }
 }
 function feedPets(feedNum) {
