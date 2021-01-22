@@ -6,6 +6,7 @@
  */
 /*
 京东年货节
+活动入口：https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301
 用5000金币开盲盒必中200-300京豆，任务做完每天1000，5天换一次
 活动时间：2021年1月9日-2021年2月9日
 已支持IOS双京东账号,Node.js支持N个京东账号
