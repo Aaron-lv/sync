@@ -87,7 +87,7 @@ if [ $DO_NOT_RUN_SCRIPTS ]; then
     echo "您配置了不运行的脚本：$DO_NOT_RUN_SCRIPTS"
     arr=${DO_NOT_RUN_SCRIPTS//&/ }
     for item in $arr; do
-        sed -ie '/'"${item}"'/d' /1.txt
+        sed -ie '/'"${item}"'/d' ${mergedListFile}
     done
 
 fi
