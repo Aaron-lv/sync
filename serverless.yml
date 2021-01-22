@@ -40,18 +40,18 @@ inputs:
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_nianCollect
-    - timer: #宠汪汪积分兑换奖品 #宠汪汪偷好友积分与狗 #点点券 #京东直播18豆 #集鞭炮赢京豆
+    - timer: #宠汪汪积分兑换奖品 #宠汪汪偷好友积分与狗 #点点券 #东东小窝 #京东直播18豆 #集鞭炮赢京豆
         parameters:
-          name: joyreward_joysteal_necklace_live_firecrackers
+          name: joyreward_joysteal_necklace_smallhome_live_firecrackers
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_live&jd_firecrackers
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #东东小窝
+          argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_small_home&jd_live&jd_firecrackers
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机
         parameters:
-          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_smallhome
+          name: redPacket_shop_unsubscribe_unbind_lotteryMachine
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_small_home
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine
     - timer: #京东天天加速 #天天提鹅 #京东炸年兽
         parameters:
           name: speed_daily_egg_nian
