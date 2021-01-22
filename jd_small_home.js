@@ -2,7 +2,7 @@
  * @Author: LXK9301 https://github.com/LXK9301
  * @Date: 2020-11-12 11:42:12 
  * @Last Modified by: LXK9301
- * @Last Modified time: 2021-1-4 14:27:20
+ * @Last Modified time: 2021-1-22 14:27:20
  */
 /*
 东东小窝 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js
@@ -25,17 +25,17 @@ https://h5.m.jd.com/babelDiy/Zeus/2HFSytEAN99VPmMGZ6V4EYWus1x/index.html
 ===============Quantumultx===============
 [task_local]
 #东东小窝
-16 0 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png, enabled=true
+16 22 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "16 0 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝
+cron "16 22 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝
 
 ===============Surge=================
-东东小窝 = type=cron,cronexp="16 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js
+东东小窝 = type=cron,cronexp="16 22 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js
 
 ============小火箭=========
-东东小窝 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, cronexpr="16 0 * * *", timeout=3600, enable=true
+东东小窝 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, cronexpr="16 22 * * *", timeout=3600, enable=true
  */
 const $ = new Env('东东小窝');
 const notify = $.isNode() ? require('./sendNotify') : '';
