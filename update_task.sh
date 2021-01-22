@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 ## Author: https://github.com/EvineDeng
-## Modified： 2021-01-21
-## Version： v1.0.0
+## Modified： 2021-01-22
+## Version： v1.0.1
 
 ## 路径与清单
 WorkDir=$(cd $(dirname $0); pwd)
-JsList=$(cd $WorkDir; ls *.js | grep -E "j[drx]_")
+JsList=$(cd $WorkDir; ls *.js | grep -Ei "j[drx]_")
 JsList="$JsList backUp/xmSports.js"
 FileLoon=$WorkDir/Loon/lxk0301_LoonTask.conf
 FileQx=$WorkDir/QuantumultX/lxk0301_gallery.json
