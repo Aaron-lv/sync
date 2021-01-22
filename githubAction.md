@@ -47,7 +47,7 @@
 |     `JDJOY_SHARECODES`      |  疯狂的JOY互助码   | 非必须 |            6/             | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `BOOKSHOP_SHARECODES`    |   京东书店互助码   | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `JD_CASH_SHARECODES`     |  签到领现金互助码  | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
-|      `JXNC_SHARECODES`      |   京喜农场互助码   | 非必须 |             /             | 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！<br>每个账号 shareCode 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"smp":"22bdadsfaadsfadse8a","active":"jdnc_1_btorange210113_2","joinnum":"1"}'，多账单间使用`&`或换行分开。 |
+|      `JXNC_SHARECODES`      |   京喜农场互助码   | 非必须 |             /             | 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！<br>每个账号 shareCode 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"smp":"22bdadsfaadsfadse8a","active":"jdnc_1_btorange210113_2","joinnum":"1"}'，多账单间使用`&`或换行分开。详细说明参见[#Pr202](https://github.com/LXK9301/jd_scripts/pull/202) |
 |     `JDNIAN_SHARECODES`     |    炸年兽互助码    | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |     `JDSXSY_SHARECODES`     |    京东神仙书院<br>互助码    | 非必须 |            20/5            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 
