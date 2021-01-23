@@ -161,6 +161,7 @@ async function doTask() {
             if (task.status === 1) {
               await collectScore(item.taskId, task.itemId);
             }
+            await $.wait(3000)
           }
         } else if (item.status === 2) {
           console.log(`${item.taskName}已做完`)
@@ -174,6 +175,7 @@ async function doTask() {
           if (task.status === 1) {
             await collectScore(item.taskId, task.itemId, 1);
           }
+          await $.wait(3000)
         }
       } else if(item.status===2){
         console.log(`${item.taskName}已做完`)
