@@ -12,8 +12,8 @@
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
 易黑号，建议禁用
-
-1 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js
+cron如下
+1 * * * *
  */
 const $ = new Env('京东家庭号');
 const notify = $.isNode() ? require('./sendNotify') : '';
