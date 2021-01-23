@@ -10,20 +10,10 @@
 8000幸福值可换100京豆，一天任务做完大概300幸福值，周期较长
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#京东家庭号
-1 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js, tag=京东家庭号, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_family.png, enabled=true
 
-================Loon==============
-[Script]
-cron "1 * * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js,tag=京东家庭号
+易黑号，建议禁用
 
-===============Surge=================
-京东家庭号 = type=cron,cronexp="1 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js
-
-============小火箭=========
-京东家庭号 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js, cronexpr="1 * * * *", timeout=3600, enable=true
+1 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js
  */
 const $ = new Env('京东家庭号');
 const notify = $.isNode() ? require('./sendNotify') : '';
