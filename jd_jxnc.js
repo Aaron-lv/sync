@@ -570,18 +570,25 @@ function helpShareCode(smp, active, joinnum) {
                     // ret=0 助力成功
                     // ret=1011 active 不同
                     // ret=1012 has complete 已完成
+                    // ret=1013 retmsg="has expired" 已过期
                     // ret=1009 retmsg="today has help p2p" 今天已助力过
                     // ret=1021 cannot help self 不能助力自己
                     // ret=1032 retmsg="err operate env" 被助力者为 APP 专属种子，当前助力账号未配置 TOKEN
-                    if (ret === 0 || ret === 1009 || ret === 1011 || ret === 1012 || ret === 1021 || ret === 1032) {
-                        resolve(true);
+                    // if (ret === 0 || ret === 1009 || ret === 1011 || ret === 1012 || ret === 1021 || ret === 1032) {
+                    //     resolve(true);
+                    //     return;
+                    // }
+                    // ret 1016 当前账号达到助力上限
+                    // ret 147 filter 当前账号黑号了
+                    if (ret === 147 || ret === 1016) {
+                        if (ret === 147) {
+                            $.log(`\n\n  !!!!!!!!   当前账号黑号了  !!!!!!!!  \n\n`);
+                        }
+                        resolve(false);
                         return;
                     }
-                    // ret 1016 助力上限
-                    // ret 147 filter 当前账号黑号了
-                    if (ret === 147) {
-                        $.log(`\n\n  !!!!!!!!   当前账号黑号了  !!!!!!!!  \n\n`);
-                    }
+                    resolve(true);
+                    return;
                 } catch (e) {
                     $.logErr(e, resp);
                 } finally {
