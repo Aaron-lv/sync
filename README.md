@@ -27,6 +27,9 @@
 
 2. 以字母排序。
 
+<!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成下面的脚本清单，请勿删除这里的标记信息。 -->
+<!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
+<!-- 清单标记开始 -->
 | 活动时长 | 名称                            | 脚本                                                                                                   |
 | -------- | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | 长期   | 京豆变动通知                | [jd_bean_change.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js)       |
@@ -73,17 +76,17 @@
 | 长期   | 注销京东会员卡             | [jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js)                 |
 | 长期   | 取关京东店铺和商品       | [jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js)       |
 | 长期   | 京喜签到       | [jx_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js)       |
+<!-- 清单标记结束 -->
+<!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
+<!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成上面的脚本清单，请勿删除这里的标记信息。 -->
 
-搬运脚本
+#### 搬运脚本
+
 1.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js))
 
 2.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东排行榜([jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js))
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
-
-**TODO**
-
-- [x] 所有活动互助码在一个脚本打印
 
 ## 邀请码互助
 
@@ -126,9 +129,11 @@
 ### 4. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
 ##### 获取京东cookie
+
 - [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js)
 
 ##### 订阅链接：
+
 - Surge：Task&Cookies脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
 
 - Loon：Task&Cookies脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf
@@ -136,6 +141,7 @@
 - QuantumultX Task脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_gallery.json
 
 - QuantumultX cookie脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_cookies.conf
+
 ## 赞赏码(开发维护不易,请赏杯茶水费)
 
 <div align=center><img width="250" height="250" src="./icon/thanks.jpg"/></div>
