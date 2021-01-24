@@ -22,12 +22,12 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_bean_sign
-    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车 #京东汽车兑换
+    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换
         parameters:
-          name: blueCoin_clublottery_car_carexchange
+          name: blueCoin_clublottery_carexchange
           cronExpression: "0 0 0 * * * *"
           enable: true
-          argument: jd_blueCoin&jd_club_lottery&jd_car&jd_car_exchange
+          argument: jd_blueCoin&jd_club_lottery&jd_car_exchange
     - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场
         parameters:
           name: fruit_pet_bookshop_jxnc
@@ -46,12 +46,12 @@ inputs:
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
           argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_small_home&jd_live&jd_firecrackers
-    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #京东汽车
         parameters:
-          name: redPacket_shop_unsubscribe_unbind_lotteryMachine
+          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_car
           cronExpression: "0 10 0 * * * *"
           enable: true
-          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_car
     - timer: #京东天天加速 #天天提鹅 #京东炸年兽
         parameters:
           name: speed_daily_egg_nian
@@ -64,12 +64,12 @@ inputs:
           cronExpression: "0 15 * * * * *"
           enable: true
           argument: jd_superMarket
-    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #京东年货节 #京东神仙书院
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京东年货节 #京东神仙书院
         parameters:
-          name: beanchange_crazyjoy_rankingList_beanhome_nh_immortal
+          name: beanchange_crazyjoy_rankingList_beanhome_sgmh_nh_immortal
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_car&jd_nh&jd_immortal
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_nh&jd_immortal
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #签到领现金 #京喜签到 #京东炸年兽签到任务 #京东炸年兽AR #京东炸年兽小程序
         parameters:
           name: pigPet_syj_kd_jdzz_cash_sign_niansign_nianar_nianwechat
