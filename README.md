@@ -30,52 +30,61 @@
 <!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成下面的脚本清单，请勿删除这里的标记信息。 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
 <!-- 清单标记开始 -->
-| 活动时长 | 名称                            | 脚本                                                                                                   |
-| -------- | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| 长期   | 京豆变动通知                | [jd_bean_change.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js)       |
-| 长期   | 领京豆额外奖励&抢京豆   | [jd_bean_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_home.js)           |
-| 长期   | 京东多合一签到             | [jd_bean_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_sign.js)           |
-| 长期   | 东东超市兑换奖品          | [jd_blueCoin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js)             |
-| 长期   | 口袋书店                      | [jd_bookshop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js)             |
-| 长期   | 京东汽车赛点兑换京豆    | [jd_car_exchange.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car_exchange.js)     |
-| 长期   | 签到领现金    | [jd_cash.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js)     |
-| 长期   | 京东汽车签到                | [jd_car.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js)                       |
-| 长期   | 摇京豆                         | [jd_club_lottery.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_club_lottery.js)     |
-| 长期   | 疯狂的JOY挂机                | [jd_crazy_joy_coin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js) |
-| 长期   | 疯狂的JOY日常任务          | [jd_crazy_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js)           |
-| 长期   | 京东金融-天天提鹅         | [jd_daily_egg.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_daily_egg.js)           |
-| 长期   | 京喜工厂                      | [jd_dreamFactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_dreamFactory.js)     |
-| 长期   | 东东农场                      | [jd_fruit.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_fruit.js)                   |
-| 长期   | 宠汪汪                         | [jd_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js)                       |
-| 长期   | 获取所有互助码             | [jd_get_share_code.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js) |
-| 长期   | 东东工厂                      | [jd_jdfactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js)           |
-| 长期   | 京东赚赚                      | [jd_jdzz.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js)                     |
-| 长期   | 宠汪汪单独喂食             | [jd_joy_feedPets.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_feedPets.js)     |
-| 长期   | 宠汪汪强制为好友助力（iOS端专用） | [jd_joy_help.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_help.js)             |
-| 长期   | 宠汪汪聚宝盆辅助脚本（iOS端专用） | [jd_petTreasureBox.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_petTreasureBox.js) |
-| 长期   | 宠汪汪兑换奖品             | [jd_joy_reward.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js)         |
-| 长期   | 宠汪汪赛跑助力             | [jd_joy_run.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_run.js)               |
-| 长期   | 宠汪汪偷好友狗粮与积分 | [jd_joy_steal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js)           |
-| 长期   | 宠汪汪                         | [jd_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js)                       |
-| 长期   | 京喜农场                      | [jd_jxnc.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxnc.js)                     |
-| 长期   | 京东快递签到                | [jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)                         |
-| 长期   | 京东直播                      | [jd_live.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js)                     |
-| 长期   | 京东抽奖机                   | [jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js) |
-| 长期   | 摇钱树                         | [jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js)           |
-| 长期   | 点点券                         | [jd_necklace.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js)             |
-| 长期   | 东东萌宠                      | [jd_pet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js)                       |
-| 长期   | 金融养猪                      | [jd_pigPet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js)                 |
-| 长期   | 种豆得豆                      | [jd_plantBean.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_plantBean.js)           |
-| 长期   | 京东排行榜签到得京豆    | [jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js)       |
-| 长期   | 全民开红包                   | [jd_redPacket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_redPacket.js)           |
-| 长期   | 进店领豆                      | [jd_shop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js)                     |
-| 长期   | 东东小窝                      | [jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js)         |
-| 长期   | 天天加速                      | [jd_speed.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js)                   |
-| 长期   | 东东超市                      | [jd_superMarket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js)       |
-| 长期   | 十元街                         | [jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js)                       |
-| 长期   | 注销京东会员卡             | [jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js)                 |
-| 长期   | 取关京东店铺和商品       | [jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js)       |
-| 长期   | 京喜签到       | [jx_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js)       |
+| 序号 |   名称  | blob文件链接 | raw文件链接 |
+| ---- | ------- | ------------ | ----------- |
+| 1 | 京豆变动通知 | [jd_bean_change.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_bean_change.js) | [jd_bean_change.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js) |
+| 2 | 领京豆额外奖励 | [jd_bean_home.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_bean_home.js) | [jd_bean_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_home.js) |
+| 3 | 京豆签到 | [jd_bean_sign.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_bean_sign.js) | [jd_bean_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_sign.js) |
+| 4 | 东东超市兑换奖品 | [jd_blueCoin.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_blueCoin.js) | [jd_blueCoin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js) |
+| 5 | 口袋书店 | [jd_bookshop.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_bookshop.js) | [jd_bookshop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js) |
+| 6 | 京东汽车 | [jd_car.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_car.js) | [jd_car.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js) |
+| 7 | 京东汽车兑换 | [jd_car_exchange.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_car_exchange.js) | [jd_car_exchange.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car_exchange.js) |
+| 8 | 签到领现金 | [jd_cash.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_cash.js) | [jd_cash.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js) |
+| 9 | 摇京豆 | [jd_club_lottery.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_club_lottery.js) | [jd_club_lottery.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_club_lottery.js) |
+| 10 | crazyJoy任务 | [jd_crazy_joy.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_crazy_joy.js) | [jd_crazy_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js) |
+| 11 | crazyJoy挂机 | [jd_crazy_joy_coin.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_crazy_joy_coin.js) | [jd_crazy_joy_coin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js) |
+| 12 | 天天提鹅 | [jd_daily_egg.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_daily_egg.js) | [jd_daily_egg.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_daily_egg.js) |
+| 13 | 京喜工厂 | [jd_dreamFactory.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_dreamFactory.js) | [jd_dreamFactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_dreamFactory.js) |
+| 14 | 京东家庭号 | [jd_family.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_family.js) | [jd_family.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js) |
+| 15 | 集鞭炮赢京豆 | [jd_firecrackers.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_firecrackers.js) | [jd_firecrackers.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_firecrackers.js) |
+| 16 | 东东农场 | [jd_fruit.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_fruit.js) | [jd_fruit.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_fruit.js) |
+| 17 | 获取互助码 | [jd_get_share_code.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_get_share_code.js) | [jd_get_share_code.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js) |
+| 18 | 京东神仙书院 | [jd_immortal.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_immortal.js) | [jd_immortal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js) |
+| 19 | 东东工厂 | [jd_jdfactory.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_jdfactory.js) | [jd_jdfactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js) |
+| 20 | 京东赚赚 | [jd_jdzz.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_jdzz.js) | [jd_jdzz.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js) |
+| 21 | 宠汪汪 | [jd_joy.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy.js) | [jd_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js) |
+| 22 | 宠汪汪🐕喂食 | [jd_joy_feedPets.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy_feedPets.js) | [jd_joy_feedPets.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_feedPets.js) |
+| 23 | 宠汪汪强制为别人助力 | [jd_joy_help.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy_help.js) | [jd_joy_help.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_help.js) |
+| 24 | 宠汪汪积分兑换奖品 | [jd_joy_reward.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy_reward.js) | [jd_joy_reward.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js) |
+| 25 | 宠汪汪赛跑 | [jd_joy_run.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy_run.js) | [jd_joy_run.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_run.js) |
+| 26 | 宠汪汪偷好友积分与狗粮 | [jd_joy_steal.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_joy_steal.js) | [jd_joy_steal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js) |
+| 27 | 京喜农场 | [jd_jxnc.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_jxnc.js) | [jd_jxnc.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxnc.js) |
+| 28 | 京东快递签到 | [jd_kd.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_kd.js) | [jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js) |
+| 29 | 京东直播 | [jd_live.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_live.js) | [jd_live.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js) |
+| 30 | 京东抽奖机 | [jd_lotteryMachine.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_lotteryMachine.js) | [jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js) |
+| 31 | 京东摇钱树 | [jd_moneyTree.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_moneyTree.js) | [jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js) |
+| 32 | 点点券 | [jd_necklace.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_necklace.js) | [jd_necklace.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js) |
+| 33 | 京东年货节 | [jd_nh.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nh.js) | [jd_nh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js) |
+| 34 | 京东炸年兽🧨 | [jd_nian.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nian.js) | [jd_nian.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js) |
+| 35 | 京东炸年兽领爆竹🧨 | [jd_nianCollect.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nianCollect.js) | [jd_nianCollect.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js) |
+| 36 | 京东炸年兽AR | [jd_nian_ar.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nian_ar.js) | [jd_nian_ar.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_ar.js) |
+| 37 | 京东炸年兽签到任务🧨 | [jd_nian_sign.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nian_sign.js) | [jd_nian_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_sign.js) |
+| 38 | 京东炸年兽小程序🧨 | [jd_nian_wechat.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_nian_wechat.js) | [jd_nian_wechat.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js) |
+| 39 | 东东萌宠 | [jd_pet.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_pet.js) | [jd_pet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js) |
+| 40 | 聚宝盆投狗粮辅助 | [jd_petTreasureBox.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_petTreasureBox.js) | [jd_petTreasureBox.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_petTreasureBox.js) |
+| 41 | 金融养猪 | [jd_pigPet.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_pigPet.js) | [jd_pigPet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js) |
+| 42 | 京东种豆得豆 | [jd_plantBean.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_plantBean.js) | [jd_plantBean.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_plantBean.js) |
+| 43 | 京东排行榜 | [jd_rankingList.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_rankingList.js) | [jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js) |
+| 44 | 京东全民开红包 | [jd_redPacket.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_redPacket.js) | [jd_redPacket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_redPacket.js) |
+| 45 | 闪购盲盒 | [jd_sgmh.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_sgmh.js) | [jd_sgmh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_sgmh.js) |
+| 46 | 进店领豆 | [jd_shop.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_shop.js) | [jd_shop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js) |
+| 47 | 东东小窝 | [jd_small_home.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_small_home.js) | [jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js) |
+| 48 | ✈️天天加速 | [jd_speed.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_speed.js) | [jd_speed.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js) |
+| 49 | 东东超市 | [jd_superMarket.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_superMarket.js) | [jd_superMarket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js) |
+| 50 | 十元街 | [jd_syj.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_syj.js) | [jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js) |
+| 51 | 注销京东会员卡 | [jd_unbind.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_unbind.js) | [jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js) |
+| 52 | 取关京东店铺和商品 | [jd_unsubscribe.js](https://github.com/LXK9301/jd_scripts/blob/master/jd_unsubscribe.js) | [jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js) |
+| 53 | 京喜签到 | [jx_sign.js](https://github.com/LXK9301/jd_scripts/blob/master/jx_sign.js) | [jx_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js) |
 <!-- 清单标记结束 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
 <!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成上面的脚本清单，请勿删除这里的标记信息。 -->
