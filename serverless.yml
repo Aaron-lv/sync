@@ -24,7 +24,7 @@ inputs:
           argument: jd_bean_sign
     - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换
         parameters:
-          name: blueCoin_clublottery_car_carexchange
+          name: blueCoin_clublottery_carexchange
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_blueCoin&jd_club_lottery&jd_car_exchange
