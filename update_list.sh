@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+## Author: https://github.com/EvineDeng
+## Modified： 2021-01-24
+## Version： v1.0.0
+
 ## 网址、路径、文件、标记信息以及表头
 WorkDir=$(cd $(dirname $0); pwd)
 JsList=($(cd $WorkDir; ls *.js | grep -E "j[drx]_"))
