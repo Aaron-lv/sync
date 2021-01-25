@@ -13,8 +13,9 @@
 
 
 + 2021-01-21更新 增加 DO_NOT_RUN_SCRIPTS 参数配置不执行的脚本
-+ 例:DO_NOT_RUN_SCRIPTS=jd_family&jd_dreamFactory&jd_jxnc
-
++ 例:DO_NOT_RUN_SCRIPTS=jd_family.js&jd_dreamFactory.js&jd_jxnc.js
+建议填写完整文件名,不完整的文件名可能导致其他脚本被禁用。
+例如：“jd_joy”会匹配到“jd_joy_feedPets”、“jd_joy_reward”、“jd_joy_steal”
 
 + 2021-01-03更新 增加 CUSTOM_SHELL_FILE 参数配置执行自定义shell脚本
 + 例1:配置远程shell脚本, 我自己写了一个shell脚本https://raw.githubusercontent.com/iouAkira/someDockerfile/master/jd_scripts/shell_script_mod.sh 内容很简单下载惊喜农场并添加定时任务
