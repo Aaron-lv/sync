@@ -160,7 +160,7 @@ jobs:
       - name: "压缩文件夹"
         run: zip -r myfile.zip ./*
       - name: "部署到腾讯云函数"
-        run: serverless deploy
+        run: node tencentscf.js
         env:
           STAGE: dev
           SERVERLESS_PLATFORM_VENDOR: tencent
