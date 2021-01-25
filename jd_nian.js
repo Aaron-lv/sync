@@ -767,7 +767,7 @@ function pkInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if(data.code===0 && data.data && data.data.bizCode===0){
-              console.log(`您的好友PK助力码为${data.data.result.groupInfo.groupAssistInviteId}`)
+              console.log(`\n您的好友PK助力码为${data.data.result.groupInfo.groupAssistInviteId}\n`)
               let info = data.data.result.groupPkInfo
               console.log(`当前关卡：${info.dayAward}元红包，完成进度 ${info.dayTotalValue}/${info.dayTargetSell}`)
             }
