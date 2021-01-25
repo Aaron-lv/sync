@@ -175,10 +175,12 @@ if ($.isNode()) {
     return;
   }
   await requireConfig();
-  $.nextCode = ["EdLPh8A6X5G1iWXu-uPYfA==", "nCQQXQHKGjPCb7jkd8q2U-aCTjZMxL3s"];
-  $.nextCode = $.nextCode[randomNumber(0, $.nextCode.length)];
   $.selfCodes = []
   for (let i = 0; i < cookiesArr.length; i++) {
+    if (i%2===0) {
+      $.nextCode = ["EdLPh8A6X5G1iWXu-uPYfA==", "nCQQXQHKGjPCb7jkd8q2U-aCTjZMxL3s"];
+      $.nextCode = $.nextCode[randomNumber(0, $.nextCode.length)];
+    }
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
