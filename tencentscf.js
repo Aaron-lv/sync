@@ -11,7 +11,7 @@ const clientConfig = {
     secretId: process.env.TENCENT_SECRET_ID,
     secretKey: process.env.TENCENT_SECRET_KEY,
   },
-  region: "ap-hongkong",
+  region: process.env.TENCENT_REGION, // 区域参考，https://cloud.tencent.com/document/product/213/6091
   profile: {
     httpProfile: {
       endpoint: "scf.tencentcloudapi.com",
@@ -22,7 +22,7 @@ const clientConfig = {
 const client = new ScfClient(clientConfig);
 const params = {
   "Handler": "index.main_handler",
-  "FunctionName": "jd",
+  "FunctionName": process.env.TENCENT_FUNCTION_NAME, // 云函数程序名，例如 jd_scripts
   "ZipFile": contents_in_base64
 };
 client.UpdateFunctionCode(params).then(
