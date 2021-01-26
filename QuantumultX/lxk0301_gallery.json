@@ -30,7 +30,7 @@
     "3 0-23/2 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true",
     "10 0,20 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js, tag=点点券, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true",
     "1 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js, tag=京东年货节, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true",
-    "0 9,12,20 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js, tag=京东炸年兽🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true",
+    "0 9,12,20,21 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js, tag=京东炸年兽🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true",
     "50 * * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js, tag=京东收🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nianCollect.png, enabled=true",
     "0 9 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_ar.js, tag=京东炸年兽AR, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true",
     "30 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_sign.js, tag=京东炸年兽签到任务🧨, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/main/Icon/lxk0301/jd_nian.png, enabled=true",
