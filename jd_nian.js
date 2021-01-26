@@ -100,7 +100,7 @@ async function jdNian() {
       $.hasGroup = false
       await pkTaskDetail()
       if ($.hasGroup) await pkInfo()
-      //await helpFriendsPK()
+      await helpFriendsPK()
     }
     if (12 <= hour && hour < 14) {
       // 北京时间20点-22点
