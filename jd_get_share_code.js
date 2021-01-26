@@ -1,7 +1,7 @@
 /*
 一键获取我仓库所有需要互助类脚本的互助码(邀请码)(其中京东赚赚jd_jdzz.js如果今天达到5人助力则不能提取互助码)
 没必要设置(cron)定时执行，需要的时候，自己手动执行一次即可
-
+注：临时活动的互助码不添加到此处，如有需要请手动运行对应临时活动脚本
 更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
@@ -159,6 +159,7 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  $.log('\n注：临时活动的互助码不添加到此处，如有需要请手动运行对应临时活动脚本\n')
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -432,7 +433,7 @@ async function getJdZZ() {
               if (data.data.shareTaskRes) {
                 console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】${data.data.shareTaskRes.itemId}`);
               } else {
-                //console.log(`已满5人助力,暂时看不到您的京东赚赚好友助力码`)
+                console.log(`【账号${$.index}（${$.nickName || $.UserName}）京东赚赚】已满5人助力或助力功能已下线,故暂时无好友助力码`)
               }
             }
           }
@@ -654,6 +655,46 @@ async function getJoy(){
     })
   })
 }
+//闪购盲盒
+async function getSgmh(timeout = 0) {
+  return new Promise((resolve) => {
+    setTimeout( ()=>{
+      let url = {
+        url : `https://api.m.jd.com/client.action`,
+        headers : {
+          'Origin' : `https://h5.m.jd.com`,
+          'Cookie' : cookie,
+          'Connection' : `keep-alive`,
+          'Accept' : `application/json, text/plain, */*`,
+          'Referer' : `https://h5.m.jd.com/babelDiy/Zeus/2WBcKYkn8viyxv7MoKKgfzmu7Dss/index.html`,
+          'Host' : `api.m.jd.com`,
+          'Accept-Encoding' : `gzip, deflate, br`,
+          'Accept-Language' : `zh-cn`
+        },
+        body : `functionId=interact_template_getHomeData&body={"appId":"1EFRRxA","taskToken":""}&client=wh5&clientVersion=1.0.0`
+      }
+
+      $.post(url, async (err, resp, data) => {
+        try {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data.bizCode === 0) {
+              for (let i = 0; i < data.data.result.taskVos.length; i++) {
+                if (data.data.result.taskVos[i].taskName === '邀人助力任务') {
+                  console.log(`【账号${$.index}（${$.nickName || $.UserName}）闪购盲盒】${data.data.result.taskVos[i].assistTaskDetailVo.taskToken}`)
+                }
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      })
+    },timeout)
+  })
+}
 async function getShareCode() {
   console.log(`======账号${$.index}开始======`)
   await getJdFactory()
@@ -664,6 +705,7 @@ async function getShareCode() {
   await getJDFruit()
   await getJdZZ()
   await getJoy()
+  await getSgmh()
   console.log(`======账号${$.index}结束======\n`)
 }
 
