@@ -203,14 +203,15 @@ function getUserTuanInfo() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (!data.data.canStartNewAssist)
+            if (data.data && !data.data.canStartNewAssist) {
               $.tuan = {
                 "activityIdEncrypted": data.data.id,
                 "assistStartRecordId": data.data.assistStartRecordId,
                 "assistedPinEncrypted": data.data.encPin,
                 "channel": "FISSION_BEAN"
               }
-            $.tuanActId = data.data.id
+              $.tuanActId = data.data.id
+            }
           }
         }
       } catch (e) {
@@ -260,7 +261,7 @@ function getUserInfo() {
             if (data.data.shareTaskRes) {
               console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
             } else {
-              console.log(`已满5人助力,暂时看不到您的${$.name}好友助力码`)
+              console.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
             }
           }
         }
