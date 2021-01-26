@@ -48,6 +48,7 @@
 |    `BOOKSHOP_SHARECODES`    |   京东书店互助码   | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `JD_CASH_SHARECODES`     |  签到领现金互助码  | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |      `JXNC_SHARECODES`      |   京喜农场互助码   | 非必须 |             /             | 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！<br>每个账号 shareCode 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"smp":"22bdadsfaadsfadse8a","active":"jdnc_1_btorange210113_2","joinnum":"1"}'，多账单间使用`&`或换行分开。详细说明参见[#Pr202](https://github.com/LXK9301/jd_scripts/pull/202) |
+|    `JDSGMH_SHARECODES`      |  闪购盲盒互助码  | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |     `JDNIAN_SHARECODES`     |    炸年兽互助码    | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |     `JDSXSY_SHARECODES`     |    京东神仙书院<br>互助码    | 非必须 |            20/5            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 
@@ -86,6 +87,7 @@
 |     `JD_WECHAT_USER_AGENT`   |    京东炸年兽<br>小程序<br>自定义UA     | 非必须 | 强烈推荐使用自定义的小程序UA防止黑号，UA示例：<br>Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15A148 MicroMessenger/7.0.20(0x17001320) NetType/WIFI Language/zh_CN |
 | `DREAMFACTORY_FORBID_ACCOUNT`|    京喜工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行京喜工厂脚本，注：输入`0`，代表全部账号不运行京喜工厂脚本 |
 | `JDFACTORY_FORBID_ACCOUNT`|    东东工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行东东工厂脚本，注：输入`0`，代表全部账号不运行东东工厂脚本 |
+| `FIRECRACKERS_NOTITY_BEAN`|    集鞭炮赢京豆<br>满足兑换 X 个京豆通知开关     | 非必须 | 默认 0 不通知，输入 120 表示满足兑换 120 个京豆时通知 |
 
 ##### 互助码的填写规则
 
