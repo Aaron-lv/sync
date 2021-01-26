@@ -496,6 +496,7 @@ function useEnergy(PropID) {
     }
   })
 }
+//虫洞
 function getMemBerList() {
   return new Promise((resolve) => {
     const body = { "source": "game", "status": 0};
@@ -516,6 +517,12 @@ function getMemBerList() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data && data.success) {
+              for (let item of data.data) {
+                if (item['taskStatus'] === 0) {
+                  $.log(`去领取【${item['title']}】任务\n`)
+                  await getMemBerGetTask(item['sourceId']);
+                }
+              }
               $.getRewardBeans = 0;
               console.log(`\n检查是否可领虫洞京豆奖励`)
               $.memBerList = data.data.filter(item => item['taskStatus'] === 2);
@@ -535,6 +542,39 @@ function getMemBerList() {
         }
       } catch (e) {
         // $.msg("天天加速-查询太空特殊事件" + e.name + "‼️", JSON.stringify(e), e.message)
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+//领取虫洞任务API
+function getMemBerGetTask(sourceId) {
+  return new Promise((resolve) => {
+    const body = { "source": "game", sourceId};
+    const options = {
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=member_getTask&body=${escape(JSON.stringify(body))}&_t=${Date.now()}`,
+      headers: {
+        Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data && data.success) {
+              // $.getRewardBeans += data.data.beans;
+            }
+          }
+        }
+      } catch (e) {
         $.logErr(e, resp)
       } finally {
         resolve()
