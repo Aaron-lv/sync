@@ -7,7 +7,7 @@
 /*
 京东超级盒子
 活动时间：未知
-更新地址：https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js
+更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_super_box.js
 活动入口：https://prodev.m.jd.com/mall/active/21uMxFV5yiP4ivdSbmHqv5f2aXFK/index.html?tttparams=TiOY=woeyJnTG5nIjoiMTIwLjg3NTY0MSIsImdMYXQiOiIzMS4yODMxMzYifQ7==
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
