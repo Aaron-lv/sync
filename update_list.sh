@@ -24,7 +24,7 @@ Sheet=$SheetHead
 for ((i=0; i<${#JsList[*]}; i++)); do
   Name=$(grep "new Env" ${JsList[i]} | awk -F "'|\"" '{print $2}')
   Entry=$(grep -E "活动入口" ${JsList[i]} | awk -F "：" '{print $2}')
-  if [[$(echo $Entry | grep "http") != "" ]]; then
+  if [[ $(echo $Entry | grep "http") != "" ]]; then
     Entry="[活动地址]($Entry)"
   fi
   Raw="$UrlRaw${JsList[i]}"
