@@ -3,8 +3,8 @@ name: update_ios_task
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 4,16 * * *'
+  #schedule:
+    #- cron: '0 4,16 * * *'
   repository_dispatch:
     types: update_ios_task
   push:
@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    #if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@v2
