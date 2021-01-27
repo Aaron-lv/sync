@@ -5,6 +5,7 @@
 
 京喜农场:脚本更新地址 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxnc.js
 更新时间：2021-01-10 22:47:51
+活动入口：京喜APP我的-京喜农场
 东东农场活动链接：https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2
 已支持IOS双京东账号,Node.js支持N个京东账号
 理论上脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
