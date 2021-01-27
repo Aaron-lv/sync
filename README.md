@@ -122,7 +122,7 @@
     
   + 京东APP扫码获取cookie(此种方式获取的cookie有效期为90天)(执行`node getJDCookie.js`即可)
 
-### 4. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
+### 2. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
 ##### BoxJs订阅地址：[lxk0301.boxjs.json](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/lxk0301.boxjs.json)
 
