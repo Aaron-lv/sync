@@ -49,8 +49,7 @@
 |[jd_firecrackers.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_firecrackers.js)|集鞭炮赢京豆|京东APP首页-发现好货-悬浮窗领京豆|
 |[jd_fruit.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_fruit.js)|东东农场|京东APP我的-更多工具-东东农场|
 |[jd_get_share_code.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js)|获取互助码|我的->游戏与互动->查看更多开启`|
-|[jd_immortal_answer.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js)|京东神仙书院答题|
-https://h5.m.jd.com//babelDiy//Zeus//4XjemYYyPScjmGyjej78M6nsjZvj//index.html?babelChannel=ttt9|
+|[jd_immortal_answer.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js)|京东神仙书院答题||
 |[jd_immortal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js)|京东神仙书院|京东APP我的-神仙书院|
 |[jd_jdfactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js)|东东工厂|京东APP首页-数码电器-东东工厂|
 |[jd_jdzz.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js)|京东赚赚|京东赚赚小程序|
@@ -61,7 +60,7 @@ https://h5.m.jd.com//babelDiy//Zeus//4XjemYYyPScjmGyjej78M6nsjZvj//index.html?ba
 |[jd_joy_run.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_run.js)|宠汪汪赛跑|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_steal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js)|宠汪汪偷好友积分与狗粮|京东APP我的-更多工具-宠汪汪|
 |[jd_jxnc.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxnc.js)|京喜农场|京喜APP我的-京喜农场|
-|[jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)|京东快递签到|https://jingcai-h5.jd.com/#/|
+|[jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)|京东快递签到||
 |[jd_live.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js)|京东直播|京东APP首页-京东直播|
 |[jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js)|京东抽奖机|京东APP中各种抽奖活动的汇总|
 |[jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js)|京东摇钱树|京东APP我的-更多工具-摇钱树|
