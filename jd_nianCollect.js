@@ -1,6 +1,8 @@
 /*
 #炸年兽专门收集爆竹
 京东炸年兽领爆竹🧨
+活动入口：京东app首页浮动窗口
+地址：https://wbbny.m.jd.com/babelDiy/Zeus/2cKMj86srRdhgWcKonfExzK4ZMBy/index.html
 仅仅是收集一下京东炸年兽领爆竹活动每秒产生的爆竹🧨
 每小时的第20分运行一次
 ============Quantumultx===============
