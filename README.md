@@ -41,11 +41,13 @@
 |[jd_car_exchange.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car_exchange.js)|京东汽车兑换|京东APP首页-京东汽车-屏幕右中部，车主福利|
 |[jd_cash.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js)|签到领现金|京东APP搜索领现金进入|
 |[jd_club_lottery.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_club_lottery.js)|摇京豆|京东APP首页-领京豆-摇京豆|
+|[jd_coupon.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_coupon.js)|源头好物红包|[活动地址](https://h5.m.jd.com/babelDiy/Zeus/3hhgqjj5rLjZFbi8UtaD2uex21ky/index.html?babelChannel=ttt19)|
 |[jd_crazy_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js)|crazyJoy任务|京东APP我的-更多工具-疯狂的JOY|
 |[jd_crazy_joy_coin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js)|crazyJoy挂机|京东APP我的-更多工具-疯狂的JOY|
 |[jd_daily_egg.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_daily_egg.js)|天天提鹅|京东金融-天天提鹅|
 |[jd_dreamFactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_dreamFactory.js)|京喜工厂|京东APP-游戏与互动-查看更多-京喜工厂|
 |[jd_family.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js)|京东家庭号|玩一玩-家庭号|
+|[jd_festival.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_festival.js)|京东手机年终奖|[活动地址](https://shopping-festival.m.jd.com)|
 |[jd_firecrackers.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_firecrackers.js)|集鞭炮赢京豆|京东APP首页-发现好货-悬浮窗领京豆|
 |[jd_fruit.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_fruit.js)|东东农场|京东APP我的-更多工具-东东农场|
 |[jd_get_share_code.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js)|获取互助码|我的->游戏与互动->查看更多开启`|
@@ -63,7 +65,9 @@
 |[jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)|京东快递签到|[活动地址](https://jingcai-h5.jd.com/#/)|
 |[jd_live.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js)|京东直播|京东APP首页-京东直播|
 |[jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js)|京东抽奖机|京东APP中各种抽奖活动的汇总|
+|[jd_mh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_mh.js)|盲盒抽京豆|[活动地址](https://anmp.jd.com/babelDiy/Zeus/xKACpgVjVJM7zPKbd5AGCij5yV9/index.html?wxAppName=jd)|
 |[jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js)|京东摇钱树|京东APP我的-更多工具-摇钱树|
+|[jd_ms.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_ms.js)|京东秒秒币|京东app-京东秒杀-签到领红包|
 |[jd_necklace.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js)|点点券|京东APP-领券中心/券后9.9-领点点券|
 |[jd_nh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js)|京东年货节|[活动地址](https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301)|
 |[jd_nian.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
@@ -85,6 +89,7 @@
 |[jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
 |[jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js)|注销京东会员卡||
 |[jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js)|取关京东店铺和商品||
+|[jd_xg.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_xg.js)|小鸽有礼|[活动地址](https://snsdesign.jd.com/babelDiy/Zeus/4N5phvUAqZsGWBNGVJWmufXoBzpt/index.html?channel=lingsns003&scope=0&sceneid=9001&btnTips=&hideApp=0)|
 |[jx_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js)|京喜签到||
 <!-- 清单标记结束 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
