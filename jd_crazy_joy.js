@@ -3,7 +3,7 @@ crazyJoy任务
 
 每天运行一次即可
 
-
+活动入口：京东APP我的-更多工具-疯狂的JOY
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
