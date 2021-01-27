@@ -86,6 +86,7 @@
 |[jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
 |[jd_speed.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
 |[jd_superMarket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
+|[jd_super_box.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_super_box.js)|京东超级盒子|[活动地址](https://prodev.m.jd.com/mall/active/21uMxFV5yiP4ivdSbmHqv5f2aXFK/index.html?tttparams=TiOY=woeyJnTG5nIjoiMTIwLjg3NTY0MSIsImdMYXQiOiIzMS4yODMxMzYifQ7==)|
 |[jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
 |[jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js)|注销京东会员卡||
 |[jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js)|取关京东店铺和商品||
