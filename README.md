@@ -91,9 +91,9 @@
 
 #### 搬运脚本
 
-1.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js))
+1.  【 [@yangtingxiao](https://github.com/yangtingxiao) 】 京东抽奖机([jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js))
 
-2.  【[@yangtingxiao](https://github.com/yangtingxiao)】京东排行榜([jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js))
+2.  【 [@yangtingxiao](https://github.com/yangtingxiao) 】 京东排行榜([jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js))
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
 
@@ -137,19 +137,19 @@
 
 ### 4. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
-##### 获取京东cookie
+##### BoxJs订阅地址：[lxk0301.boxjs.json](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/lxk0301.boxjs.json)
 
-- [京东cookie获取脚本 JD_extra_cookie.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js)
+##### 获取京东cookie [JD_extra_cookie.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js)
 
 ##### 订阅链接：
 
-- Surge：Task&Cookies脚本模块地址: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
+- Surge：Task&Cookies脚本模块地址: [lxk0301_Task.sgmodule.sgmodule](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule)
 
-- Loon：Task&Cookies脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf
+- Loon：Task&Cookies脚本订阅链接: [lxk0301_LoonTask.conf](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/Loon/lxk0301_LoonTask.conf)
 
-- QuantumultX Task脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_gallery.json
+- QuantumultX Task脚本订阅链接: [lxk0301_gallery.json](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_gallery.json)
 
-- QuantumultX cookie脚本订阅链接: https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_cookies.conf
+- QuantumultX cookie脚本订阅链接: [lxk0301_cookies.conf](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/QuantumultX/lxk0301_cookies.conf)
 
 ## 赞赏码(开发维护不易,请赏杯茶水费)
 
