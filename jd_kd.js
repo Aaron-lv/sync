@@ -1,6 +1,6 @@
 /*
 京东快递签到
-活动地址：https://jingcai-h5.jd.com/#/
+活动入口：https://jingcai-h5.jd.com/#/
 签到领豆,14天内满4次和7次享额外奖励，每天运行一次即可
 更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js
 
