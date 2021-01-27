@@ -1,26 +1,27 @@
 /*
-京东直播，每日18豆
-活动结束时间未知
-活动入口：京东APP首页-京东直播
-地址：https://h5.m.jd.com/babelDiy/Zeus/2zwQnu4WHRNfqMSdv69UPgpZMnE2/index.html/
+京东神仙书院答题
+根据bing搜索结果答题，常识题可对，商品题不能保证胜率
+活动时间:2021-1-27至2021-2-5
+活动入口: 京东APP我的-神仙书院
+活动地址：https://h5.m.jd.com//babelDiy//Zeus//4XjemYYyPScjmGyjej78M6nsjZvj//index.html?babelChannel=ttt9
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
-#京东直播
-10-20/5 12 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, tag=京东直播, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+#京东神仙书院答题
+20 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10-20/5 12 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js,tag=京东直播
+cron "20 8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js,tag=京东神仙书院答题
 
 ===============Surge=================
-京东直播 = type=cron,cronexp="10-20/5 12 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js
+京东神仙书院答题 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js
 
 ============小火箭=========
-京东直播 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js, cronexpr="10-20/5 12 * * *", timeout=3600, enable=true
+京东神仙书院答题 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js, cronexpr="20 8 * * *", timeout=3600, enable=true
  */
-const $ = new Env('京东直播');
+const $ = new Env('京东神仙书院答题');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -43,11 +44,13 @@ if ($.isNode()) {
   cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  await requireTk()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -66,28 +69,65 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
         continue
       }
-      await jdHealth()
+      await jdImmortalAnswer()
     }
   }
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
-async function jdHealth() {
-  $.bean = 0
-  await getTaskList()
-  message += `领奖完成，共计获得 ${$.bean} 京豆\n`
-  await showMsg();
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
+
+async function jdImmortalAnswer() {
+  try {
+    $.risk = false
+    $.earn = 0
+    await getHomeData()
+    if ($.risk) return
+    await getQuestions()
+    await showMsg()
+  } catch (e) {
+    $.logErr(e)
+  }
 }
 
-function getTs() {
-  return new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+function getHomeData(info = false) {
+  return new Promise((resolve) => {
+    $.post(taskPostUrl('mcxhd_brandcity_homePage'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data && data['retCode'] === "200") {
+            const {userCoinNum} = data.result
+            if (info) {
+              $.earn = userCoinNum - $.coin
+            } else {
+              console.log(`当前用户金币${userCoinNum}`)
+            }
+            $.coin = userCoinNum
+          } else {
+            $.risk = true
+            console.log(`账号被风控，无法参与活动`)
+            message += `账号被风控，无法参与活动\n`
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
+
 function showMsg() {
   return new Promise(resolve => {
+    message += `本次运行获得${$.earn}积分`
     if (!jdNotify) {
       $.msg($.name, '', `${message}`);
     } else {
@@ -97,151 +137,217 @@ function showMsg() {
   })
 }
 
-// 开始看
-function getTaskList() {
-  let body = {"timestamp": new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000 }
-  return new Promise(resolve => {
-    $.get(taskUrl("liveChannelTaskListToM", body), async (err, resp, data) => {
+function getQuestions() {
+  return new Promise((resolve) => {
+    $.get(taskUrl('mcxhd_brandcity_getQuestions'), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            await superTask()
-            await awardTask("starViewTask")
-            console.log(`去做分享直播间任务`)
-            await shareTask()
-            await awardTask()
-            console.log(`去做浏览直播间任务`)
-            await viewTask()
-            await awardTask("commonViewTask")
+          data = JSON.parse(data);
+          if (data && data['retCode'] === "200") {
+            console.log(`答题开启成功`)
+            let i = 0, questionList = []
+            for (let vo of data.result.questionList) {
+              $.question = vo
+              let option = null, hasFound = false
+
+              console.log(`去查询第${++i}题：【${vo.questionStem}】`)
+              let ques = $.tk.filter(qo => qo.questionId === vo.questionId)
+
+              if (ques.length) {
+                ques = ques[0]
+                let ans = JSON.parse(ques.correct)
+                let opt = vo.options.filter(bo => bo.optionDesc === ans.optionDesc)
+                if (opt.length) {
+                  console.log(`在题库中找到题啦～`)
+                  option = opt[0]
+                  hasFound = true
+                }
+              }
+
+              if (!option) {
+                console.log(`在题库中未找到题`)
+                let ans = -1
+                for (let opt of vo.options) {
+                  let str = vo.questionStem + opt.optionDesc
+                  console.log(`去搜索${str}`)
+                  let res = await bing(str)
+                  if (res > ans) {
+                    option = opt
+                    ans = res
+                  }
+                  await $.wait(2 * 1000)
+                }
+                if (!option) {
+                  option = vo.options[1]
+                  console.log(`未找到答案，都选B【${option.optionDesc}】\n`)
+                } else {
+                  console.log(`选择搜索返回结果最多的一项【${option.optionDesc}】\n`)
+                }
+              }
+
+              let b = {
+                "questionToken": vo.questionToken,
+                "optionId": option.optionId
+              }
+              $.option = option
+              await answer(b)
+              if (!hasFound) questionList.push($.question)
+              if (i < data.result.questionList.length) {
+                if (hasFound)
+                  await $.wait(2 * 1000)
+                else
+                  await $.wait(5 * 1000)
+              }
+            }
+            for (let vo of questionList) {
+              $.question = vo
+              await submitQues({
+                ...$.question,
+                options: JSON.stringify($.question.options),
+                correct: JSON.stringify($.question.correct),
+              })
+            }
+          } else {
+            console.log(`答题开启失败`)
           }
         }
       } catch (e) {
-        $.logErr(e, resp)
+        $.logErr(e, resp);
       } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-function superTask() {
-  let body = 'body=%7B%22liveId%22%3A%223019486%22%2C%22type%22%3A%22viewTask%22%2C%22authorId%22%3A%22681523%22%2C%22extra%22%3A%7B%22time%22%3A200%7D%7D&build=167454&client=apple&clientVersion=9.3.0&d_brand=apple&d_model=iPhone10%2C2&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=194&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=68c0d87a5de62711bab9e6e796c08170&st=1607778652966&sv=100&uts=0f31TVRjBSsySvX9aqk89gHBMqz5E28EYCqc3cRu/4%2Bv0EzRuStHwMI1R5P9RqeizLow/pAquaX1v5IJQGVxUzSfExCFmfO0L7BEMvXnkeCZhKEsmSkbQm54W7ig8aRsmHiXp7YT/SOV7sEKxXauv59O/SAAFkr1egGgKev7Uj81nJRFDnNRSomlrOj2jQzH6iddCTSpydcSYRnDyDcodA%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D'
-  return new Promise(resolve => {
-    $.post(taskPostUrl("liveChannelReportDataV912", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-function viewTask() {
-  let body = 'body=%7B%22liveId%22%3A%223008300%22%2C%22type%22%3A%22viewTask%22%2C%22authorId%22%3A%22644894%22%2C%22extra%22%3A%7B%22time%22%3A120%7D%7D&build=167408&client=apple&clientVersion=9.2.0&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=N&joycious=194&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=TF&rfs=0000&scope=01&sign=90e14adc21c4bf31232a1ded5f4ba40e&st=1607561111999&sv=111&uts=0f31TVRjBSsxGLJHVBkddxFxBqY/8qFkrfEYLL0gkhB/JVGyEYIoD8r5rLvootZziQYAUyvIPogdJpesEuOMmvlisDx6AR2SEsfp381xPoggwvq8XaMYlOnHUV66TZiSfC%2BSgcLpB2v9cy/0Z41tT%2BuLheoEwBwDDYzANkZjncUI9PDCWpCg5/i0A14XfnsUTfQHbMqa3vwsY6QtsbNsgA%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D'
-  return new Promise(resolve => {
-    $.post(taskPostUrl("liveChannelReportDataV912", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-function shareTask() {
-  let body = 'body=%7B%22liveId%22%3A%222995233%22%2C%22type%22%3A%22shareTask%22%2C%22authorId%22%3A%22682780%22%2C%22extra%22%3A%7B%22num%22%3A1%7D%7D&build=167408&client=apple&clientVersion=9.2.0&eid=eidIF3CF0112RTIyQTVGQTEtRDVCQy00Qg%3D%3D6HAJa9%2B/4Vedgo62xKQRoAb47%2Bpyu1EQs/6971aUvk0BQAsZLyQAYeid%2BPgbJ9BQoY1RFtkLCLP5OMqU&isBackground=Y&joycious=194&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=TF&rfs=0000&scope=01&screen=1242%2A2208&sign=457d557a0902f43cbdf9fb735d2bcd64&st=1607559819969&sv=110&uts=0f31TVRjBSsxGLJHVBkddxFxBqY/8qFkrfEYLL0gkhB/JVGyEYIoD8r5rLvootZziQYAUyvIPogdJpesEuOMmvlisDx6AR2SEsfp381xPoggwvq8XaMYlOnHUV66TZiSfC%2BSgcLpB2v9cy/0Z41tT%2BuLheoEwBwDDYzANkZjncUI9PDCWpCg5/i0A14XfnsUTfQHbMqa3vwsY6QtsbNsgA%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D'
-  return new Promise(resolve => {
-    $.post(taskPostUrl("liveChannelReportDataV912", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
+        resolve();
       }
     })
   })
 }
 
-function awardTask(type="shareTask") {
-  let body = `functionId=getChannelTaskRewardToM&appid=h5-live&body=%7B%22type%22%3A%22${type}%22%2C%22liveId%22%3A%222942545%22%7D&v=${getTs()}`
+function submitQues(question) {
   return new Promise(resolve => {
-    $.post(taskPostUrl(null, body,"https://api.m.jd.com/api"), async (err, resp, data) => {
+    $.post({
+      'url': 'http://qa.turinglabs.net:8081/api/v1/question',
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(question),
+    }, (err, resp, data) => {
+      try {
+        data = JSON.parse(data)
+        if (data.status === 200) {
+          console.log(`提交成功`)
+        } else {
+          console.log(`提交失败`)
+        }
+        resolve()
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+
+function answer(body = {}) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('mcxhd_brandcity_answerQuestion', {"costTime": 1, ...body}), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.subCode === "0") {
-              $.bean += data.sum
-              console.log(`任务领奖成功，获得 ${data.sum} 京豆`);
-              message += `任务领奖成功，获得 ${data.sum} 京豆\n`
+          data = JSON.parse(data);
+          // console.log(data)
+          if (data && data['retCode'] === "200") {
+            if (data.result.isCorrect) {
+              console.log(`您选对啦！获得积分${data.result.score}，本次答题共计获得${data.result.totalScore}分`)
+              $.earn += parseInt(data.result.score)
+              $.question = {
+                ...$.question,
+                correct: $.option
+              }
             } else {
-              console.log(`任务领奖失败，${data.msg}`)
+              let correct = $.question.options.filter(vo => vo.optionId === data.result.correctOptionId)[0]
+              console.log(`您选错啦～正确答案是：${correct.optionDesc}`)
+              $.question = {
+                ...$.question,
+                correct: correct
+              }
             }
+            if (data.result.isLastQuestion) {
+              console.log(`答题完成`)
+            }
+          } else {
+            console.log(`答题失败`)
           }
         }
       } catch (e) {
-        $.logErr(e, resp)
+        $.logErr(e, resp);
       } finally {
-        resolve(data);
+        resolve();
       }
     })
   })
 }
-function taskPostUrl(function_id, body = {}, url=null) {
-  if(!url) url = `${JD_API_HOST}?functionId=${function_id}`
+
+function bing(str) {
+  return new Promise(resolve => {
+    $.get({
+      url: `https://www.bing.com/search?q=${str}`,
+      headers: {
+        'Connection': 'Keep-Alive',
+        'Accept': 'text/html, application/xhtml+xml, */*',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'Accept-Encoding': 'gzip, deflate',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4371.0 Safari/537.36'
+      }
+    }, (err, resp, data) => {
+      try {
+        let num = parseInt(data.match(/="sb_count">(.*) 条结果<\/span>/)[1].split(',').join(''))
+        console.log(`找到结果${num}个`)
+        resolve(num)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve()
+      }
+    })
+  })
+
+}
+
+function taskUrl(function_id, body = {}, function_id2) {
+  body = {"token": 'jd17919499fb7031e5', ...body}
   return {
-    url: url,
-    body: body,
+    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0&appid=publicUseApi&t=${new Date().getTime()}&sid=&uuid=&area=&networkType=wifi`,
     headers: {
       "Cookie": cookie,
+      'Accept': "application/json, text/plain, */*",
+      'Accept-Language': 'zh-cn',
       "origin": "https://h5.m.jd.com",
-      "referer": "https://h5.m.jd.com/",
+      "referer": "https://h5.m.jd.com/babelDiy/Zeus/4XjemYYyPScjmGyjej78M6nsjZvj/index.html",
       'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
     }
   }
 }
-function taskUrl(function_id, body = {}) {
+
+function taskPostUrl(function_id, body = {}, function_id2) {
+  let url = `${JD_API_HOST}`;
+  if (function_id2) {
+    url += `?functionId=${function_id2}`;
+  }
+  body = {...body, "token": 'jd17919499fb7031e5'}
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&appid=h5-live&body=${escape(JSON.stringify(body))}&v=${new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000}`,
+    url,
+    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0&appid=publicUseApi`,
     headers: {
       "Cookie": cookie,
       "origin": "https://h5.m.jd.com",
       "referer": "https://h5.m.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
     }
   }
 }
@@ -286,6 +392,26 @@ function TotalBean() {
     })
   })
 }
+
+function requireTk() {
+  return new Promise(resolve => {
+    $.get({
+      url: `http://qn6l5d6wm.hn-bkt.clouddn.com/question.json?t=${new Date().getTime()}`,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4371.0 Safari/537.36'
+      }
+    }, (err, resp, data) => {
+      try {
+        $.tk = JSON.parse(data).RECORDS
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+
 function safeGet(data) {
   try {
     if (typeof JSON.parse(data) == "object") {
@@ -297,6 +423,7 @@ function safeGet(data) {
     return false;
   }
 }
+
 function jsonParse(str) {
   if (typeof str == "string") {
     try {

@@ -1,7 +1,7 @@
 /*
 领京豆额外奖励&抢京豆
 脚本自带助力码，介意者可将 29行 helpAuthor 变量设置为 false
-入口：首页-领京豆
+活动入口：京东APP首页-领京豆
 更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_home.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
