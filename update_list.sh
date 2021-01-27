@@ -10,7 +10,7 @@ JsList=($(cd $WorkDir; ls *.js | grep -E "j[drx]_"))
 FileReadme=$WorkDir/README.md
 UrlBlob=https://github.com/LXK9301/jd_scripts/blob/master/
 UrlRaw=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/
-SheetHead="| 序号 |   名称  | blob文件链接 | raw文件链接 |\n| ---- | ------- | ------------ | ----------- |"
+SheetHead="| 文件 | 名称 | 活动入口 |\n| - | - | - |"
 
 ## 删除标记行的内容
 StartLine=$(($(grep -n "标记开始" "$FileReadme" | awk -F ":" '{print $1}') + 1))
@@ -23,8 +23,8 @@ cd $WorkDir
 Sheet=$SheetHead
 for ((i=0; i<${#JsList[*]}; i++)); do
   Name=$(grep "new Env" ${JsList[i]} | awk -F "'|\"" '{print $2}')
-  Blob="$UrlBlob${JsList[i]}"
+  Entry=$(grep -E "活动入口|活动地址" ${JsList[i]} | awk -F "：" '{print $2}')
   Raw="$UrlRaw${JsList[i]}"
-  Sheet="$Sheet\n| $(($i + 1)) | $Name | [${JsList[i]}]($Blob) | [${JsList[i]}]($Raw) |"
+  Sheet="$Sheet\n|[${JsList[i]}]($Raw)|$Name|$Entry|"
 done
 echo -e "$Sheet\n$Tail" >> $FileReadme
