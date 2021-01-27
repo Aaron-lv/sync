@@ -2,7 +2,7 @@
 京东神仙书院答题
 根据bing搜索结果答题，常识题可对，商品题不能保证胜率
 活动时间:2021-1-27至2021-2-5
-活动入口: 京东app-我的-神仙书院
+活动入口: 京东APP我的-神仙书院
 活动地址：https://h5.m.jd.com//babelDiy//Zeus//4XjemYYyPScjmGyjej78M6nsjZvj//index.html?babelChannel=ttt9
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
