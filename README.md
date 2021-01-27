@@ -49,7 +49,7 @@
 |[jd_firecrackers.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_firecrackers.js)|集鞭炮赢京豆|京东APP首页-发现好货-悬浮窗领京豆|
 |[jd_fruit.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_fruit.js)|东东农场|京东APP我的-更多工具-东东农场|
 |[jd_get_share_code.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_get_share_code.js)|获取互助码|我的->游戏与互动->查看更多开启`|
-|[jd_immortal_answer.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js)|京东神仙书院答题||
+|[jd_immortal_answer.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js)|京东神仙书院答题|京东APP我的-神仙书院|
 |[jd_immortal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js)|京东神仙书院|京东APP我的-神仙书院|
 |[jd_jdfactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js)|东东工厂|京东APP首页-数码电器-东东工厂|
 |[jd_jdzz.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js)|京东赚赚|京东赚赚小程序|
@@ -70,7 +70,7 @@
 |[jd_nianCollect.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
 |[jd_nian.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
 |[jd_nian_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_sign.js)|京东炸年兽签到任务🧨|京东app左侧浮动窗口|
-|[jd_nian_wechat.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js)|京东炸年兽小程序🧨||
+|[jd_nian_wechat.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js)|京东炸年兽小程序🧨|京东小程序-炸年兽|
 |[jd_pet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js)|东东萌宠|京东APP我的-更多工具-东东萌宠|
 |[jd_petTreasureBox.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_petTreasureBox.js)|聚宝盆投狗粮辅助|京东APP我的-更多工具-宠汪汪|
 |[jd_pigPet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js)|金融养猪|京东金融养猪猪|
