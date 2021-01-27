@@ -2,7 +2,7 @@
 jd宠汪汪 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
-更新时间：2021-1-22
+更新时间：2021-1-26
 建议先凌晨0点运行jd_joy.js脚本获取狗粮后，再运行此脚本(jd_joy_steal.js)可偷好友积分，6点运行可偷好友狗粮
 feedCount:自定义 每次喂养数量; 等级只和喂养次数有关，与数量无关
 推荐每次投喂10个，积累狗粮，然后去玩聚宝盆赌
@@ -265,11 +265,11 @@ async function petTask() {
     }
     //每日喂狗粮
     if (item['taskType'] === 'FeedEveryDay') {
-      if (item['taskStatus'] === 'processing') {
+      if (item['receiveStatus'] === 'chance_left') {
         console.log(`\n${item['taskName']}任务进行中\n`)
       } else if (item['receiveStatus'] === 'unreceive') {
         const res = await getFood('FeedEveryDay');
-        console.log(`领取每日帮好友喂一次狗粮 狗粮结果：${res.data}`);
+        console.log(`领取每日喂狗粮 结果：${res.data}`);
       }
     }
     //
