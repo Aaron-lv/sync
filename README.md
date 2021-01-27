@@ -76,7 +76,7 @@
 |[jd_pigPet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js)|金融养猪|京东金融养猪猪|
 |[jd_plantBean.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_plantBean.js)|京东种豆得豆|京东APP我的-更多工具-种豆得豆|
 |[jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js)|京东排行榜|京东APP首页-更多频道-排行榜-悬浮按钮|
-|[jd_redPacket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_redPacket.js)|京东全民开红包|京东APP-首页-领券-锦鲤红包|
+|[jd_redPacket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_redPacket.js)|京东全民开红包|京东APP首页-领券-锦鲤红包|
 |[jd_sgmh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_sgmh.js)|闪购盲盒|京东APP首页-闪购-闪购盲盒|
 |[jd_shop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
 |[jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
