@@ -6,7 +6,7 @@
  */
 /*
 TODO
-京东金融-天天提鹅
+活动入口：京东金融-天天提鹅
 定时收鹅蛋,兑换金币
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js

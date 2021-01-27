@@ -1,6 +1,7 @@
 /*
 京东摇钱树 ：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js
 更新时间：2020-11-16
+活动入口：京东APP我的-更多工具-摇钱树
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 ===============Quantumultx===============
