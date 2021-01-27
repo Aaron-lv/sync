@@ -1,7 +1,7 @@
 /*
 京东汽车，签到满500赛点可兑换500京豆，一天运行一次即可
 长期活动
-活动入口：首页👉京东汽车👉屏幕右中部，车主福利
+活动入口：京东APP首页-京东汽车-屏幕右中部，车主福利
 更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
