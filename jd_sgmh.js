@@ -2,7 +2,7 @@
 闪购盲盒
 长期活动，一人每天5次助力机会，10次被助机会，被助力一次获得一次抽奖机会，前几次必中京豆
 修改自 @yangtingxiao 抽奖机脚本
-活动入口：首页-闪购-闪购盲盒
+活动入口：京东APP首页-闪购-闪购盲盒
 网页地址：https://h5.m.jd.com/babelDiy/Zeus/3vzA7uGuWL2QeJ5UeecbbAVKXftQ/index.html
 更新地址：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_sgmh.js
 已支持IOS双京东账号, Node.js支持N个京东账号
