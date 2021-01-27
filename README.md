@@ -60,12 +60,12 @@
 |[jd_joy_run.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_run.js)|宠汪汪赛跑|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_steal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js)|宠汪汪偷好友积分与狗粮|京东APP我的-更多工具-宠汪汪|
 |[jd_jxnc.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jxnc.js)|京喜农场|京喜APP我的-京喜农场|
-|[jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)|京东快递签到||
+|[jd_kd.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_kd.js)|京东快递签到|[活动地址](https://jingcai-h5.jd.com/#/)|
 |[jd_live.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_live.js)|京东直播|京东APP首页-京东直播|
 |[jd_lotteryMachine.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_lotteryMachine.js)|京东抽奖机|京东APP中各种抽奖活动的汇总|
 |[jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js)|京东摇钱树|京东APP我的-更多工具-摇钱树|
 |[jd_necklace.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js)|点点券|京东APP-领券中心/券后9.9-领点点券|
-|[jd_nh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js)|京东年货节|https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301|
+|[jd_nh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js)|京东年货节|[活动地址](https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301)|
 |[jd_nian_ar.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_ar.js)|京东炸年兽AR|京东app首页浮动窗口|
 |[jd_nianCollect.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
 |[jd_nian.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
@@ -77,7 +77,7 @@
 |[jd_plantBean.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_plantBean.js)|京东种豆得豆|京东APP我的-更多工具-种豆得豆|
 |[jd_rankingList.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_rankingList.js)|京东排行榜|京东APP首页-更多频道-排行榜-悬浮按钮|
 |[jd_redPacket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_redPacket.js)|京东全民开红包|京东APP-首页-领券-锦鲤红包|
-|[jd_sgmh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_sgmh.js)|闪购盲盒|首页-闪购-闪购盲盒|
+|[jd_sgmh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_sgmh.js)|闪购盲盒|京东APP首页-闪购-闪购盲盒|
 |[jd_shop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
 |[jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
 |[jd_speed.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
