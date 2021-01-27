@@ -195,13 +195,74 @@ function getHomeData(info = false) {
         } else {
           data = JSON.parse(data);
           if (data && data['retCode'] === "200") {
-            const {userCoinNum} = data.result
+            const {userCoinNum, userRemainScore} = data.result
             if (info) {
               $.earn = userCoinNum - $.coin
             } else {
-              console.log(`当前用户金币${userCoinNum}`)
+              console.log(`当前用户金币${userCoinNum}，积分${userRemainScore}`)
+              if (userRemainScore) {
+                // await getExchangeInfo()
+              }
             }
             $.coin = userCoinNum
+          } else {
+            $.risk = true
+            console.log(`账号被风控，无法参与活动`)
+            message += `账号被风控，无法参与活动\n`
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function getExchangeInfo() {
+  return new Promise((resolve) => {
+    $.post(taskPostUrl('mcxhd_brandcity_exchangePage'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data && data['retCode'] === "200") {
+            const {userRemainScore, exchageRate} = data.result
+            console.log(`当前用户兑换比率${exchageRate}`)
+            if (exchageRate === 1.4) {
+              console.log(`已达到最大比率，去兑换`)
+              await exchange()
+            }
+          } else {
+            $.risk = true
+            console.log(`账号被风控，无法参与活动`)
+            message += `账号被风控，无法参与活动\n`
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+function exchange() {
+  return new Promise((resolve) => {
+    $.post(taskPostUrl('mcxhd_brandcity_exchange'), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data && data['retCode'] === "200") {
+            const {consumedUserScore, receivedJbeanNum} = data.result
+            console.log(`兑换成功，消耗${consumedUserScore}积分，获得${receivedJbeanNum}京豆`)
           } else {
             $.risk = true
             console.log(`账号被风控，无法参与活动`)
