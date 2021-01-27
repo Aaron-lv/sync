@@ -35,14 +35,15 @@
 |[jd_bean_change.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_change.js)|京豆变动通知||
 |[jd_bean_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_home.js)|领京豆额外奖励|首页-领京豆|
 |[jd_bean_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bean_sign.js)|京豆签到|各处的签到汇总|
+|[jd_beauty.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_beauty.js)|美丽研究院|京东app首页-美妆馆-底部中间按钮|
 |[jd_blueCoin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_blueCoin.js)|东东超市兑换奖品|京东APP我的-更多工具-东东超市|
 |[jd_bookshop.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_bookshop.js)|口袋书店|京东app首页-京东图书-右侧口袋书店|
-|[jd_car_exchange.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car_exchange.js)|京东汽车兑换|首页👉京东汽车兑换👉屏幕右中部，车主福利|
 |[jd_car.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js)|京东汽车|首页👉京东汽车👉屏幕右中部，车主福利|
+|[jd_car_exchange.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car_exchange.js)|京东汽车兑换|首页👉京东汽车兑换👉屏幕右中部，车主福利|
 |[jd_cash.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_cash.js)|签到领现金|京东APP搜索领现金进入|
 |[jd_club_lottery.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_club_lottery.js)|摇京豆|京东APP首页-领京豆-摇京豆|
-|[jd_crazy_joy_coin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js)|crazyJoy挂机|京东APP我的-更多工具-疯狂的JOY|
 |[jd_crazy_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy.js)|crazyJoy任务|京东APP我的-更多工具-疯狂的JOY|
+|[jd_crazy_joy_coin.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_crazy_joy_coin.js)|crazyJoy挂机|京东APP我的-更多工具-疯狂的JOY|
 |[jd_daily_egg.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_daily_egg.js)|天天提鹅|京东金融-天天提鹅|
 |[jd_dreamFactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_dreamFactory.js)|京喜工厂|京东APP-游戏与互动-查看更多-京喜工厂|
 |[jd_family.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_family.js)|京东家庭号|玩一玩-家庭号|
@@ -52,9 +53,9 @@
 |[jd_immortal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js)|京东神仙书院|京东app-我的-神仙书院|
 |[jd_jdfactory.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdfactory.js)|东东工厂|京东APP首页-数码电器-东东工厂|
 |[jd_jdzz.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_jdzz.js)|京东赚赚|京东赚赚小程序|
+|[jd_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js)|宠汪汪|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_feedPets.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_feedPets.js)|宠汪汪🐕喂食|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_help.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_help.js)|宠汪汪强制为别人助力|京东APP我的-更多工具-宠汪汪|
-|[jd_joy.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy.js)|宠汪汪|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_reward.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_reward.js)|宠汪汪积分兑换奖品|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_run.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_run.js)|宠汪汪赛跑|京东APP我的-更多工具-宠汪汪|
 |[jd_joy_steal.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_joy_steal.js)|宠汪汪偷好友积分与狗粮|京东APP我的-更多工具-宠汪汪|
@@ -65,11 +66,11 @@
 |[jd_moneyTree.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_moneyTree.js)|京东摇钱树|京东APP我的-更多工具-摇钱树|
 |[jd_necklace.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_necklace.js)|点点券|京东APP-领券中心/券后9.9-领点点券|
 |[jd_nh.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nh.js)|京东年货节|https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301|
-|[jd_nian_ar.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_ar.js)|京东炸年兽AR|京东app首页浮动窗口|
-|[jd_nianCollect.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
 |[jd_nian.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
+|[jd_nian_ar.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_ar.js)|京东炸年兽AR|京东app首页浮动窗口|
 |[jd_nian_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_sign.js)|京东炸年兽签到任务🧨|京东app左侧浮动窗口|
 |[jd_nian_wechat.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nian_wechat.js)|京东炸年兽小程序🧨||
+|[jd_nianCollect.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
 |[jd_pet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js)|东东萌宠|京东APP我的-更多工具-东东萌宠|
 |[jd_petTreasureBox.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_petTreasureBox.js)|聚宝盆投狗粮辅助|京东APP我的-更多工具-宠汪汪|
 |[jd_pigPet.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pigPet.js)|金融养猪|京东金融养猪猪|
@@ -81,7 +82,7 @@
 |[jd_small_home.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
 |[jd_speed.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
 |[jd_superMarket.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
-|[jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js)|十元街||
+|[jd_syj.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
 |[jd_unbind.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js)|注销京东会员卡||
 |[jd_unsubscribe.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js)|取关京东店铺和商品||
 |[jx_sign.js](https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jx_sign.js)|京喜签到||
