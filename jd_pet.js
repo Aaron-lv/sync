@@ -1,6 +1,7 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_pet.js
 更新时间：2021-01-19
+活动入口：京东APP我的-更多工具-东东萌宠
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
