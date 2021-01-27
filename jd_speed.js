@@ -1,6 +1,7 @@
 /*
 京东天天加速链接：https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js
 更新时间：2020-12-25
+活动入口：京东APP我的-更多工具-天天加速
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 每天4京豆，再小的苍蝇也是肉
