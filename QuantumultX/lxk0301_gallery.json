@@ -49,6 +49,7 @@
     "16 22 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_small_home.js, tag=东东小窝, img-url=https://raw.githubusercontent.com/58xinian/icon/master/ddxw.png, enabled=true",
     "8 0-23/3 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_speed.js, tag=京东天天加速, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png, enabled=true",
     "11 1-23/5 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_superMarket.js, tag=东东超市, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true",
+    "20 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_super_box.js, tag=京东超级盒子, enabled=true",
     "10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_syj.js, tag=赚京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true",
     "55 23 * * 6 https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, tag=注销京东会员卡, img-url= https://raw.githubusercontent.com/58xinian/icon/master/jd_unbind.png, enabled=true",
     "55 23 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unsubscribe.js, tag=取关京东店铺商品, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true",
