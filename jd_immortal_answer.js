@@ -50,6 +50,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  await requireTk()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -150,33 +151,56 @@ function getQuestions() {
             let i = 0, questionList = []
             for (let vo of data.result.questionList) {
               $.question = vo
+              let option = null, hasFound = false
+
               console.log(`去查询第${++i}题：【${vo.questionStem}】`)
-              let ans = -1, option = null
-              for (let opt of vo.options) {
-                let str = vo.questionStem + opt.optionDesc
-                console.log(`去搜索${str}`)
-                let res = await bing(str)
-                if (res > ans) {
-                  option = opt
-                  ans = res
+              let ques = $.tk.filter(qo => qo.questionId === vo.questionId)
+
+              if (ques.length) {
+                ques = ques[0]
+                let ans = JSON.parse(ques.correct)
+                let opt = vo.options.filter(bo => bo.optionDesc === ans.optionDesc)
+                if (opt.length) {
+                  console.log(`在题库中找到题啦～`)
+                  option = opt[0]
+                  hasFound = true
                 }
-                await $.wait(2 * 1000)
               }
+
               if (!option) {
-                option = vo.options[1]
-                console.log(`未找到答案，都选B【${option.optionDesc}】\n`)
-              } else {
-                console.log(`选择搜索返回结果最多的一项【${option.optionDesc}】\n`)
+                console.log(`在题库中未找到题`)
+                let ans = -1
+                for (let opt of vo.options) {
+                  let str = vo.questionStem + opt.optionDesc
+                  console.log(`去搜索${str}`)
+                  let res = await bing(str)
+                  if (res > ans) {
+                    option = opt
+                    ans = res
+                  }
+                  await $.wait(2 * 1000)
+                }
+                if (!option) {
+                  option = vo.options[1]
+                  console.log(`未找到答案，都选B【${option.optionDesc}】\n`)
+                } else {
+                  console.log(`选择搜索返回结果最多的一项【${option.optionDesc}】\n`)
+                }
               }
+
               let b = {
                 "questionToken": vo.questionToken,
                 "optionId": option.optionId
               }
               $.option = option
               await answer(b)
-              questionList.push($.question)
-              if (i < data.result.questionList.length)
-                await $.wait(5 * 1000)
+              if (!hasFound) questionList.push($.question)
+              if (i < data.result.questionList.length) {
+                if (hasFound)
+                  await $.wait(2 * 1000)
+                else
+                  await $.wait(5 * 1000)
+              }
             }
             for (let vo of questionList) {
               $.question = vo
@@ -364,6 +388,25 @@ function TotalBean() {
         $.logErr(e, resp)
       } finally {
         resolve();
+      }
+    })
+  })
+}
+
+function requireTk() {
+  return new Promise(resolve => {
+    $.get({
+      url: `http://qn6l5d6wm.hn-bkt.clouddn.com/question.json?t=${new Date().getTime()}`,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4371.0 Safari/537.36'
+      }
+    }, (err, resp, data) => {
+      try {
+        $.tk = JSON.parse(data).RECORDS
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve()
       }
     })
   })
