@@ -125,7 +125,7 @@
 
 ### 2. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
-##### BoxJs订阅地址：[lxk0301.boxjs.json](./lxk0301.boxjs.json)
+##### BoxJs订阅地址：[lxk0301.boxjs.json](https://gitee.com/lxk0301/jd_scripts/raw/master/lxk0301.boxjs.json)
 
 ##### 获取京东cookie [JD_extra_cookie.js](https://gitee.com/lxk0301/jd_scripts/raw/master/JD_extra_cookie.js)
 
