@@ -8,9 +8,8 @@
 WorkDir=$(cd $(dirname $0); pwd)
 JsList=($(cd $WorkDir; ls *.js | grep -E "j[drx]_"))
 FileReadme=$WorkDir/README.md
-UrlBlob=https://gitee.com/lxk0301/jd_scripts/blob/master/
 UrlRaw=https://gitee.com/lxk0301/jd_scripts/raw/master/
-SheetHead="| 文件 | 名称 | 活动入口 |\n| - | - | - |"
+SheetHead="| 序号 | 文件 | 名称 | 活动入口 |\n| :-: | - | - | - |"
 
 ## 删除标记行的内容
 StartLine=$(($(grep -n "标记开始" "$FileReadme" | awk -F ":" '{print $1}') + 1))
@@ -28,6 +27,6 @@ for ((i=0; i<${#JsList[*]}; i++)); do
     Entry="[活动地址]($Entry)"
   fi
   Raw="$UrlRaw${JsList[i]}"
-  Sheet="$Sheet\n|[${JsList[i]}]($Raw)|$Name|$Entry|"
+  Sheet="$Sheet\n|$(($i + 1))|[${JsList[i]}]($Raw)|$Name|$Entry|"
 done
 echo -e "$Sheet\n$Tail" >> $FileReadme
