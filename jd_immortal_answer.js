@@ -9,17 +9,17 @@
 ============Quantumultx===============
 [task_local]
 #京东神仙书院答题
-20 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 8 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js, tag=京东神仙书院答题, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js,tag=京东神仙书院答题
+cron "20 8 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js,tag=京东神仙书院答题
 
 ===============Surge=================
-京东神仙书院答题 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js
+京东神仙书院答题 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js
 
 ============小火箭=========
-京东神仙书院答题 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal_answer.js, cronexpr="20 8 * * *", timeout=3600, enable=true
+京东神仙书院答题 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js, cronexpr="20 8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东神仙书院答题');
 
