@@ -1,6 +1,7 @@
 /*
 京东神仙书院
 活动时间:2021-1-20至2021-2-5
+增加自动积分兑换京豆(条件默认为：至少700积分，1.4倍率)
 暂不加入品牌会员，需要自行填写坐标，用于做逛身边好店任务
 环境变量：JD_IMMORTAL_LATLON(经纬度)
 示例：JD_IMMORTAL_LATLON={"lat":33.1, "lng":118.1}
@@ -12,17 +13,17 @@ boxjs IMMORTAL_LATLON
 ============Quantumultx===============
 [task_local]
 #京东神仙书院
-20 8 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js, tag=京东神仙书院, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 8 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal.js, tag=京东神仙书院, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js,tag=京东神仙书院
+cron "20 8 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal.js, tag=京东神仙书院
 
 ===============Surge=================
-京东神仙书院 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js
+京东神仙书院 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal.js
 
 ============小火箭=========
-京东神仙书院 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js, cronexpr="20 8 * * *", timeout=3600, enable=true
+京东神仙书院 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal.js, cronexpr="20 8 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东神仙书院');
 
