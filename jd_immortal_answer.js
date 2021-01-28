@@ -13,13 +13,13 @@
 
 ================Loon==============
 [Script]
-cron "20 8 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js,tag=京东神仙书院答题
+cron "20 * * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js,tag=京东神仙书院答题
 
 ===============Surge=================
-京东神仙书院答题 = type=cron,cronexp="20 8 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js
+京东神仙书院答题 = type=cron,cronexp="20 * * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js
 
 ============小火箭=========
-京东神仙书院答题 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js, cronexpr="20 8 * * *", timeout=3600, enable=true
+京东神仙书院答题 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal_answer.js, cronexpr="20 * * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东神仙书院答题');
 
@@ -59,6 +59,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.isLogin = true;
       $.nickName = '';
       message = '';
+      $.stopAnswer = false;
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
@@ -86,7 +87,17 @@ async function jdImmortalAnswer() {
     $.earn = 0
     await getHomeData()
     if ($.risk) return
-    await getQuestions()
+    if ($.isNode()) {
+      //一天答题上限是15次
+      for (let i = 0; i < 15; i++) {
+        $.log(`\n开始第 ${i + 1}次答题\n`);
+        await getQuestions()
+        await $.wait(2000)
+        if ($.stopAnswer) break
+      }
+    } else {
+      await getQuestions()
+    }
     await showMsg()
   } catch (e) {
     $.logErr(e)
@@ -210,7 +221,14 @@ function getQuestions() {
                 correct: JSON.stringify($.question.correct),
               })
             }
+          } else if (data && data['retCode'] === '325') {
+            console.log(`答题开启失败,${data['retMessage']}`);
+            $.stopAnswer = true;//答题已到上限
+          } else if (data && data['retCode'] === '326') {
+            console.log(`答题开启失败,${data['retMessage']}`);
+            $.stopAnswer = true;//答题已到上限
           } else {
+            console.log(JSON.stringify(data))
             console.log(`答题开启失败`)
           }
         }
