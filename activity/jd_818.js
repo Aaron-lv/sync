@@ -22,12 +22,12 @@
 // quantumultx
 [task_local]
 #京东手机狂欢城
-1 0-18/6 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js, tag=京东手机狂欢城, enabled=true
+1 0-18/6 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js, tag=京东手机狂欢城, enabled=true
 // Loon
 [Script]
-cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js,tag=京东手机狂欢城
+cron "1 0-18/6 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js,tag=京东手机狂欢城
 // Surge
-京东手机狂欢城 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js
+京东手机狂欢城 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js
  */
 const $ = new Env('京东手机狂欢城');
 
