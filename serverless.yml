@@ -69,7 +69,7 @@ inputs:
           name: beanchange_crazyjoy_rankingList_beanhome_sgmh_nh_immortal_mh
           cronExpression: "0 30 7 * * * *"
           enable: true
-          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_nh&jd_immortal@jd_immortal_answer&jd_mh
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_nh&jd_immortal&jd_immortal_answer&jd_mh
     - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #签到领现金 #京喜签到 #京东炸年兽签到任务 #京东炸年兽AR #京东炸年兽小程序 #京东手机年终奖
         parameters:
           name: pigPet_syj_kd_jdzz_cash_sign_niansign_nianar_nianwechat_fes
