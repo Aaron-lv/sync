@@ -1,5 +1,3 @@
-## 请勿使用github action、滥用github资源会封我仓库以及账号，如再被封，则金盆洗手。[详见](https://github.com/LXK9301/jd_scripts/issues/3)
-
 ## 特别声明: 
 
 * 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
@@ -105,8 +103,6 @@
 
 ## 邀请码互助
 
-- [邀请码互助入口](https://github.com/LXK9301/jd_scripts/discussions)
-
 - [获取各类活动互助码脚本 jd_get_share_code.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js)
 
 - [邀请码使用规范](githubAction.md#互助码类环境变量)(仅限云端)
@@ -115,21 +111,21 @@
 
 ### 1. Docker1
 
-- [部署方法](https://github.com/LXK9301/jd_scripts/tree/master/docker)
+- [部署方法](./docker)
 
-- [环境变量集合](https://github.com/LXK9301/jd_scripts/blob/master/githubAction.md)
+- [环境变量集合](./githubAction.md)
  
 - 获取京东cookie教程可参考：
   
-  + [浏览器获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie.md)
+  + [浏览器获取京东cookie教程](./backUp/GetJdCookie.md)
     
-  + [插件获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie2.md)
+  + [插件获取京东cookie教程](./backUp/GetJdCookie2.md)
     
   + 京东APP扫码获取cookie(此种方式获取的cookie有效期为90天)(执行`node getJDCookie.js`即可)
 
 ### 2. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
-##### BoxJs订阅地址：[lxk0301.boxjs.json](https://gitee.com/lxk0301/jd_scripts/raw/master/lxk0301.boxjs.json)
+##### BoxJs订阅地址：[lxk0301.boxjs.json](./lxk0301.boxjs.json)
 
 ##### 获取京东cookie [JD_extra_cookie.js](https://gitee.com/lxk0301/jd_scripts/raw/master/JD_extra_cookie.js)
 
