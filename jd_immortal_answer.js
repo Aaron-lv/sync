@@ -178,10 +178,8 @@ function getQuestions() {
                   hasFound = true
                 } else {
                   console.log(`在脚本内置题库中 未找到答案，去线上题库寻找～`);
-                  await requireTk();
-                  ques = $.tk.filter(qo => qo.questionId === vo.questionId);
-                  if (ques.length) {
-                    ques = ques[0]
+                  ques = await getQues(vo.questionId)
+                  if (ques) {
                     let ans = JSON.parse(ques.correct)
                     let opt = vo.options.filter(bo => bo.optionDesc === ans.optionDesc)
                     if (opt.length) {
@@ -273,6 +271,30 @@ function submitQues(question) {
           console.log(`提交失败`)
         }
         resolve()
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+
+function getQues(questionId) {
+  return new Promise(resolve => {
+    $.get({
+      'url': `http://qa.turinglabs.net:8081/api/v1/question/${questionId}/`,
+      'headers': {
+        'Content-Type': 'application/json'
+      }
+    }, (err, resp, data) => {
+      try {
+        data = JSON.parse(data)
+        if (data.status === 200) {
+          resolve(data.data)
+        } else {
+          resolve(null)
+        }
       } catch (e) {
         console.log(e)
       } finally {
@@ -427,24 +449,6 @@ function TotalBean() {
   })
 }
 
-function requireTk() {
-  return new Promise(resolve => {
-    $.get({
-      url: `http://qn6l5d6wm.hn-bkt.clouddn.com/question.json?t=${new Date().getTime()}`,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4371.0 Safari/537.36'
-      }
-    }, (err, resp, data) => {
-      try {
-        $.tk = JSON.parse(data).RECORDS;
-      } catch (e) {
-        console.log(e)
-      } finally {
-        resolve()
-      }
-    })
-  })
-}
 
 function safeGet(data) {
   try {
