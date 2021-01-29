@@ -190,7 +190,7 @@ function getActInfo() {
         } else {
           data = JSON.parse(data);
           if (data && data['code'] === 200) {
-            message += `当前积分：${data.data.integralNum}`
+            message += `用户当前积分：${data.data.integralNum}\n`
             console.log(`用户当前积分：${data.data.integralNum}`)
           } else {
             console.log(data)
