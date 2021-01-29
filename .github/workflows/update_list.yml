@@ -3,16 +3,16 @@ name: update_list
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '1 5,17 * * *'
+  #schedule:
+    #- cron: '1 5,17 * * *'
   repository_dispatch:
     types: update_list
-  #push:
-  #  branches: [ master ]
+  push:
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    #if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@v2
