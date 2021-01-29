@@ -22,6 +22,9 @@
 
 #京东神仙书院答题(活动时间:2021-1-20至2021-2-5)
 5 1 * * * node /scripts/jd_immortal_answer.js >> /scripts/logs/jd_immortal_answer.log 2>&1
+# 5G狂欢城
+0 */6 * * * node /scripts/jd_5g.js >> /scripts/log/jd_5g.log 2>&1
+
 
 ##############长期活动##############
 # 签到
