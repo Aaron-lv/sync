@@ -10,7 +10,7 @@ const clientConfig = {
     secretId: process.env.TENCENT_SECRET_ID,
     secretKey: process.env.TENCENT_SECRET_KEY,
   },
-  region: process.env.TENCENT_REGION, // 区域参考，https://cloud.tencent.com/document/product/213/6091
+  region: process.env.TENCENT_REGION, // 区域参考，https://cloud.tencent.com/document/product/583/17299
   profile: {
     httpProfile: {
       endpoint: "scf.tencentcloudapi.com",
