@@ -73,7 +73,8 @@ async function start() {
       $.msg($.name, '失败', `Token已失效，请重新获取`)
     }
   } else {
-    $.msg($.name, `失败`, '暂无Token')
+    $.log('暂无Token')
+    //$.msg($.name, `失败`, '暂无Token')
   }
   $.done()
 }
