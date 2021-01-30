@@ -113,6 +113,7 @@ async function jdFive() {
     await getShopList()
     console.log(`去帮助好友`)
     await helpFriends()
+    await myRank();//领取往期排名奖励
     await getActInfo()
     await showMsg()
   } catch (e) {
@@ -454,6 +455,101 @@ function getHelp() {
         $.logErr(e, resp);
       } finally {
         resolve();
+      }
+    })
+  })
+}
+function myRank() {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/myRank?t=${Date.now()}`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com/",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.jbeanNum = '';
+    $.get(options, async (err, resp, data) => {
+      try {
+        // console.log('查询获奖列表data', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200 && data.data.myHis) {
+            for (let i = 0; i < data.data.myHis.length; i++) {
+              $.date = data.data.myHis[0].date;
+              if (data.data.myHis[i].status === '21') {
+                await $.wait(1000);
+                console.log('开始领奖')
+                let res = await saveJbean(data.data.myHis[i].id);
+                // console.log('领奖结果', res)
+                if (res.code === 200 && res.data.rsCode === 200) {
+                  // $.jbeanNum += Number(res.data.jbeanNum);
+                  console.log(`${data.data.myHis[i].date}日奖励领取成功${JSON.stringify(res.data.jbeanNum)}`)
+                }
+              }
+              if (i === 0 && data.data.myHis[i].status === '22') {
+                $.jbeanNum = data.data.myHis[i].prize;
+              }
+            }
+            // for (let item of data.data.myHis){
+            //   if (item.status === '21') {
+            //     await $.wait(1000);
+            //     console.log('开始领奖')
+            //     let res = await saveJbean(item.id);
+            //     // console.log('领奖结果', res)
+            //     if (res.code === 200 && res.data.rsCode === 200) {
+            //       $.jbeanNum += Number(res.data.jbeanNum);
+            //     }
+            //   }
+            // }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function saveJbean(id) {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/saveJbean`,
+      "body": `prizeId=${id}`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com/",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        // console.log('领取京豆结果', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
       }
     })
   })
