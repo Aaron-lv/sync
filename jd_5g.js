@@ -90,7 +90,13 @@ async function jdFive() {
   try {
     $.beans = 0
     $.score = 0
+    $.risk = false
     await getToday()
+    if($.risk){
+      message += '活动太火爆了，快去买买买吧\n'
+      await showMsg()
+      return
+    }
     await getHelp()
     console.log(`去浏览会场`)
     await getMeetingList()
@@ -169,7 +175,10 @@ function getToday() {
           if (data && data['code'] === 200) {
             console.log(data.data.rsMsg)
           } else {
-            console.log(data)
+            console.log(data.msg)
+            if(data.code===1002){
+              $.risk = true
+            }
           }
         }
       } catch (e) {
