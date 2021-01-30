@@ -202,7 +202,7 @@ function getActInfo() {
             message += `用户当前积分：${data.data.integralNum}\n`
             console.log(`用户当前积分：${data.data.integralNum}`)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -228,7 +228,7 @@ function getMeetingList() {
               await getMeetingPrize(vo['id'])
             }
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -251,7 +251,7 @@ function browseMeeting(id) {
           if (data && data['code'] === 200) {
             console.log(data.msg)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -276,7 +276,7 @@ function getMeetingPrize(id) {
             $.score += parseInt(data.data.integralNum)
             console.log(`获得${data.data.jdNum}京豆，${data.data.integralNum}积分`)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -302,7 +302,7 @@ function getGoodList() {
               await getGoodPrize(vo['id'])
             }
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -325,7 +325,7 @@ function browseGood(id) {
           if (data && data['code'] === 200) {
             console.log(data.msg)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -350,7 +350,7 @@ function getGoodPrize(id) {
             $.score += parseInt(data.data.integralNum)
             console.log(`获得${data.data.jdNum}京豆，${data.data.integralNum}积分`)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -376,7 +376,7 @@ function getShopList() {
               await getShopPrize(vo['shopId'])
             }
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -399,7 +399,7 @@ function browseShop(id) {
           if (data && data['code'] === 200) {
             console.log(data.msg)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -424,7 +424,7 @@ function getShopPrize(id) {
             $.score += parseInt(data.data.integralNum)
             console.log(`获得${data.data.jdNum}京豆，${data.data.integralNum}积分`)
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
@@ -447,7 +447,7 @@ function getHelp() {
           if (data && data['code'] === 200) {
             console.log(`您的好友助力码为：${data.data.shareId} \n注：此邀请码每天都变！`);
           } else {
-            console.log(data)
+            console.log(JSON.stringify(data))
           }
         }
       } catch (e) {
