@@ -43,19 +43,11 @@ else
     echo "当前只使用了默认定时任务文件 $DEFAULT_LIST_FILE ..."
 fi
 
-##可能存在旧版crontab里面有default_task.sh任务有就直接删除，否则可能会任务重复
-sed -i "/default_task.sh/d" $mergedListFile
 
-echo "第3步判断是否配置了默认脚本更新任务..."
-if [ $(grep -c "docker_entrypoint.sh" $mergedListFile) -eq '0' ]; then
-    echo "合并后的定时任务文件，未包含必须的默认定时任务，增加默认定时任务..."
-    echo -e >>$mergedListFile
-    echo "52 */1 * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >>$mergedListFile
-else
-    echo "已配置默认脚本更新任务。"
-fi
 
-echo "第4步判断是否配置了随即延迟参数..."
+
+
+echo "第3步判断是否配置了随即延迟参数..."
 if [ $RANDOM_DELAY_MAX ]; then
     if [ $RANDOM_DELAY_MAX -ge 1 ]; then
         echo "已设置随机延迟为 $RANDOM_DELAY_MAX , 设置延迟任务中..."
@@ -65,7 +57,7 @@ else
     echo "未配置随即延迟对应的环境变量，故不设置延迟任务..."
 fi
 
-echo "第5步判断是否配置自定义shell执行脚本..."
+echo "第4步判断是否配置自定义shell执行脚本..."
 if [ 0"$CUSTOM_SHELL_FILE" = "0" ]; then
     echo "未配置自定shell脚本文件，跳过执行。"
 else
@@ -90,7 +82,7 @@ fi
 
 
 
-echo "第6步删除不运行的脚本任务..."
+echo "第5步删除不运行的脚本任务..."
 if [ $DO_NOT_RUN_SCRIPTS ]; then
     echo "您配置了不运行的脚本：$DO_NOT_RUN_SCRIPTS"
     arr=${DO_NOT_RUN_SCRIPTS//&/ }
@@ -99,6 +91,34 @@ if [ $DO_NOT_RUN_SCRIPTS ]; then
     done
 
 fi
+
+
+echo "第6步设定下次运行docker_entrypoint.sh时间..."
+echo "删除原有docker_entrypoint.sh任务"
+sed -ie '/'docker_entrypoint.sh'/d' ${mergedListFile}
+
+
+current_min=$(date +%M)
+echo "当前分钟:${current_min}"
+
+#当前分钟大于1，则随机一个小于当前分钟的，否则为59
+if [ $current_min -ge 1 ]; then
+    random_min=$(($RANDOM % $current_min))
+else
+    random_min=59
+fi
+
+echo "下次运行的分钟：${random_min}"
+
+#小时间隔1-3随机
+random_h=$(($RANDOM % 3+1))
+
+echo "小时间隔调整为${random_h}"
+
+echo -e >>$mergedListFile
+echo "#必须要的默认定时任务请勿删除" >> ${mergedListFile}
+echo ""${random_min}" */"${random_h}" * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >> ${mergedListFile}
+
 
 
 
