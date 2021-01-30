@@ -236,7 +236,7 @@ function getExchangeInfo() {
           if (data && data['retCode'] === "200") {
             const {userRemainScore, exchageRate} = data.result
             console.log(`当前用户兑换比率${exchageRate}`)
-            if (exchageRate === 1.4 && userRemainScore >= scoreToBeans) {
+            if (userRemainScore >= scoreToBeans) {
               console.log(`已达到最大比率，去兑换`)
               await exchange()
             }
