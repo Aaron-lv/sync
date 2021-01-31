@@ -930,6 +930,11 @@
       "id": "jd_dreamFactory",
       "name": "京喜工厂",
       "keys": ["jd_jxFactory"],
+      "descs_html": [
+        "请在输入框输入跟你互助的京喜工厂的好友互助码",
+        "同一个京东账号的好友邀请码用@隔开,不同京东账号互助码用换行(return按键)隔开",
+        "下方输入框给出一个示例,自己使用时删除示例邀请码然后按示例填写即可"
+      ],
       "settings": [
         {
           "id": "jd_jxFactory",
@@ -942,7 +947,7 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdgc_mini.png",
         "https://github.com/58xinian/icon/raw/master/jdgc.png"
       ],
       "author": "@lxk0301",
