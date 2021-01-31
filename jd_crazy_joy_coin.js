@@ -206,8 +206,8 @@ async function jdCrazyJoy() {
     $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
   }
 
-  // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY (没有34级JOY时才会执行)
-  if(checkHasFullOccupied() && !checkCanMerge() && !checkHas34Level()) {
+  // 如果格子全部被占有且没有可以合并的JOY，只能回收低级的JOY (且最低等级的JOY小于30级)
+  if(checkHasFullOccupied() && !checkCanMerge() && finMinJoyLevel() < 30) {
     const minJoyId = Math.min(...$.joyIds);
     const boxId = $.joyIds.indexOf(minJoyId);
     console.log(`格子全部被占有且没有可以合并的JOY，回收${boxId + 1}号位等级为${minJoyId}的JOY`)
@@ -225,6 +225,7 @@ async function jdCrazyJoy() {
       await $.wait(1000)
     }
   }
+  // await buyJoyLogic()
   await getJoyList()
   let obj = {};
   $.joyIds.map((vo, idx) => {
@@ -239,11 +240,27 @@ async function jdCrazyJoy() {
   for (let idx in obj) {
     const vo = obj[idx]
     if (idx < 34 && vo.length >= 2) {
+      $.log(`开始合并两只${idx}级joy\n`)
       await mergeJoy(vo[0], vo[1])
       await $.wait(3000)
     }
+    if (idx === '34' && vo.length >= 8) {
+      await getCoin();
+      if ($.coin >= 6000000000000000) {
+        //当存在8个34级JOY，并且剩余金币可为后面继续合成两只新的34级JOY(按全部用30级JOY合成一只34级JOY计算需:1.66T * 2 * 2 * 2 * 2 = 26.56T = 2.6Q)时,则此条件下合并两个34级JOY
+        $.log(`开始合并两只${idx}级joy\n`)
+        await mergeJoy(vo[0], vo[1])
+        await $.wait(3000)
+      }
+    }
   }
-
+  await getJoyList()
+  if ($.joyIds && $.joyIds.length > 0) {
+    $.log('合并后的JOY分布情况')
+    $.log(`\n${$.joyIds[0]} ${$.joyIds[1]} ${$.joyIds[2]} ${$.joyIds[3]}`)
+    $.log(`${$.joyIds[4]} ${$.joyIds[5]} ${$.joyIds[6]} ${$.joyIds[7]}`)
+    $.log(`${$.joyIds[8]} ${$.joyIds[9]} ${$.joyIds[10]} ${$.joyIds[11]}\n`)
+  }
   await hourBenefit()
   await $.wait(1000)
   await getCoin()
@@ -252,7 +269,7 @@ async function jdCrazyJoy() {
   await $.wait(5000)
   console.log(`当前信息：${$.bean} 京豆，${$.coin} 金币`)
 }
-
+//查询格子里面是否还有空格
 function checkHasFullOccupied() {
   return !$.joyIds.includes(0);
 }
@@ -260,6 +277,70 @@ function checkHasFullOccupied() {
 // 查询是否有34级JOY
 function checkHas34Level() {
   return $.joyIds.includes(34);
+}
+
+//查找格子里面有几个空格
+function findZeroNum() {
+  return $.joyIds.filter(i => i === 0).length
+}
+//查找当前 购买 joyLists 中最低等级的那一个
+function finMinJoyLevel() {
+  return Math.min(...$.joyIds.filter(s => s))
+}
+/**
+ * 来源：https://elecv2.ml/#算法研究之合并类小游戏的最优购买问题
+ * 获取下一个合适的购买等级。（算法二优化版）
+ * @param     {array}     joyPrices    商店 joy 价格和等级列表
+ * @param     {number}    start        开始比较的等级。范围1~30，默认：30
+ * @param     {number}    direction    向上比较还是向下比较。0：向下比较，1：向上比较，默认：0
+ * @return    {number}                 返回最终适合购买的等级
+ */
+function getBuyid2b(joyPrices, start = 30, direction = 0) {
+  if (start < 1 || start > 30) {
+    console.log('start 等级输入不合法')
+    return 1
+  }
+  let maxL = 30        // 设置最高购买等级
+  if (direction) {
+    // 向上比较
+    for (let ind = start - 1; ind < maxL - 1; ind++) {       // 商店 joy 等级和序列号相差1，需要减一下
+      if (joyPrices[ind].coins * 2 < joyPrices[ind + 1].coins) return joyPrices[ind].joyId
+    }
+    return maxL
+  } else {
+    // 向下比较
+    for (let ind = start - 1; ind > 0; ind--) {
+      if (joyPrices[ind].coins <= joyPrices[ind - 1].coins * 2) return joyPrices[ind].joyId
+    }
+    return 1
+  }
+}
+
+function buyJoyLogic() {
+  new Promise(async resolve => {
+    let zeroNum = findZeroNum();
+    if (zeroNum === 0) {
+      console.log('格子满了')
+    } else if (zeroNum === 1) {
+      await buyJoy(finMinJoyLevel());
+    } else {
+      let buyLevel = 1, joyPrices
+      console.log('joyPrices', JSON.stringify($.joyPrices))
+      if (zeroNum > 2) joyPrices = $.joyPrices;
+      while (zeroNum--) {
+        await $.wait(1000)
+        if (zeroNum >= 2 && joyPrices && joyPrices.length) {
+          // buyLevel = getBuyid2b(joyPrices, joyPrices.length)     // 具体参数可根据个人情况进行调整
+          buyLevel = getBuyid2b(joyPrices)     // 具体参数可根据个人情况进行调整
+        }
+        if ($.joyPrices) {
+          //添加判断。避免在获取$.joyPrices失败时，直接买等级1
+          await buyJoy(buyLevel)
+        }
+      }
+    }
+    resolve()
+  })
 }
 
 function checkCanMerge() {
@@ -315,7 +396,8 @@ function getJoyShop() {
         } else {
           data = JSON.parse(data);
           if (data.success && data.data && data.data.shop) {
-            const shop = data.data.shop.filter(vo => vo.status === 1) || []
+            const shop = data.data.shop.filter(vo => vo.status === 1) || [];
+            $.joyPrices = shop;
             $.buyJoyLevel = shop.length ? shop[shop.length - 1]['joyId'] : 1;//可购买的最大等级
             if ($.isNode() && process.env.BUY_JOY_LEVEL) {
               $.log(`当前可购买的最高JOY等级为${$.buyJoyLevel}级\n`)
@@ -347,7 +429,28 @@ function mergeJoy(x, y) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.success && data.data.newJoyId) {
-              console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
+              if (data.data.newJoyId > 34) {
+                let level = function (newJoyId) {
+                  switch (newJoyId) {
+                    case 1003:
+                      return '多多JOY'
+                    case 1004:
+                      return '快乐JOY'
+                    case 1005:
+                      return '好物JOY'
+                    case 1006:
+                      return '省钱JOY'
+                    case 1007:
+                      return '咚咚JOY'
+                    default:
+                      return '未知JOY'
+                  }
+                }
+                console.log(`合并成功，获得${level(data.data.newJoyId)}级Joy`)
+                if (level(data.data.newJoyId) === '咚咚JOY' && $.isNode()) await notify.sendNotify($.name, `京东账号${$.index} ${$.nickName}\n合并成功，获得${level(data.data.newJoyId)}级Joy`)
+              } else {
+                console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
+              }
             } else
               console.log(`合并失败，错误`)
           }
@@ -374,6 +477,7 @@ function buyJoy(joyId) {
           if (data.success) {
             if (data.data.eventInfo) {
               await openBox(data.data.eventInfo.eventType, data.data.eventInfo.eventRecordId)
+              $.log('金币不足')
               $.canBuy = false
               return
             }
