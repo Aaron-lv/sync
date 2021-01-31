@@ -933,8 +933,8 @@
       "settings": [
         {
           "id": "jd_jxFactory",
-          "name": "好友邀请码 列表",
-          "val": "V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=@Bo-jnVs_m9uBvbRzraXcSA==\n-OvElMzqeyeGBWazWYjI1Q==",
+          "name": "京喜工厂好友邀请码 列表",
+          "val": "V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=@Bo-jnVs_m9uBvbRzraXcSA==\n\n-OvElMzqeyeGBWazWYjI1Q==",
           "type": "textarea",
           "autoGrow": true,
           "rows": 8,
