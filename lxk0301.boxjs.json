@@ -925,6 +925,29 @@
         "https://m.360buyimg.com/babel/jfs/t1/165970/14/3741/2184/600585feE6fb250f8/77db4ca560e006be.png",
         "https://m.360buyimg.com/babel/jfs/t1/165970/14/3741/2184/600585feE6fb250f8/77db4ca560e006be.png"
       ]
+    },
+    {
+      "id": "jd_dreamFactory",
+      "name": "京喜工厂",
+      "keys": ["jd_jxFactory"],
+      "settings": [
+        {
+          "id": "jd_jxFactory",
+          "name": "好友邀请码 列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 8,
+          "desc": "京喜工厂邀请码"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://github.com/58xinian/icon/raw/master/jdgc.png"
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/jd_scripts/tree/master",
+      "script": "https://gitee.com/lxk0301/jd_scripts/raw/master/jd_dreamFactory.js"
     }
   ]
 }
