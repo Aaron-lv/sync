@@ -30,8 +30,8 @@
 <!-- 清单标记开始 -->
 | 序号 | 文件 | 名称 | 活动入口 |
 | :-: | - | - | - |
-|1|[jd_5g.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_5g.js)|5G狂欢城|暂无|
-|2|[jd_818.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js)|京东手机狂欢城||
+|1|[jd_5g.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_5g.js)|5G狂欢城|[活动地址](https://rdcseason.m.jd.com/)|
+|2|[jd_818.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js)|京东手机狂欢城|[活动地址](https://rdcseason.m.jd.com/#/index)|
 |3|[jd_bean_change.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js)|京豆变动通知||
 |4|[jd_bean_home.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_home.js)|领京豆额外奖励|京东APP首页-领京豆|
 |5|[jd_bean_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_sign.js)|京豆签到|各处的签到汇总|
