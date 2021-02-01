@@ -241,28 +241,30 @@ function receiveHundredCard(cardNo) {
 }
 function consumeCard(cardNo) {
   return new Promise((resolve) => {
-    $.post(taskPostUrl('newyearmoney_consumeCard',{"cardNo":cardNo}), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data);
-          if (data && data.data['bizCode'] === 0) {
-            $.red += parseFloat(data.data.result.currentTimeMoney)
-            console.log(`合成成功，获得${data.data.result.currentTimeMoney}红包`)
+    setTimeout(() => {
+      $.post(taskPostUrl('newyearmoney_consumeCard',{"cardNo":cardNo}), async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
           } else {
-            $.risk = true
-            console.log(`账号被风控，无法参与活动`)
-            message += `账号被风控，无法参与活动\n`
+            data = JSON.parse(data);
+            if (data && data.data['bizCode'] === 0) {
+              $.red += parseFloat(data.data.result.currentTimeMoney)
+              console.log(`合成成功，获得${data.data.result.currentTimeMoney}红包`)
+            } else {
+              $.risk = true
+              console.log(`账号被风控，无法参与活动`)
+              message += `账号被风控，无法参与活动\n`
+            }
           }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve();
         }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    })
+      })
+    }, 1000)
   })
 }
 function helpFriend(inviteId) {
