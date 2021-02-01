@@ -225,6 +225,7 @@ async function jdCrazyJoy() {
 
   for (let i = 0; i < $.joyIds.length; ++i) {
     if (!$.canBuy) {
+      $.log(`金币不足，跳过购买`)
       break
     }
     if ($.joyIds[i] === 0) {
@@ -232,6 +233,7 @@ async function jdCrazyJoy() {
       await $.wait(1000)
       await getJoyList()
       await $.wait(1000)
+      await getCoin();
     }
   }
 
@@ -607,6 +609,7 @@ function getCoin() {
             }
             if (data.data && data.data.totalCoinAmount) {
               $.coin = data.data.totalCoinAmount;
+              $.log(`当前金币:${$.coin}\n`)
             } else {
               $.coin = `获取当前金币数量失败`
             }

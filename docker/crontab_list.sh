@@ -15,14 +15,25 @@
 # 京东炸年兽小程序
 50 0,1,8 * * * node /scripts/jd_nian_wechat.js >> /scripts/logs/jd_nian_wechat.log 2>&1
 # 京东神仙书院(活动时间:2021-1-20至2021-2-5)
-30 6 * * * node /scripts/jd_immortal.js >> /scripts/logs/jd_immortal.log 2>&1
+30 6,8,12,22 * * * node /scripts/jd_immortal.js >> /scripts/logs/jd_immortal.log 2>&1
 # 京东神仙书院答题(活动时间:2021-1-20至2021-2-5)
 5 1 * * * node /scripts/jd_immortal_answer.js >> /scripts/logs/jd_immortal_answer.log 2>&1
-# 5G狂欢城
+# 5G狂欢城(2021-1-30至2021-2-4)
 0 */6 * * * node /scripts/jd_5g.js >> /scripts/logs/jd_5g.log 2>&1
 0 */6 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
-# 小鸽有礼2
+# 小鸽有礼(活动时间：2021年1月15日至2021年2月19日)
+5 7 * * * node /scripts/jd_xg.js >> /scripts/logs/jd_xg.log 2>&1
+# 小鸽有礼2(活动时间：2021年1月28日～2021年2月28日)
 34 9 * * * node /scripts/jd_xgyl.js >> /scripts/logs/jd_jd_xgyl.log 2>&1
+# 京东手机年终奖(活动时间：2021年1月26日～2021年2月8日)
+15 0 * * * node /scripts/jd_festival.js >> /scripts/logs/jd_festival.log 2>&1
+# 盲盒抽京豆(活动时间：2021年1月6日～2021年2月5日)
+1 7 * * * node /scripts/jd_mh.js >> /scripts/logs/jd_mh.log 2>&1
+# 京东压岁钱(活动时间：2021-2-1至2021-2-11)
+20 8,12 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
+# 京东压岁钱抢百元卡(活动时间：2021-2-1至2021-2-11)
+0 9,12,16,20 * * * node /scripts/jd_newYearMoney_lottery.js >> /scripts/logs/jd_newYearMoney_lottery.log 2>&1
+
 
 ##############长期活动##############
 # 签到
@@ -111,17 +122,7 @@
 27 8 * * * node /scripts/jd_sgmh.js >> /scripts/logs/jd_sgmh.log 2>&1
 # 源头好物红包
 0 0 * * *  node /scripts/jd_coupon.js >> /scripts/logs/jd_coupon.log 2>&1
-# 京东手机年终奖
-15 0 * * * node /scripts/jd_festival.js >> /scripts/logs/jd_festival.log 2>&1
-# 盲盒抽京豆
-1 7 * * * node /scripts/jd_mh.js >> /scripts/logs/jd_mh.log 2>&1
 # 京东秒秒币
 10 7 * * * node /scripts/jd_ms.js >> /scripts/logs/jd_ms.log 2>&1
-# 小鸽有礼
-5 7 * * * node /scripts/jd_xg.js >> /scripts/logs/jd_xg.log 2>&1
 # 京东超级盒子
 20 7 * * * node /scripts/jd_super_box.js >> /scripts/logs/jd_super_box.log 2>&1
-# 京东压岁钱
-20 8,12 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
-# 京东压岁钱抢百元卡
-0 9,12,16,20 * * * node /scripts/jd_newYearMoney_lottery.js >> /scripts/logs/jd_newYearMoney_lottery.log 2>&1
