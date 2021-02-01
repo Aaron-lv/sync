@@ -68,30 +68,32 @@
 |36|[jd_moneyTree.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_moneyTree.js)|京东摇钱树|京东APP我的-更多工具-摇钱树|
 |37|[jd_ms.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_ms.js)|京东秒秒币|京东app-京东秒杀-签到领红包|
 |38|[jd_necklace.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_necklace.js)|点点券|京东APP-领券中心/券后9.9-领点点券|
-|39|[jd_nh.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nh.js)|京东年货节|[活动地址](https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301)|
-|40|[jd_nian_ar.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_ar.js)|京东炸年兽AR|京东app首页浮动窗口|
-|41|[jd_nianCollect.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
-|42|[jd_nian.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
-|43|[jd_nian_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_sign.js)|京东炸年兽签到任务🧨|京东app左侧浮动窗口|
-|44|[jd_nian_wechat.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_wechat.js)|京东炸年兽小程序🧨|京东小程序-炸年兽|
-|45|[jd_pet.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pet.js)|东东萌宠|京东APP我的-更多工具-东东萌宠|
-|46|[jd_petTreasureBox.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_petTreasureBox.js)|聚宝盆投狗粮辅助|京东APP我的-更多工具-宠汪汪|
-|47|[jd_pigPet.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pigPet.js)|金融养猪|京东金融养猪猪|
-|48|[jd_plantBean.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_plantBean.js)|京东种豆得豆|京东APP我的-更多工具-种豆得豆|
-|49|[jd_rankingList.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_rankingList.js)|京东排行榜|京东APP首页-更多频道-排行榜-悬浮按钮|
-|50|[jd_redPacket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_redPacket.js)|京东全民开红包|京东APP首页-领券-锦鲤红包|
-|51|[jd_sgmh.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js)|闪购盲盒|京东APP首页-闪购-闪购盲盒|
-|52|[jd_shop.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
-|53|[jd_small_home.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
-|54|[jd_speed.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
-|55|[jd_super_box.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js)|京东超级盒子|[活动地址](https://prodev.m.jd.com/mall/active/21uMxFV5yiP4ivdSbmHqv5f2aXFK/index.html?tttparams=TiOY=woeyJnTG5nIjoiMTIwLjg3NTY0MSIsImdMYXQiOiIzMS4yODMxMzYifQ7==)|
-|56|[jd_superMarket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
-|57|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
-|58|[jd_unbind.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unbind.js)|注销京东会员卡||
-|59|[jd_unsubscribe.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unsubscribe.js)|取关京东店铺和商品||
-|60|[jd_xg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xg.js)|小鸽有礼|[活动地址](https://snsdesign.jd.com/babelDiy/Zeus/4N5phvUAqZsGWBNGVJWmufXoBzpt/index.html?channel=lingsns003&scope=0&sceneid=9001&btnTips=&hideApp=0)|
-|61|[jd_xgyl.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xgyl.js)|小鸽有礼2|[活动地址](https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354740864131276800)|
-|62|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
+|39|[jd_newYearMoney.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_newYearMoney.js)|京东压岁钱|京东APP我的-压岁钱|
+|40|[jd_newYearMoney_lottery.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_newYearMoney_lottery.js)|京东压岁钱抢百元卡|京东APP我的-压岁钱|
+|41|[jd_nh.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nh.js)|京东年货节|[活动地址](https://lzdz-isv.isvjcloud.com/dingzhi/vm/template/activity/940531?activityId=dzvm210168869301)|
+|42|[jd_nian_ar.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_ar.js)|京东炸年兽AR|京东app首页浮动窗口|
+|43|[jd_nianCollect.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nianCollect.js)|京东炸年兽领爆竹🧨|京东app首页浮动窗口|
+|44|[jd_nian.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian.js)|京东炸年兽🧨|京东app首页浮动窗口|
+|45|[jd_nian_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_sign.js)|京东炸年兽签到任务🧨|京东app左侧浮动窗口|
+|46|[jd_nian_wechat.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_wechat.js)|京东炸年兽小程序🧨|京东小程序-炸年兽|
+|47|[jd_pet.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pet.js)|东东萌宠|京东APP我的-更多工具-东东萌宠|
+|48|[jd_petTreasureBox.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_petTreasureBox.js)|聚宝盆投狗粮辅助|京东APP我的-更多工具-宠汪汪|
+|49|[jd_pigPet.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pigPet.js)|金融养猪|京东金融养猪猪|
+|50|[jd_plantBean.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_plantBean.js)|京东种豆得豆|京东APP我的-更多工具-种豆得豆|
+|51|[jd_rankingList.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_rankingList.js)|京东排行榜|京东APP首页-更多频道-排行榜-悬浮按钮|
+|52|[jd_redPacket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_redPacket.js)|京东全民开红包|京东APP首页-领券-锦鲤红包|
+|53|[jd_sgmh.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_sgmh.js)|闪购盲盒|京东APP首页-闪购-闪购盲盒|
+|54|[jd_shop.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
+|55|[jd_small_home.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
+|56|[jd_speed.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
+|57|[jd_super_box.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js)|京东超级盒子|[活动地址](https://prodev.m.jd.com/mall/active/21uMxFV5yiP4ivdSbmHqv5f2aXFK/index.html?tttparams=TiOY=woeyJnTG5nIjoiMTIwLjg3NTY0MSIsImdMYXQiOiIzMS4yODMxMzYifQ7==)|
+|58|[jd_superMarket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
+|59|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
+|60|[jd_unbind.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unbind.js)|注销京东会员卡||
+|61|[jd_unsubscribe.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unsubscribe.js)|取关京东店铺和商品||
+|62|[jd_xg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xg.js)|小鸽有礼|[活动地址](https://snsdesign.jd.com/babelDiy/Zeus/4N5phvUAqZsGWBNGVJWmufXoBzpt/index.html?channel=lingsns003&scope=0&sceneid=9001&btnTips=&hideApp=0)|
+|63|[jd_xgyl.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xgyl.js)|小鸽有礼2|[活动地址](https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354740864131276800)|
+|64|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
 <!-- 清单标记结束 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
 <!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成上面的脚本清单，请勿删除这里的标记信息。 -->
