@@ -225,6 +225,7 @@ async function jdCrazyJoy() {
 
   for (let i = 0; i < $.joyIds.length; ++i) {
     if (!$.canBuy) {
+      $.log(`金币不足，跳过购买`)
       break
     }
     if ($.joyIds[i] === 0) {
@@ -261,6 +262,7 @@ async function jdCrazyJoy() {
       }
     }
     if (idx === '34' && vo.length >= 8) {
+      await getCoin()
       if ($.coin >= 6000000000000000) {
         //当存在8个34级JOY，并且剩余金币可为后面继续合成两只新的34级JOY(按全部用30级JOY合成一只34级JOY计算需:1.66T * 2 * 2 * 2 * 2 = 26.56T = 2.6Q)时,则此条件下合并两个34级JOY
         $.log(`开始合并两只${idx}级joy\n`)
