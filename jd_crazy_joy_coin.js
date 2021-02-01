@@ -456,13 +456,13 @@ function mergeJoy(x, y) {
                     case 1006:
                       return '省钱JOY'
                     case 1007:
-                      return '咚咚JOY'
+                      return '东东JOY'
                     default:
                       return '未知JOY'
                   }
                 }
                 console.log(`合并成功，获得${level(data.data.newJoyId)}级Joy`)
-                if (level(data.data.newJoyId) === '咚咚JOY' && $.isNode()) await notify.sendNotify($.name, `京东账号${$.index} ${$.nickName}\n合并成功，获得${level(data.data.newJoyId)}级Joy`)
+                if (data.data.newJoyId === 1007 && $.isNode()) await notify.sendNotify($.name, `京东账号${$.index} ${$.nickName}\n合并成功，获得${level(data.data.newJoyId)}级Joy`)
               } else {
                 console.log(`合并成功，获得${data.data.newJoyId}级Joy`)
               }
