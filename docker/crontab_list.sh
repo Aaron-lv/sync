@@ -124,4 +124,4 @@
 # 京东压岁钱
 20 8,12 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
 # 京东压岁钱抢百元卡
-0 9,12,16,20 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
+0 9,12,16,20 * * * node /scripts/jd_newYearMoney_lottery.js >> /scripts/logs/jd_newYearMoney_lottery.log 2>&1
