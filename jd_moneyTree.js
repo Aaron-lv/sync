@@ -80,18 +80,22 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
       $.done();
     })
 async function jd_moneyTree() {
-  const userRes = await user_info();
-  if (!userRes || !userRes.realName) return
-  await signEveryDay();
-  await dayWork();
-  await harvest();
-  await sell();
-  await myWealth();
-  await stealFriendFruit()
+  try {
+    const userRes = await user_info();
+    if (!userRes || !userRes.realName) return
+    await signEveryDay();
+    await dayWork();
+    await harvest();
+    await sell();
+    await myWealth();
+    await stealFriendFruit()
 
-  $.log(`\n${message}\n`);
-  if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle, message);
+    $.log(`\n${message}\n`);
+    if (!jdNotify || jdNotify === 'false') {
+      $.msg($.name, subTitle, message);
+    }
+  } catch (e) {
+    $.logErr(e)
   }
 }
 function user_info() {

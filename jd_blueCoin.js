@@ -81,13 +81,17 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
           coinToBeans = process.env.MARKET_COIN_TO_BEANS;
         }
       }
-      if (`${coinToBeans}` !== '0') {
-        await smtgHome();//查询蓝币数量，是否满足兑换的条件
-        await PrizeIndex();
-      } else {
-        console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans\n')
+      try {
+        if (`${coinToBeans}` !== '0') {
+          await smtgHome();//查询蓝币数量，是否满足兑换的条件
+          await PrizeIndex();
+        } else {
+          console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans\n')
+        }
+        await msgShow();
+      } catch (e) {
+        $.logErr(e)
       }
-      await msgShow();
     }
   }
 })()
