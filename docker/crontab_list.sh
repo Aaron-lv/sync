@@ -27,12 +27,12 @@
 34 9 * * * node /scripts/jd_xgyl.js >> /scripts/logs/jd_jd_xgyl.log 2>&1
 # 京东手机年终奖(活动时间：2021年1月26日～2021年2月8日)
 15 0 * * * node /scripts/jd_festival.js >> /scripts/logs/jd_festival.log 2>&1
+# 盲盒抽京豆(活动时间：2021年1月6日～2021年2月5日)
+1 7 * * * node /scripts/jd_mh.js >> /scripts/logs/jd_mh.log 2>&1
 # 京东压岁钱(活动时间：2021-2-1至2021-2-11)
 20 8,12 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
 # 京东压岁钱抢百元卡(活动时间：2021-2-1至2021-2-11)
 0 9,12,16,20 * * * node /scripts/jd_newYearMoney.js >> /scripts/logs/jd_newYearMoney.log 2>&1
-# 盲盒抽京豆(活动时间：2021年1月6日～2021年2月5日)
-1 7 * * * node /scripts/jd_mh.js >> /scripts/logs/jd_mh.log 2>&1
 
 
 ##############长期活动##############
