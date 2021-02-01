@@ -88,7 +88,7 @@ let helpCode = []
       // await main();
     }
   }
-  // console.log($.temp)
+  // console.log(JSON.stringify($.temp))
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
