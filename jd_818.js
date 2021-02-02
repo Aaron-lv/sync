@@ -65,6 +65,7 @@ let helpCode = []
     return;
   }
   $.temp = [];
+  await updateShareCodesCDN();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -589,7 +590,6 @@ async function doHelp() {
   }
   // await updateShareCodes();
   // if (!$.updatePkActivityIdRes) await updateShareCodesCDN();
-  await updateShareCodesCDN();
   if ($.updatePkActivityIdRes && $.updatePkActivityIdRes['shareCodes']) tempCode = $.updatePkActivityIdRes['shareCodes'];
   console.log(`是否大于当天九点🕘:${nowTime > new Date(nowTime).setHours(9, 0, 0, 0)}`)
   //当天大于9:00才从API里面取收集的助力码
