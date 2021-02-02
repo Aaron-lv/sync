@@ -858,7 +858,7 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/LXK9301/updat
     })
   })
 }
-function updateShareCodesCDN(url = 'https://gitee.com/lxk0301/updateTeam/raw/master/jd_shareCodes.json') {
+function updateShareCodesCDN(url = 'https://gitee.com/lxk0301/updateTeam/raw/master/shareCodes/jd_shareCodes.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/LXK9301/updateTeam@master/jd_shareCodes.json
     $.get({url}, async (err, resp, data) => {
