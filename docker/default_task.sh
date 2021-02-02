@@ -98,7 +98,7 @@ echo "删除原有docker_entrypoint.sh任务"
 sed -ie '/'docker_entrypoint.sh'/d' ${mergedListFile}
 
 
-current_min=$(date +%M)
+current_min=$(date +%-M)
 echo "当前分钟:${current_min}"
 
 #当前分钟大于1，则随机一个小于当前分钟的，否则为59
