@@ -46,8 +46,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `cgxZaDXWZPCmiUa2akPVmFMI27K6antJzucULQPYNim_BPEW1Dwd@cgxZdTXtIrPYuAqfDgSpusxr97nagU6hwFa3TXxnqM95u3ib-xt4nWqZdz8@cgxZdTXtIO-O6QmYDVf67KCEJ19JcybuMB2_hYu8NSNQg0oS2Z_FpMce45g@cgxZdTXtILiLvg7OAASp61meehou4OeZvqbjghsZlc3rI5SBk7b3InUqSQ0@cgxZdTXtIL-L7FzMAQCqvap-CydslPKkAn5-YquhVOdq2fHQPxbVJ4pskHs`,
-  `cgxZaDXWZPCmiUa2akPVmFMI27K6antJzucULQPYNim_BPEW1Dwd@cgxZdTXtIrPYuAqfDgSpusxr97nagU6hwFa3TXxnqM95u3ib-xt4nWqZdz8@cgxZdTXtIO-O6QmYDVf67KCEJ19JcybuMB2_hYu8NSNQg0oS2Z_FpMce45g@cgxZdTXtILiLvg7OAASp61meehou4OeZvqbjghsZlc3rI5SBk7b3InUqSQ0@cgxZdTXtIL-L7FzMAQCqvap-CydslPKkAn5-YquhVOdq2fHQPxbVJ4pskHs`
+  `cgxZbDnLLbvT4kKFa2r4itMpof2y7_o@cgxZdTXtILLevwyYCwz65yWwCE8lGkr3bUNrT0h7kLPi4wxXS762i1R7_A0@cgxZdTXtILiLvg7OAASp61meehou4OeZvqbjghsZlc3rI5SBk7b3InUqSQ0@cgxZdTXtIL-L7FzMAQCqvap-CydslPKkAn5-YquhVOdq2fHQPxbVJ4pskHs`,
+  `cgxZbDnLLbvT4kKFa2r4itMpof2y7_o@cgxZdTXtILLevwyYCwz65yWwCE8lGkr3bUNrT0h7kLPi4wxXS762i1R7_A0@cgxZdTXtILiLvg7OAASp61meehou4OeZvqbjghsZlc3rI5SBk7b3InUqSQ0@cgxZdTXtIL-L7FzMAQCqvap-CydslPKkAn5-YquhVOdq2fHQPxbVJ4pskHs`
 ];
 const pkInviteCodes = [
   'IgNWdiLGaPadvlqJQnnKp27-YpAvKvSYNTSkTGvZylf_0wcvqD9EMkohEN4@IgNWdiLGaPaZskfACQyhgLSpZWps-WtQEW3McibU@IgNWdiLGaPaAvmHPAQf769XqjJjMyRirPzN9-AS-WHY9Y_G7t9Cwe5gdiI2qEvDY',
@@ -114,6 +114,7 @@ const pkInviteCodes = [
 
 async function jdNian() {
   try {
+    $.full = false
     await getHomeData()
     if (!$.secretp) return
     let hour = new Date().getUTCHours()
@@ -131,6 +132,7 @@ async function jdNian() {
       if ($.hasGroup) await pkInfo()
       await helpFriendsPK()
     }
+    if($.full) return
     await $.wait(2000)
     await killCouponList()
     await $.wait(2000)
@@ -344,7 +346,12 @@ function getHomeData(info = false) {
               $.secretp = null
               return
             }
-            console.log(`\n\n当前等级:${$.userInfo.raiseInfo.curMaxLevel}\n当前爆竹${$.userInfo.raiseInfo.remainScore}🧨，下一关需要${$.userInfo.raiseInfo.nextLevelScore - $.userInfo.raiseInfo.curLevelStartScore}🧨\n\n`)
+            if ($.userInfo.raiseInfo.fullFlag) {
+              console.log(`当前等级已满，不再做日常任务！\n`)
+              $.full = true
+              return
+            }
+            console.log(`\n\n当前等级:${$.userInfo.raiseInfo.scoreLevel}\n当前爆竹${$.userInfo.raiseInfo.remainScore}🧨，下一关需要${$.userInfo.raiseInfo.nextLevelScore - $.userInfo.raiseInfo.curLevelStartScore}🧨\n\n`)
 
             if (info) {
               message += `当前爆竹${$.userInfo.raiseInfo.remainScore}🧨\n`
