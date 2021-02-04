@@ -99,25 +99,51 @@ sed -ie '/'docker_entrypoint.sh'/d' ${mergedListFile}
 
 
 current_min=$(date +%-M)
-echo "当前分钟:${current_min}"
+current_h=$(date +%-H)
 
-#当前分钟大于1，则随机一个小于当前分钟的，否则为59
+echo "当前分钟:${current_min}"
+echo "当前小时:${current_h}"
+
+
+remainder_h=`expr $current_h % 8`
+
+
+case $remainder_h in
+    0)  run_hour="0,8,16"
+    ;;
+    1)  run_hour="1,9,17"
+    ;;
+    2)  run_hour="2,10,18"
+    ;;
+    3)  run_hour="3,11,19"
+    ;;
+    4)  run_hour="4,12,20"
+    ;;
+    5)  run_hour="5,13,21"
+    ;;
+    6)  run_hour="0,14,22"
+    ;;
+    7)  run_hour="0,15,23"
+    ;;
+
+esac
+
+
+
+#当前分钟大于1，则随机一个小于当前分钟的，否则随机一个大于30分
 if [ $current_min -ge 1 ]; then
     random_min=$(($RANDOM % $current_min))
 else
-    random_min=59
+    random_min=$(($RANDOM % 30+30))
 fi
 
-echo "下次运行的分钟：${random_min}"
+echo "设定 docker_entrypoint.sh cron为："
+echo ""${random_min}" "${run_hour}" * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1"
 
-#小时间隔1-3随机
-random_h=$(($RANDOM % 3+1))
-
-echo "小时间隔调整为${random_h}"
 
 echo -e >>$mergedListFile
 echo "#必须要的默认定时任务请勿删除" >> ${mergedListFile}
-echo ""${random_min}" */"${random_h}" * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >> ${mergedListFile}
+echo ""${random_min}" "${run_hour}" * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" >> ${mergedListFile}
 
 
 
