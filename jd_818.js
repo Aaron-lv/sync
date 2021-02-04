@@ -55,7 +55,7 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2021/2/4 23:59:59+08:00';
+const activeEndTime = '2021/2/4 00:59:59+08:00';
 const addUrl = 'http://jd.turinglabs.net/helpcode/create/';
 const printUrl = `http://jd.turinglabs.net/api/v2/jd/5g/read/30/`;
 let helpCode = []
