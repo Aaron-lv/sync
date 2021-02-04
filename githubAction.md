@@ -84,7 +84,6 @@
 | `FACTORAY_WANTPRODUCT_NAME`  |     东东工厂<br>心仪商品     | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，<br>如不提供则会兑换当前所选商品 |
 |         `JXNCTOKENS`         |        京喜农场TOKEN         | 非必须 | 每个账号 token 是一个 json，json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，示例：'{"farm_jstoken":"749a90f871adsfads8ffda7bf3b1576760",<br>"timestamp":"1610165423873",<br>"phoneid":"42c7e3dadfadsfdsaac-18f0e4f4a0cf"}'，多账号间使用`&`或换行分开。 |
 |     `JD_IMMORTAL_LATLON`     |    京东神仙书院<br>地理位置变量     | 非必须 | 京东神仙书院地理位置，示例格式：{"lat":33.1, "lng":118.1} |
-|     `JD_WECHAT_USER_AGENT`   |    京东炸年兽<br>小程序<br>自定义UA     | 非必须 | 强烈推荐使用自定义的小程序UA防止黑号，在微信聊天界面发送 https://www.ip138.com/useragent/ ，打开网址即可获得，UA示例：<br>Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15A148 MicroMessenger/7.0.20(0x17001320) NetType/WIFI Language/zh_CN |
 | `DREAMFACTORY_FORBID_ACCOUNT`|    京喜工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行京喜工厂脚本，注：输入`0`，代表全部账号不运行京喜工厂脚本 |
 | `JDFACTORY_FORBID_ACCOUNT`|    东东工厂<br>控制哪个京东账号不运行此脚本     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行东东工厂脚本，注：输入`0`，代表全部账号不运行东东工厂脚本 |
 
