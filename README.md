@@ -1,7 +1,3 @@
-### 说明
-
-2020.2.4日 20点，删除docker hub上的镜像，此后Docker2不再维护
-
 ## 特别声明: 
 
 * 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
@@ -124,12 +120,8 @@
     
   + 京东APP扫码获取cookie(此种方式获取的cookie有效期为90天)(执行`node getJDCookie.js`即可)
 
-### 2. Docker2
 
-- 请见 [这里](https://hub.docker.com/r/evinedeng/jd)
-- 2020.2.4日 20点，删除docker hub上的镜像，此后Docker2不再维护
-
-### 3. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
+### 2. iOS代理软件（QuantumultX, Surge, Loon, 小火箭）
 
 ##### BoxJs订阅地址：[lxk0301.boxjs.json](https://gitee.com/lxk0301/jd_scripts/raw/master/lxk0301.boxjs.json)
 
