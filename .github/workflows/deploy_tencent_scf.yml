@@ -89,7 +89,6 @@ jobs:
           if [ $FACTORAY_WANTPRODUCT_NAME ]; then sed -i "/variables/a\      FACTORAY_WANTPRODUCT_NAME: $FACTORAY_WANTPRODUCT_NAME" serverless.yml; fi;
           if [ $JXNCTOKENS ]; then sed -i "/variables/a\      JXNCTOKENS: $JXNCTOKENS" serverless.yml; fi;
           if [ $JD_IMMORTAL_LATLON ]; then sed -i "/variables/a\      JD_IMMORTAL_LATLON: $JD_IMMORTAL_LATLON" serverless.yml; fi;
-          if [ $JD_WECHAT_USER_AGENT ]; then sed -i "/variables/a\      JD_WECHAT_USER_AGENT: $JD_WECHAT_USER_AGENT" serverless.yml; fi;
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           cat serverless.yml
@@ -158,7 +157,6 @@ jobs:
           FACTORAY_WANTPRODUCT_NAME: ${{ secrets.FACTORAY_WANTPRODUCT_NAME}}
           JXNCTOKENS: ${{ secrets.JXNCTOKENS}}
           JD_IMMORTAL_LATLON: ${{ secrets.JD_IMMORTAL_LATLON}}
-          JD_WECHAT_USER_AGENT: ${{ secrets.JD_WECHAT_USER_AGENT}}
           DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
           JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
 
