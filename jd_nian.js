@@ -106,7 +106,7 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
     }
   }
   if ((nowTimes.getHours() < 20 && nowTimes.getHours() >= 10) && nowTimes.getDate() === 4) {
-    if (nowTimes.getHours() === 10 || nowTimes.getHours() === 19) {
+    if (nowTimes.getHours() === 12 || nowTimes.getHours() === 19) {
       $.msg($.name, '', '队伍红包已可兑换\n点击弹窗直达兑换页面', { 'open-url' : openUrl});
       if ($.isNode()) await notify.sendNotify($.name, `队伍PK红包已可兑换\n兑换地址: https://wbbny.m.jd.com/babelDiy/Zeus/2cKMj86srRdhgWcKonfExzK4ZMBy/index.html`)
     }
