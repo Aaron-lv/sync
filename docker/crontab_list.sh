@@ -10,8 +10,7 @@
 30 6,8,12,22 * * * node /scripts/jd_immortal.js >> /scripts/logs/jd_immortal.log 2>&1
 # 京东神仙书院答题(活动时间:2021-1-20至2021-2-5)
 5 1 * * * node /scripts/jd_immortal_answer.js >> /scripts/logs/jd_immortal_answer.log 2>&1
-# 5G狂欢城(2021-1-30至2021-2-4)
-0 */6 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
+
 # 小鸽有礼(活动时间：2021年1月15日至2021年2月19日)
 5 7 * * * node /scripts/jd_xg.js >> /scripts/logs/jd_xg.log 2>&1
 # 小鸽有礼2(活动时间：2021年1月28日～2021年2月28日)
