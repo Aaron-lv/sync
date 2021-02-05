@@ -18,19 +18,19 @@ hostname = wq.jd.com
 0 9,12,18 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxnc.js, tag=京喜农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxnc.png, enabled=true
 [rewrite_local]
 # 京喜农场APP种子Token
-^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask url script-request-header https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_nc.cookie.js
+^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask url script-request-header https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_tokens.js
 =========================Loon=============================
 [Script]
-http-request ^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask script-path=https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_nc.cookie.js, requires-body=false, timeout=3600, tag=京喜农场cookie
+http-request ^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask script-path=https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_tokens.js, requires-body=false, timeout=3600, tag=京喜农场cookie
 cron "0 9,12,18 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxnc.js,tag=京喜农场
 
 =========================Surge============================
 京喜农场 = type=cron,cronexp="0 9,12,18 * * *",timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxnc.js
-京喜农场cookie = type=http-request,pattern=^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask,requires-body=0,max-size=0,script-path= https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_nc.cookie.js
+京喜农场cookie = type=http-request,pattern=^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask,requires-body=0,max-size=0,script-path= https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_tokens.js
  
 =========================小火箭===========================
 京喜农场 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxnc.js, cronexpr="0 9,12,18 * * *", timeout=3600, enable=true
-京喜农场APP种子cookie = type=http-request,script-path=https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_nc.cookie.js,pattern=^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask,max-size=131072,timeout=3600,enable=true
+京喜农场APP种子cookie = type=http-request,script-path=https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_tokens.js,pattern=^https\:\/\/wq\.jd\.com\/cubeactive\/farm\/dotask,max-size=131072,timeout=3600,enable=true
 
 特别说明：
 脚本运行必须填写种子token，iOS用户使用代理可以直接获取；Android用户需要抓包获取种子token，手动做京喜农场任意任务即可获取种子token，推荐使用elecV2P（使用设置类似iOS用户的代理软件）或者HttpCanary，搜索关键字"farm_jstoken"，token按照{"farm_jstoken":"xxx","timestamp":"xxx","phoneid":"xxx-xxx"}格式填写即可
@@ -147,7 +147,8 @@ function requireConfig() {
                 tokenArr.push(jdTokenNode[item] ? JSON.parse(jdTokenNode[item]) : tokenNull)
             })
         } else {
-            tokenArr.push(...[JSON.parse($.getdata('jxnc_token1')) || tokenNull, JSON.parse($.getdata('jxnc_token2')) || tokenNull])
+            let tmpTokens = JSON.parse($.getdata('jx_tokens') || '[]');
+            tokenArr.push(...tmpTokens)
         }
 
         if ($.isNode()) {
@@ -281,9 +282,16 @@ async function jdJXNC() {
     const startInfo = await getTaskList();
     if (startInfo) {
         message += `【水果名称】${startInfo.prizename}\n`;
-        if (startInfo.target <= startInfo.score) {
-            notifyBool = true;
-            message += `【成熟】水果已成熟请及时收取，deliverState：${startInfo.deliverState}\n`;
+        if (startInfo.target <= startInfo.score) { // 水滴已满
+            if (startInfo.activestatus === 2) { // 成熟未收取
+                notifyBool = true;
+                $.log(`【成熟】水果已成熟请及时收取，activestatus：${startInfo.activestatus}\n`);
+                message += `【成熟】水果已成熟请及时收取，activestatus：${startInfo.activestatus}\n`;
+            } else if (startInfo.activestatus === 0) { // 未种植（成熟已收取）
+                $.log('账号未选择种子，请先去京喜农场选择种子。\n如果选择 APP 专属种子，必须提供 token。');
+                message += '账号未选择种子，请先去京喜农场选择种子。\n如果选择 APP 专属种子，必须提供 token。\n';
+                notifyBool = notifyBool && notifyLevel >= 3;
+            }
         } else {
             let shareCodeJson = {
                 "smp": $.info.smp,
