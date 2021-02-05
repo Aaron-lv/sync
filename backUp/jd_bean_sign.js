@@ -13,9 +13,9 @@ const $ = new Env('京豆签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const exec = require('child_process').execSync
-const fs = require('fs')
-const download = require('download');
+const exec = $.isNode() ? require('child_process').execSync : '';
+const fs = $.isNode() ? require('fs') : '';
+const download = $.isNode() ? require('download') : '';
 let resultPath = "./result.txt";
 let JD_DailyBonusPath = "./JD_DailyBonus.js";
 let outPutUrl = './';
