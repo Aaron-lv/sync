@@ -70,7 +70,8 @@ if ($.isNode()) {
       if (cookie) {
         console.log(`*****************开始京东账号${i + 1}京豆签到*******************\n`);
         $.body = $.body.replace(/var Key = '.*'/, `var Key = '${cookie}'`)
-        await new Promise((resolve) => {
+        new Promise((resolve) => {
+          $request = undefined;
           $.resolve = resolve
           $.body = $.body.replace(/\$done/g, '$.resolve')
           $.body = $.body.replace(/\$\.done/g, '$.resolve')
