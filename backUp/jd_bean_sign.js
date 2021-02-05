@@ -33,21 +33,39 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  await requireConfig();
-  // 下载最新代码
-  await downFile();
-  const content = await fs.readFileSync(JD_DailyBonusPath, 'utf8')
-  for (let i =0; i < cookiesArr.length; i++) {
-    cookie = cookiesArr[i];
-    if (cookie) {
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-      $.index = i + 1;
-      $.nickName = '';
-      await TotalBean();
-      console.log(`*****************开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到*******************\n`);
-      console.log(`⚠️⚠️⚠️⚠️目前Bark APP推送通知消息对推送内容长度有限制，如推送通知中包含此推送方式脚本会默认转换成简洁内容推送 ⚠️⚠️⚠️⚠️\n`)
-      await changeFile(content);
-      await execSign();
+  if ($.isNode()) {
+    await requireConfig();
+    // 下载最新代码
+    await downFile();
+    const content = await fs.readFileSync(JD_DailyBonusPath, 'utf8')
+    for (let i =0; i < cookiesArr.length; i++) {
+      cookie = cookiesArr[i];
+      if (cookie) {
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+        $.index = i + 1;
+        $.nickName = '';
+        await TotalBean();
+        console.log(`*****************开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到*******************\n`);
+        console.log(`⚠️⚠️⚠️⚠️目前Bark APP推送通知消息对推送内容长度有限制，如推送通知中包含此推送方式脚本会默认转换成简洁内容推送 ⚠️⚠️⚠️⚠️\n`)
+        await changeFile(content);
+        await execSign();
+      }
+    }
+  } else {
+    await downloadUrl();
+    if (!$.body) {
+      await downloadUrl('https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js');
+      for (let i = 0; i < cookiesArr.length; i++) {
+        cookie = cookiesArr[i];
+        if (cookie) {
+          $.body = $.body.replace(/var Key = '.*'/, `var Key = '${cookie}'`)
+          console.log(`*****************开始京东账号${i + 1}京豆签到*******************\n`);
+          await eval($.body);
+          await $.wait(10 * 1000)
+          // console.log($.body)
+          // await evalSign($.body);
+        }
+      }
     }
   }
 })()
@@ -240,6 +258,18 @@ function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/mast
         resolve();
       }
     })
+  })
+}
+function evalSign(data) {
+  return new Promise(async resolve => {
+    try {
+      await eval(data);
+      await $.wait(10 * 1000);
+    } catch (e) {
+      $.logErr(e)
+    } finally {
+      resolve()
+    }
   })
 }
 function requireConfig() {
