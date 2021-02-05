@@ -2,19 +2,6 @@
 脚本：删除优惠券
 更新时间：2021-01-21
 说明：1、删除优惠券名称中不含“京东”、“超市”、“生鲜”关键字的券；2、删除优惠券名称中含“XX旗舰店”的券；3、已删除的券可以在回收站中还原
-
-脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js, 小火箭
-==============Quantumult X===========
-[task_local]
-#删除优惠券
-55 23 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js, tag=取关京东店铺商品, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
-===========Loon============
-[Script]
-cron "55 23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js,tag=删除优惠券
-============Surge=============
-删除优惠券 = type=cron,cronexp="55 23 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js
-===========小火箭========
-删除优惠券 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js, cronexpr="55 23 * * *", timeout=3600, enable=true
  */
 const $ = new Env('删除优惠券');
 //Node.js用户请在jdCookie.js处填写京东ck;
