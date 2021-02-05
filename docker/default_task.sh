@@ -121,9 +121,9 @@ case $remainder_h in
     ;;
     5)  run_hour="5,13,21"
     ;;
-    6)  run_hour="0,14,22"
+    6)  run_hour="6,14,22"
     ;;
-    7)  run_hour="0,15,23"
+    7)  run_hour="7,15,23"
     ;;
 
 esac
