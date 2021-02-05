@@ -108,7 +108,7 @@ echo "当前小时:${current_h}"
 remainder_h=`expr $current_h % 8`
 
 
-case $remainder_h in
+case ${remainder_h} in
     0)  run_hour="0,8,16"
     ;;
     1)  run_hour="1,9,17"
