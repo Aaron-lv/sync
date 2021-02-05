@@ -61,31 +61,37 @@ if ($.isNode()) {
     }
   } else {
     await downloadUrl();
-    if (!$.body) await downloadUrl('https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js');
+    // if (!$.body) await downloadUrl('https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js');
     // await $.wait(10 * 1000)
     // const promiseArr = cookiesArr.map(ck => evalSign(ck));
     // await Promise.all(promiseArr);
-    for (let i = 0; i < cookiesArr.length; i++) {
-      cookie = cookiesArr[i];
-      if (cookie) {
-        console.log(`*****************开始京东账号${i + 1}京豆签到*******************\n`);
-        $.body = $.body.replace(/var Key = '.*'/, `var Key = '${cookie}'`)
-        new Promise((resolve) => {
-          $request = undefined;
-          $.resolve = resolve
-          $.body = $.body.replace(/\$done/g, '$.resolve')
-          $.body = $.body.replace(/\$\.done/g, '$.resolve')
-          $.log($.body)
-          try {
-            eval($.body)
-          } catch (e) {
-            $.logErr(e)
-          } finally {
-            resolve()
-          }
-        })
-      }
-    }
+    await Promise.all(
+      cookiesArr.map(async ck => {
+        await evalSign(ck)
+      })
+    )
+
+    // for (let i = 0; i < cookiesArr.length; i++) {
+    //   cookie = cookiesArr[i];
+    //   if (cookie) {
+    //     console.log(`*****************开始京东账号${i + 1}京豆签到*******************\n`);
+    //     $.body = $.body.replace(/var Key = '.*'/, `var Key = '${cookie}'`)
+    //     new Promise((resolve) => {
+    //       $request = undefined;
+    //       $.resolve = resolve
+    //       $.body = $.body.replace(/\$done/g, '$.resolve')
+    //       $.body = $.body.replace(/\$\.done/g, '$.resolve')
+    //       $.log($.body)
+    //       try {
+    //         eval($.body)
+    //       } catch (e) {
+    //         $.logErr(e)
+    //       } finally {
+    //         resolve()
+    //       }
+    //     })
+    //   }
+    // }
   }
 })()
     .catch((e) => $.logErr(e))
@@ -279,11 +285,14 @@ function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/mast
     })
   })
 }
-function evalSign(data) {
+function evalSign(ck) {
   return new Promise(async resolve => {
     try {
-      $.body = $.body.replace(/var Key = '.*'/, `var Key = '${data}'`)
-      await eval($.body);
+      $.body = $.body.replace(/var Key = '.*'/, `var Key = '${ck}'`);
+      $request = undefined;
+      $.body = $.body.replace(/\$done/g, 'resolve')
+      $.body = $.body.replace(/\$\.done/g, 'resolve')
+      eval($.body);
       // await $.wait(10 * 1000);
     } catch (e) {
       $.logErr(e)
