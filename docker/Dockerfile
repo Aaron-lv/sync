@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.12
 LABEL AUTHOR="none" \
         VERSION=0.1.3
 
