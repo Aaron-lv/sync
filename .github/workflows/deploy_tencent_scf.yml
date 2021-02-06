@@ -58,8 +58,6 @@ jobs:
           if [ $JD_CASH_SHARECODES ]; then sed -i "/variables/a\      JD_CASH_SHARECODES: $JD_CASH_SHARECODES" serverless.yml; fi;
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
           if [ $JDSGMH_SHARECODES ]; then sed -i "/variables/a\      JDSGMH_SHARECODES: $JDSGMH_SHARECODES" serverless.yml; fi;
-          if [ $JDNIAN_SHARECODES ]; then sed -i "/variables/a\      JDNIAN_SHARECODES: $JDNIAN_SHARECODES" serverless.yml; fi;
-          if [ $JDSXSY_SHARECODES ]; then sed -i "/variables/a\      JDSXSY_SHARECODES: $JDSXSY_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
@@ -88,7 +86,6 @@ jobs:
           if [ $MONEY_TREE_SELL_FRUIT ]; then sed -i "/variables/a\      MONEY_TREE_SELL_FRUIT: $MONEY_TREE_SELL_FRUIT" serverless.yml; fi;
           if [ $FACTORAY_WANTPRODUCT_NAME ]; then sed -i "/variables/a\      FACTORAY_WANTPRODUCT_NAME: $FACTORAY_WANTPRODUCT_NAME" serverless.yml; fi;
           if [ $JXNCTOKENS ]; then sed -i "/variables/a\      JXNCTOKENS: $JXNCTOKENS" serverless.yml; fi;
-          if [ $JD_IMMORTAL_LATLON ]; then sed -i "/variables/a\      JD_IMMORTAL_LATLON: $JD_IMMORTAL_LATLON" serverless.yml; fi;
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           cat serverless.yml
@@ -126,8 +123,6 @@ jobs:
           JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES}}
           JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
           JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES}}
-          JDNIAN_SHARECODES: ${{ secrets.JDNIAN_SHARECODES}}
-          JDSXSY_SHARECODES: ${{ secrets.JDSXSY_SHARECODES}}
           JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
           JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
           JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}
@@ -156,7 +151,6 @@ jobs:
           MONEY_TREE_SELL_FRUIT: ${{ secrets.MONEY_TREE_SELL_FRUIT}}
           FACTORAY_WANTPRODUCT_NAME: ${{ secrets.FACTORAY_WANTPRODUCT_NAME}}
           JXNCTOKENS: ${{ secrets.JXNCTOKENS}}
-          JD_IMMORTAL_LATLON: ${{ secrets.JD_IMMORTAL_LATLON}}
           DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
           JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
 
