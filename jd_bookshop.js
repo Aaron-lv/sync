@@ -279,7 +279,7 @@ function getActContent(info = false, shareUuid = '') {
         if (err) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (safeGet(data)) {
+          if (data && safeGet(data)) {
             data = JSON.parse(data);
             if (data.data) {
               $.userInfo = data.data
