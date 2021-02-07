@@ -76,11 +76,10 @@
 |44|[jd_speed.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
 |45|[jd_superMarket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
 |46|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
-|47|[jd_unbind.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unbind.js)|注销京东会员卡||
-|48|[jd_unsubscribe.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unsubscribe.js)|取关京东店铺和商品||
-|49|[jd_xg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xg.js)|小鸽有礼|[活动地址](https://snsdesign.jd.com/babelDiy/Zeus/4N5phvUAqZsGWBNGVJWmufXoBzpt/index.html?channel=lingsns003&scope=0&sceneid=9001&btnTips=&hideApp=0)|
-|50|[jd_xgyl.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xgyl.js)|小鸽有礼2|[活动地址](https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354740864131276800)|
-|51|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
+|47|[jd_unsubscribe.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unsubscribe.js)|取关京东店铺和商品||
+|48|[jd_xg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xg.js)|小鸽有礼|[活动地址](https://snsdesign.jd.com/babelDiy/Zeus/4N5phvUAqZsGWBNGVJWmufXoBzpt/index.html?channel=lingsns003&scope=0&sceneid=9001&btnTips=&hideApp=0)|
+|49|[jd_xgyl.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xgyl.js)|小鸽有礼2|[活动地址](https://jingcai-h5.jd.com/#/dialTemplate?activityCode=1354740864131276800)|
+|50|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
 <!-- 清单标记结束 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
 <!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成上面的脚本清单，请勿删除这里的标记信息。 -->
