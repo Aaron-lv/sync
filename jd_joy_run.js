@@ -43,8 +43,9 @@ let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45
 //下面给出好友赛跑助力的示例填写规则
 let run_pins = ["被折叠的记忆33,jd_6cd93e613b0e5,jd_45a6b5953b15b,jd_66f5cecc1efcd,jd_sIhNpDXJehOr,jd_41345a6f96aa5,jd_704a2e5e28a66,zooooo58,jd_5851f32d4a083,jd_mCbhXxmqzYJC"];
 let temp = run_pins[0].split(',')
-const fixPins = temp.splice(0, 2)
-const randomPins = getRandomArrayElements(temp, 4)
+let fixPins = temp.splice(temp.indexOf('被折叠的记忆33'), 1);
+fixPins.push(...temp.splice(temp.indexOf('jd_6cd93e613b0e5'), 1));
+const randomPins = getRandomArrayElements(temp, 4);
 temp = [...fixPins, ...randomPins];
 run_pins = [temp.join(',')];
 // $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
