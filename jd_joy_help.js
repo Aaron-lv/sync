@@ -39,14 +39,14 @@ const friendsArr = ["jd_41345a6f96aa5", "jd_45a6b5953b15b", "jd_45a6b5953b15b", 
  * @param {number} max 最大值（不包含）
  */
 let newUrl, url = $request.url;
+function randomNumber(min = 0, max = 100) {
+  return Math.min(Math.floor(min + Math.random() * (max - min)), max);
+}
 try {
   console.log(`url:${url}`);
-  function randomNumber(min = 0, max = 100) {
-    return Math.min(Math.floor(min + Math.random() * (max - min)), max);
-  }
   let friendPin = encodeURI(friendsArr[randomNumber(0, friendsArr.length)]) //强制为对方助力,可成为好友关系
   const timestamp = new Date().getTime()
-  newUrl = url.replace(/friendPin=.*?$/i, "friendPin=" + friendPin).replace(/invitePin=.*?$/i, "invitePin=" + friendPin).replace(/inviteTimeStamp=.*?$/i, "inviteTimeStamp=" + timestamp + "&")
+  newUrl = url.replace(/friendPin=.*?$/i, "friendPin=" + friendPin).replace(/invitePin=.*?$/i, "invitePin=" + friendPin).replace(/inviteTimeStamp=.*?$/i, "inviteTimeStamp=" + timestamp + "&").replace(/common\//, '')
   console.log(`newUrl:${newUrl}`);
 } catch (e) {
   console.log(e);
