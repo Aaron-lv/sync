@@ -12,7 +12,7 @@ let PlantBeanShareCodes = [
 ]
 
 // 从日志获取互助码
-const logShareCodes = require('./jdShareCodes');
+const logShareCodes = require('./utils/jdShareCodes');
 if (logShareCodes.PLANT_BEAN_SHARECODES.length > 0 && !process.env.PLANT_BEAN_SHARECODES) {
   process.env.PLANT_BEAN_SHARECODES = logShareCodes.PLANT_BEAN_SHARECODES.join('&');
 }
