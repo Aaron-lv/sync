@@ -12,7 +12,7 @@ let shareCodes = [
 ]
 
 // 从日志获取互助码
-const logShareCodes = require('./jdShareCodes');
+const logShareCodes = require('./utils/jdShareCodes');
 if (logShareCodes.DDFACTORY_SHARECODES.length > 0 && !process.env.DDFACTORY_SHARECODES) {
   process.env.DDFACTORY_SHARECODES = logShareCodes.DDFACTORY_SHARECODES.join('&');
 }
