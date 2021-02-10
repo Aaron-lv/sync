@@ -15,7 +15,7 @@ let fileContent = '';
 if (process.env.SHARE_CODE_FILE) {
   try {
     const fs = require('fs');
-    fileContent = fs.readFileSync(process.env.SHARE_CODE_FILE, 'utf8');
+    if (fs.existsSync(process.env.SHARE_CODE_FILE)) fileContent = fs.readFileSync(process.env.SHARE_CODE_FILE, 'utf8');
   } catch (err) {
     console.error(err)
   }
