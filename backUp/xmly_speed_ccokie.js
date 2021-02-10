@@ -7,8 +7,7 @@
  Surge
  喜马拉雅极速版Cookie = type=http-request,pattern=https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmly_speed_ccokie.js
  Loon:
- http-request https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmly_speed_ccokie.js
- , requires-body=true, timeout=3600, tag=喜马拉雅极速版Cookie
+ http-request https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/backUp/xmly_speed_ccokie.js, requires-body=true, timeout=3600, tag=喜马拉雅极速版Cookie
  QX:
  [rewrite_local]
  # 喜马拉雅极速版Cookie
