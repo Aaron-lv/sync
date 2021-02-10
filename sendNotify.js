@@ -134,7 +134,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 
 async function sendNotify(text, desp, params = {}) {
-  //提供7种通知
+  //提供6种通知
   desp += `\n本脚本开源免费使用 By：https://github.com/LXK9301/jd_scripts`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
@@ -149,7 +149,7 @@ async function sendNotify(text, desp, params = {}) {
     qywxBotNotify(text, desp), //企业微信机器人
     qywxamNotify(text, desp), //企业微信应用消息推送
     iGotNotify(text, desp, params),//iGot
-    CoolPush(text, desp)//QQ酷推
+    //CoolPush(text, desp)//QQ酷推
   ])
 }
 
