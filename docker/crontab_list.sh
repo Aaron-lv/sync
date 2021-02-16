@@ -10,7 +10,6 @@
 #环球挑战赛 活动时间：2021-02-02 至 2021-02-22
 0 9,12,20,21 2-22 2 * node /scripts/jd_global.js >> /scripts/logs/jd_global.log 2>&1
 
-0 9,12,20,21 2-15 2 * node /scripts/jd_global_mh.js >> /scripts/logs/jd_global_mh.log 2>&1
 
 ##############长期活动##############
 # 签到
