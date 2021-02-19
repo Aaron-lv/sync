@@ -28,8 +28,8 @@ cron "5 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_
 小鸽有礼 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xg.js, cronexpr="5 7 * * *", timeout=200, enable=true
  */
 const $ = new Env('小鸽有礼');
-const notify = $.isNode() ? require('./sendNotify') : '';
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
