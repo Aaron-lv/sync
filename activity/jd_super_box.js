@@ -14,7 +14,7 @@
 ============Quantumultx===============
 [task_local]
 #京东超级盒子
-20 7 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js, tag=京东超级盒子, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+20 7 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js, tag=京东超级盒子, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
