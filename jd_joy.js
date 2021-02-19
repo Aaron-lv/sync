@@ -562,7 +562,7 @@ function followShop(shopId) {
       method: "POST",
       data: body,
       credentials: "include",
-      header: {"application/x-www-form-urlencoded"}
+      header: {"content-type":"application/x-www-form-urlencoded"}
     }
     const url = "https:"+ taroRequest(opt)['url']
     $.post(taskPostUrl(url, body, reqSource, host,'application/x-www-form-urlencoded'), (err, resp, data) => {
