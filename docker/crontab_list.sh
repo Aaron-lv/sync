@@ -10,6 +10,9 @@
 
 #女装盲盒 活动时间：2021-2-19至2021-2-25
 5 7,23 19-25 2 * node /scripts/jd_nzmh.js >> /scripts/logs/jd_nzmh.log 2>&1
+
+#京东极速版天天领红包 活动时间：2021-1-18至2021-3-3
+5 0,23 * * * node /scripts/jd_redpacket.js >> /scripts/logs/jd_redpacket.log 2>&1
 ##############长期活动##############
 # 签到
 3 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
