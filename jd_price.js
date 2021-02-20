@@ -6,6 +6,7 @@
  * 没进行过保价的60天内的订单。查询一次，不符合保价的，不会再次申请保价。
  *
  * 支持云端cookie使用
+ * 修改自：https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_priceProtect.js
  * 修改自：https://raw.githubusercontent.com/id77/QuantumultX/master/task/jdGuaranteedPrice.js
  *
  * 京东保价页面脚本：https://static.360buyimg.com/siteppStatic/script/priceskus-phone.js
