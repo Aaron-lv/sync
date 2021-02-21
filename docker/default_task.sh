@@ -106,7 +106,7 @@ fi
 random_m=$(($RANDOM % 60))
 
 echo "设定 docker_entrypoint.sh cron为："
-echo -e "\n# 必须要的默认定时任务请勿删除\n" >> $mergedListFile
+echo -e "\n# 必须要的默认定时任务请勿删除" >> $mergedListFile
 echo -e "${random_m} ${random_h} * * * docker_entrypoint.sh >> /scripts/logs/default_task.log 2>&1" | tee -a $mergedListFile
 
 
