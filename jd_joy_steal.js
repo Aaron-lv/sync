@@ -149,7 +149,7 @@ async function jdJoySteal() {
             }
             break
           }
-          if (nowTimes.getHours() < 6 && nowTimes.getHours() > 0) {
+          if (nowTimes.getHours() < 6 && nowTimes.getHours() >= 0) {
             $.log('未到早餐时间, 暂不能偷好友狗粮\n')
             break
           }
