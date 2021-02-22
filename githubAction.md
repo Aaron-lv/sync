@@ -124,13 +124,9 @@ Apple京东自营旗舰店
 
   > 如果你填写了推送通知方式中的某一种通知所需环境变量，那么脚本通知情况如下：
 
-  > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js,jd_818.js四个脚本每次运行后都通知
+  > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js,jd_bean_change.js,jd_jxnc.js这些脚本(默认)每次运行后都通知
 
   ```
-jd_plantBean.js是每周一收集京豆后通知一次，
-jd_joy_reward.js是每次兑换到了京豆通知一次，
-jd_blueCoin.js是每次兑换到了奖品通知一次，
-jd_818.js是每次获取新的互助码会通知一次，以帮助您快速上车，
-其余的脚本平常运行都是不通知，只有在京东cookie失效后，才会推送通知    
+其余的脚本平常运行都是不通知，只有在京东cookie失效以及达到部分条件后，才会推送通知    
   ```
 
