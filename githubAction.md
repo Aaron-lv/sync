@@ -4,7 +4,7 @@
 
 |    Name     | 归属 | 属性 | 说明                                                         |
 | :---------: | :--: | ---- | ------------------------------------------------------------ |
-| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开或者换行。具体获取参考[浏览器获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/LXK9301/jd_scripts/blob/master/backUp/GetJdCookie2.md) |
+| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开或者换行。具体获取参考[浏览器获取京东cookie教程](./backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](./backUp/GetJdCookie2.md) |
 
 ##### 京东隐私安全 环境变量
 
@@ -36,11 +36,11 @@
 
 |            Name             |        归属        |  属性  | 需要助力次数/可提供助力次数 | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | :-----------------------: | ------------------------------------------------------------ |
-|      `FRUITSHARECODES`      |   东东农场<br>互助码   | 非必须 |            5/4            | 填写规则请看[jdFruitShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|       `PETSHARECODES`       |   东东萌宠<br>互助码   | 非必须 |            5/5            | 填写规则请看[jdPetShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPetShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|   `PLANT_BEAN_SHARECODES`   |   种豆得豆<br>互助码   | 非必须 |            9/3            | 填写规则请看[jdPlantBeanShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdPlantBeanShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-|   `DDFACTORY_SHARECODES`    |   东东工厂<br>互助码   | 非必须 |            5/3            | 填写规则请看[jdFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
-| `DREAM_FACTORY_SHARE_CODES` |   京喜工厂<br>互助码   | 非必须 |         不固定/3          | 填写规则请看[jdDreamFactoryShareCodes.js](https://github.com/LXK9301/jd_scripts/blob/master/jdDreamFactoryShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|      `FRUITSHARECODES`      |   东东农场<br>互助码   | 非必须 |            5/4            | 填写规则请看[jdFruitShareCodes.js](./jdFruitShareCodes.js)或见下方[互助码的填写规则](#互助码的填写规则) |
+|       `PETSHARECODES`       |   东东萌宠<br>互助码   | 非必须 |            5/5            | 填写规则和上面类似或见下方[互助码的填写规则](#互助码的填写规则) |
+|   `PLANT_BEAN_SHARECODES`   |   种豆得豆<br>互助码   | 非必须 |            9/3            | 填写规则和上面类似或见下方[互助码的填写规则](#互助码的填写规则) |
+|   `DDFACTORY_SHARECODES`    |   东东工厂<br>互助码   | 非必须 |            5/3            | 填写规则和上面类似或见下方[互助码的填写规则](#互助码的填写规则) |
+| `DREAM_FACTORY_SHARE_CODES` |   京喜工厂<br>互助码   | 非必须 |         不固定/3          | 填写规则和上面类似或见下方[互助码的填写规则](#互助码的填写规则) |
 |      `JDZZ_SHARECODES`      |   京东赚赚<br>互助码   | 非必须 |            5/2            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |     `JDJOY_SHARECODES`      |  疯狂的JOY<br>互助码   | 非必须 |            6/             | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `BOOKSHOP_SHARECODES`    |   京东书店<br>互助码   | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
