@@ -1,6 +1,6 @@
 /*
 京东极速版红包
-欧皇3个微信现金，可前往活动入口直接提现
+欧皇3个微信现金，可直接提现
 
 活动时间：2021-2-14至2021-3-3
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
