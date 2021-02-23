@@ -4,15 +4,15 @@
 
 * 本项目内所有资源文件，禁止任何公众号、自媒体进行任何形式的转载、发布。
 
-* LXK9301对任何脚本问题概不负责，包括但不限于由任何脚本错误导致的任何损失或损害.
+* lxk0301对任何脚本问题概不负责，包括但不限于由任何脚本错误导致的任何损失或损害.
 
-* 间接使用脚本的任何用户，包括但不限于建立VPS或在某些行为违反国家/地区法律或相关法规的情况下进行传播, LXK9301 对于由此引起的任何隐私泄漏或其他后果概不负责.
+* 间接使用脚本的任何用户，包括但不限于建立VPS或在某些行为违反国家/地区法律或相关法规的情况下进行传播, lxk0301 对于由此引起的任何隐私泄漏或其他后果概不负责.
 
 * 请勿将Script项目的任何内容用于商业或非法目的，否则后果自负.
 
 * 如果任何单位或个人认为该项目的脚本可能涉嫌侵犯其权利，则应及时通知并提供身份证明，所有权证明，我们将在收到认证文件后删除相关脚本.
 
-* 任何以任何方式查看此项目的人或直接或间接使用该Script项目的任何脚本的使用者都应仔细阅读此声明。LXK9301 保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或Script项目的规则，则视为您已接受此免责声明.
+* 任何以任何方式查看此项目的人或直接或间接使用该Script项目的任何脚本的使用者都应仔细阅读此声明。lxk0301 保留随时更改或补充此免责声明的权利。一旦使用并复制了任何相关脚本或Script项目的规则，则视为您已接受此免责声明.
 
  **您必须在下载后的24小时内从计算机或手机中完全删除以上内容.**  </br>
 > ***您使用或者复制了本仓库且本人制作的任何脚本，则视为`已接受`此声明，请仔细阅读*** 
@@ -41,14 +41,14 @@
 |9|[jd_cash.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js)|签到领现金|京东APP搜索领现金进入|
 |10|[jd_club_lottery.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_club_lottery.js)|摇京豆|京东APP首页-领京豆-摇京豆|
 |11|[jd_crazy_joy.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_crazy_joy.js)|crazyJoy任务|京东APP我的-更多工具-疯狂的JOY|
-|12|[jd_crazy_joy_coin.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_crazy_joy_coin.js)|crazyJoy挂机|京东APP我的-更多工具-疯狂的JOY|
-|13|[jd_daily_egg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_egg.js)|天天提鹅|京东金融-天天提鹅|
-|14|[jd_delCoupon.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js)|删除优惠券|京东APP我的-优惠券|
-|15|[jd_dreamFactory.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_dreamFactory.js)|京喜工厂|京东APP-游戏与互动-查看更多-京喜工厂|
-|16|[jd_family.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_family.js)|京东家庭号|玩一玩-家庭号|
-|17|[jd_fruit.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_fruit.js)|东东农场|京东APP我的-更多工具-东东农场|
-|18|[jd_get_share_code.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js)|获取互助码|我的->游戏与互动->查看更多开启`|
-|19|[jd_global.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_global.js)|环球挑战赛|京东app搜索京东国际-环球挑战赛|
+|12|[jd_crazy_joy_bonus.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_crazy_joy_bonus.js)|监控crazyJoy分红|京东APP我的-更多工具-疯狂的JOY|
+|13|[jd_crazy_joy_coin.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_crazy_joy_coin.js)|crazyJoy挂机|京东APP我的-更多工具-疯狂的JOY|
+|14|[jd_daily_egg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_egg.js)|天天提鹅|京东金融-天天提鹅|
+|15|[jd_delCoupon.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_delCoupon.js)|删除优惠券|京东APP我的-优惠券|
+|16|[jd_dreamFactory.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_dreamFactory.js)|京喜工厂|京东APP-游戏与互动-查看更多-京喜工厂|
+|17|[jd_family.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_family.js)|京东家庭号|玩一玩-家庭号|
+|18|[jd_fruit.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_fruit.js)|东东农场|京东APP我的-更多工具-东东农场|
+|19|[jd_get_share_code.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_get_share_code.js)|获取互助码|我的->游戏与互动->查看更多开启`|
 |20|[jd_jdfactory.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdfactory.js)|东东工厂|京东APP首页-数码电器-东东工厂|
 |21|[jd_jdzz.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jdzz.js)|京东赚赚|京东赚赚小程序|
 |22|[jd_joy.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_joy.js)|宠汪汪|京东APP我的-更多工具-宠汪汪|
@@ -74,8 +74,7 @@
 |42|[jd_shop.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
 |43|[jd_small_home.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
 |44|[jd_speed.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
-|45|[jd_speed_redpocke.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_redpocke.js)|京东极速版红包|
-京东极速版app-领红包|
+|45|[jd_speed_redpocke.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_redpocke.js)|京东极速版红包|京东极速版-领红包|
 |46|[jd_speed_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_sign.js)|京东极速版|京东极速版app-现金签到|
 |47|[jd_superMarket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
 |48|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
