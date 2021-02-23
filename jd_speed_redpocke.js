@@ -1,10 +1,10 @@
 /*
 京东极速版红包
-欧皇3个微信现金，可前往活动入口直接提现
+欧皇3个微信现金，可直接提现
 
 活动时间：2021-2-14至2021-3-3
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
-活动入口：京东极速版app-领红包
+活动入口：京东极速版-领红包
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
