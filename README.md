@@ -74,8 +74,7 @@
 |42|[jd_shop.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_shop.js)|进店领豆|京东APP首页-领京豆-进店领豆|
 |43|[jd_small_home.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_small_home.js)|东东小窝|京东APP我的-游戏与更多-东东小窝|
 |44|[jd_speed.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed.js)|✈️天天加速|京东APP我的-更多工具-天天加速|
-|45|[jd_speed_redpocke.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_redpocke.js)|京东极速版红包|
-京东极速版app-领红包|
+|45|[jd_speed_redpocke.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_redpocke.js)|京东极速版红包|京东极速版-领红包|
 |46|[jd_speed_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_speed_sign.js)|京东极速版|京东极速版app-现金签到|
 |47|[jd_superMarket.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_superMarket.js)|东东超市|京东APP首页-京东超市-底部东东超市|
 |48|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
