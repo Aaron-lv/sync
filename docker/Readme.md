@@ -219,9 +219,10 @@ jd_scripts
 
 ![image](https://user-images.githubusercontent.com/6993269/99024832-6424e000-25a2-11eb-8e31-287771f42ad2.png)
 
-### 环境变量
+### DOCKER专属环境变量
 
 |        Name       |      归属      |  属性  | 说明                                                         |
 | :---------------: | :------------: | :----: | ------------------------------------------------------------ |
 | `SHARE_CODE_FILE` | 互助码日志文件 | 非必须 | docker-compose下请填写`/scripts/logs/sharecode.log`，其他填写对应的互助码日志文路径 |
 | `CRZAY_JOY_COIN_ENABLE` | 是否jd_crazy_joy_coin挂机 | 非必须 | `CRZAY_JOY_COIN_ENABLE=Y`表示挂机,`CRZAY_JOY_COIN_ENABLE=N`表不挂机 |
+| `DO_NOT_RUN_SCRIPTS` | 不执行的脚本 | 非必须 | 例:docker-compose.yml文件里面填写`DO_NOT_RUN_SCRIPTS=jd_family.js&jd_dreamFactory.js&jd_jxnc.js`, 建议填写完整脚本名,不完整的文件名可能导致其他脚本被禁用 |
