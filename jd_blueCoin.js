@@ -89,7 +89,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       }
     }
   }
-  if ($.isNode() && allMessage) {
+  if ($.isNode() && allMessage && $.ctrTemp) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })()
@@ -348,16 +348,15 @@ function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
   return new Promise(async resolve => {
     $.log(`\n【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
-    let ctrTemp;
     if ($.isNode() && process.env.MARKET_REWARD_NOTIFY) {
-      ctrTemp = `${process.env.MARKET_REWARD_NOTIFY}` === 'false';
+      $.ctrTemp = `${process.env.MARKET_REWARD_NOTIFY}` === 'false';
     } else if ($.getdata('jdSuperMarketRewardNotify')) {
-      ctrTemp = $.getdata('jdSuperMarketRewardNotify') === 'false';
+      $.ctrTemp = $.getdata('jdSuperMarketRewardNotify') === 'false';
     } else {
-      ctrTemp = `${jdNotify}` === 'false';
+      $.ctrTemp = `${jdNotify}` === 'false';
     }
     //默认只在兑换奖品成功后弹窗提醒。情况情况加，只打印日志，不弹窗
-    if ($.beanscount && ctrTemp) {
+    if ($.beanscount && $.ctrTemp) {
       $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
       allMessage += `【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}${$.index !== cookiesArr.length ? '\n\n' : ''}`
       // if ($.isNode()) {
