@@ -464,7 +464,7 @@ function ChangeUserId(desp) {
     for (let i = 0; i < userIdTmp.length; i++) {
       const count = "账号" + (i + 1);
       const count2 = "签到号 " + (i + 1);
-      if (desp.match(count) || desp.match(count2)) {
+      if (desp.match(count2)) {
         userId = userIdTmp[i];
       }
     }
