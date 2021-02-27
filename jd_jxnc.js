@@ -52,7 +52,7 @@ let currentShareCode = []; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
 const JXNC_API_HOST = 'https://wq.jd.com/';
-
+let allMessage = '';
 $.detail = []; // 今日明细列表
 $.helpTask = null;
 $.allTask = []; // 任务列表
@@ -97,6 +97,9 @@ let assistUserShareCode = 0; // 随机助力用户 share code
             await shareCodesFormat(); // 处理当前账号 助力码
             await jdJXNC(); // 执行当前账号 主代码流程
         }
+    }
+    if ($.isNode() && allMessage) {
+      await notify.sendNotify(`${$.name}`, `${allMessage}`)
     }
 })()
     .catch((e) => {
@@ -664,7 +667,8 @@ async function showMsg() {
     if (notifyBool) {
         $.msg($.name, subTitle, message, option);
         if ($.isNode()) {
-            await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
+            // await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
+            allMessage += `${subTitle}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`
         }
     } else {
         $.log(`${$.name} - notify 通知已关闭\n账号${$.index} - ${$.nickName}\n${subTitle}\n${message}`);
