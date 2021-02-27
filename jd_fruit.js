@@ -71,7 +71,7 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
       await jdFruit();
     }
   }
-  if ($.isNode() && allMessage && ctrTemp) {
+  if ($.isNode() && allMessage && $.ctrTemp) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })()
@@ -1221,15 +1221,14 @@ async function waterFriendForFarm(shareCode) {
   $.waterFriendForFarmRes = await request('waterFriendForFarm', body);
 }
 async function showMsg() {
-  let ctrTemp;
   if ($.isNode() && process.env.FRUIT_NOTIFY_CONTROL) {
-    ctrTemp = `${process.env.FRUIT_NOTIFY_CONTROL}` === 'false';
+    $.ctrTemp = `${process.env.FRUIT_NOTIFY_CONTROL}` === 'false';
   } else if ($.getdata('jdFruitNotify')) {
-    ctrTemp = $.getdata('jdFruitNotify') === 'false';
+    $.ctrTemp = $.getdata('jdFruitNotify') === 'false';
   } else {
-    ctrTemp = `${jdNotify}` === 'false';
+    $.ctrTemp = `${jdNotify}` === 'false';
   }
-  if (ctrTemp) {
+  if ($.ctrTemp) {
     $.msg($.name, subTitle, message, option);
     if ($.isNode()) {
       allMessage += `${subTitle}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
