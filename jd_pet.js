@@ -72,7 +72,7 @@ let randomCount = $.isNode() ? 20 : 5;
       await jdPet();
     }
   }
-  if ($.isNode() && allMessage && ctrTemp) {
+  if ($.isNode() && allMessage && $.ctrTemp) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })()
@@ -429,16 +429,15 @@ async function feedReachInitFun() {
   console.log('投食任务结束...\n');
 }
 async function showMsg() {
-  let ctrTemp;
   if ($.isNode() && process.env.PET_NOTIFY_CONTROL) {
-    ctrTemp = `${process.env.PET_NOTIFY_CONTROL}` === 'false';
+    $.ctrTemp = `${process.env.PET_NOTIFY_CONTROL}` === 'false';
   } else if ($.getdata('jdPetNotify')) {
-    ctrTemp = $.getdata('jdPetNotify') === 'false';
+    $.ctrTemp = $.getdata('jdPetNotify') === 'false';
   } else {
-    ctrTemp = `${jdNotify}` === 'false';
+    $.ctrTemp = `${jdNotify}` === 'false';
   }
   // jdNotify = `${notify.petNotifyControl}` === 'false' && `${jdNotify}` === 'false' && $.getdata('jdPetNotify') === 'false';
-  if (ctrTemp) {
+  if ($.ctrTemp) {
     $.msg($.name, subTitle, message, option);
     if ($.isNode()) {
       allMessage += `${subTitle}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`
