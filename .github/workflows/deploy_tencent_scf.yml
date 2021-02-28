@@ -39,6 +39,7 @@ jobs:
       JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES}}
       JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES}}
       JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES}}
+      JDCFD_SHARECODES: ${{ secrets.JDCFD_SHARECODES}}
       JDGLOBAL_SHARECODES: ${{ secrets.JDGLOBAL_SHARECODES}}
       JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
       JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
@@ -68,6 +69,7 @@ jobs:
       JXNCTOKENS: ${{ secrets.JXNCTOKENS}}
       DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
       JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
+      CFD_NOTIFY_CONTROL: ${{ secrets.CFD_NOTIFY_CONTROL}}
       
     steps:
       - name: Checkout
@@ -121,6 +123,7 @@ jobs:
           if [ $JD_CASH_SHARECODES ]; then sed -i "/variables/a\      JD_CASH_SHARECODES: $JD_CASH_SHARECODES" serverless.yml; fi;
           if [ $JXNC_SHARECODES ]; then sed -i "/variables/a\      JXNC_SHARECODES: $JXNC_SHARECODES" serverless.yml; fi;
           if [ $JDSGMH_SHARECODES ]; then sed -i "/variables/a\      JDSGMH_SHARECODES: $JDSGMH_SHARECODES" serverless.yml; fi;
+          if [ $JDCFD_SHARECODES ]; then sed -i "/variables/a\      JDCFD_SHARECODES: $JDCFD_SHARECODES" serverless.yml; fi;
           if [ $JDGLOBAL_SHARECODES ]; then sed -i "/variables/a\      JDGLOBAL_SHARECODES: $JDGLOBAL_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
@@ -150,6 +153,7 @@ jobs:
           if [ $JXNCTOKENS ]; then sed -i "/variables/a\      JXNCTOKENS: $JXNCTOKENS" serverless.yml; fi;
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
+          if [ $CFD_NOTIFY_CONTROL ]; then sed -i "/variables/a\      CFD_NOTIFY_CONTROL: $CFD_NOTIFY_CONTROL" serverless.yml; fi;
           cat serverless.yml
           env
 
