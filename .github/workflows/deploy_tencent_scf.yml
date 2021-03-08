@@ -69,6 +69,7 @@ jobs:
       DREAMFACTORY_FORBID_ACCOUNT: ${{ secrets.DREAMFACTORY_FORBID_ACCOUNT}}
       JDFACTORY_FORBID_ACCOUNT: ${{ secrets.JDFACTORY_FORBID_ACCOUNT}}
       CFD_NOTIFY_CONTROL: ${{ secrets.CFD_NOTIFY_CONTROL}}
+      JD_JXD_EXCHANGE: ${{ secrets.JD_JXD_EXCHANGE}}
       
     steps:
       - name: Checkout
@@ -152,6 +153,7 @@ jobs:
           if [ $DREAMFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      DREAMFACTORY_FORBID_ACCOUNT: $DREAMFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $JDFACTORY_FORBID_ACCOUNT ]; then sed -i "/variables/a\      JDFACTORY_FORBID_ACCOUNT: $JDFACTORY_FORBID_ACCOUNT" serverless.yml; fi;
           if [ $CFD_NOTIFY_CONTROL ]; then sed -i "/variables/a\      CFD_NOTIFY_CONTROL: $CFD_NOTIFY_CONTROL" serverless.yml; fi;
+          if [ $JD_JXD_EXCHANGE ]; then sed -i "/variables/a\      JD_JXD_EXCHANGE: $JD_JXD_EXCHANGE" serverless.yml; fi;
           cat serverless.yml
           env
 
