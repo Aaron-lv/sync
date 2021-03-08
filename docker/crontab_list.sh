@@ -111,4 +111,4 @@
 #京东直播（又回来了）
 10-20/5 12,23 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
 #京小兑
-23 5 * * * node /scripts/jd_jxd.js >> /scripts/logs/jd_jxd.log 2>&1
+23 5,23 * * * node /scripts/jd_jxd.js >> /scripts/logs/jd_jxd.log 2>&1
