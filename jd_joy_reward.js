@@ -100,7 +100,6 @@ async function joyReward() {
       // const giftSaleInfos = levelSaleInfos.giftSaleInfos;
       // console.log(`当前积分 ${data.coin}\n`);
       // console.log(`宠物等级 ${data.level}\n`);
-      console.log(`京东昵称 ${$.nickName}\n`);
       let saleInfoId = '', giftValue = '', extInfo = '', leftStock = 0, salePrice = 0;
       let rewardNum = 0;
       if ($.isNode() && process.env.JD_JOY_REWARD_NAME) {
@@ -128,6 +127,7 @@ async function joyReward() {
       }
       console.log(`\ndebug场次:${giftSaleInfos}\n`)
       for (let item of data[giftSaleInfos]) {
+        console.log(`${item['giftName']}当前库存:${item['leftStock']}`)
         if (item.giftType === 'jd_bean' && item['giftValue'] === rewardNum) {
           saleInfoId = item.id;
           leftStock = item.leftStock;
@@ -135,8 +135,8 @@ async function joyReward() {
           giftValue = item.giftValue;
         }
       }
-      console.log(`当前京豆库存:${leftStock}`)
-      console.log(`saleInfoId:${saleInfoId}`)
+      // console.log(`${giftValue}京豆当前京豆库存:${leftStock}`)
+      // console.log(`saleInfoId:${saleInfoId}`)
       // 兼容之前BoxJs兑换设置的数据
       if (rewardNum && (rewardNum === 1 || rewardNum === 20 || rewardNum === 50 || rewardNum === 100 || rewardNum === 500 || rewardNum === 1000)) {
         //开始兑换
@@ -144,12 +144,12 @@ async function joyReward() {
           if (leftStock) {
             if (!saleInfoId) return
             // console.log(`当前账户积分:${data.coin}\n当前京豆库存:${leftStock}\n满足兑换条件,开始为您兑换京豆\n`);
-            console.log(`当前京豆库存:${leftStock}\n满足兑换条件,开始为您兑换京豆\n`);
+            console.log(`\n您设置的兑换${giftValue}京豆库存充足,开始为您兑换${giftValue}京豆\n`);
             await exchange(saleInfoId, 'pet');
             if ($.exchangeRes && $.exchangeRes.success) {
               if ($.exchangeRes.errorCode === 'buy_success') {
                 // console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
-                console.log(`兑换${giftValue}成功,【消耗积分】${salePrice}个`)
+                console.log(`\n兑换${giftValue}成功,【消耗积分】${salePrice}个\n`)
                 if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
                   $.ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
                 } else if ($.getdata('jdJoyRewardNotify')) {
@@ -168,20 +168,20 @@ async function joyReward() {
                 //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
                 // }
               } else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-                console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~\n`)
+                console.log(`\n兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~\n`)
                 //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
               } else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty'){
-                console.log(`兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
+                console.log(`\n兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
               } else if ($.exchangeRes && $.exchangeRes.errorCode === 'insufficient'){
-                console.log(`兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
+                console.log(`\n兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
               } else {
-                console.log(`兑奖失败:${JSON.stringify($.exchangeRes)}`)
+                console.log(`\n兑奖失败:${JSON.stringify($.exchangeRes)}`)
               }
             } else {
-              console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
+              console.log(`\n兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
             }
           } else {
-            console.log(`兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换`)
+            console.log(`\n按您设置的兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换\n`);
           }
         } else {
           // console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
