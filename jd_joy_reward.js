@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301
  * @Date: 2020-08-16 18:54:16
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-03-08 21:22:37
+ * @Last Modified time: 2021-03-09 21:22:37
  */
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
@@ -119,10 +119,10 @@ async function joyReward() {
     }
     let giftSaleInfos = 'beanConfigs0';
     let time = new Date($.getExchangeRewardsRes['currentTime']).getHours();
-    if (time >= 23 && time < 8) {
+    if (time >= 23 && time < 7) {
       giftSaleInfos = 'beanConfigs0';
     }
-    if (time >= 7 && time < 16) {
+    if (time >= 7 && time < 15) {
       giftSaleInfos = 'beanConfigs8';
     }
     if (time >= 15 && time < 23) {
@@ -173,8 +173,10 @@ async function joyReward() {
               //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
             } else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty'){
               console.log(`兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
+            } else if ($.exchangeRes && $.exchangeRes.errorCode === 'insufficient'){
+              console.log(`兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
             } else {
-              console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
+              console.log(`兑奖失败:${JSON.stringify($.exchangeRes)}`)
             }
           } else {
             console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
@@ -183,7 +185,7 @@ async function joyReward() {
           console.log(`兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换`)
         }
       } else {
-        console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
+        // console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
         //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
       }
     } else {
