@@ -131,8 +131,8 @@ autoHelp "京喜财富岛好友互助码" "${logDir}/jd_cfd.log" "JDCFD_SHARECOD
 #京喜农场
 autoHelp "京喜农场好友互助码" "${logDir}/jd_jxnc.log" "JXNC_SHARECODES"
 
-#京东赚赚（助力下线）
-#autoHelp "京东赚赚好友互助码" "${logDir}/jd_jdzz.log" "JDZZ_SHARECODES"
+#京东赚赚
+autoHelp "京东赚赚好友互助码" "${logDir}/jd_jdzz.log" "JDZZ_SHARECODES"
 
 
 
@@ -143,13 +143,13 @@ autoHelp "京喜农场好友互助码" "${logDir}/jd_jxnc.log" "JXNC_SHARECODES"
 ######### 日志打印格式需调整 #########
 
 #口袋书店
-#autoHelp "" "${logDir}/jd_bookshop.log" "BOOKSHOP_SHARECODES"
+autoHelp "" "${logDir}/jd_bookshop.log" "BOOKSHOP_SHARECODES"
 
 #领现金
-#autoHelp "" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
+autoHelp "" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
 
 #闪购盲盒
-#autoHelp "" "${logDir}/jd_sgmh.log" "JDSGMH_SHARECODES"
+autoHelp "" "${logDir}/jd_sgmh.log" "JDSGMH_SHARECODES"
 
 
 
