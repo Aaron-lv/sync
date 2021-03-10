@@ -134,6 +134,6 @@ echo "第11步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bi
 cat /scripts/docker/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
 
 echo "发送通知"
-export NOTIFY_CONTENT="2021-03-10更新 新版docker但容器多账号自动互助.开启方式：docker-compose.yml 中添加环境变量 - ENABLE_AUTO_HELP=true,详见Readme.md"
+export NOTIFY_CONTENT="2021-03-10更新 新版docker单容器多账号自动互助.开启方式：docker-compose.yml 中添加环境变量 - ENABLE_AUTO_HELP=true,详见Readme.md"
 cd /scripts/docker
 node notify_docker_user.js
