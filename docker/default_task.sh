@@ -134,6 +134,6 @@ echo "第11步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bi
 cat /scripts/docker/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
 
 echo "发送通知"
-export NOTIFY_CONTENT="2021-02-21更新 https://gitee.com/lxk0301/jd_scripts仓库被迫私有，需重新更新一下镜像：https://hub.docker.com/r/lxk0301/jd_scripts，(注：国内第三方镜像目前可能不是最新请使用hub.docker.com镜像，docker-compose.yml的REPO_URL记得修改)后续可同步更新jd_script仓库最新脚本"
+export NOTIFY_CONTENT="2021-03-10更新 新版docker但容器多账号自动互助.开启方式：docker-compose.yml 中添加环境变量 - ENABLE_AUTO_HELP=true,详见Readme.md"
 cd /scripts/docker
 node notify_docker_user.js
