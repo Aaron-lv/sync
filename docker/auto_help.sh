@@ -143,13 +143,13 @@ autoHelp "京东赚赚好友互助码" "${logDir}/jd_jdzz.log" "JDZZ_SHARECODES"
 ######### 日志打印格式需调整 #########
 
 #口袋书店
-autoHelp "" "${logDir}/jd_bookshop.log" "BOOKSHOP_SHARECODES"
+autoHelp "口袋书店好友互助码" "${logDir}/jd_bookshop.log" "BOOKSHOP_SHARECODES"
 
 #领现金
-autoHelp "" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
+autoHelp "领现金好友互助码" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
 
 #闪购盲盒
-autoHelp "" "${logDir}/jd_sgmh.log" "JDSGMH_SHARECODES"
+autoHelp "闪购盲盒好友互助码" "${logDir}/jd_sgmh.log" "JDSGMH_SHARECODES"
 
 
 
