@@ -146,7 +146,7 @@ autoHelp "京东赚赚好友互助码" "${logDir}/jd_jdzz.log" "JDZZ_SHARECODES"
 autoHelp "口袋书店好友互助码" "${logDir}/jd_bookshop.log" "BOOKSHOP_SHARECODES"
 
 #领现金
-autoHelp "领现金好友互助码" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
+autoHelp "签到领现金好友互助码" "${logDir}/jd_cash.log" "JD_CASH_SHARECODES"
 
 #闪购盲盒
 autoHelp "闪购盲盒好友互助码" "${logDir}/jd_sgmh.log" "JDSGMH_SHARECODES"
