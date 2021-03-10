@@ -1,7 +1,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/lxk0301/jd_scripts?style=for-the-badge)
 ### Usage
 ```diff
-+ 2021-03-9更新 新版docker但容器多账号自动互助
++ 2021-03-9更新 新版docker单容器多账号自动互助
 +开启方式：docker-compose.yml 中添加环境变量 - ENABLE_AUTO_HELP=true 
 +助力原则：不考虑需要被助力次数与提供助力次数  假设有3个账号，则生成： ”助力码1@助力码2@助力码3&助力码1@助力码2@助力码3&助力码1@助力码2@助力码3“
 +原理说明：1、定时调用 /scripts/docker/auto_help.sh collect 收集各个活动的助力码，整理、去重、排序、保存到 /scripts/logs/sharecodeCollection.log;
@@ -232,3 +232,4 @@ jd_scripts
 | `SHARE_CODE_FILE` | 互助码日志文件 | 非必须 | docker-compose.yml文件下填写`SHARE_CODE_FILE=/scripts/logs/sharecode.log`，其他(群晖)填写对应的互助码日志文路径 |
 | `CRZAY_JOY_COIN_ENABLE` | 是否jd_crazy_joy_coin挂机 | 非必须 | docker-compose.yml文件下填写`CRZAY_JOY_COIN_ENABLE=Y`表示挂机,`CRZAY_JOY_COIN_ENABLE=N`表不挂机 |
 | `DO_NOT_RUN_SCRIPTS` | 不执行的脚本 | 非必须 | 例:docker-compose.yml文件里面填写`DO_NOT_RUN_SCRIPTS=jd_family.js&jd_dreamFactory.js&jd_jxnc.js`, 建议填写完整脚本名,不完整的文件名可能导致其他脚本被禁用 |
+| `ENABLE_AUTO_HELP` | 单容器多账号自动互助 | 非必须 | 例:docker-compose.yml文件里面填写`ENABLE_AUTO_HELP=true` |
