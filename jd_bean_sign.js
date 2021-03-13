@@ -95,7 +95,7 @@ async function execSign() {
       //不管哪个时区,这里得到的都是北京时间的时间戳;
       const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60000 + 28800000;
       $.beanSignTime = timeFormat(UTC8);
-      console.log(`脚本执行完毕时间：${$.beanSignTime}`)
+      //console.log(`脚本执行完毕时间：${$.beanSignTime}`)
       if (BarkContent) {
         allMessage += `【京东号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
         if (!process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE || (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE && process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE !== 'true')) {
@@ -104,7 +104,7 @@ async function execSign() {
       }
       //运行完成后，删除下载的文件
       await deleteFile(resultPath);//删除result.txt
-      console.log(`*****************京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n`);
+      console.log(`\n\n*****************京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n\n`);
     } else {
       console.log(`\nJD_DailyBonus.js文件不存在\n`)
     }
