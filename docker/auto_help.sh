@@ -102,7 +102,8 @@ autoHelp(){
 
 ############# 短期活动 #############
 
-
+#环球挑战赛
+autoHelp "环球挑战赛好友互助码" "${logDir}/jd_global.log" "JDGLOBAL_SHARECODES"
 
 
 
