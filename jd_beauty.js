@@ -87,7 +87,12 @@ async function mr() {
   $.helpInfo = []
   $.needs = []
   const WebSocket = require('ws')
-  let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
+  let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`,null,{
+    headers:{
+      'user-agent': '%E6%88%91%E6%98%AF%E7%94%B0%E5%AE%87%E8%88%AA',
+    }
+  })
+  console.log(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
   client.onopen = async () => {
     console.log(`美容研究院服务器连接成功`);
     client.send('{"msg":{"type":"action","args":{"source":1},"action":"_init_"}}');
@@ -131,7 +136,7 @@ async function mr() {
 
   client.onclose = () => {
     console.log(`本次运行获得美妆币${$.coins}`)
-    // console.log('服务器连接关闭');
+    console.log('服务器连接关闭');
     $.hasDone = true
     for (let i = 0; i < $.pos.length && i < $.tokens.length; ++i) {
       $.helpInfo.push(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}","position":"${$.pos[i]}","token":"${$.tokens[i]}"},"action":"employee"}}`)
@@ -434,6 +439,7 @@ function getIsvToken() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.isvToken = data['tokenKey']
+            console.log($.isvToken)
           }
         }
       } catch (e) {
@@ -468,6 +474,7 @@ function getIsvToken2() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.token2 = data['token']
+            console.log($.token2)
           }
         }
       } catch (e) {
@@ -482,7 +489,7 @@ function getIsvToken2() {
 function getToken() {
   let config = {
     url: 'https://xinruimz-isv.isvjcloud.com/api/auth',
-    body: `{"token":"${$.token2}","source":"01"}`,
+    body: JSON.stringify({"token":$.token2,"source":"01"}),
     headers: {
       'Host': 'xinruimz-isv.isvjcloud.com',
       'Accept': 'application/x.jd-school-island.v1+json',
@@ -490,9 +497,10 @@ function getToken() {
       'Accept-Language': 'zh-cn',
       'Content-Type': 'application/json;charset=utf-8',
       'Origin': 'https://xinruimz-isv.isvjcloud.com',
-      'User-Agent': 'JD4iPhone/167490 (iPhone; iOS 14.2; Scale/3.00)',
+      'User-Agent': 'jdapp;iPhone;9.4.4;14.2;53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2;network/wifi;ADID/BC551DF5-C536-41C6-8CEA-E308EF111AB1;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,2;addressid/137923973;supportBestPay/0;appBuild/167584;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
       'Referer': 'https://xinruimz-isv.isvjcloud.com/logined_jd/',
-      'Cookie': `${cookie} isvToken=${$.isvToken};`
+      'Authorization': 'Bearer undefined',
+      'Cookie': `IsvToken=${$.isvToken};`
     }
   }
   return new Promise(resolve => {
@@ -505,6 +513,7 @@ function getToken() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.token = data.access_token
+            console.log($.token)
           }
         }
       } catch (e) {
