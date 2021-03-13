@@ -497,7 +497,7 @@ function getToken() {
       'Accept-Language': 'zh-cn',
       'Content-Type': 'application/json;charset=utf-8',
       'Origin': 'https://xinruimz-isv.isvjcloud.com',
-      'User-Agent': 'jdapp;iPhone;9.4.4;14.2;53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2;network/wifi;ADID/BC551DF5-C536-41C6-8CEA-E308EF111AB1;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone10,2;addressid/137923973;supportBestPay/0;appBuild/167584;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
       'Referer': 'https://xinruimz-isv.isvjcloud.com/logined_jd/',
       'Authorization': 'Bearer undefined',
       'Cookie': `IsvToken=${$.isvToken};`
