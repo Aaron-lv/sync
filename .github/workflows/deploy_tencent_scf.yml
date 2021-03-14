@@ -58,8 +58,6 @@ jobs:
       MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS}}
       MARKET_REWARD_NOTIFY: ${{ secrets.MARKET_REWARD_NOTIFY}}
       JOIN_PK_TEAM: ${{ secrets.JOIN_PK_TEAM}}
-      SUPERMARKET_UPGRADE: ${{ secrets.SUPERMARKET_UPGRADE}}
-      BUSINESS_CIRCLE_JUMP: ${{ secrets.BUSINESS_CIRCLE_JUMP}}
       SUPERMARKET_LOTTERY: ${{ secrets.SUPERMARKET_LOTTERY}}
       FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD}}
       UN_SUBSCRIBES: ${{ secrets.UN_SUBSCRIBES}}
@@ -144,8 +142,6 @@ jobs:
           if [ $MARKET_COIN_TO_BEANS ]; then sed -i "/variables/a\      MARKET_COIN_TO_BEANS: $MARKET_COIN_TO_BEANS" serverless.yml; fi;
           if [ $MARKET_REWARD_NOTIFY ]; then sed -i "/variables/a\      MARKET_REWARD_NOTIFY: $MARKET_REWARD_NOTIFY" serverless.yml; fi;
           if [ $JOIN_PK_TEAM ]; then sed -i "/variables/a\      JOIN_PK_TEAM: $JOIN_PK_TEAM" serverless.yml; fi;
-          if [ $SUPERMARKET_UPGRADE ]; then sed -i "/variables/a\      SUPERMARKET_UPGRADE: $SUPERMARKET_UPGRADE" serverless.yml; fi;
-          if [ $BUSINESS_CIRCLE_JUMP ]; then sed -i "/variables/a\      BUSINESS_CIRCLE_JUMP: $BUSINESS_CIRCLE_JUMP" serverless.yml; fi;
           if [ $SUPERMARKET_LOTTERY ]; then sed -i "/variables/a\      SUPERMARKET_LOTTERY: $SUPERMARKET_LOTTERY" serverless.yml; fi;
           if [ $FRUIT_BEAN_CARD ]; then sed -i "/variables/a\      FRUIT_BEAN_CARD: $FRUIT_BEAN_CARD" serverless.yml; fi;
           if [ $UN_SUBSCRIBES ]; then sed -i "/variables/a\      UN_SUBSCRIBES: $UN_SUBSCRIBES" serverless.yml; fi;
