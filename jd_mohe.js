@@ -271,7 +271,6 @@ function taskList() {
       try {
         // console.log('homeGoBrowse', data)
         data = JSON.parse(data);
-        console.log(`请继续等待,正在做任务,不要退出哦`)
         // console.log(`成功领取${data.data}热力值`)
         if (data.code === 200) {
           const { task4, task6, task5, task2, task1 } = data.data;
@@ -288,14 +287,16 @@ function taskList() {
             await strollShop(task2.shopId);
             await taskCoin(task2.type);
           }
-          if (task5.finishNum < task5.totalNum) {
-            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
-          } else {
-            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
-          }
+          // if (task5.finishNum < task5.totalNum) {
+          //   console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          // } else {
+          //   console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          // }
           if (task4.state === 2 && task1.state === 2 && task2.state === 2) {
             console.log('\n\n----taskList的任务全部做完了---\n\n')
+            console.log(`分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
           } else {
+            console.log(`请继续等待,正在做任务,不要退出哦`)
             await taskList();
           }
         }
