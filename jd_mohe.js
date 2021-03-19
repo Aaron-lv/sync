@@ -81,8 +81,11 @@ $.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175
   }
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
+    $.index = v + 1;
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
     console.log(`自己账号内部互助\n\n`);
     for (let item of $.shareId) {
+      console.log(`账号${$.index}${$.UserName}开始给 ${item}进行助力`)
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
         console.log(`次数已用完，跳出助力`)
