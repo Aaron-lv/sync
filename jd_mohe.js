@@ -154,9 +154,11 @@ function addShare(shareId) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(`\n助力结果${data}`)
           data = JSON.parse(data);
           if (data['code'] === 200) {
-            console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）助力好友 【${data['data']}】 成功\n`);
+            // console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）助力好友 【${data['data']}】 成功\n`);
+            console.log(`\n助力好友 【${data['data']}】 成功\n`);
           }
         }
       } catch (e) {
