@@ -36,7 +36,8 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://isp5g.m.jd.com';
-$.shareId = [];
+//邀请码可能一天一变化，先测试
+$.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175daeb147f0"];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -82,7 +83,11 @@ $.shareId = [];
     cookie = cookiesArr[v];
     console.log(`自己账号内部互助\n\n`);
     for (let item of $.shareId) {
-      await addShare(item);
+      const res = await addShare(item);
+      if (res && res['code'] === 2005) {
+        console.log(`次数已用完，跳出助力`)
+        break
+      }
     }
     // console.log(`如有剩下的机会，助力作者\n\n`);
     // for (let index = 0; index < starID.length; index++) {
