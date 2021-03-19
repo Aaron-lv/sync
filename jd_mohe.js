@@ -271,12 +271,13 @@ function taskList() {
             await strollShop(task2.shopId);
             await taskCoin(task2.type);
           }
-          // if (task6.finishNum < task6.totalNum) {
-          //   await strollMember(task6.venderId);
-          //   await taskCoin(task6.type);
-          // }
+          if (task5.finishNum < task5.totalNum) {
+            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          } else {
+            console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
+          }
           if (task4.state === 2 && task1.state === 2 && task2.state === 2) {
-            console.log('taskList的任务全部做完了---')
+            console.log('\n\n----taskList的任务全部做完了---\n\n')
           } else {
             await taskList();
           }
