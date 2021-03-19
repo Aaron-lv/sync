@@ -23,7 +23,7 @@ const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 let UserName = '';
-const JD_API_HOST = 'https://blindbox.jd.com';
+const JD_API_HOST = 'https://isp5g.m.jd.com';
 let shareId = '';
 !(async () => {
   if (!cookie) {
@@ -39,7 +39,7 @@ let shareId = '';
     ])
     await taskList();
     await getAward();//抽奖
-    if ($.time('yyyy-MM-dd') === '2020-08-19') {
+    if ($.time('yyyy-MM-dd') === '2021-05-01') {
       $.msg($.name, '活动已结束', `请禁用或删除脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/LXK9301/jd_scripts\n`, {"open-url": "https://github.com/LXK9301/jd_scripts"});
     } else {
       $.msg($.name, '', `【京东账号一】${UserName}\n任务已做完.\n 抽奖详情查看 https://blindbox.jd.com\n`, {"open-url": "https://blindbox.jd.com"});
