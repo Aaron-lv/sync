@@ -80,7 +80,7 @@ $.shareId = [];
   if (new Date().getHours() === 22) {
     $.msg($.name, '', `任务已做完\n抽奖详情查看 https://isp5g.m.jd.com`, {"open-url": "https://isp5g.m.jd.com"});
   }
-  await $.http.get({url: `https://code.chiang.fun//api/v1/jd/mohe/read/20`, timeout: 10000}).then(async (resp) => {
+  await $.http.get({url: `https://code.c-hiang.cn//api/v1/jd/mohe/read/20`, timeout: 10000}).then(async (resp) => {
     if (resp.statusCode === 200) {
       try {
         let { body } = resp;
@@ -495,7 +495,7 @@ function shareUrl() {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
           console.log(`此邀请码一天一变化，旧的不可用`)
-          await $.http.get({url: `https://code.chiang.fun/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
+          await $.http.get({url: `https://code.c-hiang.cn/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
             // console.log('resp', resp)
             if (resp.statusCode === 200) {
               try {
