@@ -2,7 +2,7 @@
 5G超级盲盒，可抽奖获得京豆，建议在凌晨0点时运行脚本，白天抽奖基本没有京豆，4小时运行一次收集热力值
 活动地址: https://isp5g.m.jd.com
 活动时间：2021-03-19到2021-04-30
-更新时间：2021-03-19 18:35
+更新时间：2021-03-20 08:55
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -36,8 +36,8 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://isp5g.m.jd.com';
-//邀请码可能一天一变化，先测试
-$.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175daeb147f0"];
+//邀请码一天一变化，已确定
+$.shareId = ["120185fe-0046-4781-8d8f-499f3f00a0eb","a5f49645-4028-4fae-b0a6-f8320940d1a9"];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -96,8 +96,8 @@ $.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175
     cookie = cookiesArr[v];
     $.index = v + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    console.log(`\n\n开始随机互助互助`);
-    for (let item of $.body || []) {
+    console.log(`\n\n自己账号内部互助`);
+    for (let item of $.shareId) {
       console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
@@ -105,8 +105,8 @@ $.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175
         break
       }
     }
-    console.log(`\n\n自己账号内部互助`);
-    for (let item of $.shareId) {
+    console.log(`\n\n如果有剩余助力机会则随机互助`);
+    for (let item of $.body || []) {
       console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
@@ -493,6 +493,7 @@ function shareUrl() {
         if (data['code'] === 200) {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
+          console.log(`此邀请码一天一变化，旧的不可用`)
           await $.http.get({url: `https://code.chiang.fun/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
             // console.log('resp', resp)
             if (resp.statusCode === 200) {
@@ -500,7 +501,7 @@ function shareUrl() {
                 let { body } = resp;
                 body = JSON.parse(body);
                 if (body['code'] === 200) {
-                  console.log(`邀请码${data['data']}}提交成功\n`)
+                  console.log(`\n邀请码${data['data']}}提交成功\n`)
                 } else if (body['code'] === 400) {
                   // console.log(`邀请码 【${data['data']}】 已存在\n`)
                 } else {
