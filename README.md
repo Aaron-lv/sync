@@ -42,7 +42,7 @@
 |8|[jd_car_exchange.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_car_exchange.js)|京东汽车兑换|京东APP首页-京东汽车-屏幕右中部，车主福利|
 |9|[jd_cash.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cash.js)|签到领现金|京东APP搜索领现金进入|
 |10|[jd_cfd.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_cfd.js)|京喜财富岛|京喜APP-我的-京喜财富岛|
-|11|[jd_city.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js)|城城auto||
+|11|[jd_city.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city.js)|城城领现金||
 |12|[jd_city_invite.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_city_invite.js)|签到领现金兑换红包||
 |13|[jd_club_lottery.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_club_lottery.js)|摇京豆|京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆|
 |14|[jd_crazy_joy.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_crazy_joy.js)|crazyJoy任务|京东APP我的-更多工具-疯狂的JOY|
