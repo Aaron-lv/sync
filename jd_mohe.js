@@ -502,7 +502,7 @@ function shareUrl() {
                 let { body } = resp;
                 body = JSON.parse(body);
                 if (body['code'] === 200) {
-                  console.log(`\n邀请码【${data['data']}】提交成功\n`)
+                  console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}提交成功\n`)
                 } else if (body['code'] === 400) {
                   // console.log(`邀请码 【${data['data']}】 已存在\n`)
                 } else {
