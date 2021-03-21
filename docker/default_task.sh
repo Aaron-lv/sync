@@ -108,7 +108,7 @@ EOF
   fi
 
   echo "容器jd_bot交互所需环境已配置安装已完成..."
-  curl -sX POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage" -d "chat_id=$TG_USER_ID&text=恭喜🎉你获得feature\n容器jd_bot交互所需环境已配置安装已完成，并启用。请发送 /help 查看使用帮助。如需禁用请在docker-compose.yml配置 DISABLE_BOT_COMMAND=True" >>/dev/null
+  curl -sX POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage" -d "chat_id=$TG_USER_ID&text=恭喜🎉你获得feature容器jd_bot交互所需环境已配置安装已完成，并启用。请发送 /help 查看使用帮助。如需禁用请在docker-compose.yml配置 DISABLE_BOT_COMMAND=True" >>/dev/null
 
 fi
 
