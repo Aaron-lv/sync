@@ -15,8 +15,6 @@ git -C /scripts pull --rebase
 echo "npm install 安装最新依赖"
 npm install --prefix /scripts
 
-echo "设定远程仓库地址..."
-git -C /jd_docker pull --rebase
 
 # 默认启动telegram交互机器人的条件
 # 确认容器启动时调用的docker_entrypoint.sh
