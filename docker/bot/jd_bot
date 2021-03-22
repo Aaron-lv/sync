@@ -550,8 +550,13 @@ def get_crontab_list(cmd_type):
                 else:
                     items = i.split('>>')
                     item_sub = items[0].split()[5:]
-                    if cmd_type == item_sub[0]:
-                        button_list.append(' '.join(item_sub))
+                    logger.info(item_sub[0])
+                    if cmd_type.find(item_sub[0])>-1:
+                        if cmd_type == 'spnode':
+                            #logger.info(str(' '.join(item_sub)).replace('node','spnode'))
+                            button_list.append(str(' '.join(item_sub)).replace('node','spnode'))
+                        else:
+                            button_list.append(' '.join(item_sub))
                     elif cmd_type == 'crontab_l':
                         button_list.append(items[0])
     except:
