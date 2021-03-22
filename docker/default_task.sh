@@ -29,7 +29,7 @@ first=\$1
 cmd=\$*
 echo \${cmd/\$1/}
 if [ \$1 == "conc" ]; then
-    for job in \$(paste -d" " -s - <\$COOKIES_LIST); do
+    for job in \$(cat \$COOKIES_LIST | grep -v "#" | paste -s -d ' '); do
         { export JD_COOKIE=\$job && node \${cmd/\$1/}
         }&
     done
@@ -42,7 +42,7 @@ elif [ -n "\$(cat \$COOKIES_LIST  | grep "pt_pin=\$first")" ];then
     { export JD_COOKIE=\$(cat \$COOKIES_LIST | grep "pt_pin=\$first") && node \${cmd/\$1/}
     }&
 else
-    { export JD_COOKIE=\$(cat \$COOKIES_LIST | paste -s -d '&') && node \$*
+    { export JD_COOKIE=\$(cat \$COOKIES_LIST | grep -v "#" | paste -s -d '&') && node \$*
     }&
 fi
 EOF
