@@ -142,7 +142,7 @@ def spnode(update, context):
                         parse_mode=ParseMode.MARKDOWN_V2)
 
                     log_name = '%sbot_%s_%s.log' % (
-                        _logs_dir, 'spnode', os.path.splitext(commands[-1])[0])
+                        _logs_dir, 'spnode',  re.findall(r"(?<=/)\w+", cmd)[-1])
 
                     with open(log_name, 'a+') as wf:
                         wf.write(out_text)
@@ -550,7 +550,7 @@ def get_crontab_list(cmd_type):
                 else:
                     items = i.split('>>')
                     item_sub = items[0].split()[5:]
-                    logger.info(item_sub[0])
+                    # logger.info(item_sub[0])
                     if cmd_type.find(item_sub[0])>-1:
                         if cmd_type == 'spnode':
                             #logger.info(str(' '.join(item_sub)).replace('node','spnode'))
