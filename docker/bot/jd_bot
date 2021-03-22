@@ -724,7 +724,7 @@ def get_jd_cookie(update, context):
     qr_code_path = genQRCode()
     photo_file = open(qr_code_path, 'rb')
     photo_message = context.bot.send_photo(chat_id=update.effective_chat.id, photo=photo_file,
-                                           caption="请扫描二维码获取Cookie")
+                                           caption="请使用京东APP扫描二维码获取Cookie")
     photo_file.close()
 
     return_msg = chekLogin()
