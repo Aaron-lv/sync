@@ -733,8 +733,7 @@ def shcmd(update, context):
                             helpers.escape_markdown(' ↓↓↓ %s 执行结果超长,请查看log ↓↓↓' % cmd)),
                             chat_id=update.effective_chat.id,
                             parse_mode=ParseMode.MARKDOWN_V2)
-                        log_name = '%sbot_%s_%s.log' % (
-                            _logs_dir, 'git', os.path.splitext(commands[-1])[0])
+                        log_name = '%sbot_%s_%s.log' % (_logs_dir, 'cmd', commands[0])
                         with open(log_name, 'a+') as wf:
                             wf.write(out_text)
                         msg.reply_document(
