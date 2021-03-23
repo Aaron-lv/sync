@@ -713,22 +713,32 @@ def gen_daily_code(update, context):
 def shcmd(update, context):
     """
     执行终端命令，超时时间为60，执行耗时或者不退出的指令会报超时异常
-    :param update:
-    :param context:
-    :return:
     """
     if is_admin(update.message.from_user.id):
         commands = update.message.text.split()
         commands.remove('/cmd')
         if len(commands) > 0:
-            support_cmd = ["ls", "cp", "mv", "wget", "cat", "sed", "git", "sh", "docker_entrypoint.sh"]
+            support_cmd = ["echo", "ls", "pwd", "cp", "mv", "ps", "wget", "cat", "sed", "git", "sed", "apk", "sh",
+                           "docker_entrypoint.sh"]
             if commands[0] in support_cmd:
+                sp_cmd = ["sh", "docker_entrypoint.sh"]
                 cmd = ' '.join(commands)
                 try:
-                    out_bytes = subprocess.check_output(
-                        cmd, shell=True, timeout=60, stderr=subprocess.STDOUT)
-                    out_text = out_bytes.decode('utf-8')
-                    if len(out_text.split()) > 50:
+                    # 测试发现 subprocess.check_output 执行shell 脚本文件的时候无法正常执行获取返回结果
+                    # 所以 ["sh", "docker_entrypoint.sh"] 指令换为 subprocess.Popen 方法执行
+                    out_text = ""
+                    if commands[0] in sp_cmd:
+                        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        while p.poll() is None:
+                            line = p.stdout.readline()
+                            # logger.info(line.decode('utf-8'))
+                            out_text = out_text + line.decode('utf-8')
+                    else:
+                        out_bytes = subprocess.check_output(
+                            cmd, shell=True, timeout=60, stderr=subprocess.STDOUT)
+                        out_text = out_bytes.decode('utf-8')
+
+                    if len(out_text.split('\n')) > 100:
                         msg = context.bot.sendMessage(text='```{}```'.format(
                             helpers.escape_markdown(' ↓↓↓ %s 执行结果超长,请查看log ↓↓↓' % cmd)),
                             chat_id=update.effective_chat.id,
@@ -754,7 +764,8 @@ def shcmd(update, context):
             else:
                 update.message.reply_text(
                     text='```{}```'.format(
-                        helpers.escape_markdown(f' →→→ {commands[0]}指令不在支持命令范围，请输入其他支持的指令{"|".join(support_cmd)} ←←← ')),
+                        helpers.escape_markdown(
+                            f' →→→ {commands[0]}指令不在支持命令范围，请输入其他支持的指令{"|".join(support_cmd)} ←←← ')),
                     parse_mode=ParseMode.MARKDOWN_V2)
         else:
             update.message.reply_text(
