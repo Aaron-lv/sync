@@ -738,13 +738,13 @@ def shcmd(update, context):
                             cmd, shell=True, timeout=60, stderr=subprocess.STDOUT)
                         out_text = out_bytes.decode('utf-8')
 
-                    if len(out_text.split('\n')) > 100:
+                    if len(out_text.split('\n')) > 50:
                         msg = context.bot.sendMessage(text='```{}```'.format(
                             helpers.escape_markdown(' ↓↓↓ %s 执行结果超长,请查看log ↓↓↓' % cmd)),
                             chat_id=update.effective_chat.id,
                             parse_mode=ParseMode.MARKDOWN_V2)
                         log_name = '%sbot_%s_%s.log' % (_logs_dir, 'cmd', commands[0])
-                        with open(log_name, 'a+') as wf:
+                        with open(log_name, 'w') as wf:
                             wf.write(out_text)
                         msg.reply_document(
                             reply_to_message_id=msg.message_id, quote=True, document=open(log_name, 'rb'))
