@@ -982,129 +982,133 @@ def saveFile(update, context):
                 helpers.escape_markdown(" →→→ 抱歉，暂时只开放上传js文件至/scripts目录 ←←← ")),
                 parse_mode=ParseMode.MARKDOWN_V2)
 
-    def unknown(update, context):
-        """回复用户输入不存在的指令
-        """
-        from_user_id = update.message.from_user.id
-        if admin_id == str(from_user_id):
-            spnode_readme = ""
-            if "DISABLE_SPNODE" not in os.environ:
-                spnode_readme = "/spnode 获取可执行脚本的列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/spnode /scripts/jd_818.js)\n\n" \
-                                "使用bot交互+spnode后 后续用户的cookie维护更新只需要更新logs/cookies.list即可\n" \
-                                "使用bot交互+spnode后 后续执行脚本命令请使用spnode否者无法使用logs/cookies.list的cookies执行脚本，定时任务也将自动替换为spnode命令执行\n" \
-                                "spnode功能概述示例\n\n" \
-                                "spnode conc /scripts/jd_bean_change.js 为每个cookie单独执行jd_bean_change脚本（伪并发\n" \
-                                "spnode 1 /scripts/jd_bean_change.js 为logs/cookies.list文件里面第一行cookie账户单独执行jd_bean_change脚本\n" \
-                                "spnode jd_XXXX /scripts/jd_bean_change.js 为logs/cookies.list文件里面pt_pin=jd_XXXX的cookie账户单独执行jd_bean_change脚本\n" \
-                                "spnode /scripts/jd_bean_change.js 为logs/cookies.list所有cookies账户一起执行jd_bean_change脚本\n" \
-                                "请仔细阅读并理解上面的内容，使用bot交互默认开启spnode指令功能功能。\n" \
-                                "如需____停用___请配置环境变量 -DISABLE_SPNODE=True"
-            update.message.reply_text(text="⚠️ 您输入了一个错误的指令，请参考说明使用\n" \
-                                           "\n" \
-                                           "/start 开始并获取指令说明\n" \
-                                           "/node 获取可执行脚本的列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/node /scripts/jd_818.js) \n" \
-                                           "/git 获取可执行git指令列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/git -C /scripts/ pull)\n" \
-                                           "/logs 获取logs下的日志文件列表，选择对应名字可以下载日志文件\n" \
-                                           "/env 获取系统环境变量列表。(拓展使用：设置系统环境变量，例：/env export JD_DEBUG=true，环境变量只针对当前bot进程生效) \n" \
-                                           "/cmd 执行执行命令。参考：/cmd ls -l 涉及目录文件操作请使用绝对路径,部分shell命令开放使用\n" \
-                                           "/gen_long_code 长期活动互助码提交消息生成\n" \
-                                           "/gen_temp_code 短期临时活动互助码提交消息生成\n" \
-                                           "/gen_daily_code 每天变化互助码活动提交消息生成\n\n%s" % spnode_readme,
-                                      parse_mode=ParseMode.HTML)
-        else:
-            update.message.reply_text(text='此为私人使用bot,不能执行您的指令！')
 
-    def error(update, context):
-        """Log Errors caused by Updates."""
-        logger.warning('Update "%s" caused error "%s"', update, context.error)
-        context.bot.send_message(
-            'Update "%s" caused error "%s"', update, context.error)
+def unknown(update, context):
+    """回复用户输入不存在的指令
+    """
+    from_user_id = update.message.from_user.id
+    if admin_id == str(from_user_id):
+        spnode_readme = ""
+        if "DISABLE_SPNODE" not in os.environ:
+            spnode_readme = "/spnode 获取可执行脚本的列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/spnode /scripts/jd_818.js)\n\n" \
+                            "使用bot交互+spnode后 后续用户的cookie维护更新只需要更新logs/cookies.list即可\n" \
+                            "使用bot交互+spnode后 后续执行脚本命令请使用spnode否者无法使用logs/cookies.list的cookies执行脚本，定时任务也将自动替换为spnode命令执行\n" \
+                            "spnode功能概述示例\n\n" \
+                            "spnode conc /scripts/jd_bean_change.js 为每个cookie单独执行jd_bean_change脚本（伪并发\n" \
+                            "spnode 1 /scripts/jd_bean_change.js 为logs/cookies.list文件里面第一行cookie账户单独执行jd_bean_change脚本\n" \
+                            "spnode jd_XXXX /scripts/jd_bean_change.js 为logs/cookies.list文件里面pt_pin=jd_XXXX的cookie账户单独执行jd_bean_change脚本\n" \
+                            "spnode /scripts/jd_bean_change.js 为logs/cookies.list所有cookies账户一起执行jd_bean_change脚本\n" \
+                            "请仔细阅读并理解上面的内容，使用bot交互默认开启spnode指令功能功能。\n" \
+                            "如需____停用___请配置环境变量 -DISABLE_SPNODE=True"
+        update.message.reply_text(text="⚠️ 您输入了一个错误的指令，请参考说明使用\n" \
+                                       "\n" \
+                                       "/start 开始并获取指令说明\n" \
+                                       "/node 获取可执行脚本的列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/node /scripts/jd_818.js) \n" \
+                                       "/git 获取可执行git指令列表，选择对应的按钮执行。(拓展使用：运行指定路径脚本，例：/git -C /scripts/ pull)\n" \
+                                       "/logs 获取logs下的日志文件列表，选择对应名字可以下载日志文件\n" \
+                                       "/env 获取系统环境变量列表。(拓展使用：设置系统环境变量，例：/env export JD_DEBUG=true，环境变量只针对当前bot进程生效) \n" \
+                                       "/cmd 执行执行命令。参考：/cmd ls -l 涉及目录文件操作请使用绝对路径,部分shell命令开放使用\n" \
+                                       "/gen_long_code 长期活动互助码提交消息生成\n" \
+                                       "/gen_temp_code 短期临时活动互助码提交消息生成\n" \
+                                       "/gen_daily_code 每天变化互助码活动提交消息生成\n\n%s" % spnode_readme,
+                                  parse_mode=ParseMode.HTML)
+    else:
+        update.message.reply_text(text='此为私人使用bot,不能执行您的指令！')
 
-    def main():
-        global admin_id, bot_token, crontab_list_file
 
-        if 'TG_BOT_TOKEN' in os.environ:
-            bot_token = os.getenv('TG_BOT_TOKEN')
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    context.bot.send_message(
+        'Update "%s" caused error "%s"', update, context.error)
 
-        if 'TG_USER_ID' in os.environ:
-            admin_id = os.getenv('TG_USER_ID')
 
-        if 'CRONTAB_LIST_FILE' in os.environ:
-            crontab_list_file = os.getenv('CRONTAB_LIST_FILE')
-        else:
-            crontab_list_file = 'crontab_list.sh'
+def main():
+    global admin_id, bot_token, crontab_list_file
 
-        logger.info('CRONTAB_LIST_FILE=' + crontab_list_file)
+    if 'TG_BOT_TOKEN' in os.environ:
+        bot_token = os.getenv('TG_BOT_TOKEN')
 
-        # 创建更新程序并参数为你Bot的TOKEN。
-        updater = Updater(bot_token, use_context=True)
+    if 'TG_USER_ID' in os.environ:
+        admin_id = os.getenv('TG_USER_ID')
 
-        # 获取调度程序来注册处理程序
-        dp = updater.dispatcher
+    if 'CRONTAB_LIST_FILE' in os.environ:
+        crontab_list_file = os.getenv('CRONTAB_LIST_FILE')
+    else:
+        crontab_list_file = 'crontab_list.sh'
 
-        # 通过 start 函数 响应 '/start' 命令
-        dp.add_handler(CommandHandler('start', start))
+    logger.info('CRONTAB_LIST_FILE=' + crontab_list_file)
 
-        # 通过 start 函数 响应 '/help' 命令
-        dp.add_handler(CommandHandler('help', start))
+    # 创建更新程序并参数为你Bot的TOKEN。
+    updater = Updater(bot_token, use_context=True)
 
-        # 通过 node 函数 响应 '/node' 命令
-        dp.add_handler(CommandHandler('node', node))
+    # 获取调度程序来注册处理程序
+    dp = updater.dispatcher
 
-        # 通过 node 函数 响应 '/spnode' 命令
-        dp.add_handler(CommandHandler('spnode', spnode))
+    # 通过 start 函数 响应 '/start' 命令
+    dp.add_handler(CommandHandler('start', start))
 
-        # 通过 git 函数 响应 '/git' 命令
-        dp.add_handler(CommandHandler('git', git))
+    # 通过 start 函数 响应 '/help' 命令
+    dp.add_handler(CommandHandler('help', start))
 
-        # 通过 crontab 函数 响应 '/crontab' 命令
-        dp.add_handler(CommandHandler('crontab', crontab))
+    # 通过 node 函数 响应 '/node' 命令
+    dp.add_handler(CommandHandler('node', node))
 
-        # 通过 logs 函数 响应 '/logs' 命令
-        dp.add_handler(CommandHandler('logs', logs))
+    # 通过 node 函数 响应 '/spnode' 命令
+    dp.add_handler(CommandHandler('spnode', spnode))
 
-        # 通过 cmd 函数 响应 '/cmd' 命令
-        dp.add_handler(CommandHandler('cmd', shcmd))
+    # 通过 git 函数 响应 '/git' 命令
+    dp.add_handler(CommandHandler('git', git))
 
-        # 通过 callback_run 函数 响应相关按钮命令
-        dp.add_handler(CallbackQueryHandler(callback_run))
+    # 通过 crontab 函数 响应 '/crontab' 命令
+    dp.add_handler(CommandHandler('crontab', crontab))
 
-        # 通过 env 函数 响应 '/env' 命令
-        dp.add_handler(CommandHandler('env', env))
+    # 通过 logs 函数 响应 '/logs' 命令
+    dp.add_handler(CommandHandler('logs', logs))
 
-        # 通过 gen_long_code 函数 响应 '/gen_long_code' 命令
-        dp.add_handler(CommandHandler('gen_long_code', gen_long_code))
+    # 通过 cmd 函数 响应 '/cmd' 命令
+    dp.add_handler(CommandHandler('cmd', shcmd))
 
-        # 通过 gen_temp_code 函数 响应 '/gen_temp_code' 命令
-        dp.add_handler(CommandHandler('gen_temp_code', gen_temp_code))
+    # 通过 callback_run 函数 响应相关按钮命令
+    dp.add_handler(CallbackQueryHandler(callback_run))
 
-        # 通过 gen_daily_code 函数 响应 '/gen_daily_code' 命令
-        dp.add_handler(CommandHandler('gen_daily_code', gen_daily_code))
+    # 通过 env 函数 响应 '/env' 命令
+    dp.add_handler(CommandHandler('env', env))
 
-        # 通过 get_jd_cookie 函数 响应 '/eikooc_dj_teg' 命令 #别问为啥这么写，有意为之的
-        dp.add_handler(CommandHandler('eikooc_dj_teg', get_jd_cookie))
+    # 通过 gen_long_code 函数 响应 '/gen_long_code' 命令
+    dp.add_handler(CommandHandler('gen_long_code', gen_long_code))
 
-        # 文件监听
-        dp.add_handler(MessageHandler(Filters.document, saveFile))
+    # 通过 gen_temp_code 函数 响应 '/gen_temp_code' 命令
+    dp.add_handler(CommandHandler('gen_temp_code', gen_temp_code))
 
-        # 没找到对应指令
-        dp.add_handler(MessageHandler(Filters.command, unknown))
+    # 通过 gen_daily_code 函数 响应 '/gen_daily_code' 命令
+    dp.add_handler(CommandHandler('gen_daily_code', gen_daily_code))
 
-        # 响应普通文本消息
-        # dp.add_handler(MessageHandler(Filters.text, resp_text))
+    # 通过 get_jd_cookie 函数 响应 '/eikooc_dj_teg' 命令 #别问为啥这么写，有意为之的
+    dp.add_handler(CommandHandler('eikooc_dj_teg', get_jd_cookie))
 
-        dp.add_error_handler(error)
+    # 文件监听
+    dp.add_handler(MessageHandler(Filters.document, saveFile))
 
-        updater.start_polling()
-        updater.idle()
+    # 没找到对应指令
+    dp.add_handler(MessageHandler(Filters.command, unknown))
 
-    # 生成依赖安装列表
-    # pip3 freeze > requirements.txt
-    # 或者使用pipreqs
-    # pip3 install pipreqs
-    # 在当前目录生成
-    # pipreqs . --encoding=utf8 --force
-    # 使用requirements.txt安装依赖
-    # pip3 install -r requirements.txt
-    if __name__ == '__main__':
-        main()
+    # 响应普通文本消息
+    # dp.add_handler(MessageHandler(Filters.text, resp_text))
+
+    dp.add_error_handler(error)
+
+    updater.start_polling()
+    updater.idle()
+
+
+# 生成依赖安装列表
+# pip3 freeze > requirements.txt
+# 或者使用pipreqs
+# pip3 install pipreqs
+# 在当前目录生成
+# pipreqs . --encoding=utf8 --force
+# 使用requirements.txt安装依赖
+# pip3 install -r requirements.txt
+if __name__ == '__main__':
+    main()
