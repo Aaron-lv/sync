@@ -3,7 +3,7 @@
 if [[ -f /usr/bin/jd_bot && -z "$DISABLE_SPNODE" ]]; then
   CMD="spnode"
 else
-  CMD="NODE"
+  CMD="node"
 fi
 
 echo "处理jd_crazy_joy_coin任务。。。"
