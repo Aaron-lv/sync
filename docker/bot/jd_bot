@@ -140,9 +140,10 @@ def spnode(update, context):
                     msg = context.bot.sendMessage(text='```{}```'.format(
                         helpers.escape_markdown(' ↓↓↓ %s 执行结果超长,请查看log ↓↓↓' % cmd)), chat_id=update.effective_chat.id,
                         parse_mode=ParseMode.MARKDOWN_V2)
-
-                    log_name = '%sbot_%s_%s.log' % (
-                        _logs_dir, 'spnode', re.findall(r"(?<=/)\w+", cmd)[-1])
+                    file_name = re.split(r"\W+", cmd)
+                    if 'js' in file_name:
+                        file_name.remove('js')
+                    log_name = '%sbot_%s_%s.log' % (_logs_dir, 'spnode', file_name[-1])
 
                     with open(log_name, 'a+') as wf:
                         wf.write(out_text)
@@ -718,7 +719,7 @@ def shcmd(update, context):
         commands = update.message.text.split()
         commands.remove('/cmd')
         if len(commands) > 0:
-            support_cmd = ["echo", "ls", "pwd", "cp", "mv", "ps", "wget", "cat", "sed", "git", "sed", "apk", "sh",
+            support_cmd = ["echo", "ls", "pwd", "cp", "mv", "ps", "wget", "cat", "sed", "git", "apk", "sh",
                            "docker_entrypoint.sh"]
             if commands[0] in support_cmd:
                 sp_cmd = ["sh", "docker_entrypoint.sh"]
