@@ -824,10 +824,10 @@ function PickUpComponent(index, encryptPin) {
 }
 //偷好友的电力
 async function stealFriend() {
-  if (!$.pickUpMyselfComponent) {
-    $.log(`今日收取零件已达上限，偷好友零件也达到上限，故跳出`)
-    return
-  }
+  // if (!$.pickUpMyselfComponent) {
+  //   $.log(`今日收取零件已达上限，偷好友零件也达到上限，故跳出`)
+  //   return
+  // }
   await getFriendList();
   $.friendList = [...new Set($.friendList)];
   for (let i = 0; i < $.friendList.length; i++) {
