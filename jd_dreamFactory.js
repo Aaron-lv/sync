@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2021-3-24 修复做任务、收集电力出现火爆，不能完成任务
+更新时间：2021-3-25 修复做任务、收集电力出现火爆，不能完成任务
 重新计算h5st验证
 参考自 ：https://www.orzlee.com/web-development/2021/03/03/lxk0301-jingdong-signin-scriptjingxi-factory-solves-the-problem-of-unable-to-signin.html
 活动入口：京东APP-游戏与互动-查看更多-京喜工厂
@@ -294,10 +294,8 @@ function getUserElectricity() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`\nnextCollectDoubleFlag::${data.data.nextCollectDoubleFlag}`);
-              console.log(`nextCollectDoubleType::${data.data.nextCollectDoubleType}\n`);
-              $.log(`下次集满收取${data.data.nextCollectDoubleFlag === 1 ? '可' : '不可'}双倍电力`)
               console.log(`发电机：当前 ${data.data.currentElectricityQuantity} 电力，最大值 ${data.data.maxElectricityQuantity} 电力`)
+              $.log(`\n本次发电机电力集满分享后${data.data.nextCollectDoubleFlag === 1 ? '可' : '不可'}获得双倍电力，${data.data.nextCollectDoubleFlag === 1 ? '故目前不收取电力' : '故现在收取电力'}\n`)
               if (data.data.nextCollectDoubleFlag === 1) {
                 if (data.data.currentElectricityQuantity === data.data.maxElectricityQuantity && data.data.doubleElectricityFlag) {
                   console.log(`发电机：电力可翻倍并收获`)
@@ -1413,7 +1411,7 @@ function taskTuanUrl(functionId, body = '', stk) {
 
 function taskurl(functionId, body = '', stk) {
   let url = `${JD_API_HOST}/dreamfactory/${functionId}?zone=dream_factory&${body}&sceneval=2&g_login_type=1&_time=${Date.now()}&_=${Date.now() + 2}&_ste=1`
-  url += `&h5st=${encodeURIComponent(decrypt(Date.now(), stk, '', url))}`
+  url += `&h5st=${decrypt(Date.now(), stk, '', url)}`
   if (stk) {
     url += `&_stk=${encodeURIComponent(stk)}`;
   }
@@ -1499,13 +1497,14 @@ function decrypt(time, stk, type, url) {
     // const token = `tk01wc7621cbea8nQmVZSmlhZi94FdUu+YM8dL1NZhoyQSy2c0po7rgY+nXdXBWRaUzOoLBqlpqOccJ56KHSjVil7Q7w`;
     // const fingerprint = 2964628087631161;
     // const appId = 10001;
-    const random = 'cNlpbJCwIFx/';
-    let token = `tk01wc7951ceea8nVzY0UlBvK3QvPAfwG6UuVMo3YIwnuyPtwgIZr9BSCkJT96NMHRqNWCO5x0zbNsEA2bkjst3tYymV`;
-    let fingerprint = 6318883301648161;
+    const random = '5gkjB6SpmC9s';
+    let token = `tk01wcdf61cb3a8nYUtHcmhSUFFCfddDPRvKvYaMjHkxo6Aj7dhzO+GXGFa9nPXfcgT+mULoF1b1YIS1ghvSlbwhE0Xc`;
+    let fingerprint = 5287160221454703;
     const appId = 10001;
     const timestamp = new Date(time).Format("yyyyMMddhhmmssSSS");
     const str = `${token}${fingerprint}${timestamp}${appId}${random}`;
-    const hash1 = $.CryptoJS.HmacSHA512(str, token).toString($.CryptoJS.enc.Hex);
+    // const hash1 = $.CryptoJS.HmacSHA512(str, token).toString($.CryptoJS.enc.Hex);
+    const hash1 = $.CryptoJS.SHA512(str, token).toString($.CryptoJS.enc.Hex);
     let st = '';
     stk.split(',').map((item, index) => {
       // sts += `${item}:${item === '_time' ? time : item === 'zone' ? 'dream_factory' : item === 'type' ? type || '1' : item}${index === stk.split(',').length -1 ? '' : '&'}`;
@@ -1514,8 +1513,7 @@ function decrypt(time, stk, type, url) {
     // const hash2 = $.CryptoJS.HmacSHA256(st, hash1).toString($.CryptoJS.enc.Hex);
     // const hash2 = $.CryptoJS.HmacSHA256(st, hash1.toString($.CryptoJS.enc.Hex)).toString($.CryptoJS.enc.Hex);
     const hash2 = $.CryptoJS.HmacSHA256(st, hash1.toString()).toString($.CryptoJS.enc.Hex);
-    // console.log(`st:${st}\n`)
-    // console.log(`hash2:${JSON.stringify(["".concat(timestamp.toString()), "".concat(fingerprint.toString()), "".concat(appId.toString()), "".concat(token), "".concat(hash2)])}\n`)
+    // console.log(`\nst:${st}`)
     // console.log(`h5st:${["".concat(timestamp.toString()), "".concat(fingerprint.toString()), "".concat(appId.toString()), "".concat(token), "".concat(hash2)].join(";")}\n`)
     return encodeURIComponent(["".concat(timestamp.toString()), "".concat(fingerprint.toString()), "".concat(appId.toString()), "".concat(token), "".concat(hash2)].join(";"))
   } else {
