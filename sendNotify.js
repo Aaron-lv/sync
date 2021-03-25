@@ -28,6 +28,7 @@ let TG_USER_ID = '';
 //tg推送HTTP代理设置(不懂可忽略,telegram机器人通知推送功能中非必填)
 let TG_PROXY_HOST = '';//例如:127.0.0.1(环境变量名:TG_PROXY_HOST)
 let TG_PROXY_PORT = '';//例如:1080(环境变量名:TG_PROXY_PORT)
+let TG_PROXY_AUTH = '';//tg代理配置认证参数
 //Telegram api自建的反向代理地址(不懂可忽略,telegram机器人通知推送功能中非必填),默认tg官方api(环境变量名:TG_API_HOST)
 let TG_API_HOST = 'api.telegram.org'
 // =======================================钉钉机器人通知设置区域===========================================
