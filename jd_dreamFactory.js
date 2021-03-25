@@ -424,7 +424,7 @@ function assistFriend(sharepin) {
     //     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
     //   }
     // }
-    const options = taskurl('AssistFriend', `sharepin=${escape(sharepin)}`, `_time,sharepin,zone`);
+    const options = taskurl('friend/AssistFriend', `sharepin=${escape(sharepin)}`, `_time,sharepin,zone`);
     $.get(options, (err, resp, data) => {
       try {
         if (err) {
