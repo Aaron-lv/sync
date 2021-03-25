@@ -1,6 +1,7 @@
 /*
 超级直播间红包雨
 下一场直播时间:03月26日  20:00
+下一场直播时间:03月30日  20:00
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
 [task_local]
@@ -23,6 +24,10 @@ let bodyList = {
   "26": {
     "url": "https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&st=1616564445042&sign=3ff4854f9d00fde86995e4a6d3efecb2&sv=121",
     "body": "body=%7B%22liveId%22%3A%223759184%22%7D"
+  },
+  "30": {
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.1&undefined",
+    "body": "body=%7B%22liveId%22%3A%223761428%22%7D"
   }
 }
 let ids = {
@@ -60,7 +65,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.log(`本地红包雨配置获取成功`)
     } else{
       $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
-      $.log(`下一场直播时间:03月26日  20:00，非红包雨期间出现上面提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
+      $.log(`下一场直播时间:03月26日  20:00，下一场直播时间:03月30日  20:00\n非红包雨期间出现上面提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
       return
     }
   } else{
