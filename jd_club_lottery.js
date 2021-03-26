@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-3-26 12:27:09
+* @Last Modified time: 2021-3-27 0:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -90,7 +90,7 @@ async function clubLottery() {
     await vvipclub_receive_lottery_times();//京东会员：领取一次免费的机会
     await vvipclub_shaking_info();//京东会员：查询多少次摇奖次数
     await shaking();//开始摇奖
-    await getActInfo();
+    await superShakeBean();//京东APP首页超级摇一摇
   } catch (e) {
     $.logErr(e)
   }
@@ -360,14 +360,26 @@ function shakeBean() {
   })
 }
 //超级摇一摇(此处功能部分京东API抓包自：https://github.com/i-chenzhe/qx/blob/main/jd_shake.js)
+async function superShakeBean() {
+  await getActInfo();
+  if ($.ActInfo) {
+    await fc_getHomeData($.ActInfo);//获取任务列表
+    await doShakeTask($.ActInfo);//做任务
+    await fc_getHomeData($.ActInfo);//做完任务后查询多少次摇奖次数
+    await superShakeLottery($.ActInfo);//开始摇奖
+  } else {
+    console.log(`京东APP首页超级摇一摇：目前暂无活动`)
+  }
+}
 function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJWyBrBHcM/index.html') {
   return new Promise(resolve => {
     $.get({
-      url: url,
+      url,
       headers:{
         'Cookie': cookie,
         'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-      }
+      },
+      timeout: 10000
     },async (err,resp,data)=>{
       try {
         if (err) {
@@ -377,12 +389,10 @@ function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJW
           data = data.match(/window\.__FACTORY__TAOYIYAO__STATIC_DATA__ = (.*)}/)
           if (data) {
             data = JSON.parse(data[1] + '}');
-            if (data['taskConfig']) $.ActInfo = data['taskConfig']['taskAppId'];
-            console.log(`京东APP首页超级摇一摇 活动ID：${$.ActInfo}`);
-            await fc_getHomeData($.ActInfo);//获取任务列表
-            await doShakeTask($.ActInfo);//做任务
-            await fc_getHomeData($.ActInfo);//做完任务后查询多少次摇奖次数
-            await superShakeLottery($.ActInfo);//开始摇奖
+            if (data['taskConfig']) {
+              $.ActInfo = data['taskConfig']['taskAppId'];
+              console.log(`\n获取京东APP首页超级摇一摇活动ID成功：${$.ActInfo}\n`);
+            }
           }
         }
       } catch (e) {
@@ -399,6 +409,7 @@ function fc_getHomeData(appId) {
     const body = { appId }
     const options = taskPostUrl('fc_getHomeData', body)
     $.taskVos = [];
+    $.lotteryNum = 0;
     $.post(options, async (err, resp, data) => {
       try {
         if (err) {
@@ -411,6 +422,8 @@ function fc_getHomeData(appId) {
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
+            } else if (data && data['data']['bizCode'] === 101) {
+              console.log(`获取超级摇一摇： ${data['data']['bizMsg']}`);
             } else {
               console.log(`获取超级摇一摇任务数据异常： ${JSON.stringify(data)}`)
             }
@@ -498,7 +511,7 @@ function fc_collectScore(body) {
 }
 async function superShakeLottery(appId) {
   $.superShakeBeanNum = 0;
-  console.log(`\n\n开始京东APP首页超级摇一摇 摇奖`);
+  if ($.lotteryNum) console.log(`\n\n开始京东APP首页超级摇一摇 摇奖`);
   for (let i = 0; i < new Array($.lotteryNum).fill('').length; i++) {
     await fc_getLottery(appId);//抽奖
     await $.wait(1000)
