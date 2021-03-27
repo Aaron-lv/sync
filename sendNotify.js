@@ -193,7 +193,7 @@ function serverNotify(text, desp, timeout = 2100) {
         })
       }, timeout)
     } else {
-      console.log('您未提供server酱的SCKEY，取消微信推送消息通知🚫\n');
+      console.log('\n\n您未提供server酱的SCKEY，取消微信推送消息通知🚫\n');
       resolve()
     }
   })
