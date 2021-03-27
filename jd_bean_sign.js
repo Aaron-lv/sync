@@ -261,17 +261,20 @@ function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/mast
 }
 function requireConfig() {
   return new Promise(resolve => {
-    const file = 'jd_bean_sign.js';
-    if (process.env.TENCENTCLOUD_RUNENV === 'SCF') {
-      console.log(`云函数 特有环境变量DEBUG：${process.env.TENCENTCLOUD_RUNENV}`)
-    }
-    fs.access(file, fs.constants.W_OK, (err) => {
-      resultPath = err ? '/tmp/result.txt' : resultPath;
-      JD_DailyBonusPath = err ? '/tmp/JD_DailyBonus.js' : JD_DailyBonusPath;
-      outPutUrl = err ? '/tmp/' : outPutUrl;
-      NodeSet = err ? '/tmp/CookieSet.json' : NodeSet;
-      resolve()
-    });
+    // const file = 'jd_bean_sign.js';
+    // fs.access(file, fs.constants.W_OK, (err) => {
+    //   resultPath = err ? '/tmp/result.txt' : resultPath;
+    //   JD_DailyBonusPath = err ? '/tmp/JD_DailyBonus.js' : JD_DailyBonusPath;
+    //   outPutUrl = err ? '/tmp/' : outPutUrl;
+    //   NodeSet = err ? '/tmp/CookieSet.json' : NodeSet;
+    //   resolve()
+    // });
+    //判断是否是云函数环境。原函数跟目录目录没有可写入权限，文件只能放到根目录下虚拟的/temp/文件夹（具有可写入权限）
+    resultPath = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/result.txt' : resultPath;
+    JD_DailyBonusPath = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/JD_DailyBonus.js' : JD_DailyBonusPath;
+    outPutUrl = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/' : outPutUrl;
+    NodeSet = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/CookieSet.json' : NodeSet;
+    resolve()
   })
 }
 function timeFormat(time) {
