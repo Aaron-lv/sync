@@ -103,7 +103,7 @@ function showMsg() {
 function feedPets(feedNum) {
   return new Promise(resolve => {
     console.log(`您设置的喂食数量::${FEED_NUM}g\n`);
-    if (FEED_NUM === 0) console.log(`跳出喂食`);return
+    if (FEED_NUM === 0) { console.log(`跳出喂食`);resolve();return }
     console.log(`实际的喂食数量::${feedNum}g\n`);
     let opt = {
       url: `//jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5`,
