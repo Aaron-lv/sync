@@ -361,6 +361,7 @@ function shakeBean() {
 }
 //超级摇一摇(此处功能部分京东API抓包自：https://github.com/i-chenzhe/qx/blob/main/jd_shake.js)
 async function superShakeBean() {
+  //TODO:此处api貌似可不需cookie调用，待下次活动开启后，进行校验后再优化
   await getActInfo();
   if ($.ActInfo) {
     await fc_getHomeData($.ActInfo);//获取任务列表
@@ -368,7 +369,7 @@ async function superShakeBean() {
     await fc_getHomeData($.ActInfo);//做完任务后查询多少次摇奖次数
     await superShakeLottery($.ActInfo);//开始摇奖
   } else {
-    console.log(`京东APP首页超级摇一摇：目前暂无活动`)
+    console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
   }
 }
 function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJWyBrBHcM/index.html') {
@@ -386,7 +387,7 @@ function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJW
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          data = data.match(/window\.__FACTORY__TAOYIYAO__STATIC_DATA__ = (.*)}/)
+          data = data && data.match(/window\.__FACTORY__TAOYIYAO__STATIC_DATA__ = (.*)}/)
           if (data) {
             data = JSON.parse(data[1] + '}');
             if (data['taskConfig']) {
@@ -419,11 +420,12 @@ function fc_getHomeData(appId) {
           if (data) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
+              if ($.isNode() && $.index === 1) await notify.sendNotify($.name, `京东APP首页超级摇一摇活再次开启，活动ID：${$.ActInfo}`)
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
             } else if (data && data['data']['bizCode'] === 101) {
-              console.log(`获取超级摇一摇： ${data['data']['bizMsg']}`);
+              console.log(`京东APP首页超级摇一摇： ${data['data']['bizMsg']}`);
             } else {
               console.log(`获取超级摇一摇任务数据异常： ${JSON.stringify(data)}`)
             }
