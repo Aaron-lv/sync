@@ -26,15 +26,7 @@ let bodyList = {
   }
 }
 let ids = {
-  '15': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',
-  '16': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',  
-  '17': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',
-  '18': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',   
-  '19': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',  
-  '20': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',    
-  '21': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ', 
-  '22': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ',   
-  '23': 'RRAEzSRdppUk4QcaZjAyn2hNmQ5kRJ'
+  
 }
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
