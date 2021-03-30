@@ -372,7 +372,7 @@ async function superShakeBean() {
     console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
   }
 }
-function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJWyBrBHcM/index.html') {
+function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html') {
   return new Promise(resolve => {
     $.get({
       url,
