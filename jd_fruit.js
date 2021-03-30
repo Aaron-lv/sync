@@ -827,7 +827,6 @@ async function doFriendsWater() {
           }
         }
       });
-      //TODO ,发现bug,github action运行发现有些账号第一次没有给3个好友浇水
       console.log(`需要浇水的好友列表shareCodes:${JSON.stringify(needWaterFriends)}`);
       let waterFriendsCount = 0, cardInfoStr = '';
       for (let index = 0; index < needWaterFriends.length; index ++) {
