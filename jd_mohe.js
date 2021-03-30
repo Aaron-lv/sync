@@ -414,7 +414,7 @@ async function getAward() {
           console.log(`====抽奖结果====,${JSON.stringify(lotteryRes.data)}`);
           console.log(lotteryRes.data.name);
           console.log(lotteryRes.data.beanNum);
-          if ((lotteryRes.data['prizeId'] && lotteryRes.data['prizeId'] !== '9999') || lotteryRes.data.name === '未中奖') {
+          if ((lotteryRes.data['prizeId'] && lotteryRes.data['prizeId'] !== '9999') || lotteryRes.data.name !== '未中奖') {
             message += `抽奖获得：${lotteryRes.data.name}\n`;
           }
         } else if (lotteryRes.code === 4001) {
