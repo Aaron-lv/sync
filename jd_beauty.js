@@ -6,7 +6,7 @@
 cron 1 7,12,19 * * * jd_beauty.js
  */
 const $ = new Env('美丽研究院');
-
+process.env.JD_USER_AGENT="Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1"
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
