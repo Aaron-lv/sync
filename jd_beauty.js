@@ -71,6 +71,10 @@ async function jdBeauty() {
   await getIsvToken()
   await getIsvToken2()
   await getToken()
+  if (!$.token) {
+    console.log(`\n\n提示：请尝试换服务器ip或者设置"xinruimz-isv.isvjcloud.com"域名直连，或者自定义UA再次尝试(环境变量JD_USER_AGENT)\n\n`)
+    return
+  }
   await mr()
   while (!$.hasDone) {
     await $.wait(1000)
