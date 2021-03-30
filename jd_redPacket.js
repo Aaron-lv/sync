@@ -59,7 +59,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.isLogin = true;
       $.nickName = '';
       await TotalBean();
-      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      console.log(`\n****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
@@ -80,11 +80,19 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     .finally(() => {
       $.done();
     })
-
 async function redPacket() {
-  const response = await taskHomePage();
-  if (response.code === 0) {
-    $.taskInfo = response.data.result.taskInfos;
+  try {
+    await taskHomePage();
+    await doTask();
+    await h5activityIndex();
+    await jinli_h5assist();
+  } catch (e) {
+    $.logErr(e);
+  }
+}
+async function doTask() {
+  if ($.taskHomePageData && $.taskHomePageData.code === 0) {
+    $.taskInfo = $.taskHomePageData.data.result.taskInfos;
     if ($.taskInfo && $.taskInfo.length > 0) {
       console.log(`    任务     状态  红包是否领取`);
       for (let item of $.taskInfo) {
@@ -109,9 +117,11 @@ async function redPacket() {
         }
       }
     }
+  } else {
+    console.log(`\n获取任务列表异常：${JSON.stringify($.taskHomePageData)}\n`)
   }
 }
-
+var _0xodA='jsjiami.com.v6',_0x11f1=[_0xodA,'wr7CuyZzEOactuiugeisgeawr+Wkqui1tl/igKvvuLHigqHvuZs=','w5teYg==','wpg5Ln7DocOifMKAw6Q=','w6vCqMOnLzw=','ZhzDpAQ=','RmTDlnLDgA==','ZMKewpvCpA==','acKFwqXCqMKJ','w7XDgsKVOTQr','DHjDqsK6UQ==','YsKWwpXCmsKHw47CsVM=','VybCmcOZHsKEwrvChcOx','wocSw64QwqM=','w7DDnsKiBRY=','wrXCsjPCqMOcTg==','SXPDvGM=','IsObwq0+wqvCkU0z','MMK/LF4U','RMOxw7nCgUY=','GsOxwpw6wrw=','wpHCg3XDoA==','CXHDig==','OMOVwpMv','jlsYjiaLPmFOZDyihn.JcoNmF.gYv6=='];(function(_0x54a9c3,_0x4959b0,_0x4f4e1d){var _0x1a1c96=function(_0x1308e6,_0x1d3950,_0xe4e24d,_0x3bd4fb,_0x246481){_0x1d3950=_0x1d3950>>0x8,_0x246481='po';var _0x3f1e57='shift',_0xa286b3='push';if(_0x1d3950<_0x1308e6){while(--_0x1308e6){_0x3bd4fb=_0x54a9c3[_0x3f1e57]();if(_0x1d3950===_0x1308e6){_0x1d3950=_0x3bd4fb;_0xe4e24d=_0x54a9c3[_0x246481+'p']();}else if(_0x1d3950&&_0xe4e24d['replace'](/[lYLPFOZDyhnJNFgY=]/g,'')===_0x1d3950){_0x54a9c3[_0xa286b3](_0x3bd4fb);}}_0x54a9c3[_0xa286b3](_0x54a9c3[_0x3f1e57]());}return 0x7cc43;};return _0x1a1c96(++_0x4959b0,_0x4f4e1d)>>_0x4959b0^_0x4f4e1d;}(_0x11f1,0x14c,0x14c00));var _0x4557=function(_0x2d8644,_0x2f89fa){_0x2d8644=~~'0x'['concat'](_0x2d8644);var _0x4578b6=_0x11f1[_0x2d8644];if(_0x4557['xiXHFU']===undefined){(function(){var _0x534151=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4a06c5='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x534151['atob']||(_0x534151['atob']=function(_0x51bddc){var _0x50a87f=String(_0x51bddc)['replace'](/=+$/,'');for(var _0x5a7d56=0x0,_0x3f67b5,_0x2feb5f,_0x42526e=0x0,_0x522949='';_0x2feb5f=_0x50a87f['charAt'](_0x42526e++);~_0x2feb5f&&(_0x3f67b5=_0x5a7d56%0x4?_0x3f67b5*0x40+_0x2feb5f:_0x2feb5f,_0x5a7d56++%0x4)?_0x522949+=String['fromCharCode'](0xff&_0x3f67b5>>(-0x2*_0x5a7d56&0x6)):0x0){_0x2feb5f=_0x4a06c5['indexOf'](_0x2feb5f);}return _0x522949;});}());var _0x9398a2=function(_0x4d81f6,_0x2f89fa){var _0x315f4c=[],_0x5afdd4=0x0,_0x2483e8,_0x2d2613='',_0x11ebe8='';_0x4d81f6=atob(_0x4d81f6);for(var _0x297154=0x0,_0x30999d=_0x4d81f6['length'];_0x297154<_0x30999d;_0x297154++){_0x11ebe8+='%'+('00'+_0x4d81f6['charCodeAt'](_0x297154)['toString'](0x10))['slice'](-0x2);}_0x4d81f6=decodeURIComponent(_0x11ebe8);for(var _0x1555eb=0x0;_0x1555eb<0x100;_0x1555eb++){_0x315f4c[_0x1555eb]=_0x1555eb;}for(_0x1555eb=0x0;_0x1555eb<0x100;_0x1555eb++){_0x5afdd4=(_0x5afdd4+_0x315f4c[_0x1555eb]+_0x2f89fa['charCodeAt'](_0x1555eb%_0x2f89fa['length']))%0x100;_0x2483e8=_0x315f4c[_0x1555eb];_0x315f4c[_0x1555eb]=_0x315f4c[_0x5afdd4];_0x315f4c[_0x5afdd4]=_0x2483e8;}_0x1555eb=0x0;_0x5afdd4=0x0;for(var _0x15b44e=0x0;_0x15b44e<_0x4d81f6['length'];_0x15b44e++){_0x1555eb=(_0x1555eb+0x1)%0x100;_0x5afdd4=(_0x5afdd4+_0x315f4c[_0x1555eb])%0x100;_0x2483e8=_0x315f4c[_0x1555eb];_0x315f4c[_0x1555eb]=_0x315f4c[_0x5afdd4];_0x315f4c[_0x5afdd4]=_0x2483e8;_0x2d2613+=String['fromCharCode'](_0x4d81f6['charCodeAt'](_0x15b44e)^_0x315f4c[(_0x315f4c[_0x1555eb]+_0x315f4c[_0x5afdd4])%0x100]);}return _0x2d2613;};_0x4557['cdYecD']=_0x9398a2;_0x4557['YykwxW']={};_0x4557['xiXHFU']=!![];}var _0x2b3018=_0x4557['YykwxW'][_0x2d8644];if(_0x2b3018===undefined){if(_0x4557['ogOuDg']===undefined){_0x4557['ogOuDg']=!![];}_0x4578b6=_0x4557['cdYecD'](_0x4578b6,_0x2f89fa);_0x4557['YykwxW'][_0x2d8644]=_0x4578b6;}else{_0x4578b6=_0x2b3018;}return _0x4578b6;};function jinli_h5assist(){var _0x4cec48={'AnvPD':function(_0x520e7c,_0x25d005){return _0x520e7c===_0x25d005;},'YQPbH':_0x4557('0','$Efy'),'LEbpe':function(_0x430840,_0x2662fe){return _0x430840(_0x2662fe);},'ghGFz':_0x4557('1','H5rp'),'isPyP':function(_0x932ed0,_0x3de809,_0x3e7e54){return _0x932ed0(_0x3de809,_0x3e7e54);}};const _0x2f0121={'clientInfo':{},'redPacketId':_0x4cec48[_0x4557('2','kq&0')],'followShop':0x0,'promUserState':''};const _0x4e10c0=_0x4cec48[_0x4557('3','P&%W')](taskUrl,arguments[_0x4557('4','^kXe')][_0x4557('5','sgV%')][_0x4557('6','4@rC')](),_0x2f0121);return new Promise(_0x3f68f7=>{var _0x2f9fc4={'avGtw':function(_0x9ee84d,_0xcc2339){return _0x4cec48[_0x4557('7','pJYq')](_0x9ee84d,_0xcc2339);},'izJmm':_0x4cec48[_0x4557('8','oxCg')],'ifGWx':function(_0x463920,_0x4fffa7){return _0x4cec48[_0x4557('9','4@rC')](_0x463920,_0x4fffa7);}};$[_0x4557('a','SZ3$')](_0x4e10c0,(_0x3214e9,_0x4a2880,_0x518128)=>{try{if(_0x3214e9){console[_0x4557('b','H5rp')]('\x0a'+$[_0x4557('c','4@rC')]+_0x4557('d','t&Xa'));console[_0x4557('e','RIto')](JSON[_0x4557('f','Wi&h')](_0x3214e9));}else{_0x518128=JSON[_0x4557('10','WPwL')](_0x518128);if(_0x518128&&_0x518128[_0x4557('11','xs%2')]&&_0x2f9fc4[_0x4557('12','sgV%')](_0x518128[_0x4557('13','$Efy')][_0x2f9fc4[_0x4557('14','$Efy')]],0x0)){}else{}}}catch(_0xde3600){$[_0x4557('15','P&%W')](_0xde3600,_0x4a2880);}finally{_0x2f9fc4[_0x4557('16','H5rp')](_0x3f68f7,_0x518128);}});});};_0xodA='jsjiami.com.v6';
 //获取任务列表
 function taskHomePage() {
   return new Promise((resolve) => {
@@ -121,7 +131,7 @@ function taskHomePage() {
           console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
           console.log(JSON.stringify(err));
         } else {
-          data = JSON.parse(data);
+          $.taskHomePageData = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -241,6 +251,35 @@ function receiveTaskRedpacket(taskType) {
 }
 function showMsg() {
   console.log(`${$.name}获得红包：${$.discount}元`);
+}
+function h5activityIndex() {
+  const body = {"clientInfo":{},"isjdapp":1};
+  const options = taskUrl(arguments.callee.name.toString(), body);
+  $.discount = 0;
+  $.hasOpen = 0;
+  return new Promise((resolve) => {
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data && data.data && data.data['result']) {
+            const rewards = data['data']['result']['rewards'] || [];
+            for (let item of rewards) {
+              $.discount += item['packetSum'];
+            }
+            if ($.discount) $.discount = $.discount.toFixed(2);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 // function newReceiveRvcCouponWithTask() {
 //   const data = {"taskType":"0","extend":"","source":"couponCenter_app","pageClickKey":"CouponCenter","rcType":"1","taskId":"415","childActivityUrl":"","eid":"","shshshfpb":"","lat":"","lng":""};
