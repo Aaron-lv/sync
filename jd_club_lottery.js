@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-3-27 0:27:09
+* @Last Modified time: 2021-3-31 0:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -26,6 +26,7 @@ cron "5 0,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/
 */
 
 const $ = new Env('摇京豆');
+const superShakeUlr = 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -46,6 +47,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  await getActInfo(superShakeUlr);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -361,8 +363,6 @@ function shakeBean() {
 }
 //超级摇一摇(此处功能部分京东API抓包自：https://github.com/i-chenzhe/qx/blob/main/jd_shake.js)
 async function superShakeBean() {
-  //TODO:此处api貌似可不需cookie调用，待下次活动开启后，进行校验后再优化
-  await getActInfo();
   if ($.ActInfo) {
     await fc_getHomeData($.ActInfo);//获取任务列表
     await doShakeTask($.ActInfo);//做任务
@@ -372,12 +372,12 @@ async function superShakeBean() {
     console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
   }
 }
-function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html') {
+function getActInfo(url= 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html') {
   return new Promise(resolve => {
     $.get({
       url,
       headers:{
-        'Cookie': cookie,
+        // 'Cookie': cookie,
         'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       },
       timeout: 10000
@@ -420,7 +420,10 @@ function fc_getHomeData(appId, flag = false) {
           if (data) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
-              if (flag && $.isNode() && $.index === 1) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启，活动ID：${$.ActInfo}`)
+              if (flag && $.index === 1) {
+                if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: superShakeUlr });
+                $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': superShakeUlr })
+              }
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
