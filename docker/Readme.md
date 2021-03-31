@@ -59,11 +59,17 @@ _____
 ```
 > 推荐使用`docker-compose`所以这里只介绍`docker-compose`使用方式
 
-- `Docker`安装 
-国内一键安装 `sudo curl -sSL https://get.daocloud.io/docker | sh`
-国外一键安装 `sudo curl -sSL get.docker.com | sh`
 
-- `docker-compose` 安装（群晖nas docker自带安装了docker-compose）
+
+Docker安装 
+
+- 国内一键安装 `sudo curl -sSL https://get.daocloud.io/docker | sh`
+- 国外一键安装 `sudo curl -sSL get.docker.com | sh`
+
+
+
+docker-compose 安装（群晖`nas docker`自带安装了`docker-compose`）
+
 ```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
@@ -219,7 +225,7 @@ jd_scripts
  `docker-compose down` 停止并删除容器；  
 
 - 你可能会用到的命令
-   
+  
    `docker exec -it jd_scripts /bin/sh -c 'git -C /scripts pull && node /scripts/jd_bean_change.js'`  手动运行一脚本
    
    `docker exec -it jd_scripts /bin/sh -c 'env'`  查看设置的环境变量
@@ -229,10 +235,10 @@ jd_scripts
    `docker exec -it jd_scripts /bin/sh` 仅进入容器命令
    
    `rm -rf  logs/*.log` 删除logs文件夹里面所有的日志文件
- 
-- 如果是群晖用户，在docker注册表搜jd_scripts，双击下载映像。
-不需要docker-compose.yml，只需建个logs/目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入json配置新建容器。
-若要自定义my_crontab_list.sh，再建个my_crontab_list.sh文件，配置参考`jd_scripts.my_crontab_list.syno.json`。
+
+- 如果是群晖用户，在docker注册表搜`jd_scripts`，双击下载映像。
+不需要`docker-compose.yml`，只需建个logs/目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入json配置新建容器。
+若要自定义`my_crontab_list.sh`，再建个`my_crontab_list.sh`文件，配置参考`jd_scripts.my_crontab_list.syno.json`。
 ![image](../icon/qh1.png)
 
 ![image](../icon/qh2.png)
@@ -243,6 +249,6 @@ jd_scripts
 
 |        Name       |      归属      |  属性  | 说明                                                         |
 | :---------------: | :------------: | :----: | ------------------------------------------------------------ |
-| `CRZAY_JOY_COIN_ENABLE` | 是否jd_crazy_joy_coin挂机 | 非必须 | docker-compose.yml文件下填写`CRZAY_JOY_COIN_ENABLE=Y`表示挂机,`CRZAY_JOY_COIN_ENABLE=N`表不挂机 |
-| `DO_NOT_RUN_SCRIPTS` | 不执行的脚本 | 非必须 | 例:docker-compose.yml文件里面填写`DO_NOT_RUN_SCRIPTS=jd_family.js&jd_dreamFactory.js&jd_jxnc.js`, 建议填写完整脚本名,不完整的文件名可能导致其他脚本被禁用 |
-| `ENABLE_AUTO_HELP` | 单容器多账号自动互助 | 非必须 | 例:docker-compose.yml文件里面填写`ENABLE_AUTO_HELP=true` |
+| `CRZAY_JOY_COIN_ENABLE` | 是否jd_crazy_joy_coin挂机 | 非必须 | `docker-compose.yml`文件下填写`CRZAY_JOY_COIN_ENABLE=Y`表示挂机,`CRZAY_JOY_COIN_ENABLE=N`表不挂机 |
+| `DO_NOT_RUN_SCRIPTS` | 不执行的脚本 | 非必须 | 例:`docker-compose.yml`文件里面填写`DO_NOT_RUN_SCRIPTS=jd_family.js&jd_dreamFactory.js&jd_jxnc.js`, 建议填写完整脚本名,不完整的文件名可能导致其他脚本被禁用 |
+| `ENABLE_AUTO_HELP` | 单容器多账号自动互助 | 非必须 | 例:`docker-compose.yml`文件里面填写`ENABLE_AUTO_HELP=true` |
