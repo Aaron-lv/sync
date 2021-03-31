@@ -1,6 +1,7 @@
 /*
 超级直播间红包雨
-下一场直播时间:04月02日  20:00
+下一场直播时间:04月01日  16:00 https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3810378
+下一场直播时间:04月02日  20:00 https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3804885
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
 [task_local]
@@ -20,8 +21,12 @@ cron "0,30,31 20-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/ra
 const $ = new Env('超级直播间红包雨');
 let allMessage = '';
 let bodyList = {
+  "1": {
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617173270021&sign=dbab3d99be06b010a7b296dea77487f5&sv=110",
+    "body": "body=%7B%22liveId%22%3A%223810378%22%7D"
+  },
   "2": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617170756022&sign=d88f8ddcec714e9ed5636e75c73b6fd9&sv=112",
+    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617173266040&sign=8161dae063680508aa93aef0cf5473a0&sv=112",
     "body": "body=%7B%22liveId%22%3A%223804885%22%7D"
   }
 }
@@ -49,6 +54,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  console.log('下一场直播时间:04月01日  16:00 https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3810378\n' +
+      '下一场直播时间:04月02日  20:00 https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3804885')
   await getRedRain();
 
   let nowTs = new Date().getTime()
