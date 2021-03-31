@@ -421,8 +421,10 @@ function fc_getHomeData(appId, flag = false) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
               if (flag && $.index === 1) {
-                if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: superShakeUlr });
-                $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': superShakeUlr })
+                const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
+                const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
+                if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
+                $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
               }
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
