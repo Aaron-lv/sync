@@ -82,14 +82,18 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.done();
     })
 async function jd_necklace() {
-  await necklace_homePage();
-  await doTask();
-  await necklace_homePage();
-  await receiveBubbles();
-  await sign();
-  await necklace_homePage();
-  // await necklace_exchangeGift($.totalScore);//自动兑换多少钱的无门槛红包，1000代表1元，默认兑换全部点点券
-  await showMsg();
+  try {
+    await necklace_homePage();
+    await doTask();
+    await necklace_homePage();
+    await receiveBubbles();
+    await sign();
+    await necklace_homePage();
+    // await necklace_exchangeGift($.totalScore);//自动兑换多少钱的无门槛红包，1000代表1元，默认兑换全部点点券
+    await showMsg();
+  } catch (e) {
+    $.logErr(e)
+  }
 }
 function showMsg() {
   return new Promise(async resolve => {
@@ -313,6 +317,8 @@ function necklace_getTask(taskId) {
 
 function necklace_homePage() {
   $.taskConfigVos = [];
+  $.bubbles = [];
+  $.signInfo = {};
   return new Promise(resolve => {
     $.post(taskPostUrl('necklace_homePage'), async (err, resp, data) => {
       try {
