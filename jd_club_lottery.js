@@ -366,7 +366,7 @@ async function superShakeBean() {
   if ($.ActInfo) {
     await fc_getHomeData($.ActInfo);//获取任务列表
     await doShakeTask($.ActInfo);//做任务
-    await fc_getHomeData($.ActInfo);//做完任务后查询多少次摇奖次数
+    await fc_getHomeData($.ActInfo, true);//做完任务后查询多少次摇奖次数
     await superShakeLottery($.ActInfo);//开始摇奖
   } else {
     console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
@@ -405,7 +405,7 @@ function getActInfo(url='https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWC
     })
   })
 }
-function fc_getHomeData(appId) {
+function fc_getHomeData(appId, flag = false) {
   return new Promise(resolve => {
     const body = { appId }
     const options = taskPostUrl('fc_getHomeData', body)
@@ -420,7 +420,7 @@ function fc_getHomeData(appId) {
           if (data) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
-              if ($.isNode() && $.index === 1) await notify.sendNotify($.name, `京东APP首页超级摇一摇活再次开启，活动ID：${$.ActInfo}`)
+              if (flag && $.isNode() && $.index === 1) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启，活动ID：${$.ActInfo}`)
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
