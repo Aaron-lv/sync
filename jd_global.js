@@ -2,7 +2,7 @@
 环球挑战赛
 活动时间：2021-03-08 至 2021-03-31
 多个账号会相互互助
-活动地址：https://ghttps://gmart.jd.com/?appId=54935130mart.jd.com/?appId=54935130
+活动地址：https://gmart.jd.com/?appId=54935130mart.jd.com/?appId=54935130
 活动入口：京东app搜索京东国际-环球挑战赛
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
