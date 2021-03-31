@@ -6,15 +6,9 @@
 */
 /*
 京东全民开红包
-活动入口：京东APP首页-领券-锦鲤红包
-已完成功能：
-①浏览活动
-②关注频道
-③领取红包
-未实现功能：
-领3张券功能
+活动入口：京东APP首页-领券-锦鲤红包。[活动地址](https://happy.m.jd.com/babelDiy/zjyw/3ugedFa7yA6NhxLN5gw2L3PF9sQC/index.html)
+未实现功能：领3张券功能
 
-支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ================QuantumultX==================
 [task_local]
