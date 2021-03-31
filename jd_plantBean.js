@@ -90,7 +90,7 @@ async function jdPlantBean() {
     console.log(`获取任务及基本信息`)
     await plantBeanIndex();
     // console.log(plantBeanIndexResult.data.taskList);
-    if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0') {
+    if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0' && $.plantBeanIndexResult.data) {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
       $.myPlantUuid = getParam(shareUrl, 'plantUuid')
       console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
@@ -118,7 +118,7 @@ async function jdPlantBean() {
     $.logErr(e);
     const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
     if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
-    $.msg($.name, '', `京东账号${$.index} ${$.nickName || $.UserName}\n${errMsg}`)
+    $.msg($.name, '', `${errMsg}`)
   }
 }
 async function doGetReward() {
