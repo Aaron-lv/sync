@@ -109,7 +109,7 @@ jd_scripts
 - `jd_scripts/docker-compose.yml`里面的环境变量(`environment:`)配置[参考这里](../githubAction.md#互助码类环境变量)
 
 
-- `jd_scripts/my_crontab_list.sh` 参考内容如下,自己根据需要调整增加删除，不熟悉用户推荐使用默认配置：
+- `jd_scripts/my_crontab_list.sh` 参考内容如下,自己根据需要调整增加删除，不熟悉用户推荐使用[默认配置](./crontab_list.sh)里面的内容：
 
 ```shell
 # 每3天的23:50分清理一次日志(互助码不清理，proc_file.sh对该文件进行了去重)
