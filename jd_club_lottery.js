@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-3-31 0:27:09
+* @Last Modified time: 2021-4-2 12:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -26,7 +26,7 @@ cron "5 0,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/
 */
 
 const $ = new Env('摇京豆');
-const superShakeUlr = 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html';
+let superShakeUlr = 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -47,6 +47,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  await welcomeHome()
   await getActInfo(superShakeUlr);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -371,6 +372,64 @@ async function superShakeBean() {
   } else {
     console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
   }
+}
+function welcomeHome() {
+  return new Promise(resolve => {
+    const data = {
+      "homeAreaCode": "",
+      "identity": "",
+      "fQueryStamp": "",
+      "globalUIStyle": "",
+      "showCate": "",
+      "tSTimes": "",
+      "geoLast": "",
+      "geo": "",
+      "cycFirstTimeStamp": "",
+      "displayVersion": "",
+      "geoReal": "",
+      "controlMaterials": "",
+      "xviewGuideFloor": "",
+      "fringe": "",
+      "receiverGeo": ""
+    }
+    const options = {
+      url: `https://api.m.jd.com/client.action?functionId=welcomeHome&body=${escape(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617337078035&sign=c14a3ca716d6dd4de373cafdea4f81c3&sv=122`,
+      body: `body=${escape(JSON.stringify(data))}`,
+      headers: {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-Hans-CN;q=1, zh-Hant-CN;q=0.9",
+        "Connection": "keep-alive",
+        "Content-Length": "1761",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "api.m.jd.com",
+        "User-Agent": "JD4iPhone/167588 (iPhone; iOS 14.3; Scale/2.00)"
+      }
+    }
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} welcomeHome API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['floorList'] && data['floorList'].length) {
+              const jump = data['floorList'].filter(vo => !!vo && vo.type === 'shakeFloorNew')[0]['jump'];
+              if (jump && jump.params && jump['params']['url']) {
+                superShakeUlr = jump.params.url;
+                console.log(`【超级摇一摇】活动链接：${superShakeUlr}`);
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 function getActInfo(url= 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html') {
   return new Promise(resolve => {
