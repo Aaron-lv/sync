@@ -26,7 +26,7 @@ cron "5 0,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/
 */
 
 const $ = new Env('摇京豆');
-let superShakeUlr = 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html';
+let superShakeUlr = '';//超级摇一摇活动链接
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -77,6 +77,12 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   }
   if (allMessage) {
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
+  }
+  if (superShakeUlr) {
+    const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
+    const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
+    if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
+    $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
   }
 })()
     .catch((e) => {
@@ -479,12 +485,12 @@ function fc_getHomeData(appId, flag = false) {
           if (data) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
-              if (flag && $.index === 1) {
-                const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
-                const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
-                if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
-                $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
-              }
+              // if (flag && $.index === 1) {
+              //   const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
+              //   const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
+              //   if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
+              //   $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
+              // }
               $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
