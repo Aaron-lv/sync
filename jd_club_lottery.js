@@ -26,7 +26,6 @@ cron "5 0,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/
 */
 
 const $ = new Env('摇京豆');
-let superShakeUlr = '';//超级摇一摇活动链接
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -41,7 +40,12 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-$.superShakeBeanFlag = false;
+let superShakeBeanConfig = {
+  "superShakeUlr": "",//超级摇一摇活动链接
+  "superShakeBeanFlag": false,
+  "superShakeTitle": "",
+  "taskVipName": "",
+}
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if (!cookiesArr[0]) {
@@ -49,7 +53,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     return;
   }
   await welcomeHome()
-  await getActInfo(superShakeUlr);
+  if (superShakeBeanConfig['superShakeUlr']) await getActInfo(superShakeBeanConfig['superShakeUlr']);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -79,11 +83,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   if (allMessage) {
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
   }
-  if ($.superShakeBeanFlag) {
-    const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
+  if (superShakeBeanConfig.superShakeBeanFlag) {
+    const scaleUl = { "category": "jump", "des": "m", "url": superShakeBeanConfig['superShakeUlr'] };
     const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
-    if ($.isNode()) await notify.sendNotify($.name, `【超级摇一摇】活动再次开启\n【开通会员】如需做此任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
-    $.msg($.name, '', `【超级摇一摇】活动再次开启\n【开通会员】如需做此任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
+    if ($.isNode()) await notify.sendNotify($.name, `【${superShakeBeanConfig['superShakeTitle']}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击链接直达活动页面\n${superShakeBeanConfig['superShakeUlr']}`, { url: openjd });
+    $.msg($.name, superShakeBeanConfig['superShakeTitle'], `【超级摇一摇】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
   }
 })()
     .catch((e) => {
@@ -424,8 +428,8 @@ function welcomeHome() {
             if (data['floorList'] && data['floorList'].length) {
               const jump = data['floorList'].filter(vo => !!vo && vo.type === 'shakeFloorNew')[0]['jump'];
               if (jump && jump.params && jump['params']['url']) {
-                superShakeUlr = jump.params.url;
-                console.log(`【超级摇一摇】活动链接：${superShakeUlr}`);
+                superShakeBeanConfig['superShakeUlr'] = jump.params.url;
+                console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
               }
             }
           }
@@ -438,7 +442,7 @@ function welcomeHome() {
     })
   })
 }
-function getActInfo(url= 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZWCtwUqro5/index.html') {
+function getActInfo(url) {
   return new Promise(resolve => {
     $.get({
       url,
@@ -456,9 +460,10 @@ function getActInfo(url= 'https://h5.m.jd.com/babelDiy/Zeus/2GXPFfQmeLgzZuQCWFZW
           data = data && data.match(/window\.__FACTORY__TAOYIYAO__STATIC_DATA__ = (.*)}/)
           if (data) {
             data = JSON.parse(data[1] + '}');
+            if (data['pageConfig']) superShakeBeanConfig['superShakeTitle'] = data['pageConfig']['htmlTitle'];
             if (data['taskConfig']) {
               $.ActInfo = data['taskConfig']['taskAppId'];
-              console.log(`\n获取京东APP首页超级摇一摇活动ID成功：${$.ActInfo}\n`);
+              console.log(`\n获取【${superShakeBeanConfig['superShakeTitle']}】活动ID成功：${$.ActInfo}\n`);
             }
           }
         }
@@ -486,14 +491,12 @@ function fc_getHomeData(appId, flag = false) {
           if (data) {
             data = JSON.parse(data);
             if (data && data['data']['bizCode'] === 0) {
+              const taskVos = data['data']['result']['taskVos'] || [];
               if (flag && $.index === 1) {
-                $.superShakeBeanFlag = true;
-                // const scaleUl = { "category": "jump", "des": "m", "url": superShakeUlr };
-                // const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
-                // if ($.isNode()) await notify.sendNotify($.name, `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击链接直达活动页面\n${superShakeUlr}`, { url: openjd });
-                // $.msg($.name, '', `京东APP首页超级摇一摇再次开启\n如需做开通会员任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
+                superShakeBeanConfig['superShakeBeanFlag'] = true;
+                superShakeBeanConfig['taskVipName'] = taskVos.filter(vo => !!vo && vo['taskType'] === 21)[0]['taskName'];
               }
-              $.taskVos = data['data']['result']['taskVos'].filter(item => !!item && item['status'] === 1) || [];
+              $.taskVos = taskVos.filter(item => !!item && item['status'] === 1) || [];
               $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
               $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
             } else if (data && data['data']['bizCode'] === 101) {
@@ -591,8 +594,8 @@ async function superShakeLottery(appId) {
     await $.wait(1000)
   }
   if ($.superShakeBeanNum > 0) {
-    message += `${message ? '\n' : ''}京东APP首页超级摇一摇：获得${$.superShakeBeanNum}京豆`
-    allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n京东APP首页超级摇一摇：获得${$.superShakeBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+    message += `${message ? '\n' : ''}${superShakeBeanConfig['superShakeTitle']}：获得${$.superShakeBeanNum}京豆`
+    allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n${superShakeBeanConfig['superShakeTitle']}：获得${$.superShakeBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
   }
 }
 function fc_getLottery(appId) {
