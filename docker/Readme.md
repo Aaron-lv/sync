@@ -65,7 +65,7 @@ Docker安装
 
 - 国内一键安装 `sudo curl -sSL https://get.daocloud.io/docker | sh`
 - 国外一键安装 `sudo curl -sSL get.docker.com | sh`
-
+- 北京外国语大学开源软件镜像站 `https://mirrors.bfsu.edu.cn/help/docker-ce/`
 
 
 docker-compose 安装（群晖`nas docker`自带安装了`docker-compose`）
