@@ -32,7 +32,7 @@ exportSharecode() {
     #账号数
     cookiecount=$(echo ${JD_COOKIE} | grep -o pt_key | grep -c pt_key)
     if [ -f /usr/local/bin/spnode ]; then
-      cookiecount =$(cat "$COOKIES_LIST" | grep -o pt_key | grep -c pt_key)
+      cookiecount=$(cat "$COOKIES_LIST" | grep -o pt_key | grep -c pt_key)
     fi
     echo "cookie个数：${cookiecount}"
 
