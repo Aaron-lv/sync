@@ -966,7 +966,7 @@ async function tuanActivity() {
   }
 }
 async function joinLeaderTuan() {
-  let res = await updateTuanIdsCDN(), res2 = await updateTuanIdsCDN("https://gitee.com/shylocks/updateTeam/raw/main/jd_updateFactoryTuanId.json")
+  let res = await updateTuanIdsCDN(), res2 = await updateTuanIdsCDN("http://qr6pzoy01.hn-bkt.clouddn.com/factory.json")
   $.authorTuanIds = [...(res && res.tuanIds || []),...(res2 && res2.tuanIds || [])]
   if ($.authorTuanIds && $.authorTuanIds.length) {
     console.log(`\n参加作者的团`);
@@ -1188,7 +1188,7 @@ function tuanAward(activeId, tuanId, isTuanLeader = true) {
   })
 }
 
-function updateTuanIdsCDN(url = 'https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json') {
+function updateTuanIdsCDN(url = 'https://raw.githubusercontent.com/gitupdate/updateTeam/master/shareCodes/jd_updateFactoryTuanId.json') {
   return new Promise(async resolve => {
     $.get({url,
       timeout: 200000,
@@ -1206,11 +1206,11 @@ function updateTuanIdsCDN(url = 'https://cdn.jsdelivr.net/gh/gitupdate/updateTea
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data || []);
+        resolve(data);
       }
     })
     await $.wait(20000)
-    resolve([]);
+    resolve();
   })
 }
 
@@ -1321,12 +1321,20 @@ function shareCodesFormat() {
 }
 function requireConfig() {
   return new Promise(async resolve => {
-    await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
+    await updateTuanIdsCDN();
     if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
       tuanActiveId = $.tuanConfigs['tuanActiveId'];
       console.log(`拼团活动ID: 获取成功 ${tuanActiveId}`)
     } else {
-      console.log(`拼团活动ID：获取失败`)
+      if (!$.tuanConfigs) {
+        await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
+        if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
+          tuanActiveId = $.tuanConfigs['tuanActiveId'];
+          console.log(`拼团活动ID: 获取成功 ${tuanActiveId}`)
+        } else {
+          console.log(`拼团活动ID：获取失败，将采取脚本内置活动ID`)
+        }
+      }
     }
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
