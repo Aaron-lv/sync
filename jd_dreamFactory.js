@@ -112,6 +112,7 @@ if ($.isNode()) {
           console.log(`\n${$.UserName} 去参加团 ${item}`);
           if (!$.canHelp) break;
           await JoinTuan(item);
+          await $.wait(1000);
         }
       }
     }
