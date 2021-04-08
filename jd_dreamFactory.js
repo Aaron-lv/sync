@@ -107,7 +107,7 @@ if ($.isNode()) {
       if ($.canHelp) await joinLeaderTuan();//参团
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ((cookiesArr && cookiesArr.length >= ($.tuanNum || 5)) && $.canHelp) {
-        console.log(`\n账号内部相互进团\n`);
+        console.log(`\n账号${$.UserName} 内部相互进团\n`);
         for (let item of $.tuanIds) {
           console.log(`\n${$.UserName} 去参加团 ${item}`);
           if (!$.canHelp) break;
@@ -970,11 +970,12 @@ async function joinLeaderTuan() {
   if (!res) res = await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
   $.authorTuanIds = [...(res && res.tuanIds || []),...(res2 && res2.tuanIds || [])]
   if ($.authorTuanIds && $.authorTuanIds.length) {
-    console.log(`\n参加作者的团`);
     for (let tuanId of $.authorTuanIds) {
       if (!tuanId) continue
       if (!$.canHelp) break;
+      console.log(`\n账号${$.UserName} 参加作者lxk0301的团 【${tuanId}】`);
       await JoinTuan(tuanId);
+      await $.wait(1000);
     }
   }
 }
