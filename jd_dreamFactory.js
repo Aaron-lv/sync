@@ -1588,7 +1588,7 @@ function decrypt(time, stk, type, url) {
       const random = '5gkjB6SpmC9s';
       $.token = `tk01wcdf61cb3a8nYUtHcmhSUFFCfddDPRvKvYaMjHkxo6Aj7dhzO+GXGFa9nPXfcgT+mULoF1b1YIS1ghvSlbwhE0Xc`;
       $.fingerprint = 5287160221454703;
-      const str = `${token}${$.fingerprint}${timestamp}${$.appId}${random}`;
+      const str = `${$.token}${$.fingerprint}${timestamp}${$.appId}${random}`;
       hash1 = $.CryptoJS.SHA512(str, token).toString($.CryptoJS.enc.Hex);
     }
     let st = '';
