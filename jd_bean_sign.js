@@ -99,7 +99,7 @@ async function execSign() {
     }
     //不管哪个时区,这里得到的都是北京时间的时间戳;
     const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60000 + 28800000;
-    $.beanSignTime = timeFormat(UTC8);
+    $.beanSignTime = new Date(UTC8).toLocaleString('zh', {hour12: false});
     //console.log(`脚本执行完毕时间：${$.beanSignTime}`)
     if (BarkContent) {
       allMessage += `【京东号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
@@ -109,7 +109,7 @@ async function execSign() {
     }
     //运行完成后，删除下载的文件
     await deleteFile(resultPath);//删除result.txt
-    console.log(`\n\n*****************${new Date(new Date().getTime()).toLocaleString()} 京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n\n`);
+    console.log(`\n\n*****************${new Date(new Date().getTime()).toLocaleString('zh', {hour12: false})} 京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n\n`);
   } catch (e) {
     console.log("京东签到脚本执行异常:" + e);
   }
