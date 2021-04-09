@@ -2,7 +2,7 @@
 种豆得豆 脚本更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_plantBean.js
 更新时间：2021-04-9
 活动入口：京东APP我的-更多工具-种豆得豆
-已支持IOS京东双账号,云端N个京东账号
+已支持IOS京东多账号,云端多京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 注：会自动关注任务中的店铺跟商品，介意者勿使用。
 互助码shareCode请先手动运行脚本查看打印可看到
@@ -600,7 +600,7 @@ function requireConfig() {
       })
     } else {
       if ($.getdata('jd_plantbean_inviter')) $.shareCodesArr = $.getdata('jd_plantbean_inviter').split('\n').filter(item => !!item);
-      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_plantbean_inviter')}\n`);
+      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_plantbean_inviter') ? $.getdata('jd_plantbean_inviter') : '暂无'}\n`);
     }
     // console.log(`\n种豆得豆助力码::${JSON.stringify($.shareCodesArr)}`);
     console.log(`您提供了${$.shareCodesArr.length}个账号的种豆得豆助力码\n`);
