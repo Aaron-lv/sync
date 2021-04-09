@@ -2,7 +2,7 @@
 东东萌宠 更新地址： https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pet.js
 更新时间：2021-04-9
 活动入口：京东APP我的-更多工具-东东萌宠
-已支持IOS双京东账号,Node.js支持N个京东账号
+已支持IOS多京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
 互助码shareCode请先手动运行脚本查看打印可看到
@@ -522,7 +522,7 @@ function requireConfig() {
       })
     } else {
       if ($.getdata('jd_pet_inviter')) $.shareCodesArr = $.getdata('jd_pet_inviter').split('\n').filter(item => !!item);
-      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_pet_inviter')}\n`);
+      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_pet_inviter') ? $.getdata('jd_pet_inviter') : '暂无'}\n`);
     }
     // console.log(`$.shareCodesArr::${JSON.stringify($.shareCodesArr)}`)
     // console.log(`jdPetShareArr账号长度::${$.shareCodesArr.length}`)
