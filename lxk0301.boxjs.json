@@ -105,9 +105,16 @@
           "desc": "运行东东农场脚本时不发出系统通知"
         },
         {
+          "id": "jdFruitBeanCard",
+          "name": "使用水滴换豆卡",
+          "val": false,
+          "type": "boolean",
+          "desc": "使用水滴换豆卡(如果出现限时活动是100g水换20豆,此时比浇水划算,推荐换豆)"
+        },
+        {
           "id": "jd_fruit_inviter",
           "name": "东东农场好友邀请码 列表",
-          "val": "",
+          "val": "账号1的好友1邀请码@账号1的好友2邀请码\n\n账号2的好友1邀请码@账号2的好友2邀请码",
           "type": "textarea",
           "autoGrow": true,
           "rows": 8,
@@ -142,7 +149,7 @@
         {
           "id": "jd_pet_inviter",
           "name": "东东萌宠好友邀请码 列表",
-          "val": "",
+          "val": "账号1的好友1邀请码@账号1的好友2邀请码\n\n账号2的好友1邀请码@账号2的好友2邀请码",
           "type": "textarea",
           "autoGrow": true,
           "rows": 8,
@@ -177,7 +184,7 @@
         {
           "id": "jd_plantbean_inviter",
           "name": "京东种豆好友邀请码 列表",
-          "val": "",
+          "val": "账号1的好友1邀请码@账号1的好友2邀请码\n\n账号2的好友1邀请码@账号2的好友2邀请码",
           "type": "textarea",
           "autoGrow": true,
           "rows": 8,
