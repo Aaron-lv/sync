@@ -1,11 +1,8 @@
 /*
 超级直播间红包雨
-下一场直播时间:04月20日  20:00，ID：3913828
-30,31 20-23/1 20 4 *
-下一场直播时间:04月17日  20:00，ID：3915958
-30,31 20-23/1 17 4 *
-下一场直播时间:04月16日  20:00，ID：3916360
-30,31 20-23/1 16 4 *
+下一场直播时间:04月20日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3913828
+下一场直播时间:04月17日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3915958
+下一场直播时间:04月16日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3916360
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
 [task_local]
@@ -39,30 +36,30 @@ let bodyList = {
   }
 }
 let ids = {
-  '0': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '1': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '2': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '3': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '4': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '5': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '6': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '7': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '8': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '9': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '10': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '11': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '12': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '13': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '14': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '15': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '16': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '17': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '18': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '19': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '20': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '21': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '22': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN', 
-  '23': 'RRA2CnovS9KVTTwBD9NV7o4kc3P8PTN'
+  '0': '', 
+  '1': '', 
+  '2': '', 
+  '3': '', 
+  '4': '', 
+  '5': '', 
+  '6': '', 
+  '7': '', 
+  '8': '', 
+  '9': '', 
+  '10': '', 
+  '11': '', 
+  '12': '', 
+  '13': '', 
+  '14': '', 
+  '15': '', 
+  '16': '', 
+  '17': '', 
+  '18': '', 
+  '19': '', 
+  '20': '', 
+  '21': '', 
+  '22': '', 
+  '23': ''
 }
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -85,17 +82,14 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  console.log('下一场直播时间:04月20日  20:00，ID：3913828\n' +
-      '30,31 20-23/1 20 4 *\n' +
-      '下一场直播时间:04月17日  20:00，ID：3915958\n' +
-      '30,31 20-23/1 17 4 *\n' +
-      '下一场直播时间:04月16日  20:00，ID：3916360\n' +
-      '30,31 20-23/1 16 4 *')
+  console.log('下一场直播时间:04月20日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3913828\n' +
+      '下一场直播时间:04月17日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3915958\n' +
+      '下一场直播时间:04月16日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=3916360')
   await getRedRain();
 
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
-    $.log(`远程红包雨配置获取错误，从本地读取配置`)
+    $.log(`\n远程红包雨配置获取错误，从本地读取配置`)
     let hour = (new Date().getUTCHours() + 8) %24
     if (ids[hour]){
       $.activityId = ids[hour]
