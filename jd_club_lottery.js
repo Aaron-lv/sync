@@ -504,7 +504,7 @@ function superBrandMainPage() {
               $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
               $.activityName = data['data']['result']['activityBaseInfo']['activityName'];
               $.userStarNum = Number(data['data']['result']['activityUserInfo']['userStarNum']) || 0;
-              console.log(`当前共有积分：${$.userStarNum}，可抽奖：${parseInt($.userStarNum / 100)}次(最多4次摇奖机会)\n`);
+              console.log(`${$.activityName} 当前共有积分：${$.userStarNum}，可抽奖：${parseInt($.userStarNum / 100)}次(最多4次摇奖机会)\n`);
             } else {
               console.log(`获取超级摇一摇信息异常：${JSON.stringify(data)}`);
             }
@@ -641,7 +641,7 @@ async function lo() {
     await superBrandTaskLottery();
   }
   if ($.superShakeBeanNum > 0) {
-    message += `${message ? '\n' : ''}${$.activityName}：获得${$.superShakeBeanNum}京豆`
+    message += `${message ? '\n' : ''}${$.activityName} || 超级摇一摇：获得${$.superShakeBeanNum}京豆`
     allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n${superShakeBeanConfig['superShakeTitle']}：获得${$.superShakeBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
   }
 }
@@ -887,7 +887,7 @@ async function shakeSign() {
       beanNum = signRes['data']['rewardVos'] && signRes['data']['rewardVos'][0]['jingBeanVo'] && signRes['data']['rewardVos'][0]['jingBeanVo']['beanNum']
     }
     if (beanNum) {
-      message += `京东会员签到：${beanNum}获得京豆\n`;
+      message += `\n京东会员签到：${beanNum}获得京豆`;
     }
   } else {
     console.log(`京东会员第${$.currSignCursor}已签到`)
