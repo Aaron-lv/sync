@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-4-3 9:27:09
+* @Last Modified time: 2021-4-16 9:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -46,6 +46,7 @@ let superShakeBeanConfig = {
   "superShakeTitle": "",
   "taskVipName": "",
 }
+$.assigFirends = [];
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if (!cookiesArr[0]) {
@@ -53,7 +54,9 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     return;
   }
   await welcomeHome()
-  if (superShakeBeanConfig['superShakeUlr']) await getActInfo(superShakeBeanConfig['superShakeUlr']);
+  if (superShakeBeanConfig['superShakeUlr']) {
+    await getActInfo(superShakeBeanConfig['superShakeUlr']);
+  }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -79,10 +82,41 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       await showMsg();
     }
   }
+  for (let v = 0; v < cookiesArr.length; v++) {
+    cookie = cookiesArr[v];
+    $.index = v + 1;
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+    $.canHelp = true;
+    if ($.canHelp) {
+      $.assigFirends = $.assigFirends.concat({
+        "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+        "assignmentType": 2,
+        "itemId": "SZm_olqSxIOtH97BATGmKoWraLaw",
+      })
+      for (let item of $.assigFirends || []) {
+        if (item['encryptAssignmentId'] && item['assignmentType'] && item['itemId']) {
+          console.log(`\n账号 ${$.index} ${$.UserName} 开始给 ${item['itemId']} 进行助力`)
+          await superBrandDoTask({
+            "activityId": $.activityId,
+            "encryptProjectId": $.encryptProjectId,
+            "encryptAssignmentId": item['encryptAssignmentId'],
+            "assignmentType": item['assignmentType'],
+            "itemId": item['itemId'],
+            "actionType": 0,
+            "source": "main"
+          });
+          if (!$.canHelp) {
+            console.log(`次数已用完，跳出助力`)
+            break
+          }
+        }
+      }
+    }
+  }
   if (allMessage) {
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
   }
-  if (superShakeBeanConfig.superShakeBeanFlag) {
+  if (superShakeBeanConfig.superShakeUlr) {
     const scaleUl = { "category": "jump", "des": "m", "url": superShakeBeanConfig['superShakeUlr'] };
     const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
     if ($.isNode()) await notify.sendNotify($.name, `【${superShakeBeanConfig['superShakeTitle']}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击链接直达活动页面\n${superShakeBeanConfig['superShakeUlr']}`, { url: openjd });
@@ -121,7 +155,7 @@ async function doTasks() {
           taskID.push(item.id);
         }
       });
-      console.log(`开始做浏览页面任务`)
+      if (taskID.length > 0) console.log(`开始做浏览页面任务`)
       for (let i = 0; i < new Array(taskTime).fill('').length; i++) {
         await $.wait(1000);
         await doTask('browseTask', taskID[i]);
@@ -375,36 +409,43 @@ function shakeBean() {
 }
 //超级摇一摇(此处功能部分京东API抓包自：https://github.com/i-chenzhe/qx/blob/main/jd_shake.js)
 async function superShakeBean() {
+  await superBrandMainPage();
+  if ($.activityId && $.encryptProjectId) {
+    await superBrandTaskList();
+    await superBrandDoTaskFun();
+    await superBrandMainPage();
+    await lo();
+  }
   if ($.ActInfo) {
     await fc_getHomeData($.ActInfo);//获取任务列表
     await doShakeTask($.ActInfo);//做任务
     await fc_getHomeData($.ActInfo, true);//做完任务后查询多少次摇奖次数
     await superShakeLottery($.ActInfo);//开始摇奖
   } else {
-    console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
+    // console.log(`\n\n京东APP首页超级摇一摇：目前暂无活动\n\n`)
   }
 }
 function welcomeHome() {
   return new Promise(resolve => {
     const data = {
       "homeAreaCode": "",
-      "identity": "",
+      "identity": "88732f840b77821b345bf07fd71f609e6ff12f43",
       "fQueryStamp": "",
-      "globalUIStyle": "",
-      "showCate": "",
+      "globalUIStyle": "9.0.0",
+      "showCate": "1",
       "tSTimes": "",
       "geoLast": "",
       "geo": "",
       "cycFirstTimeStamp": "",
-      "displayVersion": "",
+      "displayVersion": "9.0.0",
       "geoReal": "",
       "controlMaterials": "",
-      "xviewGuideFloor": "",
+      "xviewGuideFloor": "index,category,find,cart,home",
       "fringe": "",
       "receiverGeo": ""
     }
     const options = {
-      url: `https://api.m.jd.com/client.action?functionId=welcomeHome&body=${escape(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1617337078035&sign=c14a3ca716d6dd4de373cafdea4f81c3&sv=122`,
+      url: `https://api.m.jd.com/client.action?functionId=welcomeHome&body=${escape(JSON.stringify(data))}&uuid=8888888&client=apple&clientVersion=9.4.1&st=1618538579097&sign=e29d09be25576be52ec22a3bb74d4f86&sv=100`,
       body: `body=${escape(JSON.stringify(data))}`,
       headers: {
         "Accept": "*/*",
@@ -434,6 +475,205 @@ function welcomeHome() {
                   console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
                 }
               }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//===================新版超级本摇一摇==============
+function superBrandMainPage() {
+  return new Promise(resolve => {
+    const body = {"source":"main"};
+    const options = superShakePostUrl('superBrandMainPage', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superBrandTaskList API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['code'] === '0' && data['data']['bizCode'] === '0') {
+              $.activityId = data['data']['result']['activityBaseInfo']['activityId'];
+              $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
+              $.activityName = data['data']['result']['activityBaseInfo']['activityName'];
+              $.userStarNum = Number(data['data']['result']['activityUserInfo']['userStarNum']) || 0;
+              console.log(`当前共有积分：${$.userStarNum}，可抽奖：${parseInt($.userStarNum / 100)}次(最多4次摇奖机会)\n`);
+            } else {
+              console.log(`获取超级摇一摇信息异常：${JSON.stringify(data)}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function superBrandTaskList() {
+  return new Promise(resolve => {
+    $.taskList = [];
+    const body = {"activityId": $.activityId, "assistInfoFlag": 4, "source": "main"};
+    const options = superShakePostUrl('superBrandTaskList', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superBrandTaskList API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            // console.log(data);
+            data = JSON.parse(data);
+            if (data['code'] === '0' && data['data']['bizCode'] === '0') {
+              $.taskList = data['data']['result']['taskList'];
+            } else {
+              console.log(`获取超级摇一摇任务异常：${JSON.stringify(data)}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+async function superBrandDoTaskFun() {
+  $.taskList = $.taskList.filter(vo => !!vo && !vo['completionFlag'] && (vo['assignmentType'] !== 6 && vo['assignmentType'] !== 7 && vo['assignmentType'] !== 0 && vo['assignmentType'] !== 30));
+  for (let item of $.taskList) {
+    if (item['assignmentType'] === 1) {
+      const { ext } = item;
+      console.log(`开始做 ${item['assignmentName']}，需等待${ext['waitDuration']}秒`);
+      const shoppingActivity = ext['shoppingActivity'];
+      for (let task of shoppingActivity) {
+        await superBrandDoTask({
+          "activityId": $.activityId,
+          "encryptProjectId": $.encryptProjectId,
+          "encryptAssignmentId": item['encryptAssignmentId'],
+          "assignmentType": item['assignmentType'],
+          "itemId": task['itemId'],
+          "actionType": 1,
+          "source": "main"
+        })
+        await $.wait(1000 * ext['waitDuration'])
+        await superBrandDoTask({
+          "activityId": $.activityId,
+          "encryptProjectId": $.encryptProjectId,
+          "encryptAssignmentId": item['encryptAssignmentId'],
+          "assignmentType": item['assignmentType'],
+          "itemId": task['itemId'],
+          "actionType": 0,
+          "source": "main"
+        })
+      }
+    }
+    if (item['assignmentType'] === 3) {
+      const { ext } = item;
+      console.log(`开始做 ${item['assignmentName']}`);
+      const followShop = ext['followShop'];
+      for (let task of followShop) {
+        await superBrandDoTask({
+          "activityId": $.activityId,
+          "encryptProjectId": $.encryptProjectId,
+          "encryptAssignmentId": item['encryptAssignmentId'],
+          "assignmentType": item['assignmentType'],
+          "itemId": task['itemId'],
+          "actionType": 0,
+          "source": "main"
+        })
+      }
+    }
+    if (item['assignmentType'] === 2) {
+      const { ext } = item;
+      const assistTaskDetail = ext['assistTaskDetail'];
+      console.log(`${item['assignmentName']}好友邀请码： ${assistTaskDetail['itemId']}`)
+      if (assistTaskDetail['itemId']) $.assigFirends.push({
+        itemId: assistTaskDetail['itemId'],
+        encryptAssignmentId: item['encryptAssignmentId'],
+        assignmentType: item['assignmentType'],
+      });
+    }
+  }
+}
+function superBrandDoTask(body) {
+  return new Promise(resolve => {
+    const options = superShakePostUrl('superBrandDoTask', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superBrandTaskList API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            if (body['assignmentType'] === 2) {
+              console.log(`助力好友 ${body['itemId']}结果 ${data}`);
+            } else {
+              console.log('做任务结果', data);
+            }
+            data = JSON.parse(data);
+            if (data && data['code'] === '0' && data['data']['bizCode'] === '108') {
+              $.canHelp = false;
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+async function lo() {
+  $.superShakeBeanNum = 0;
+  const num = parseInt(($.userStarNum || 0) / 100);
+  for (let i = 0; i < new Array(num).fill('').length; i++) {
+    await $.wait(1000);
+    await superBrandTaskLottery();
+  }
+  if ($.superShakeBeanNum > 0) {
+    message += `${message ? '\n' : ''}${$.activityName}：获得${$.superShakeBeanNum}京豆`
+    allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n${superShakeBeanConfig['superShakeTitle']}：获得${$.superShakeBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+  }
+}
+function superBrandTaskLottery() {
+  return new Promise(resolve => {
+    const body = { "activityId": $.activityId, "source": "main" }
+    const options = superShakePostUrl('superBrandTaskLottery', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superBrandDoTaskLottery API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data && data['code'] === '0') {
+              if (data['data']['bizCode'] === "TK000") {
+                $.rewardComponent = data['data']['result']['rewardComponent'];
+                if ($.rewardComponent) {
+                  console.log(`超级摇一摇 抽奖结果:${JSON.stringify($.rewardComponent)}`)
+                  if ($.rewardComponent.beanList && $.rewardComponent.beanList.length) {
+                    console.log(`获得${$.rewardComponent.beanList[0]['quantity']}京豆`)
+                    $.superShakeBeanNum = $.superShakeBeanNum + parseInt($.rewardComponent.beanList[0]['quantity']);
+                  }
+                }
+              } else if (data['data']['bizCode'] === "TK1703") {
+                console.log(`超级摇一摇 抽奖失败：${data['data']['bizMsg']}`);
+              } else {
+                console.log(`超级摇一摇 抽奖失败：${data['data']['bizMsg']}`);
+              }
+            } else {
+              console.log(`超级摇一摇 抽奖异常： ${JSON.stringify(data)}`)
             }
           }
         }
@@ -799,6 +1039,17 @@ function taskUrl(function_id, body = {}, appId = 'vip_h5') {
 function taskPostUrl(function_id, body) {
   return {
     url: `https://api.m.jd.com/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=1.0.0`,
+    headers: {
+      'Cookie': cookie,
+      'Host': 'api.m.jd.com',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/4SXuJSqKganGpDSEMEkJWyBrBHcM/index.html',
+    }
+  }
+}
+function superShakePostUrl(function_id, body) {
+  return {
+    url: `https://api.m.jd.com/client.action?functionId=${function_id}&appid=content_ecology&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=9.3.0&uuid=8888888&t=${Date.now()}`,
     headers: {
       'Cookie': cookie,
       'Host': 'api.m.jd.com',
