@@ -504,6 +504,7 @@ function superBrandMainPage() {
               $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
               $.activityName = data['data']['result']['activityBaseInfo']['activityName'];
               $.userStarNum = Number(data['data']['result']['activityUserInfo']['userStarNum']) || 0;
+              superShakeBeanConfig['superShakeTitle'] = $.activityName;
               console.log(`${$.activityName} 当前共有积分：${$.userStarNum}，可抽奖：${parseInt($.userStarNum / 100)}次(最多4次摇奖机会)\n`);
             } else {
               console.log(`获取超级摇一摇信息异常：${JSON.stringify(data)}`);
