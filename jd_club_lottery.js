@@ -67,6 +67,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.freeTimes = 0;
       $.prizeBeanCount = 0;
       $.totalBeanCount = 0;
+      $.superShakeBeanNum = 0;
       $.isLogin = true;
       $.nickName = '';
       message = ''
@@ -648,7 +649,6 @@ function superBrandDoTask(body) {
   })
 }
 async function lo() {
-  $.superShakeBeanNum = 0;
   const num = parseInt(($.userStarNum || 0) / 100);
   if (!$.canLottery) {
     for (let i = 0; i < new Array(num).fill('').length; i++) {
@@ -846,7 +846,6 @@ function fc_collectScore(body) {
   })
 }
 async function superShakeLottery(appId) {
-  $.superShakeBeanNum = 0;
   if ($.lotteryNum) console.log(`\n\n开始京东APP首页超级摇一摇 摇奖`);
   for (let i = 0; i < new Array($.lotteryNum).fill('').length; i++) {
     await fc_getLottery(appId);//抽奖
