@@ -47,6 +47,8 @@ let superShakeBeanConfig = {
   "taskVipName": "",
 }
 $.assigFirends = [];
+$.brandActivityId = '2f707380-ebc9-4b4f-bc39-cc2c7702ca0e';//超级品牌日活动ID
+$.brandActivityId2 = '2vSNXCeVuBy8mXTL2hhG3mwSysoL';//超级品牌日活动ID2
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if (!cookiesArr[0]) {
@@ -87,7 +89,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.index = v + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
-    if ($.canHelp) {
+    if ($.canHelp && $.activityId) {
       $.assigFirends = $.assigFirends.concat({
         "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
         "assignmentType": 2,
@@ -119,7 +121,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   if (superShakeBeanConfig.superShakeUlr) {
     const scaleUl = { "category": "jump", "des": "m", "url": superShakeBeanConfig['superShakeUlr'] };
     const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
-    if ($.isNode()) await notify.sendNotify($.name, `【${superShakeBeanConfig['superShakeTitle']}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击链接直达活动页面\n${superShakeBeanConfig['superShakeUlr']}`, { url: openjd });
+    if ($.isNode()) await notify.sendNotify($.name, `【${superShakeBeanConfig['superShakeTitle']}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击链接直达活动页面\n${superShakeBeanConfig['superShakeUlr']}\n【超级品牌日】${$.superbrandUrl}`, { url: openjd });
     $.msg($.name, superShakeBeanConfig['superShakeTitle'], `【超级摇一摇】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通会员'}】如需做此任务,请点击弹窗直达活动页面`, { 'open-url': openjd })
   }
 })()
@@ -139,6 +141,7 @@ async function clubLottery() {
     await shaking();//开始摇奖
     await shakeSign();
     await superShakeBean();//京东APP首页超级摇一摇
+    await superbrandShakeBean();//京东APP首页超级品牌日
   } catch (e) {
     $.logErr(e)
   }
@@ -468,11 +471,20 @@ function welcomeHome() {
             data = JSON.parse(data);
             if (data['floorList'] && data['floorList'].length) {
               const shakeFloorNew = data['floorList'].filter(vo => !!vo && vo.type === 'shakeFloorNew')[0];
+              const shakeFloorNew2 = data['floorList'].filter(vo => !!vo && vo.type === 'float')[0];
+              // console.log('shakeFloorNew2', JSON.stringify(shakeFloorNew2))
               if (shakeFloorNew) {
                 const jump = shakeFloorNew['jump'];
                 if (jump && jump.params && jump['params']['url']) {
                   superShakeBeanConfig['superShakeUlr'] = jump.params.url;
                   console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
+                }
+              }
+              if (shakeFloorNew && shakeFloorNew2) {
+                const jump = shakeFloorNew2['jump'];
+                if (jump && jump.params && jump['params']['url']) {
+                  console.log(`【超级品牌日】活动链接：${jump.params.url}`);
+                  $.superbrandUrl = jump.params.url;
                 }
               }
             }
@@ -535,6 +547,7 @@ function superBrandTaskList() {
             data = JSON.parse(data);
             if (data['code'] === '0' && data['data']['bizCode'] === '0') {
               $.taskList = data['data']['result']['taskList'];
+              $.canLottery = $.taskList.filter(vo => !!vo && vo['assignmentTimesLimit'] === 4)[0]['completionFlag']
             } else {
               console.log(`获取超级摇一摇任务异常：${JSON.stringify(data)}`);
             }
@@ -637,12 +650,14 @@ function superBrandDoTask(body) {
 async function lo() {
   $.superShakeBeanNum = 0;
   const num = parseInt(($.userStarNum || 0) / 100);
-  for (let i = 0; i < new Array(num).fill('').length; i++) {
-    await $.wait(1000);
-    await superBrandTaskLottery();
+  if (!$.canLottery) {
+    for (let i = 0; i < new Array(num).fill('').length; i++) {
+      await $.wait(1000);
+      await superBrandTaskLottery();
+    }
   }
   if ($.superShakeBeanNum > 0) {
-    message += `${message ? '\n' : ''}${$.activityName} || 超级摇一摇：获得${$.superShakeBeanNum}京豆`
+    message += `${message ? '\n' : ''}${$.activityName || '超级摇一摇'}：获得${$.superShakeBeanNum}京豆\n`;
     allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n${superShakeBeanConfig['superShakeTitle']}：获得${$.superShakeBeanNum}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
   }
 }
@@ -875,7 +890,161 @@ function fc_getLottery(appId) {
     })
   })
 }
-//京东会员签到
+//============超级品牌日==============
+async function superbrandShakeBean() {
+  if ($.brandActivityId) {
+    await superbrand_getMaterial();
+    await qryCompositeMaterials();
+    await superbrand_getGift();//抽奖
+  }
+}
+function superbrand_getMaterial() {
+  return new Promise(resolve => {
+    const body = {"brandActivityId":$.brandActivityId}
+    const options = superShakePostUrl('superbrand_getMaterial', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superbrand_getMaterial API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data['code'] === 0) {
+              if (data['data']['bizCode'] === 0) {
+                const { result } = data['data'];
+                $.cmsTaskShopId = result['cmsTaskShopId'];
+                $.cmsTaskLink = result['cmsTaskLink'];
+                $.cmsTaskGroupId = result['cmsTaskGroupId'];
+              } else {
+                console.log(`超级超级品牌日 ${data['data']['bizMsg']}`)
+              }
+            } else {
+              console.log(`超级超级品牌日 异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function qryCompositeMaterials() {
+  return new Promise(resolve => {
+    const t1 = {"type": "productGroup", "id": `${$.cmsTaskGroupId}`, "mapTo": "Tasks0"}
+    const qryParam = JSON.stringify([t1]);
+    const body = {
+      qryParam,
+      "activityId": $.brandActivityId2,
+      "pageId": "1411763",
+      "reqSrc": "jmfe",
+      "geo": {"lng": "", "lat": ""}
+    }
+    const options = taskPostUrl('qryCompositeMaterials', body)
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} qryCompositeMaterials API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['code'] === '0') {
+              const { list } = data['data']['Tasks0'];
+              console.log(`超级品牌日，做关注店铺 任务`)
+              let body = {"brandActivityId": $.brandActivityId, "taskType": "1", "taskId": $.cmsTaskShopId}
+              await superbrand_doMyTask(body);
+              console.log(`超级品牌日，逛品牌会场 任务`)
+              body = {"brandActivityId": $.brandActivityId, "taskType": "2", "taskId": $.cmsTaskLink}
+              await superbrand_doMyTask(body);
+              console.log(`超级品牌日，浏览下方指定商品 任务`)
+              for (let item of list.slice(0, 3)) {
+                body = {"brandActivityId": $.brandActivityId, "taskType": "3", "taskId": item['skuId']};
+                await superbrand_doMyTask(body);
+              }
+            } else {
+              console.log(`qryCompositeMaterials异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//做任务API
+function superbrand_doMyTask(body) {
+  return new Promise(resolve => {
+    const options = superShakePostUrl('superbrand_doMyTask', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superbrand_doMyTask API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            // data = JSON.parse(data)
+            console.log(`超级品牌日活动做任务结果：${data}\n`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function superbrand_getGift() {
+  return new Promise(resolve => {
+    const body = {"brandActivityId":$.brandActivityId}
+    const options = superShakePostUrl('superbrand_getGift', body)
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} superbrand_getGift API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data)
+            if (data['code'] === 0) {
+              if (data['data']['bizCode'] === 0) {
+                const { result } = data['data'];
+                $.jpeasList = result['jpeasList'];
+                if ($.jpeasList && $.jpeasList.length) {
+                  for (let item of $.jpeasList) {
+                    console.log(`超级品牌日 抽奖 活动：${item['prizeName']}`);
+                    message += `【超级品牌日】获得：${item['prizeName']}\n`;
+                    if ($.superShakeBeanNum === 0) {
+                      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['prizeName']}\n`;
+                    } else {
+                      allMessage += `【超级品牌日】获得：${item['prizeName']}\n`;
+                    }
+                  }
+                }
+              } else {
+                console.log(`超级超级品牌日 抽奖失败： ${data['data']['bizMsg']}`)
+              }
+            } else {
+              console.log(`超级超级品牌日 抽奖 异常： ${JSON.stringify(data)}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//=======================京东会员签到========================
 async function shakeSign() {
   await pg_channel_page_data();
   if ($.token && $.currSignCursor && $.signStatus === -1) {
@@ -971,6 +1140,8 @@ function pg_interact_interface_invoke(body) {
     })
   })
 }
+
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
