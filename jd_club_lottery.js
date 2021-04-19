@@ -1114,7 +1114,7 @@ async function shakeSign() {
       message += `\n京东会员签到：${beanNum}获得京豆`;
     }
   } else {
-    console.log(`京东会员第${$.currSignCursor}已签到`)
+    console.log(`京东会员第${$.currSignCursor}天已签到`)
   }
 }
 function pg_channel_page_data() {
@@ -1150,7 +1150,7 @@ function pg_channel_page_data() {
               $.currSignCursor = SIGN_ACT_INFO['floorData']['signActInfo']['currSignCursor'];
               $.signStatus = SIGN_ACT_INFO['floorData']['signActInfo']['signActCycles'].filter(item => !!item && item['signCursor'] === $.currSignCursor)[0]['signStatus'];
             }
-            console.log($.token, $.currSignCursor, $.signStatus)
+            // console.log($.token, $.currSignCursor, $.signStatus)
           }
         }
       } catch (e) {
