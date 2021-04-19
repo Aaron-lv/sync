@@ -89,7 +89,7 @@ let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ($.canHelp && cookiesArr.length > $.assistNum || 4) {
-        console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，优先内部账号互助`)
+        if ($.tuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，优先内部账号互助`)
         for (let j = 0; j < $.tuanList.length; ++j) {
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
           await helpFriendTuan($.tuanList[j])
@@ -97,7 +97,7 @@ let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 
         }
       }
       if ($.canHelp) {
-        console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，如有剩余则给作者lxk0301助力`)
+        if ($.authorTuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，如有剩余则给作者lxk0301助力`)
         for (let j = 0; j < $.authorTuanList.length; ++j) {
           console.log(`账号 ${$.UserName} 开始给作者lxk0301 ${$.authorTuanList[j]['assistedPinEncrypted']}助力`)
           await helpFriendTuan($.authorTuanList[j])
@@ -121,7 +121,7 @@ async function jdWish() {
   $.assistStatus = 0;
   await getTaskList(true)
   await getUserTuanInfo()
-  if (!$.tuan && $.assistStatus === 3 && $.canStartNewAssist) {
+  if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2) && $.canStartNewAssist) {
     console.log(`准备再次开团`)
     await openTuan()
     if ($.hasOpen) await getUserTuanInfo()
@@ -242,6 +242,7 @@ function getUserTuanInfo() {
             data = JSON.parse(data);
             if (data['success']) {
               $.log(`\n\n当前【赚京豆(微信小程序)-瓜分京豆】能否再次开团: ${data.data.canStartNewAssist ? '可以' : '否'}`)
+              console.log(`assistStatus ${data.data.assistStatus}`)
               if (data.data.assistStatus === 1 && !data.data.canStartNewAssist) {
                 console.log(`已开团(未达上限)，但团成员人未满\n\n`)
               } else if (data.data.assistStatus === 3 && data.data.canStartNewAssist) {
