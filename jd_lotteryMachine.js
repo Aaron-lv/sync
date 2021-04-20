@@ -104,7 +104,6 @@ async function help() {
   if (!cookiesArr || cookiesArr.length < 2) return
   for (let i = 0; i < cookiesArr.length; i++) {
       cookie = cookiesArr[i];
-      $.canHelp = true;
       $.index = i + 1;
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
       for (let j in appIdArr) {
@@ -114,6 +113,7 @@ async function help() {
         console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
         for (let q = 0; q < $.allShareId[$.appId].length; q++) {
           if ($.UserName === $.allShareId[$.appId][q]['userName']) continue;
+          $.canHelp = true;
           console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.allShareId[$.appId][q]['userName']}的第${parseInt(j) + 1}个抽奖活动【${$.appId}】抽奖活动邀请码 【${$.allShareId[$.appId][q]['taskToken']}】\n`)
           await harmony_collectScore($.allShareId[$.appId][q]['taskToken'], $.allShareId[$.appId][q]['taskId']);
           if (!$.canHelp) {
