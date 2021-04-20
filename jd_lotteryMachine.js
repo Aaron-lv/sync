@@ -85,54 +85,44 @@ async function help() {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  for (let i = 0; i < cookiesArr.length; i++) {
-    cookie = cookiesArr[i];
-    if (cookie) {
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-      console.log(`\n***************开始京东账号${i + 1} ${$.UserName}***************`)
-      for (let j in appIdArr) {
-        $.appId = appIdArr[j];
-        homeDataFunPrefix = homeDataFunPrefixArr[j] || 'healthyDay';
-        collectScoreFunPrefix = collectScoreFunPrefixArr[j] || 'harmony';
-        console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
-        console.log(`functionId：${homeDataFunPrefix}_getHomeData`)
-        console.log(`functionId：${collectScoreFunPrefix}_collectScore`)
+  for (let j in appIdArr) {
+    $.appId = appIdArr[j];
+    homeDataFunPrefix = homeDataFunPrefixArr[j] || 'healthyDay';
+    console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
+    console.log(`functionId：${homeDataFunPrefix}_getHomeData`)
+    for (let i = 0; i < cookiesArr.length; i++) {
+      cookie = cookiesArr[i];
+      if (cookie) {
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+        console.log(`\n***************开始京东账号${i + 1} ${$.UserName}***************`)
         await interact_template_getHomeData();
       }
-      $.allShareId[i] = $.invites;
     }
+    $.allShareId[appIdArr[j]] = $.invites;
   }
-  // console.log('$.allShareId', $.allShareId)
+  // console.log('$.allShareId', JSON.stringify($.allShareId))
   if (!cookiesArr || cookiesArr.length < 2) return
   for (let i = 0; i < cookiesArr.length; i++) {
-    cookie = cookiesArr[i];
-    $.canHelp = true;
-    $.index = i + 1;
-    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    console.log(`账号${i + 1} ${$.UserName} 自己账号内部互助\n\n`);
-    for (let item of Object.keys($.allShareId)) {
-      for (let index = 0; index < appIdArr.length; index++) {
-        $.appId = appIdArr[index];
-        console.log(`账号${i + 1} ${$.UserName} 去助力 账号${Number(item) + 1} 的【${$.appId}】抽奖活动邀请码 【${$.allShareId[item][index]['taskToken']}】\n`)
-        await harmony_collectScore($.allShareId[item][index]['taskToken'], $.allShareId[item][index]['taskId']);
-        if (!$.canHelp) {
-          console.log(`次数已用完，跳出助力`)
-          break
+      cookie = cookiesArr[i];
+      $.canHelp = true;
+      $.index = i + 1;
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      for (let j in appIdArr) {
+        $.appId = appIdArr[j];
+        // console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
+        collectScoreFunPrefix = collectScoreFunPrefixArr[j]||'harmony'
+        console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
+        for (let q = 0; q < $.allShareId[$.appId].length; q++) {
+          if ($.UserName === $.allShareId[$.appId][q]['userName']) continue;
+          console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.allShareId[$.appId][q]['userName']}的第${parseInt(j) + 1}个抽奖活动【${$.appId}】抽奖活动邀请码 【${$.allShareId[$.appId][q]['taskToken']}】\n`)
+          await harmony_collectScore($.allShareId[$.appId][q]['taskToken'], $.allShareId[$.appId][q]['taskId']);
+          if (!$.canHelp) {
+            console.log(`次数已用完，跳出助力`)
+            break
+          }
         }
       }
     }
-    // if (cookiesArr && cookiesArr.length > 3) {
-    //   console.log(`\n\n【寻找消失的企鹅】自己账号内部互助`);
-    //   for (let item of $.invites) {
-    //     console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item['taskToken']} 进行助力`)
-    //     await harmony_collectScore(item['taskToken'], item['taskId']);
-    //     if (!$.canHelp) {
-    //       console.log(`次数已用完，跳出助力`)
-    //       break
-    //     }
-    //   }
-    // }
-  }
 }
 function interact_template_getHomeData(timeout = 0) {
   return new Promise((resolve) => {
@@ -164,7 +154,8 @@ function interact_template_getHomeData(timeout = 0) {
                   if (item.assistTaskDetailVo.taskToken && item.taskId) {
                     $.invites.push({
                       taskToken: item.assistTaskDetailVo.taskToken,
-                      taskId: item.taskId
+                      taskId: item.taskId,
+                      userName: $.UserName,
                     })
                   }
                 }
