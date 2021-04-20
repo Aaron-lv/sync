@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-01 16:25:41
  * @Last Modified by:   lxk0301
- * @Last Modified time: 2021-03-29 15:25:41
+ * @Last Modified time: 2021-04-20 15:25:41
  */
 /*
 京东资产变动通知脚本：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js
@@ -293,7 +293,7 @@ function redPacket() {
         } else {
           if (data) {
             data = JSON.parse(data).data
-            $.jxRed = 0, $.jsRed = 0, $.jdRed = 0, $.jxRedExpire = 0, $.jsRedExpire = 0, $.jdRedExpire = 0;
+            $.jxRed = 0, $.jsRed = 0, $.jdRed = 0, $.jdhRed = 0, $.jxRedExpire = 0, $.jsRedExpire = 0, $.jdRedExpire = 0, $.jdhRedExpire = 0;
             let t = new Date()
             t.setDate(t.getDate() + 1)
             t.setHours(0, 0, 0, 0)
@@ -309,6 +309,11 @@ function redPacket() {
                 if (vo['endTime'] === t) {
                   $.jsRedExpire += parseFloat(vo.balance)
                 }
+              } else if (vo.orgLimitStr && vo.orgLimitStr.includes("京东健康")) {
+                $.jdhRed += parseFloat(vo.balance)
+                if (vo['endTime'] === t) {
+                  $.jdhRedExpire += parseFloat(vo.balance)
+                }
               } else {
                 $.jdRed += parseFloat(vo.balance)
                 if (vo['endTime'] === t) {
@@ -321,7 +326,7 @@ function redPacket() {
             $.jdRed = $.jdRed.toFixed(2)
             $.balance = data.balance
             $.expiredBalance = data.expiredBalance || 0;
-            $.message += `\n当前总红包：${$.balance}(今日总过期${($.jxRedExpire + $.jsRedExpire + $.jdRedExpire).toFixed(2)})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速版红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧`;
+            $.message += `\n当前总红包：${$.balance}(今日总过期${($.jxRedExpire + $.jsRedExpire + $.jdRedExpire).toFixed(2)})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速版红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧`;
             // if ($.expiredBalance > 0) $.message += `\n今明二日过期：${$.expiredBalance}元红包🧧`;
           } else {
             console.log(`京东服务器返回空数据`)
