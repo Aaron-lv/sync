@@ -20,7 +20,7 @@ cron "0,30,31 20-23/1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/ra
 超级直播间红包雨 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_live_redrain.js, cronexpr="0,30,31 20-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级直播间红包雨');
-let allMessage = '';
+let allMessage = '', id = 'RRA4RhWMc159kA62qLbaEa88evE7owb';
 let bodyList = {
   "20": {
     "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1618812732092&sign=8318f3a94b1558bc17244912dd2bff69&sv=101",
@@ -35,31 +35,9 @@ let bodyList = {
     "body": "body=%7B%22liveId%22%3A%223932303%22%7D"
   }
 }
-let ids = {
-  '0': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '1': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '2': '', 
-  '3': '', 
-  '4': '', 
-  '5': '', 
-  '6': '', 
-  '7': '', 
-  '8': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '9': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '10': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '11': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '12': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '13': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '14': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '15': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '16': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '17': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '18': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '19': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '20': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '21': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '22': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
-  '23': 'RRA4RhWMc159kA62qLbaEa88evE7owb'
+let ids = {}
+for (let i = 0; i < 24; i++) {
+  ids[i] = id;
 }
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
