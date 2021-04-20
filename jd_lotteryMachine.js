@@ -16,6 +16,12 @@ Object.keys(jdCookieNode).forEach((item) => {
 })
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
+// $.appId = "1EFRQwA";
+// $.appId = "1EFRYwA";
+const appIdArr = ['1EFRRxA', '1EFRQwA', '1EFRTyg', '1EFRXxg', '1EFRZwA', '1EFRZwQ', '1EFRYwA', '1EFRYxw']
+const homeDataFunPrefixArr = ['interact_template', 'interact_template', '', '', '', '', '', '', '', '', '', '', '', '', '', 'interact_template', 'interact_template', '']
+const collectScoreFunPrefixArr = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'interact_template', 'interact_template', '']
+$.allShareId = {};
 main();
 async function main() {
   await help();
@@ -35,7 +41,6 @@ async function main() {
       }
     }
   });
-  $.done()
 }
 function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(resolve => {
@@ -84,29 +89,52 @@ async function help() {
     cookie = cookiesArr[i];
     if (cookie) {
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-      if (i) console.log(`\n***************开始京东账号${i + 1} ${$.UserName}***************`)
-      await interact_template_getHomeData();
+      console.log(`\n***************开始京东账号${i + 1} ${$.UserName}***************`)
+      for (let j in appIdArr) {
+        $.appId = appIdArr[j];
+        homeDataFunPrefix = homeDataFunPrefixArr[j] || 'healthyDay';
+        collectScoreFunPrefix = collectScoreFunPrefixArr[j] || 'harmony';
+        console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
+        console.log(`functionId：${homeDataFunPrefix}_getHomeData`)
+        console.log(`functionId：${collectScoreFunPrefix}_collectScore`)
+        await interact_template_getHomeData();
+      }
+      $.allShareId[i] = $.invites;
     }
   }
+  // console.log('$.allShareId', $.allShareId)
+  if (!cookiesArr || cookiesArr.length < 2) return
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.canHelp = true;
     $.index = i + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    if (cookiesArr && cookiesArr.length > 3) {
-      console.log(`\n\n【寻找消失的企鹅】自己账号内部互助`);
-      for (let item of $.invites) {
-        console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item['taskToken']} 进行助力`)
-        await harmony_collectScore(item['taskToken'], item['taskId']);
+    console.log(`账号${i + 1} ${$.UserName} 自己账号内部互助\n\n`);
+    for (let item of Object.keys($.allShareId)) {
+      for (let index = 0; index < appIdArr.length; index++) {
+        $.appId = appIdArr[index];
+        console.log(`账号${i + 1} ${$.UserName} 去助力 账号${Number(item) + 1} 的【${$.appId}】抽奖活动邀请码 【${$.allShareId[item][index]['taskToken']}】\n`)
+        await harmony_collectScore($.allShareId[item][index]['taskToken'], $.allShareId[item][index]['taskId']);
         if (!$.canHelp) {
           console.log(`次数已用完，跳出助力`)
           break
         }
       }
     }
+    // if (cookiesArr && cookiesArr.length > 3) {
+    //   console.log(`\n\n【寻找消失的企鹅】自己账号内部互助`);
+    //   for (let item of $.invites) {
+    //     console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item['taskToken']} 进行助力`)
+    //     await harmony_collectScore(item['taskToken'], item['taskId']);
+    //     if (!$.canHelp) {
+    //       console.log(`次数已用完，跳出助力`)
+    //       break
+    //     }
+    //   }
+    // }
   }
 }
-function interact_template_getHomeData(appId = '1EFRYwA', timeout = 0) {
+function interact_template_getHomeData(timeout = 0) {
   return new Promise((resolve) => {
     setTimeout( ()=>{
       let url = {
@@ -121,21 +149,31 @@ function interact_template_getHomeData(appId = '1EFRYwA', timeout = 0) {
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
-        body : `functionId=interact_template_getHomeData&body={"appId":"${appId}","taskToken":""}&client=wh5&clientVersion=1.0.0`
+        body : `functionId=${homeDataFunPrefix}_getHomeData&body={"appId":"${$.appId}","taskToken":""}&client=wh5&clientVersion=1.0.0`
       }
 
       $.post(url, async (err, resp, data) => {
         try {
           data = JSON.parse(data);
-          if (data['code'] === 0 && data.data && data.data.bizCode === 0) {
-            console.log(`邀请码：${data.data.result.taskVos[3].assistTaskDetailVo.taskToken}`)
-            if (data.data.result.taskVos[3].assistTaskDetailVo.taskToken && data.data.result.taskVos[3].taskId) {
-              $.invites.push({
-                taskToken: data.data.result.taskVos[3].assistTaskDetailVo.taskToken,
-                taskId: data.data.result.taskVos[3].taskId
-              })
+          if (data['code'] === 0) {
+            if (data.data && data.data.bizCode === 0) {
+              for (let item of data.data.result.taskVos) {
+                if ([14, 6].includes(item.taskType)) {
+                  console.log(`邀请码：${item.assistTaskDetailVo.taskToken}`)
+                  console.log(`邀请好友助力：${item.times}/${item['maxTimes']}\n`);
+                  if (item.assistTaskDetailVo.taskToken && item.taskId) {
+                    $.invites.push({
+                      taskToken: item.assistTaskDetailVo.taskToken,
+                      taskId: item.taskId
+                    })
+                  }
+                }
+              }
+            } else {
+              console.log(`获取抽奖活动数据失败：${data.data.bizMsg}`)
             }
-            // await harmony_collectScore(data.data.result.taskVos[3].assistTaskDetailVo.taskToken, data.data.result.taskVos[3].taskId)
+          } else {
+            console.log(`获取抽奖活动数据异常：${JSON.stringify(data)}`)
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -148,7 +186,7 @@ function interact_template_getHomeData(appId = '1EFRYwA', timeout = 0) {
 }
 //做任务
 function harmony_collectScore(taskToken, taskId, timeout = 0) {
-  console.log(`助力 ${taskToken}`)
+  // console.log(`助力 ${taskToken}`)
   return new Promise((resolve) => {
     setTimeout( ()=>{
       let url = {
@@ -165,7 +203,7 @@ function harmony_collectScore(taskToken, taskId, timeout = 0) {
           "Referer": `https://h5.m.jd.com/babelDiy/Zeus/ahMDcVkuPyTd2zSBmWC11aMvb51/index.html?inviteId=${taskToken}`,
           "User-Agent": "jdapp;iPhone;9.4.6;14.3;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/B28DA848-0DA0-4AAA-AE7E-A6F55695C590;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167618;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
         },
-        body: `functionId=harmony_collectScore&body={"appId":"1EFRYwA","taskToken":"${taskToken}","taskId":${taskId},"actionType": 0}&client=wh5&clientVersion=1.0.0`
+        body: `functionId=${collectScoreFunPrefix}_collectScore&body={"appId": "${$.appId}","taskToken":"${taskToken}","taskId":${taskId},"actionType": 0}&client=wh5&clientVersion=1.0.0`
       }
       $.post(url, async (err, resp, data) => {
         try {
