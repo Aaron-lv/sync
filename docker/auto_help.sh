@@ -88,8 +88,7 @@ autoHelp() {
 
 ############# 短期活动 #############
 
-#环球挑战赛
-autoHelp "京东手机狂欢城好友互助码" "${logDir}/jd_carnivalcity.log" "JD818_SHARECODES"
+
 
 ############# 长期活动 #############
 
