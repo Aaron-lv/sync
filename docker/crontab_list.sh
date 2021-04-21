@@ -77,7 +77,7 @@
 # 领京豆额外奖励(每日可获得3京豆)
 23 4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 微信小程序京东赚赚
-6 0,1,2,11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
+6 0-5/1,11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
 # crazyJoy自动每日任务
 30 7,23 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
 # 京东汽车旅程赛点兑换金豆
@@ -111,6 +111,8 @@
 #家庭号
 10 6,7 * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
 #京东直播（又回来了）
-30-50/5 12,23 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
+30-50/5 12,23 * * * node /scripts/jd_   live.js >> /scripts/logs/jd_live.log 2>&1      
 #京小兑
 13 8,16,20 * * * node /scripts/jd_jxd.js >> /scripts/logs/jd_jxd.log 2>&1
+#京东健康社区
+30 0-23/3 * * * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
