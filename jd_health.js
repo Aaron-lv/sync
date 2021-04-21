@@ -1,5 +1,27 @@
 // author: 疯疯
+/*
+东东健康社区
+更新时间：2021-4-21
+活动入口：京东APP首页搜索 "玩一玩"即可
 
+已支持IOS多京东账号,Node.js支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#东东健康社区
+10 0-23/4 * * * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_health.js, tag=东东健康社区, enabled=true
+
+================Loon==============
+[Script]
+cron "10 0-23/4 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_health.js,tag=东东健康社区
+
+===============Surge=================
+东东健康社区 = type=cron,cronexp="10 0-23/4 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_health.js
+
+============小火箭=========
+东东健康社区 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_health.js, cronexpr="10 0-23/4 * * *", timeout=3600, enable=true
+
+ */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 let cookiesArr = [],
@@ -57,20 +79,24 @@ const JD_API_HOST = "https://api.m.jd.com/client.action";
   });
 
 async function main() {
-  $.score = 0
-  $.earn = false
-  await getTaskDetail(-1)
-  await getTaskDetail(16)
-  await getTaskDetail(6)
-  for(let i = 0 ; i < 5; ++i){
-    $.canDo = false
-    await getTaskDetail()
-    if(!$.canDo) break
-    await $.wait(1000)
+  try {
+    $.score = 0
+    $.earn = false
+    await getTaskDetail(-1)
+    await getTaskDetail(16)
+    await getTaskDetail(6)
+    for(let i = 0 ; i < 5; ++i){
+      $.canDo = false
+      await getTaskDetail()
+      if(!$.canDo) break
+      await $.wait(1000)
+    }
+    await collectScore()
+    await helpFriends()
+    await getTaskDetail(-1)
+  } catch (e) {
+    $.logErr(e)
   }
-  await collectScore()
-  await helpFriends()
-  await getTaskDetail(-1)
 }
 
 async function helpFriends() {
