@@ -87,6 +87,7 @@ async function help() {
   }
   for (let j in appIdArr) {
     $.appId = appIdArr[j];
+    $.appIndex = parseInt(j) + 1;
     homeDataFunPrefix = homeDataFunPrefixArr[j] || 'healthyDay';
     console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
     console.log(`functionId：${homeDataFunPrefix}_getHomeData`)
@@ -106,20 +107,16 @@ async function help() {
       cookie = cookiesArr[i];
       $.index = i + 1;
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-      for (let j in appIdArr) {
-        $.appId = appIdArr[j];
-        // console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
-        collectScoreFunPrefix = collectScoreFunPrefixArr[j]||'harmony'
+      for (let item of $.allShareId[Object.keys($.allShareId)[0]]) {
+        if ($.UserName === item['userName']) continue;
+        if (!item['taskToken'] && !item['taskId']) continue
+        console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${item['userName']}的第${item['index']}个抽奖活动【${item['appId']}】，邀请码 【${item['taskToken']}】\n`)
+        $.canHelp = true;
+        collectScoreFunPrefix = collectScoreFunPrefixArr[item['index'] - 1] || 'harmony'
         console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
-        for (let q = 0; q < $.allShareId[$.appId].length; q++) {
-          if ($.UserName === $.allShareId[$.appId][q]['userName']) continue;
-          $.canHelp = true;
-          console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.allShareId[$.appId][q]['userName']}的第${parseInt(j) + 1}个抽奖活动【${$.appId}】抽奖活动邀请码 【${$.allShareId[$.appId][q]['taskToken']}】\n`)
-          await harmony_collectScore($.allShareId[$.appId][q]['taskToken'], $.allShareId[$.appId][q]['taskId']);
-          if (!$.canHelp) {
-            console.log(`次数已用完，跳出助力`)
-            break
-          }
+        await harmony_collectScore(item['taskToken'], item['taskId']);
+        if (!$.canHelp) {
+          break
         }
       }
     }
@@ -156,15 +153,31 @@ function interact_template_getHomeData(timeout = 0) {
                       taskToken: item.assistTaskDetailVo.taskToken,
                       taskId: item.taskId,
                       userName: $.UserName,
+                      appId: $.appId,
+                      index: $.appIndex
                     })
                   }
                 }
               }
             } else {
-              console.log(`获取抽奖活动数据失败：${data.data.bizMsg}`)
+              console.log(`获取抽奖活动数据失败：${data.data.bizMsg}`);
+              $.invites.push({
+                taskToken: null,
+                taskId: null,
+                userName: $.UserName,
+                appId: $.appId,
+                index: $.appIndex
+              })
             }
           } else {
             console.log(`获取抽奖活动数据异常：${JSON.stringify(data)}`)
+            $.invites.push({
+              taskToken: null,
+              taskId: null,
+              userName: $.UserName,
+              appId: $.appId,
+              index: $.appIndex
+            })
           }
         } catch (e) {
           $.logErr(e, resp);
