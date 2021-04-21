@@ -44,8 +44,8 @@ const JD_API_HOST = 'https://api.m.jd.com/'
 
 !(async () => {
   if ($.time('yyyy-MM-dd') === '2021-04-21') {
-    $.msg($.name, '2021-04-21 0点已停止运营', `请禁用或删除脚本(jd_speed.js)`);
-    return
+    //$.msg($.name, '2021-04-21 0点已停止运营', `请禁用或删除脚本(jd_speed.js)`);
+    //return
   }
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
