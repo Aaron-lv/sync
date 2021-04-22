@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-01 16:25:41
  * @Last Modified by:   lxk0301
- * @Last Modified time: 2021-04-21 15:25:41
+ * @Last Modified time: 2021-04-22 15:25:41
  */
 /*
 京东资产变动通知脚本：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js
@@ -111,7 +111,7 @@ async function bean() {
       if (detailList && detailList.length > 0) {
         for (let item of detailList) {
           const date = item.date.replace(/-/g, '/') + "+08:00";
-          if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1) {
+          if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
             //昨日的
             yesterdayArr.push(item);
           } else if (tm > new Date(date).getTime()) {
