@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-01 16:25:41
  * @Last Modified by:   lxk0301
- * @Last Modified time: 2021-04-21 15:25:41
+ * @Last Modified time: 2021-04-22 15:25:41
  */
 /*
 京东资产变动通知脚本：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js
@@ -31,7 +31,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '';
+let cookiesArr = [], cookie = '', beanMessage = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -57,6 +57,7 @@ if ($.isNode()) {
       $.isLogin = true;
       $.nickName = '';
       $.message = '';
+      beanMessage = '';
       $.balance = 0;
       $.expiredBalance = 0;
       await TotalBean();
@@ -86,11 +87,12 @@ if ($.isNode()) {
     })
 async function showMsg() {
   if ($.errorMsg) return
-  allMessage += `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+  beanMessage += `昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶`;
+  allMessage += `账号${$.index}：${$.nickName || $.UserName}\n${beanMessage}${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
-  $.msg($.name, '', `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶${$.message}`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
+  $.msg($.name, '', `账号${$.index}：${$.nickName || $.UserName}\n${beanMessage}${$.message}`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {
   // console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
@@ -111,7 +113,7 @@ async function bean() {
       if (detailList && detailList.length > 0) {
         for (let item of detailList) {
           const date = item.date.replace(/-/g, '/') + "+08:00";
-          if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1) {
+          if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
             //昨日的
             yesterdayArr.push(item);
           } else if (tm > new Date(date).getTime()) {
@@ -141,10 +143,83 @@ async function bean() {
       $.expenseBean += Number(item.amount);
     }
   }
+  if (new Date().getDate() === 1) {
+    if ($.isNode()) {
+      if (process.env.LAST_MONTH_BEAN && process.env.LAST_MONTH_BEAN === 'true') await monthBean()
+    } else {
+      await monthBean()
+    }
+  }
   await queryexpirejingdou();//过期京豆
   await redPacket();//过期红包
   // console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
   // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
+}
+async function monthBean() {
+  $.monthIncomeBean = 0;
+  $.monthExpenseBean = 0;
+  const nowdays = new Date()
+  let year = nowdays.getFullYear()
+  let month = nowdays.getMonth()
+  if (month === 0) {
+    month = 12;
+    year = year - 1;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+
+  const myDate = new Date(year, month, 0)
+
+  const startDate = year + '/' + month + '/01 00:00:00' + "+08:00" //上个月第一天
+  const endDate = year + '/' + month + '/' + myDate.getDate() + ' 23:59:59' + "+08:00"//上个月最后一天
+  // console.log(startDate, endDate)
+  //上月第一天0:0:0时间戳
+  const tm = parseInt(new Date(startDate).getTime());
+  //上月最后一天23:59:59时间戳
+  const tm1 = parseInt(new Date(endDate).getTime());
+  let page = 1, t = 0, monthArr = [];
+  do {
+    let response = await getJingBeanBalanceDetail(page);
+    await $.wait(200)
+    console.log(`第${page}页: ${JSON.stringify(response)}`);
+    if (response && response.code === "0") {
+      page++;
+      let detailList = response.detailList;
+      if (detailList && detailList.length > 0) {
+        for (let item of detailList) {
+          const date = item.date.replace(/-/g, '/') + "+08:00";
+          if (tm <= new Date(date).getTime() && new Date(date).getTime() <= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
+            //上个月的
+            monthArr.push(item);
+          } else if (tm > new Date(date).getTime()) {
+            //上两个月的
+            t = 1;
+            break;
+          }
+        }
+      } else {
+        $.errorMsg = `数据异常`;
+        $.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
+        t = 1;
+      }
+    } else if (response && response.code === "3") {
+      console.log(`cookie已过期，或者填写不规范，跳出`)
+      t = 1;
+    } else {
+      console.log(`未知情况：${JSON.stringify(response)}`);
+      console.log(`未知情况，跳出`)
+      t = 1;
+    }
+  } while (t === 0);
+  for (let item of monthArr) {
+    if (Number(item.amount) > 0) {
+      $.monthIncomeBean += Number(item.amount);
+    } else if (Number(item.amount) < 0) {
+      $.monthExpenseBean += Number(item.amount);
+    }
+  }
+  beanMessage += `上月收入：${$.monthIncomeBean}京豆 🐶\n上月支出：${$.monthExpenseBean}京豆 🐶\n`
 }
 function TotalBean() {
   return new Promise(async resolve => {
