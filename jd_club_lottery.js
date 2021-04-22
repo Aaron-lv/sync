@@ -515,8 +515,8 @@ function superBrandMainPage() {
             data = JSON.parse(data);
             if (data['code'] === '0') {
               if (data['data']['bizCode'] === '0') {
-                superShakeBeanConfig['superShakeUlr'] = jump.params.url;
-                console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
+                //superShakeBeanConfig['superShakeUlr'] = jump.params.url;
+                //console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
 
                 $.activityId = data['data']['result']['activityBaseInfo']['activityId'];
                 $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
