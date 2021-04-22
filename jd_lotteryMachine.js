@@ -116,7 +116,7 @@ async function help() {
         console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
         await harmony_collectScore(item['taskToken'], item['taskId']);
         if (!$.canHelp) {
-          break
+          // break
         }
       }
     }
