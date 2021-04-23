@@ -69,7 +69,7 @@ const JD_API_HOST = "https://api.m.jd.com/client.action";
   });
 function showMsg() {
   return new Promise(async resolve => {
-    $.msg($.name, '', allMsg);
+    if (allMsg) $.msg($.name, '', allMsg);
     resolve();
   })
 }
@@ -106,6 +106,8 @@ async function getInfo(url) {
           if(lotteryScore<=userScore) {
             console.log(`抽奖需要${lotteryScore}，当前${userScore}分，去抽奖`)
             await doLottery("a84f9428da0bb36a6a11884c54300582")
+          } else {
+            console.log(`当前积分已不足去抽奖`)
           }
         }
       }catch (e) {

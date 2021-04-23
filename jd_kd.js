@@ -97,7 +97,7 @@ function userSignIn() {
 
             } else if (data.code === -1) {
               console.log(`今日已签到`)
-              message += `【签到】失败，今日已签到`;
+              // message += `【签到】失败，今日已签到`;
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
             }

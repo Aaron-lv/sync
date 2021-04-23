@@ -171,8 +171,8 @@ async function doCultureBean() {
 async function stealFriendWater() {
   await stealFriendList();
   if ($.stealFriendList && $.stealFriendList.code === '0') {
-    if ($.stealFriendList.data.tips) {
-      console.log('偷取好友营养液今日已达上限');
+    if ($.stealFriendList.data && $.stealFriendList.data.tips) {
+      console.log('\n\n今日偷取好友营养液已达上限\n\n');
       return
     }
     if ($.stealFriendList.data && $.stealFriendList.data.friendInfoList && $.stealFriendList.data.friendInfoList.length > 0) {
