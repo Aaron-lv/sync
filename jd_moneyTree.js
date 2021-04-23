@@ -37,7 +37,7 @@ if ($.isNode()) {
 }
 
 let jdNotify = true;//是否开启静默运行，默认true开启
-let sellFruit = false;//是否卖出金果得到金币，默认'false'不卖
+let sellFruit = true;//是否卖出金果得到金币，默认'false'不卖
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 !(async () => {
@@ -53,7 +53,6 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
       $.nickName = '';
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
-      console.log(`\n\n收获金果功能已失效，能力有限修复不了，此问题不要再问，不要再提issue\n\n`)
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
@@ -99,8 +98,15 @@ function user_info() {
     "sharePin":"",
     "shareType":1,
     "channelLV":"",
-    "source":0,
-    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+    "source":2,
+    "riskDeviceParam": {
+      "eid":"",
+      "fp":"",
+      "sdkToken":"",
+      "token":"",
+      "jstub":"",
+      "appType":"2",
+    }
   }
   params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);
   // await $.wait(5000); //歇口气儿, 不然会报操作频繁
@@ -230,7 +236,6 @@ function dayWork() {
 }
 
 function harvest() {
-  console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
   if (!userInfo) return
   const data = {
     "source": 2,
@@ -252,12 +257,12 @@ function harvest() {
   return new Promise((rs, rj) => {
     request('harvest', data).then((harvestRes) => {
       if (harvestRes && harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
-        console.log(`收获金果成功:${JSON.stringify(harvestRes)}\n`)
+        console.log(`\n收获金果成功:${JSON.stringify(harvestRes)}\n`)
         let data = harvestRes.resultData.data;
         message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
         fruitTotal = data.treeInfo.fruit;
       } else {
-        console.log(`收获金果异常:${JSON.stringify(harvestRes)}`)
+        console.log(`\n收获金果异常:${JSON.stringify(harvestRes)}`)
       }
       rs()
       // gen.next();
@@ -277,7 +282,15 @@ function sell() {
   return new Promise((rs, rj) => {
     const params = {
       "source": 2,
-      "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+      "jtCount": 7.000000000000001,
+      "riskDeviceParam": {
+        "eid": "",
+        "fp": "",
+        "sdkToken": "",
+        "token": "",
+        "jstub": "",
+        "appType": 2,
+      }
     }
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     console.log(`目前金果数量${fruitTotal}`)
@@ -287,12 +300,26 @@ function sell() {
       rs()
       return
     }
-    if (fruitTotal > 380) {
+    if (fruitTotal >= 8000 * 7) {
+      if (userInfo['jtRest'] === 0) {
+        console.log(`\n今日已卖出5.6万金果(已达上限)，获得0.07金贴\n`)
+        rs()
+        return
+      }
       request('sell', params).then((sellRes) => {
-        console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
+        if (sellRes && sellRes['resultCode'] === 0) {
+          if (sellRes['resultData']['code'] === '200') {
+            if (sellRes['resultData']['data']['sell'] === 0) {
+              console.log(`卖出金果成功，获得0.07金贴\n`);
+            } else {
+              console.log(`卖出金果失败:${JSON.stringify(sellRes)}\n`)
+            }
+          }
+        }
         rs()
       })
     } else {
+      console.log(`当前金果数量不够兑换 0.07金贴\n`);
       rs()
     }
     // request('sell', params).then(response => {
@@ -314,9 +341,9 @@ function myWealth() {
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     request('myWealth', params).then(res=> {
       if (res && res.resultCode === 0 && res.resultData.code === '200') {
-        console.log(`金币数量和金果：：${JSON.stringify(res)}`);
+        console.log(`金贴和金果数量：：${JSON.stringify(res)}`);
         message += `【我的金果数量】${res.resultData.data.gaAmount}\n`;
-        message += `【我的金币数量】${res.resultData.data.gcAmount}\n`;
+        message += `【我的金贴数量】${res.resultData.data.gcAmount / 100}\n`;
       }
       resolve();
     })
