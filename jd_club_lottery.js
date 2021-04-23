@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-4-20 13:27:09
+* @Last Modified time: 2021-4-23 13:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -478,8 +478,8 @@ function welcomeHome() {
               if (shakeFloorNew) {
                 const jump = shakeFloorNew['jump'];
                 if (jump && jump.params && jump['params']['url']) {
-                  // superShakeBeanConfig['superShakeUlr'] = jump.params.url;
-                  // console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
+                  $.superShakeUrl = "jump.params.url"
+                  console.log(`【超级摇一摇】活动链接：${jump.params.url}`);
                 }
               }
               if (shakeFloorNew && shakeFloorNew2) {
@@ -517,7 +517,7 @@ function superBrandMainPage() {
               if (data['data']['bizCode'] === '0') {
                 //superShakeBeanConfig['superShakeUlr'] = jump.params.url;
                 //console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
-
+                superShakeBeanConfig['superShakeUlr'] = $.superShakeUrl;
                 $.activityId = data['data']['result']['activityBaseInfo']['activityId'];
                 $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
                 $.activityName = data['data']['result']['activityBaseInfo']['activityName'];
