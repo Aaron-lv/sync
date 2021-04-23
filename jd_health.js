@@ -8,17 +8,17 @@ author: 疯疯
 ===================quantumultx================
 [task_local]
 #东东健康社区
-10 0-23/4 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 1,22 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "10 0-23/4 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区
+cron "13 1,22 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区
 
 ====================Surge================
-东东健康社区 = type=cron,cronexp=10 0-23/4 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js
+东东健康社区 = type=cron,cronexp=13 1,22 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js
 
 ============小火箭=========
-东东健康社区 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, cronexpr="0 0,6,12,18 * * *", timeout=3600, enable=true
+东东健康社区 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, cronexpr="13 1,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
@@ -91,6 +91,7 @@ async function main() {
     }
     await collectScore()
     await helpFriends()
+    await getTaskDetail(22);
     await getTaskDetail(-1)
   } catch (e) {
     $.logErr(e)
@@ -137,8 +138,14 @@ function getTaskDetail(taskId = '') {
             } else if (taskId === 6) {
               if (data?.data?.result?.taskVos) {
                 console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken}\n`);
-                console.log('好友助力码：' + data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken)
+                // console.log('好友助力码：' + data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken)
               }
+            } else if (taskId === 22) {
+              console.log(`${data?.data?.result?.taskVos[0]?.taskName}任务，完成次数：${data?.data?.result?.taskVos[0]?.times}/${data?.data?.result?.taskVos[0]?.maxTimes}`)
+              if (data?.data?.result?.taskVos[0]?.times === data?.data?.result?.taskVos[0]?.maxTimes) return
+              await doTask(data?.data?.result?.taskVos[0].shoppingActivityVos[0]?.taskToken, 22, 1)//领取任务
+              await $.wait(1000 * (data?.data?.result?.taskVos[0]?.waitDuration || 3));
+              await doTask(data?.data?.result?.taskVos[0].shoppingActivityVos[0]?.taskToken, 22, 0);//完成任务
             } else for (let vo of data?.data?.result?.taskVos.filter(vo => vo.taskType !== 19) ?? []) {
               console.log(`${vo.taskName}任务，完成次数：${vo.times}/${vo.maxTimes}`)
               for (let i = vo.times; i < vo.maxTimes; ++i) {
@@ -172,7 +179,8 @@ function getTaskDetail(taskId = '') {
 
 function doTask(taskToken, taskId, actionType = 0) {
   return new Promise(resolve => {
-    $.get(taskUrl('jdhealth_collectScore', {taskToken, taskId, actionType}),
+    const options = taskUrl('jdhealth_collectScore', {taskToken, taskId, actionType})
+    $.get(options,
       (err, resp, data) => {
         try {
           if (safeGet(data)) {
@@ -256,7 +264,7 @@ function readShareCode() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${$.name} health/read API请求失败，请检查网路重试`)
         } else {
           if (data) {
             console.log(`随机取${randomCount}个码放到您固定的互助码后面(不影响已有固定互助)`)
