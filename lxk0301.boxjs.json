@@ -406,9 +406,9 @@
         {
           "id": "MONEY_TREE_SELL_FRUIT",
           "name": "是否卖出金果获得金币",
-          "val": false,
+          "val": true,
           "type": "boolean",
-          "desc": "是否卖出金果获得金币,金币具有有效期，默认不卖出"
+          "desc": "是否卖出金果获得金币,金币具有有效期，默认卖出"
         }
       ],
       "author": "@lxk0301",
