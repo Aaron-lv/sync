@@ -66,6 +66,7 @@
 |    `CASH_NOTIFY_CONTROL`    |     京东领现金<br>推送开关     | 非必须 | 控制京东领现金是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `DDQ_NOTIFY_CONTROL`    |     点点券<br>推送开关     | 非必须 | 控制点点券是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `JDZZ_NOTIFY_CONTROL`    |     京东赚赚小程序<br>推送开关     | 非必须 | 控制京东赚赚小程序是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
+|    `MONEYTREE_NOTIFY_CONTROL` |     京东摇钱树<br>推送开关     | 非必须 | 控制京东摇钱树兑换0.07金贴后是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `JD_JOY_REWARD_NOTIFY`    |  宠汪汪<br>兑换京豆推送开关  | 非必须 | 控制`jd_joy_reward.js`脚本是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |       `JOY_FEED_COUNT`       |        宠汪汪喂食数量        | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字0,10,20,40,80,其他数字不可. |
 |       `JOY_HELP_FEED`        |       宠汪汪帮好友喂食       | 非必须 | 控制`jd_joy_steal.js`脚本是否给好友喂食,`false`为否,`true`为是(给好友喂食) |
