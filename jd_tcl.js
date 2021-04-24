@@ -130,7 +130,7 @@ function loadAct() {
         } else {
           //console.log(data)
           let id = data.match(/<input type="hidden" id="buyer_nick_code" name="buyer_nick_code" value="(.*)">/)
-          console.log('好友助力码' + id[1])
+          //console.log('好友助力码' + id[1])
           if (data.indexOf('<div class="yourChoice">') === -1) {
             console.log(`未选择球队，去选择`)
             await chooseTeam()
