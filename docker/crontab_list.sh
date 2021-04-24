@@ -118,3 +118,5 @@
 5-45/20 * * * * node /scripts/jd_health_collect.js >> /scripts/logs/jd_health_collect.log 2>&1
 # 幸运大转盘
 10 10,23 * * * node /scripts/jd_market_lottery.js >> /scripts/logs/jd_market_lottery.log 2>&1
+#TCL
+10 16,23 * * * node /scripts/jd_tcl.js >> /scripts/logs/jd_tcl.log 2>&1
