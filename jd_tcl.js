@@ -1,23 +1,23 @@
 // author：疯疯
 /*
 球队赢好礼
-默认：不加购物车，不开会员卡。
+默认：不加购物车，不注册店铺会员卡。
 活动地址：https://mpdz-isv.isvjcloud.com/ql/front/tcl002/loadTclAct?id=tclTeamAct002&user_id=10299171
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============QuantumultX==============
 [task_local]
 #球队赢好礼
-10 16 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js, tag=球队赢好礼, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyjd.png, enabled=true
+10 1 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js, tag=球队赢好礼, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyjd.png, enabled=true
 =================Loon===============
 [Script]
-cron "10 16 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js,tag=球队赢好礼
+cron "10 1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js,tag=球队赢好礼
 =================Surge==============
 [Script]
-球队赢好礼 = type=cron,cronexp="10 16 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js
+球队赢好礼 = type=cron,cronexp="10 1 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js
 
 ============小火箭=========
-球队赢好礼 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js, cronexpr="10 16 * * *", timeout=3600, enable=true
+球队赢好礼 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js, cronexpr="10 1 * * *", timeout=3600, enable=true
 */
 
 const $ = new Env("球队赢好礼");
