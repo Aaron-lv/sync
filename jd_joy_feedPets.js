@@ -60,6 +60,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      await $.wait(100);
       // await TotalBean();
       // console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       // if (!$.isLogin) {
