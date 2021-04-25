@@ -1,6 +1,6 @@
 /*
 宠汪汪喂食(如果喂食80g失败，降级一个档次喂食（40g）,依次类推),三餐，建议一小时运行一次
-更新时间：2021-3-39
+更新时间：2021-4-24
 活动入口：京东APP我的-更多工具-宠汪汪
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -60,6 +60,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
+      await $.wait(100);
       // await TotalBean();
       // console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       // if (!$.isLogin) {

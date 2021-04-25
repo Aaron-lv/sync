@@ -478,7 +478,7 @@ function welcomeHome() {
               if (shakeFloorNew) {
                 const jump = shakeFloorNew['jump'];
                 if (jump && jump.params && jump['params']['url']) {
-                  $.superShakeUrl = "jump.params.url"
+                  $.superShakeUrl = jump.params.url
                   console.log(`【超级摇一摇】活动链接：${jump.params.url}`);
                 }
               }
