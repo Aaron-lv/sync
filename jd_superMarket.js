@@ -100,7 +100,6 @@ async function jdSuperMarket() {
     await smtgHome();
     await receiveUserUpgradeBlue();
     await Home();
-    await rankVote();
     if (helpAu === true) {
       await helpAuthor();
       await helpAuthor3();
