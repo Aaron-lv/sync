@@ -1,5 +1,5 @@
 /*
-领金贴
+领金贴(只做签到以及互助任务里面的部分任务)
 活动入口：京东APP首页-领金贴，[活动地址](https://active.jd.com/forever/cashback/index/)
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 =================QuantumultX==============
