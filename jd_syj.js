@@ -553,7 +553,7 @@ async function distributeBeanActivity() {
       $.http.post({
         url: `https://code.c-hiang.cn/autocommit/zuan/insert`,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify($.tuan),
+        body: JSON.stringify(Object.assign($.tuan, {"time": Date.now()})),
         timeout: 30000
       }).then((resp) => {
         if (resp.statusCode === 200) {
@@ -579,7 +579,12 @@ async function distributeBeanActivity() {
 }
 function helpFriendTuan(body) {
   return new Promise(resolve => {
-    $.get(taskUrl("vvipclub_distributeBean_assist", body), async (err, resp, data) => {
+    const data = {
+      "activityIdEncrypted": body['activityIdEncrypted'],
+      "assistStartRecordId": body['assistStartRecordId'],
+      "channel": body['channel'],
+    }
+    $.get(taskUrl("vvipclub_distributeBean_assist", data), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
