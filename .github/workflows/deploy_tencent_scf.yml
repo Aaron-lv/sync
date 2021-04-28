@@ -48,6 +48,7 @@ jobs:
       PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL}}
       FRUIT_NOTIFY_CONTROL: ${{ secrets.FRUIT_NOTIFY_CONTROL}}
       CASH_NOTIFY_CONTROL: ${{ secrets.CASH_NOTIFY_CONTROL}}
+      CASH_EXCHANGE: ${{ secrets.CASH_EXCHANGE}}
       DDQ_NOTIFY_CONTROL: ${{ secrets.DDQ_NOTIFY_CONTROL}}
       JDZZ_NOTIFY_CONTROL: ${{ secrets.JDZZ_NOTIFY_CONTROL}}
       MONEYTREE_NOTIFY_CONTROL: ${{ secrets.MONEYTREE_NOTIFY_CONTROL}}
@@ -138,6 +139,7 @@ jobs:
           if [ $PET_NOTIFY_CONTROL ]; then sed -i "/variables/a\      PET_NOTIFY_CONTROL: $PET_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $FRUIT_NOTIFY_CONTROL ]; then sed -i "/variables/a\      FRUIT_NOTIFY_CONTROL: $FRUIT_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $CASH_NOTIFY_CONTROL ]; then sed -i "/variables/a\      CASH_NOTIFY_CONTROL: $CASH_NOTIFY_CONTROL" serverless.yml; fi;
+          if [ $CASH_EXCHANGE ]; then sed -i "/variables/a\      CASH_EXCHANGE: $CASH_EXCHANGE" serverless.yml; fi;
           if [ $DDQ_NOTIFY_CONTROL ]; then sed -i "/variables/a\      DDQ_NOTIFY_CONTROL: $DDQ_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JDZZ_NOTIFY_CONTROL ]; then sed -i "/variables/a\      JDZZ_NOTIFY_CONTROL: $JDZZ_NOTIFY_CONTROL" serverless.yml; fi;
           if [ $JD_JOY_REWARD_NOTIFY ]; then sed -i "/variables/a\      JD_JOY_REWARD_NOTIFY: $JD_JOY_REWARD_NOTIFY" serverless.yml; fi;
