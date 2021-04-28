@@ -87,9 +87,17 @@ async function jdCash() {
   await shareCodesFormat()
   await helpFriends()
   await getReward()
-  await getReward('2')
+  await getReward('2');
+  $.exchangeBeanNum = 0;
+  console.log(`\n\n开始花费2元红包兑换200京豆，一周可换四次`)
+  for (let i = 0; i < 4; i++) {
+    await exchange2();//兑换200京豆(2元红包换200京豆，一周四次。)
+  }
+  if ($.exchangeBeanNum) {
+    message += `兑换京豆成功，获得${$.exchangeBeanNum}京豆\n`;
+  }
   await index(true)
-  await showMsg()
+  // await showMsg()
 }
 function index(info=false) {
   return new Promise((resolve) => {
@@ -107,7 +115,7 @@ function index(info=false) {
                   message += `当前现金：${data.data.result.signMoney}元`;
                   allMessage += `京东账号${$.index}${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
                 }
-                message += `当前现金：${data.data.result.signMoney}元`;
+                console.log(`\n\n当前现金：${data.data.result.signMoney}元`);
                 return
               }
               // console.log(`您的助力码为${data.data.result.inviteCode}`)
@@ -252,7 +260,46 @@ function getReward(source = 1) {
     })
   })
 }
-
+function exchange2() {
+  let body = 'body=%7B%22node%22%3A%22-1%22%2C%22configVersion%22%3A%221.0%22%7D&client=apple&clientVersion=9.4.6&openudid=ad9e83697b055306e6b5c1d78bf341d8dd990644&sign=3a5351d59e976ac3c75e55d840fa82c0&st=1616142615135&sv=102&uuid=hjudwgohxzVu96krv%2FT6Hg%3D%3D'
+  return new Promise((resolve) => {
+    const options = {
+      url: `${JD_API_HOST}?functionId=cash_exchangeBeans&t=${Date.now()}`,
+      body: body,
+      headers: {
+        'Cookie': cookie,
+        'Host': 'api.m.jd.com',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+      }
+    }
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.code === 0 && data.data && data.data.bizCode === 0) {
+              console.log(`花费2元红包兑换200成功！获得${data.data.result.beanName}`)
+              $.exchangeBeanNum += data.data.result.beanName;
+            } else {
+              console.log('花费2元红包兑换200京豆失败：' + data.data.bizMsg)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 function showMsg() {
   return new Promise(resolve => {
     if (!jdNotify) {
