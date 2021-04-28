@@ -107,7 +107,7 @@ async function jdCash() {
       }
     }
     if ($.exchangeBeanNum) {
-      message += `兑换京豆成功，获得${$.exchangeBeanNum}京豆\n`;
+      message += `兑换京豆成功，获得${$.exchangeBeanNum * 100}京豆\n`;
     }
   }
   await index(true)
@@ -312,8 +312,8 @@ function exchange2(node) {
             data = JSON.parse(data);
             if (data['code'] === 0) {
               if (data.data.bizCode === 0) {
-                console.log(`花费2元红包兑换200成功！获得${data.data.result.beanName}\n`)
-                $.exchangeBeanNum += data.data.result.beanName;
+                console.log(`花费${data.data.result.needMoney}元红包兑换成功！获得${data.data.result.beanName}\n`)
+                $.exchangeBeanNum += parseInt(data.data.result.needMoney);
                 $.canLoop = false;
               } else {
                 console.log('花费2元红包兑换200京豆失败：' + data.data.bizMsg)
