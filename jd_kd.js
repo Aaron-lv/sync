@@ -29,7 +29,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message;
+let cookiesArr = [], cookie = '', message, allMsg = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -63,8 +63,11 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         continue
       }
       await userSignIn();
-      await showMsg();
+      // await showMsg();
     }
+  }
+  if (allMsg) {
+    $.msg($.name, '', allMsg);
   }
 })()
     .catch((e) => {
@@ -93,8 +96,8 @@ function userSignIn() {
             data = JSON.parse(data);
             if (data.code === 1) {
               console.log(`今日签到成功，获得${data.content[0].title}`)
-              message += `今日签到成功，获得${data.content[0].title} 🐶\n`;
-
+              message += `京东账号${$.index}${$.nickName}\n今日签到成功，获得${data.content[0].title} 🐶\n`;
+              allMsg += message;
             } else if (data.code === -1) {
               console.log(`今日已签到`)
               // message += `【签到】失败，今日已签到`;
