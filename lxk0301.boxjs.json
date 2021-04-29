@@ -701,9 +701,9 @@
         {
           "id": "cash_exchange",
           "name": "是否消耗红包兑换京豆",
-          "val": true,
+          "val": false,
           "type": "boolean",
-          "desc": "是否消耗2元红包兑换200京豆，一周可换四次，默认是"
+          "desc": "是否消耗2元红包兑换200京豆，一周可换四次，默认否"
         },
         {
           "id": "jd_cash_invite",
