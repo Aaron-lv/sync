@@ -43,7 +43,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 let superShakeBeanConfig = {
-  "superShakeUlr": "https://h5.m.jd.com/babelDiy/Zeus/NhDN7crw5YhhNcFbwnuc6yGC4Sn/index.html",//超级摇一摇活动链接
+  "superShakeUlr": "",//超级摇一摇活动链接
   "superShakeBeanFlag": false,
   "superShakeTitle": "",
   "taskVipName": "",
@@ -58,8 +58,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     return;
   }
   await welcomeHome()
-  if (superShakeBeanConfig['superShakeUlr']) {
-    await getActInfo(superShakeBeanConfig['superShakeUlr']);
+  if ($.superShakeUrl) {
+    await getActInfo($.superShakeUrl);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -75,7 +75,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.nickName = '';
       message = ''
       await TotalBean();
-      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
@@ -130,8 +130,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   if (superShakeBeanConfig.superShakeUlr) {
     const scaleUl = { "category": "jump", "des": "m", "url": superShakeBeanConfig['superShakeUlr'] };
     const openjd = `openjd://virtual?params=${encodeURIComponent(JSON.stringify(scaleUl))}`;
+    $.msg($.name,'', `【${superShakeBeanConfig['superShakeTitle'] || '超级摇一摇'}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通品牌会员'}】请点击弹窗直达活动页面`, { 'open-url': openjd });
     if ($.isNode()) await notify.sendNotify($.name, `【${superShakeBeanConfig['superShakeTitle']}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通品牌会员'}】请点击链接直达活动页面\n${superShakeBeanConfig['superShakeUlr']}`, { url: openjd });
-    $.msg($.name,'', `【${superShakeBeanConfig['superShakeTitle'] || '超级摇一摇'}】活动再次开启\n【${superShakeBeanConfig['taskVipName'] || '开通品牌会员'}】请点击弹窗直达活动页面`, { 'open-url': openjd })
   }
 })()
     .catch((e) => {
@@ -488,7 +488,7 @@ function welcomeHome() {
               if (shakeFloorNew) {
                 const jump = shakeFloorNew['jump'];
                 if (jump && jump.params && jump['params']['url']) {
-                  $.superShakeUrl = jump.params.url
+                  $.superShakeUrl = jump.params.url;//有活动链接，但活动可能已过期，需做进一步判断
                   console.log(`【超级摇一摇】活动链接：${jump.params.url}`);
                 }
               }
@@ -566,6 +566,7 @@ function fc_getHomeData(appId, flag = false) {
                   superShakeBeanConfig['superShakeBeanFlag'] = true;
                   superShakeBeanConfig['taskVipName'] = taskVos.filter(vo => !!vo && vo['taskType'] === 21)[0]['taskName'];
                 }
+                superShakeBeanConfig['superShakeUlr'] = $.superShakeUrl;
                 $.taskVos = taskVos.filter(item => !!item && item['status'] === 1) || [];
                 $.lotteryNum = parseInt(data['data']['result']['lotteryNum']);
                 $.lotTaskId = parseInt(data['data']['result']['lotTaskId']);
@@ -588,7 +589,7 @@ function fc_getHomeData(appId, flag = false) {
 async function doShakeTask(appId) {
   for (let vo of $.taskVos) {
     if (vo['taskType'] === 21) {
-      console.log(`${vo['taskName']} 跳过`);
+      console.log(`超级摇一摇 ${vo['taskName']} 跳过`);
       continue
     }
     if (vo['taskType'] === 9) {
@@ -726,7 +727,7 @@ function superBrandMainPage() {
                 superShakeBeanConfig['superShakeTitle'] = $.activityName;
                 console.log(`${$.activityName} 当前共有积分：${$.userStarNum}，可抽奖：${parseInt($.userStarNum / 100)}次(最多4次摇奖机会)\n`);
               } else {
-                console.log(`\n【超级摇一摇】获取信息失败：${data['data']['bizMsg']}\n`);
+                console.log(`\n【新版本 超级摇一摇】获取信息失败：${data['data']['bizMsg']}\n`);
               }
             } else {
               console.log(`获取超级摇一摇信息异常：${JSON.stringify(data)}\n`);
