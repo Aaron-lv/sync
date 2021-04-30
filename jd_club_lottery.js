@@ -946,12 +946,12 @@ function getInteractionInfo(info = true) {
             if (data['result'] && data['result']['code'] === 0) {
               const { result } = data;
               if (info) console.log(`\n\n京东小魔方：${result['brandName']}`)
-              $.taskSkuInfo = result['taskSkuInfo'];
-              $.taskList = result['taskPoolInfo']['taskList'];
+              $.taskSkuInfo = result['taskSkuInfo'] || [];
+              $.taskList = result['taskPoolInfo']['taskList'] || [];
               $.taskPoolId = result['taskPoolInfo']['taskPoolId'];
               $.taskSkuNum = result['taskSkuNum'];
               $.interactionId = result['interactionId'];
-              $.shopInfoList = result['shopInfoList'];
+              $.shopInfoList = result['shopInfoList'] || [];
               $.lotteryNum = result['lotteryInfo']['lotteryNum'] || 0;
               if (!info) console.log(`京东小魔方当前抽奖次数：${$.lotteryNum}\n`)
             } else {
