@@ -12,13 +12,13 @@ author: 疯疯
 
 =====================Loon================
 [Script]
-cron "13 1,22 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区
+cron "13 1,6,22 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区
 
 ====================Surge================
-东东健康社区 = type=cron,cronexp=13 1,22 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js
+东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js
 
 ============小火箭=========
-东东健康社区 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, cronexpr="13 1,22 * * *", timeout=3600, enable=true
+东东健康社区 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
