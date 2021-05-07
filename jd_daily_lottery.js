@@ -1,22 +1,23 @@
 /*
 每日抽奖
+活动时间：2021-05-01至2021-05-31
 更新时间：2021-5-7
 活动入口：京东APP首页搜索 "玩一玩"，每日抽奖
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
 #每日抽奖
-13 1,22 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, tag=每日抽奖, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 1,22,23 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, tag=每日抽奖, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "23 1,22 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, tag=每日抽奖
+cron "13 1,22,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, tag=每日抽奖
 
 ====================Surge================
-每日抽奖 = type=cron,cronexp="23 1,22 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js
+每日抽奖 = type=cron,cronexp="13 1,22,23 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js
 
 ============小火箭=========
-每日抽奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, cronexpr="23 1,22 * * *", timeout=3600, enable=true
+每日抽奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, cronexpr="13 1,22,23 * * *", timeout=3600, enable=true
 */
 const $ = new Env('每日抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
