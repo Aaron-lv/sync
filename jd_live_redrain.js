@@ -24,10 +24,6 @@ let bodyList = {
   "7": {
     "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619679150030&sign=df50035617ddc934be4b882ba1fa092c&sv=101",
     "body": "body=%7B%22liveId%22%3A%224033765%22%7D"
-  },
-  "30": {
-    "url": "https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1619679152042&sign=f6a21b76b113cb62be882dbd62edade7&sv=122",
-    "body": "body=%7B%22liveId%22%3A%224010816%22%7D"
   }
 }
 let ids = {}
