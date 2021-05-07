@@ -29,7 +29,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
-const linkId = "jOkIZzWCgGa9NfPuHBSx1A";
+const linkId = "AkOULcXbUA_8EAPbYLLMgg";
 
 
 
