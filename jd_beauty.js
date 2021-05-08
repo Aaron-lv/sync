@@ -88,7 +88,7 @@ async function accountCheck(){
   }
   let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`,null,{
     headers:{
-      'user-agent': process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+      'user-agent': "jdapp;android;9.5.0;5.1.1;8363331303230333330383934363-73D2138356239366237373730303;network/wifi;model/vivo X7;addressid/4092959325;aid/e3378926a846c4f7;oaid/;osVer/22;appBuild/87697;partner/vivo;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 5.1.1; vivo X7 Build/LMY47V; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36",
     }
   });
   client.onopen = async () => {
@@ -125,13 +125,13 @@ async function accountCheck(){
 
 async function jdBeauty() {
   $.hasDone = false
-  await getIsvToken()
-  await getIsvToken2()
-  await getToken()
-  if (!$.token) {
-    console.log(`\n\n提示：请尝试换服务器ip或者设置"xinruimz-isv.isvjcloud.com"域名直连，或者自定义UA再次尝试(环境变量JD_USER_AGENT)\n\n`)
-    return
-  }
+  // await getIsvToken()
+  // await getIsvToken2()
+  // await getToken()
+  // if (!$.token) {
+  //   console.log(`\n\n提示：请尝试换服务器ip或者设置"xinruimz-isv.isvjcloud.com"域名直连，或者自定义UA再次尝试(环境变量JD_USER_AGENT)\n\n`)
+  //   return
+  // }
   await mr()
   while (!$.hasDone) {
     await $.wait(1000)
@@ -148,7 +148,7 @@ async function mr() {
   $.needs = []
   let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`,null,{
     headers:{
-      'user-agent': process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+      'user-agent': "jdapp;android;9.5.0;5.1.1;8363331303230333330383934363-73D2138356239366237373730303;network/wifi;model/vivo X7;addressid/4092959325;aid/e3378926a846c4f7;oaid/;osVer/22;appBuild/87697;partner/vivo;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 5.1.1; vivo X7 Build/LMY47V; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36",
     }
   })
   console.log(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
@@ -454,13 +454,13 @@ async function mr() {
             console.log(`收取产品失败，错误信息${vo.msg}`)
           }
           break
-          // case "get_task":
-          //   console.log(`当前任务【${vo.data.describe}】，需要【${vo.data.product.name}】${vo.data.package_stock}/${vo.data.num}份`)
-          //   if (vo.data.package_stock >= vo.data.num) {
-          //     console.log(`满足任务要求，去完成任务`)
-          //     client.send(`{"msg":{"type":"action","args":{"task_id":${vo.data.id}},"action":"complete_task"}}`)
-          //   }
-          //   break
+        // case "get_task":
+        //   console.log(`当前任务【${vo.data.describe}】，需要【${vo.data.product.name}】${vo.data.package_stock}/${vo.data.num}份`)
+        //   if (vo.data.package_stock >= vo.data.num) {
+        //     console.log(`满足任务要求，去完成任务`)
+        //     client.send(`{"msg":{"type":"action","args":{"task_id":${vo.data.id}},"action":"complete_task"}}`)
+        //   }
+        //   break
         case 'get_benefit':
           for (let benefit of vo.data) {
             if (benefit.type === 1) { //type 1 是京豆
@@ -584,7 +584,7 @@ function getToken() {
       'Accept-Language': 'zh-cn',
       'Content-Type': 'application/json;charset=utf-8',
       'Origin': 'https://xinruimz-isv.isvjcloud.com',
-      'User-Agent': process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+      'User-Agent': "jdapp;android;9.5.2;10;2353932316161666-6313563383338363;network/wifi;model/EVR-AL00;addressid/4032588137;aid/2592aaaf61e38386;oaid/1d53eb96-e090-4538-ab6f-0e5e3d4664b7;osVer/29;appBuild/87971;partner/huawei;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; EVR-AL00 Build/HUAWEIEVR-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045230 Mobile Safari/537.36",
       'Referer': 'https://xinruimz-isv.isvjcloud.com/logined_jd/',
       'Authorization': 'Bearer undefined',
       'Cookie': `IsvToken=${$.isvToken};`
