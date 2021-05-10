@@ -1052,7 +1052,7 @@ function superbrand_getGift() {
                 $.jpeasList = result['jpeasList'];
                 if ($.jpeasList && $.jpeasList.length) {
                   for (let item of $.jpeasList) {
-                    console.log(`超级品牌日 抽奖 活动：${item['prizeName']}`);
+                    console.log(`超级品牌日 抽奖 获得：${item['prizeName']}`);
                     message += `【超级品牌日】获得：${item['prizeName']}\n`;
                     if ($.superShakeBeanNum === 0) {
                       allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['prizeName']}\n`;
@@ -1287,7 +1287,7 @@ async function shakeSign() {
       beanNum = signRes['data']['rewardVos'] && signRes['data']['rewardVos'][0]['jingBeanVo'] && signRes['data']['rewardVos'][0]['jingBeanVo']['beanNum']
     }
     if (beanNum) {
-      message += `\n京东会员签到：${beanNum}获得京豆`;
+      message += `\n京东会员签到：获得${beanNum}京豆\n`;
     }
   } else {
     console.log(`京东会员第${$.currSignCursor}天已签到`)
