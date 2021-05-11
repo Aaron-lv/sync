@@ -38,10 +38,9 @@ if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
-  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
-  };
-  if(JSON.stringify(process.env).indexOf('GITHUB')>-1) process.exit(0)
-}else {
+  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+  if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)
+} else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
@@ -55,17 +54,17 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
-    $.log(`\n远程红包雨配置获取错误，从本地读取配置`)
-    let hour = (new Date().getUTCHours() + 8) %24
-    if (ids[hour]){
+    $.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`)
+    let hour = (new Date().getUTCHours() + 8) % 24
+    if (ids[hour]) {
       $.activityId = ids[hour]
       $.log(`本地红包雨配置获取成功，ID为：${$.activityId}\n`)
-    } else{
+    } else {
       $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
       $.log(`非红包雨期间出现上面提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
       return
     }
-  } else{
+  } else {
     $.log(`远程红包雨配置获取成功`)
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -97,12 +96,12 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '', allMessage);
   }
 })()
-  .catch((e) => {
-    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-  })
-  .finally(() => {
-    $.done();
-  })
+    .catch((e) => {
+      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+    })
+    .finally(() => {
+      $.done();
+    })
 
 function showMsg() {
   return new Promise(resolve => {
@@ -113,9 +112,9 @@ function showMsg() {
 
 function getRedRain() {
   let body
-  if(bodyList.hasOwnProperty(new Date().getDate())) {
+  if (bodyList.hasOwnProperty(new Date().getDate())) {
     body = bodyList[new Date().getDate()]
-  }else{
+  } else {
     return
   }
   return new Promise(resolve => {
@@ -128,9 +127,8 @@ function getRedRain() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.data && data.data.iconArea) {
-              console.log(data.data.iconArea.filter(vo=>vo['type']==='anchor_darw_lottery').length &&
-                data.data.iconArea.filter(vo=>vo['type']==='anchor_darw_lottery')[0].data.lotteryId)
-              let act = data.data.iconArea.filter(vo=>vo['type']==="platform_red_packege_rain")[0]
+              // console.log(data.data.iconArea.filter(vo => vo['type'] === 'anchor_darw_lottery').length && data.data.iconArea.filter(vo => vo['type'] === 'anchor_darw_lottery')[0].data.lotteryId)
+              let act = data.data.iconArea.filter(vo => vo['type'] === "platform_red_packege_rain")[0]
               if (act) {
                 let url = act.data.activityUrl
                 $.activityId = url.substr(url.indexOf("id=") + 3)
@@ -141,10 +139,10 @@ function getRedRain() {
                 console.log(`下一场红包雨开始时间：${new Date($.st)}`)
                 console.log(`下一场红包雨结束时间：${new Date($.ed)}`)
               } else {
-                console.log(`暂无红包雨`)
+                console.log(`\n暂无超级直播间红包雨`)
               }
             } else {
-              console.log(`暂无红包雨`)
+              console.log(`\n暂无超级直播间红包雨`)
             }
           }
         }
@@ -189,10 +187,11 @@ function receiveRedRain() {
     })
   })
 }
+
 function taskGetUrl(url, body) {
   return {
     url: url,
-    body:body,
+    body: body,
     headers: {
       "Accept": "*/*",
       "Accept-Encoding": "gzip, deflate, br",
