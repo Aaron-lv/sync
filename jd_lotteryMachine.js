@@ -18,7 +18,7 @@ if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () =
 if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
 // $.appId = "1EFRQwA";
 // $.appId = "1EFRYwA";
-const appIdArr = ['1EFRRxA','1EFRQwA','1EFRTyg','1EFRXxg','1EFVRww','1EFRYxA','1EFRZwA','1EFRZwQ','1EFRYwA']
+const appIdArr = ['1EFRRxA','1EFRQwA','1EFRQw64','1EFRXxg','1EFVRww','1EFRYxA','1EFRZwA','1EFRZwQ','1EFRYwA']
 const homeDataFunPrefixArr = ['interact_template','interact_template','','','','','','','','','','','','','','','','interact_template','interact_template']
 const collectScoreFunPrefixArr = ['','','','','','','','','','','','','','','','','','interact_template','interact_template']
 $.allShareId = {};
