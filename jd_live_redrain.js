@@ -51,20 +51,31 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     return;
   }
   console.log('下一场超级直播间时间:05月11日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4085977')
+  $.newAcids = [];
   await getRedRain();
 
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
-    $.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`)
-    let hour = (new Date().getUTCHours() + 8) % 24
-    if (ids[hour]) {
-      $.activityId = ids[hour]
-      $.log(`本地红包雨配置获取成功，ID为：${$.activityId}\n`)
+    $.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`);
+    $.http.get({url: `https://purge.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json`}).then((resp) => {}).catch();
+    let hour = (new Date().getUTCHours() + 8) % 24;
+    let redIds = await getRedRainIds();
+    if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json');
+    $.newAcids = [...(redIds || [])];
+    if ($.newAcids && $.newAcids.length) {
+      $.log(`本地红包雨配置获取成功，ID为：${JSON.stringify($.newAcids)}\n`)
     } else {
       $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
-      $.log(`非红包雨期间出现上面提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
       return
     }
+    // if (ids[hour]) {
+    //   $.activityId = ids[hour]
+    //   $.log(`本地红包雨配置获取成功，ID为：${$.activityId}\n`)
+    // } else {
+    //   $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
+    //   $.log(`非红包雨期间出现上面提示请忽略。红包雨期间会正常，此脚本提issue打死！！！！！！！！！！！)`)
+    //   return
+    // }
   } else {
     $.log(`远程红包雨配置获取成功`)
   }
@@ -88,7 +99,10 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       }
       let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
       // console.log(nowTs, $.startTime, $.endTime)
-      await receiveRedRain();
+      for (let id of $.newAcids) {
+        // $.activityId = id;
+        await receiveRedRain(id);
+      }
       // await showMsg();
     }
   }
@@ -132,7 +146,8 @@ function getRedRain() {
               let act = data.data.iconArea.filter(vo => vo['type'] === "platform_red_packege_rain")[0]
               if (act) {
                 let url = act.data.activityUrl
-                $.activityId = url.substr(url.indexOf("id=") + 3)
+                $.activityId = url.substr(url.indexOf("id=") + 3);
+                $.newAcids.push($.activityId);
                 $.st = act.startTime
                 $.ed = act.endTime
                 console.log($.activityId)
@@ -156,9 +171,9 @@ function getRedRain() {
   })
 }
 
-function receiveRedRain() {
+function receiveRedRain(actId) {
   return new Promise(resolve => {
-    const body = {"actId": $.activityId};
+    const body = { actId };
     $.get(taskUrl('noahRedRainLottery', body), (err, resp, data) => {
       try {
         if (err) {
@@ -173,7 +188,7 @@ function receiveRedRain() {
               message += `领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)}京豆`
               allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n领取成功，获得 ${(data.lotteryResult.jPeasList[0].quantity)}京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
             } else if (data.subCode === '8') {
-              console.log(`今日次数已满`)
+              console.log(`领取失败：本场已领过`)
               message += `领取失败，本场已领过`;
             } else {
               console.log(`异常：${JSON.stringify(data)}`)
@@ -237,6 +252,42 @@ function taskUrl(function_id, body = {}) {
       "User-Agent": "JD4iPhone/9.4.5 CFNetwork/1209 Darwin/20.2.0"
     }
   }
+}
+
+function getRedRainIds(url = "https://raw.githubusercontent.com/gitupdate/updateTeam/master/redrain.json") {
+  return new Promise(async resolve => {
+    const options = {
+      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }
+    };
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+      const tunnel = require("tunnel");
+      const agent = {
+        https: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.TG_PROXY_HOST,
+            port: process.env.TG_PROXY_PORT * 1
+          }
+        })
+      }
+      Object.assign(options, { agent })
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          if (data) data = JSON.parse(data)
+        }
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(10000)
+    resolve([]);
+  })
 }
 
 function TotalBean() {
