@@ -1,5 +1,6 @@
 /*
 超级直播间红包雨
+更新时间：2021-05-12
 下一场超级直播间时间:05月11日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4085977
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
@@ -233,7 +234,7 @@ function taskUrl(function_id, body = {}) {
       "Host": "api.m.jd.com",
       "Referer": `https://h5.m.jd.com/active/redrain/index.html?id=${$.activityId}&lng=0.000000&lat=0.000000&sid=&un_area=`,
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+      "User-Agent": "JD4iPhone/9.4.5 CFNetwork/1209 Darwin/20.2.0"
     }
   }
 }
