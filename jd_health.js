@@ -8,7 +8,7 @@ author: 疯疯
 ===================quantumultx================
 [task_local]
 #东东健康社区
-13 1,22 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 1,6,22 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]

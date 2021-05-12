@@ -541,7 +541,7 @@ function openRedPacket(floorToken) {
 //================赚京豆开团===========
 async function distributeBeanActivity() {
   try {
-    $.tuan = null
+    $.tuan = ''
     $.hasOpen = false;
     $.assistStatus = 0;
     await getUserTuanInfo()
