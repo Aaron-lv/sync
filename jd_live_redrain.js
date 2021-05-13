@@ -101,7 +101,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       // console.log(nowTs, $.startTime, $.endTime)
       for (let id of $.newAcids) {
         // $.activityId = id;
-        await receiveRedRain(id);
+        if (id) await receiveRedRain(id);
       }
       // await showMsg();
     }
