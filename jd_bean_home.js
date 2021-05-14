@@ -75,11 +75,11 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       cookie = cookiesArr[i];
       if ($.newShareCodes.length > 1) {
         let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-        await help(code.shareCode, code.groupCode)
+        await help(code[0], code[1])
       }
       if (helpAuthor && $.authorCode) {
         console.log(`去帮助作者`)
-        const helpRes = await help($.authorCode[0], $.authorCode[1])
+        const helpRes = await help(code.shareCode, code.groupCode)
         if (helpRes && helpRes.data.respCode === 'SG209') {
           console.log(`助力次数已耗尽，跳出助力`)
           break;
