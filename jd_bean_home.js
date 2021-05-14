@@ -75,7 +75,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       cookie = cookiesArr[i];
       if ($.newShareCodes.length > 1) {
         let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-        await help(code[0], code[1])
+        await help(code.shareCode, code.groupCode)
       }
       if (helpAuthor && $.authorCode) {
         console.log(`去帮助作者`)
