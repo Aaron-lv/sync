@@ -220,7 +220,7 @@ function getUserInfo() {
               } else {
                 console.log(shareCode, groupCode)
                 // 去做逛会场任务
-                if (data.data.beanActivityVisitVenue.taskStatus === '0') {
+                if (data.data.beanActivityVisitVenue && data.data.beanActivityVisitVenue.taskStatus === '0') {
                   await help(shareCode, groupCode, 1)
                 }
                 $.newShareCodes.push([shareCode, groupCode])
