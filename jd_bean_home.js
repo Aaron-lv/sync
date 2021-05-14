@@ -165,13 +165,13 @@ function doTask2() {
 
 function getAuthorShareCode() {
   return new Promise(resolve => {
-    $.get({url: "https://gitee.com/shylocks/updateTeam/raw/main/jd_bean_home",headers:{
+    $.get({url: "https://a.nz.lu/bean.json",headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }}, async (err, resp, data) => {
       try {
         if (err) {
         } else {
-          $.authorCode = data.replace('\n', '').split(' ')
+          $.authorCode = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)
