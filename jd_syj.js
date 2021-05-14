@@ -552,7 +552,7 @@ async function distributeBeanActivity() {
     }
     if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
       $.tuanList.push($.tuan);
-      const code = Object.assign({ "code": $.tuan }, {"time": Date.now(), "act":"zuan"});
+      const code = Object.assign($.tuan, {"time": Date.now()});
       $.http.post({
         url: `http://go.chiang.fun/autocommit`,
         headers: { "Content-Type": "application/json" },
