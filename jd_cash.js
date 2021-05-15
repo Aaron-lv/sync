@@ -97,8 +97,8 @@ async function jdCash() {
     for (let item of ["-1", "0", "1", "2", "3"]) {
       $.canLoop = true;
       if ($.canLoop) {
-        for (let i = 0; i < 4; i++) {
-          await exchange2(item);//兑换200京豆(2元红包换200京豆，一周四次。)
+        for (let i = 0; i < 5; i++) {
+          await exchange2(item);//兑换200京豆(2元红包换200京豆，一周5次。)
         }
         if (!$.canLoop) {
           console.log(`已找到符合的兑换条件，跳出\n`);
