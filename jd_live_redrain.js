@@ -1,6 +1,6 @@
 /*
 超级直播间红包雨
-更新时间：2021-05-15
+更新时间：2021-05-17
 下一场超级直播间时间:05月18日  20:00，直播间地址：https://h5.m.jd.com/dev/3pbY8ZuCx4ML99uttZKLHC2QcAMn/live.html?id=4132669
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 ==============Quantumult X==============
@@ -57,7 +57,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     $.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`);
-    $.http.get({url: `https://purge.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json`}).then((resp) => {}).catch();
+    $.http.get({url: `https://purge.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json`}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
     let hour = (new Date().getUTCHours() + 8) % 24;
     let redIds = await getRedRainIds();
     if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json');
