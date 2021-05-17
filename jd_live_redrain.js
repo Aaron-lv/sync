@@ -81,7 +81,9 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   }
   for (let id of $.newAcids) {
     // $.activityId = id;
-    // if (id) await receiveRedRain(id);
+    if (!id) continue;
+    console.log(`\n今日${new Date().getHours()}点ID：${id
+    }\n`);
     for (let i = 0; i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
