@@ -141,7 +141,7 @@
 
 ## 赞赏码(开发维护不易,请赏杯茶水费)
 
-<div align=center><img width="250" height="250" src="./icon/thanks.jpg"/></div>
+<div align=center><img width="250" height="250" src="https://cdn.jsdelivr.net/gh/wisz2021/jd_docker@main/icon/thanks.jpg"/></div>
 
 
 ## 特别感谢(排名不分先后)：
