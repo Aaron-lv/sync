@@ -75,6 +75,7 @@
 |       `JOY_RUN_NOTIFY`       | 宠汪汪<br>宠汪汪赛跑获胜后是否推送通知 | 非必须 | 控制`jd_joy.js`脚本宠汪汪赛跑获胜后是否推送通知，<br>`false`为否(不推送通知消息),`true`为是(即：发送推送通知消息)<br> |
 |    `JOY_RUN_HELP_MYSELF`      |    宠汪汪<br>赛跑自己账号内部互助     | 非必须 | 输入`true`为开启内部互助 |
 |     `JD_JOY_REWARD_NAME`     |  宠汪汪<br>积分兑换多少京豆  | 非必须 | 目前可填值为`20`或者`500`,脚本默认`0`,`0`表示不兑换京豆     |
+|     `JOY_RUN_TOKEN`     |  宠汪汪<br>赛跑token  | 非必须 | 宠汪汪小程序获取token，点击`发现`或`我的`获取token     |
 |    `MARKET_COIN_TO_BEANS`    |    东东超市<br>兑换京豆数量    | 非必须 | 控制`jd_blueCoin.js`兑换京豆数量,<br>可输入值为`20`或者`1000`的数字或者其他商品的名称,例如`碧浪洗衣凝珠` |
 |    `MARKET_REWARD_NOTIFY`    |  东东超市<br>兑换奖品推送开关  | 非必须 | 控制`jd_blueCoin.js`兑换奖品成功后是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `JOIN_PK_TEAM`            |    东东超市<br>自动参加PK队伍    | 非必须 | 每次pk活动参加作者创建的pk队伍,`true`表示参加,`false`表示不参加 |
