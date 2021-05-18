@@ -1,8 +1,8 @@
 /*
-每日抽奖
-活动时间：2021-05-01至2021-05-31
-更新时间：2021-5-7
-活动入口：京东APP首页搜索 "玩一玩"，每日抽奖
+小鸽有礼-每日抽奖
+活动入口：惊喜-》我的-》寄件服务-》寻味四季-》右侧瓜分千万京豆
+author：star
+活动时间：2021-04-16至2021-05-17
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -19,10 +19,10 @@ cron "13 1,22,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mas
 ============小火箭=========
 每日抽奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, cronexpr="13 1,22,23 * * *", timeout=3600, enable=true
 */
-const $ = new Env('每日抽奖');
+const $ = new Env('小鸽有礼-每日抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const activityCode = '1386931424925319168';
+const activityCode = '1384416160044290048';
 $.helpCodeList = [];
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -63,27 +63,6 @@ if ($.isNode()) {
       await dailyLottery()
     }
   }
-  for (let i = 0; i < $.helpCodeList.length && cookiesArr.length > 0; i++) {
-    if ($.helpCodeList[i].needHelp === 0) {
-      continue;
-    }
-    for (let j = 0; j < cookiesArr.length && $.helpCodeList[i].needHelp !== 0; j++) {
-      $.helpFlag = '';
-      cookie = cookiesArr[j];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-      if ($.helpCodeList[i].use === $.UserName) {
-        continue;
-      }
-      console.log(`${$.UserName}助力:${$.helpCodeList[i].helpCpde}`);
-      await helpFriend($.helpCodeList[i].helpCpde);
-      if ($.helpFlag === true) {
-        $.helpCodeList[i].needHelp -= 1;
-      }
-      cookiesArr.splice(j, 1);
-      j--;
-    }
-  }
-
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -103,70 +82,41 @@ async function dailyLottery() {
   }
   if ($.missionList.length === 0) {
     console.log(`${$.UserName}获取任务列表失败`);
-  } else {
+    return;
+  }
+  $.runTime = 0;
+  do {
+    $.runFlag = false;
     await doMission();//做任务
-    await $.wait(1000);
     await Promise.all([getLotteryInfo(), getQueryMissionList()]);
-    // await doMission();//做任务
-    // await $.wait(1000);
-    // await Promise.all([getLotteryInfo(), getQueryMissionList()]);
-  }
-  await $.wait(1000);
-  if ($.missionList.length === 0) {
-    console.log(`${$.UserName}获取任务列表失败`);
-  } else {
+    await $.wait(1000);
     await collectionTimes();//领任务奖励
-    await $.wait(1000);
     await Promise.all([getLotteryInfo(), getQueryMissionList()]);
-  }
+    await $.wait(1000);
+    $.runTime++;
+  } while ($.runFlag && $.runTime < 30);
+
   let drawNum = $.lotteryInfo.content.drawNum || 0;
   console.log(`共有${drawNum}次抽奖机会`);
   $.drawNumber = 1;
   for (let i = 0; i < drawNum; i++) {
-    await $.wait(2000);
+    await $.wait(1000);
     //执行抽奖
     await lotteryDraw();
     $.drawNumber++;
   }
 }
 
-//助力
-async function helpFriend(missionNo) {
-  const body = `[{"userNo":"$cooMrdGatewayUid$","missionNo":"${missionNo}"}]`;
-  const myRequest = getPostRequest('luckdraw/helpFriend', body);
-  return new Promise(async resolve => {
-    $.post(myRequest, (err, resp, data) => {
-      try {
-        /*
-        * {"code":1,"content":true,"data":true,"errorMsg":"SUCCESS","msg":"SUCCESS","success":true}
-        * */
-        console.log(`助力结果:${data}`);
-        data = JSON.parse(data);
-        if (data.success === true && data.content === true) {
-          console.log(`助力成功`);
-          $.helpFlag = true;
-        } else {
-          $.helpFlag = false;
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
 
 //做任务
 async function collectionTimes() {
   console.log(`开始领任务奖励`);
   for (let i = 0; i < $.missionList.length; i++) {
-    await $.wait(1000);
     if ($.missionList[i].status === 11) {
       let getRewardNos = $.missionList[i].getRewardNos;
       for (let j = 0; j < getRewardNos.length; j++) {
         await collectionOneMission($.missionList[i].title, getRewardNos[j]);//领奖励
-        await $.wait(2000);
+        await $.wait(1000);
       }
     }
   }
@@ -179,31 +129,30 @@ async function doMission() {
     if ($.missionList[i].status !== 1) {
       continue;
     }
-    await $.wait(3000);
-    if ($.missionList[i].jumpType === 135) {
+    await $.wait(1000);
+    if ($.missionList[i].jumpType === 135 || $.missionList[i].jumpType === 136 || $.missionList[i].jumpType === 137) {
       await doOneMission($.missionList[i]);
-    } else if ($.missionList[i].jumpType === 1) {
-      await createInvitation($.missionList[i]);
+    } else if ($.missionList[i].jumpType === 45 || $.missionList[i].jumpType === 31) {
+      //await createInvitation($.missionList[i]);
+      await doOneMission2($.missionList[i]);
     }
   }
 }
 
-//邀请好友来抽奖
-async function createInvitation(missionInfo) {
-  const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}"}]`;
-  const myRequest = getPostRequest('luckdraw/createInvitation', body)
+async function doOneMission2(missionInfo) {
+  const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}","missionNo":"${missionInfo.missionNo}"}]`;
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/completeMission', body)
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
         //{"code": 1,"content": "ML:786c65ea-ca5c-4b3b-8b07-7ca5adaa8deb","data": "ML:786c65ea-ca5c-4b3b-8b07-7ca5adaa8deb","errorMsg": "SUCCESS","msg": "SUCCESS","success": true}
         data = JSON.parse(data);
         if (data.success === true) {
-          $.helpCodeList.push({
-            'use': $.UserName,
-            'helpCpde': data.data,
-            'needHelp': missionInfo['totalNum'] - missionInfo['completeNum']
-          });
-          console.log(`互助码(内部多账号自己互助)：${data.data}`);
+          console.log(`${missionInfo.title}，任务执行成功`);
+          $.runFlag = true;
+        } else {
+          console.log(JSON.stringify(data));
+          console.log(`${missionInfo.title}，任务执行失败`);
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -214,10 +163,11 @@ async function createInvitation(missionInfo) {
   })
 }
 
+
 //领奖励
 async function collectionOneMission(title, getRewardNo) {
   const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}","getCode":"${getRewardNo}"}]`;
-  const myRequest = getPostRequest('luckDraw/getDrawChance', body);
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/getDrawChance', body);
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
@@ -240,13 +190,14 @@ async function collectionOneMission(title, getRewardNo) {
 //做任务
 async function doOneMission(missionInfo) {
   const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}","missionNo":"${missionInfo.missionNo}","params":${JSON.stringify(missionInfo.params)}}]`;
-  const myRequest = getPostRequest('luckdraw/completeMission', body);
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/completeMission', body);
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
         data = JSON.parse(data);
         if (data.success === true) {
           console.log(`${missionInfo.title}，任务执行成功`);
+          $.runFlag = true;
         } else {
           console.log(JSON.stringify(data));
           console.log(`${missionInfo.title}，任务执行失败`);
@@ -263,7 +214,7 @@ async function doOneMission(missionInfo) {
 //获取任务列表
 async function getQueryMissionList() {
   const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}"}]`;
-  const myRequest = getPostRequest('luckdraw/queryMissionList', body)
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/queryMissionList', body)
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
@@ -283,7 +234,7 @@ async function getQueryMissionList() {
 //获取信息
 async function getLotteryInfo() {
   const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}"}]`;
-  const myRequest = getPostRequest('luckdraw/queryActivityBaseInfo', body)
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/queryActivityBaseInfo', body)
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
@@ -300,7 +251,7 @@ async function getLotteryInfo() {
 
 async function lotteryDraw() {
   const body = `[{"userNo":"$cooMrdGatewayUid$","activityCode":"${activityCode}"}]`;
-  const myRequest = getPostRequest('luckdraw/draw', body)
+  const myRequest = getPostRequest('WonderfulLuckDrawApi/draw', body)
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
       try {
