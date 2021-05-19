@@ -1060,7 +1060,7 @@ function superbrand_getGift() {
                     console.log(`超级品牌日 抽奖 获得：${item['quantity']}京豆🐶`);
                     message += `【超级品牌日】获得：${item['quantity']}京豆🐶\n`;
                     if ($.superShakeBeanNum === 0) {
-                      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['quantity']}${item['prizeName']}\n`;
+                      allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n【超级品牌日】获得：${item['quantity']}京豆🐶\n`;
                     } else {
                       allMessage += `【超级品牌日】获得：${item['quantity']}京豆🐶\n`;
                     }
