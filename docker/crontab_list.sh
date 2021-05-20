@@ -118,4 +118,4 @@
 # 领金贴
 5 0 * * * node /scripts/jd_jin_tie.js >> /scripts/logs/jd_jin_tie.log 2>&1
 # 跳跳乐瓜分京豆
-15 0-23/2 node /scripts/jd_jump.js >> /scripts/logs/jd_jump.log 2>&1
+15 0,12,22 * * * node /scripts/jd_jump.js >> /scripts/logs/jd_jump.log 2>&1
