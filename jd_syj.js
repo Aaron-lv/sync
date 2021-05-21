@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-11-27 09:19:21
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-5-20 16:58:02
+ * @Last Modified time: 2021-5-21 17:58:02
  */
 /*
 赚京豆脚本，一：做任务 天天领京豆(加速领京豆)、三：赚京豆-瓜分京豆
@@ -219,12 +219,13 @@ function pg_channel_page_data() {
                       } else {
                         if (currActivityBeanAmount >= beanAmountTakeMinLimit) {
                           //领取200京豆
-                          console.log(`【做任务 天天领京豆】 累计到${beanAmountTakeMinLimit}京豆可领取到京东账户\n当前：${currActivityBeanAmount}/${beanAmountTakeMinLimit}`)
+                          console.log(`【做任务 天天领京豆】 累计到${beanAmountTakeMinLimit}京豆可领取到京东账户\n【做任务 天天领京豆】当前进度：${currActivityBeanAmount}/${beanAmountTakeMinLimit}`)
                           console.log(`【做任务 天天领京豆】 当前已到领取京豆条件。开始领取京豆\n`);
                           await pg_interact_interface_invoke($.token);
                         } else {
-                          console.log(`【做任务 天天领京豆】 累计到${beanAmountTakeMinLimit}京豆可领取到京东账户\n当前：${currActivityBeanAmount}/${beanAmountTakeMinLimit}`)
+                          console.log(`【做任务 天天领京豆】 累计到${beanAmountTakeMinLimit}京豆可领取到京东账户\n【做任务 天天领京豆】当前进度：${currActivityBeanAmount}/${beanAmountTakeMinLimit}`)
                           console.log(`【做任务 天天领京豆】 当前未达到领取京豆条件。开始做任务\n`);
+                          await pg_channel_page_data();
                         }
                       }
                     }
@@ -274,11 +275,11 @@ function vvipscdp_raffle_auto_send_bean() {
             data = JSON.parse(data);
             if (data['success']) {
               if (data.data && data.data['sendBeanAmount']) {
-                console.log(`获得${data.data['sendBeanAmount']}京豆`)
+                console.log(`【做任务 天天领京豆】 送成功：获得${data.data['sendBeanAmount']}京豆`)
                 $.rewardBeanNum += data.data['sendBeanAmount'];
               }
             } else {
-              console.log("【做任务 天天领京豆】 " + data.message)
+              console.log("【做任务 天天领京豆】 送京异常：" + data.message)
             }
           }
         }
@@ -485,11 +486,11 @@ function pg_interact_interface_invoke(floorToken) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              console.log(`${data['data']['rewardBeanAmount']}京豆领取成功`);
+              console.log(`【做任务 天天领京豆】${data['data']['rewardBeanAmount']}京豆领取成功`);
               $.rewardBeanNum += data['data']['rewardBeanAmount'];
               message += `${message ? '\n' : ''}【做任务 天天领京豆】${$.rewardBeanNum}京豆`;
             } else {
-              console.log(data.message)
+              console.log(`【做任务 天天领京豆】${data.message}`);
             }
           }
         }
@@ -569,17 +570,15 @@ async function distributeBeanActivity() {
             let { body } = resp;
             body = JSON.parse(body);
             if (body['code'] === 200) {
-              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的赚京豆开团好友互助码提交成功\n`)
-            } else if (body['code'] === 400) {
-              console.log(`赚京豆团邀请码提交失败:${JSON.stringify(body)}\n`)
+              console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的【赚京豆-瓜分京豆】好友互助码提交成功\n`)
             } else {
-              console.log(`赚京豆团邀请码提交失败:${JSON.stringify(body)}\n`)
+              console.log(`【赚京豆-瓜分京豆】邀请码提交失败:${JSON.stringify(body)}\n`)
             }
           } catch (e) {
-            console.log(`赚京豆团邀请码提交异常:${e}`)
+            console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`)
           }
         }
-      }).catch((e) => console.log(`catch 赚京豆团邀请码提交异常:${e}`));
+      }).catch((e) => console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`));
     }
   } catch (e) {
     $.logErr(e);
@@ -657,7 +656,7 @@ function getUserTuanInfo() {
               $.canStartNewAssist = data['data']['canStartNewAssist'];
             } else {
               $.tuan = true;//活动火爆
-              console.log(`获取【赚京豆(微信小程序)-瓜分京豆】活动信息失败 ${JSON.stringify(data)}\n`)
+              console.log(`赚京豆(微信小程序)-瓜分京豆】获取【活动信息失败 ${JSON.stringify(data)}\n`)
             }
           }
         }
@@ -737,6 +736,7 @@ async function getRandomCode() {
         let { body } = resp;
         body = JSON.parse(body);
         if (body && body['code'] === 200) {
+          console.log(`随机取【赚京豆-瓜分京豆】${randomCount}个邀请码成功\n`);
           $.body = body['data'];
           $.body1 = [];
           $.body.map(item => {
@@ -744,10 +744,10 @@ async function getRandomCode() {
           })
         }
       } catch (e) {
-        console.log(`读取邀请码异常:${e}`)
+        console.log(`随机取【赚京豆-瓜分京豆】${randomCount}个邀请码异常:${e}`);
       }
     }
-  }).catch((e) => console.log(`catch 读取邀请码异常:${e}`));
+  }).catch((e) => console.log(`随机取【赚京豆-瓜分京豆】${randomCount}个邀请码异常:${e}`));
 }
 //======================赚京豆开团===========END=====
 function taskUrl(function_id, body = {}) {
