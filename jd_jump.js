@@ -136,10 +136,11 @@ async function jump() {
     if ($.oneJumpInfo.userInfo.diceLeft === 0) {
       console.log(`骰子数量为0`);
     }
-    while ($.oneJumpInfo.userInfo.diceLeft > 0 && flag) {
+    let runTime = 0;
+    while ($.oneJumpInfo.userInfo.diceLeft > 0 && flag && runTime < 10) {
       //丢骰子
       await throwDice();
-      if ($.gridType && ($.gridType === 'boom' || $.gridType === 'road_block' || $.gridType === 'scan_good' || $.gridType === 'add_cart')) break;
+      if ($.gridType && ($.gridType === 'boom' || $.gridType === 'road_block' || $.gridType === 'join_member' || $.gridType === 'add_cart')) break;
       await $.wait(3000);
       switch ($.gridType) {
         case 'give_dice':
@@ -177,6 +178,7 @@ async function jump() {
       }
       await $.wait(2000);
       await getOneJumpInfo();
+      runTime++;
     }
     newReward = await getReward();
     console.log(`执行结束,本次执行获得${newReward - oldReward}京豆,共获得${newReward}京豆`);
