@@ -1,6 +1,7 @@
 /*
 author:star
 跳跳乐瓜分京豆脚本
+更新时间：2021-05-21
 活动入口：来客有礼(微信小程序)=>跳跳乐或京东APP=》首页=》母婴馆=》底部中间
 注：默认不做添加物品至购物车任务，守护京东APP最后一片净土。
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -110,6 +111,7 @@ async function jump() {
     } else if ($.oneJumpInfo.userInfo.userState === 'complete') {
       console.log(`${$.jumpName},已到达终点，等待瓜分，瓜分时间：${new Date($.oneJumpInfo.jumpActivityDetail.endTime)} 之后`);
       console.log(`\n`);
+      break;
     } else if ($.oneJumpInfo.userInfo.userState === 'playing') {
       console.log(`开始执行活动：${$.jumpName}，活动时间：${new Date($.oneJumpInfo.jumpActivityDetail.startTime).toLocaleString()}至${new Date($.oneJumpInfo.jumpActivityDetail.endTime).toLocaleString()}`);
     } else {//complete
