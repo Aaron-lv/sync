@@ -1,12 +1,13 @@
 /*
-
 京东抽奖机 https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js
-活动入口：京东APP中各种抽奖活动的汇总
-自用
 author：yangtingxiao
 github： https://github.com/yangtingxiao
+活动入口：京东APP中各种抽奖活动的汇总
+
+修改自用 By lxk0301
+更新时间：2021-05-21 12:06
  */
-const $ = new Env('京东抽奖机');
+const $ = new Env('京东抽奖机&内部互助');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -16,15 +17,14 @@ Object.keys(jdCookieNode).forEach((item) => {
 })
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
-// $.appId = "1EFRQwA";
-// $.appId = "1EFRYwA";
-const appIdArr = ['1EFRRxA','1EFRQwA','1EFVRwA','1EFRXxg','1EFVRww','1EFRYxA','1EFRZwA','1EFRZwQ','1EFRYwA']
-const homeDataFunPrefixArr = ['interact_template','interact_template','','','','','','','','','','','','','','','','interact_template','interact_template']
-const collectScoreFunPrefixArr = ['','','','','','','','','','','','','','','','','','interact_template','interact_template']
+
+const appIdArr = ['1EFRRxA','1EFRQwA','1EFRYxQ','1EFRXxg','1EFVRwA','1EFRYxA','1EFRZwA','1EFRZwQ','1EFRYwA'];
+const homeDataFunPrefixArr = ['interact_template','interact_template','harmony_template','','','','','','','','','','','','','','','interact_template','interact_template'];
+const collectScoreFunPrefixArr = ['','','','','','','','','','','','','','','','','','interact_template','interact_template'];
 $.allShareId = {};
 main();
 async function main() {
-  await help();
+  await help();//先账号内部互助
   await updateShareCodes();
   if (!$.body) await updateShareCodesCDN();
   if ($.body) {
@@ -40,44 +40,7 @@ async function main() {
         console.log(`jd_lotteryMachine.js文件 CDN刷新失败`)
       }
     }
-  });
-}
-function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
-  return new Promise(resolve => {
-    $.get({url, timeout: 10000}, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-        } else {
-          $.body = data;
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
-  return new Promise(async resolve => {
-    $.get({url, timeout: 10000}, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          $.body = data;
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-    await $.wait(3000)
-    resolve();
-  })
+  }).catch((err) => console.log(`更新jd_lotteryMachine.js文件 CDN异常`, err));
 }
 async function help() {
   $.invites = [];
@@ -104,22 +67,23 @@ async function help() {
   // console.log('$.allShareId', JSON.stringify($.allShareId))
   if (!cookiesArr || cookiesArr.length < 2) return
   for (let i = 0; i < cookiesArr.length; i++) {
-      cookie = cookiesArr[i];
-      $.index = i + 1;
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-      for (let item of $.allShareId[Object.keys($.allShareId)[0]]) {
-        if ($.UserName === item['userName']) continue;
-        if (!item['taskToken'] && !item['taskId']) continue
-        console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${item['userName']}的第${item['index']}个抽奖活动【${item['appId']}】，邀请码 【${item['taskToken']}】\n`)
-        $.canHelp = true;
-        collectScoreFunPrefix = collectScoreFunPrefixArr[item['index'] - 1] || 'harmony'
-        console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
-        await harmony_collectScore(item['taskToken'], item['taskId']);
-        if (!$.canHelp) {
-          // break
-        }
+    cookie = cookiesArr[i];
+    $.index = i + 1;
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+    for (let item of $.allShareId[Object.keys($.allShareId)[0]]) {
+      if ($.UserName === item['userName']) continue;
+      if (!item['taskToken'] && !item['taskId']) continue
+      console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${item['userName']}的第${item['index']}个抽奖活动【${item['appId']}】，邀请码 【${item['taskToken']}】\n`)
+      $.canHelp = true;
+      collectScoreFunPrefix = collectScoreFunPrefixArr[item['index'] - 1] || 'harmony'
+      // console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
+      await harmony_collectScore(item['taskToken'], item['taskId']);
+      if (!$.canHelp) {
+        // console.log(`跳出\n`);
+        // break;//此处如果break，则遇到第一个活动就无助力机会时，不会继续助力第二个活动了
       }
     }
+  }
 }
 function interact_template_getHomeData(timeout = 0) {
   return new Promise((resolve) => {
@@ -230,6 +194,44 @@ function harmony_collectScore(taskToken, taskId, timeout = 0) {
         }
       })
     },timeout)
+  })
+}
+
+function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+  return new Promise(resolve => {
+    $.get({url, timeout: 10000}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          $.body = data;
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+  return new Promise(async resolve => {
+    $.get({url, timeout: 10000}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          $.body = data;
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+    await $.wait(3000)
+    resolve();
   })
 }
 
