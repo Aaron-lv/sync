@@ -231,6 +231,7 @@ function getUserInfo() {
                 if (data.data.beanActivityVisitVenue && data.data.beanActivityVisitVenue.taskStatus === '0') {
                   await help(shareCode, groupCode, 1)
                 }
+                console.log(`\n京东账号${$.index} ${$.nickName || $.UserName} 抢京豆邀请码：${shareCode}\n`);
                 $.newShareCodes.push([shareCode, groupCode])
               }
             }
@@ -261,6 +262,7 @@ function hitGroup() {
               if (shareCode) {
                 $.newShareCodes.push([shareCode, groupCode])
                 console.log('开团成功')
+                console.log(`\n京东账号${$.index} ${$.nickName || $.UserName} 抢京豆邀请码：${shareCode}\n`);
                 await help(shareCode, groupCode, 1)
               } else {
                 console.log(`为获取到助力码，错误信息${JSON.stringify(data.data)}`)
