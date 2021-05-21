@@ -5,7 +5,7 @@ github： https://github.com/yangtingxiao
 活动入口：京东APP中各种抽奖活动的汇总
 
 修改自用 By lxk0301
-更新时间：2021-05-21 12:06
+更新时间：2021-05-21 16:10
  */
 const $ = new Env('京东抽奖机&内部互助');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -43,17 +43,18 @@ async function main() {
   }).catch((err) => console.log(`更新jd_lotteryMachine.js文件 CDN异常`, err));
 }
 async function help() {
-  $.invites = [];
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
   for (let j in appIdArr) {
+    $.invites = [];
     $.appId = appIdArr[j];
     $.appIndex = parseInt(j) + 1;
     homeDataFunPrefix = homeDataFunPrefixArr[j] || 'healthyDay';
     console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】`)
-    console.log(`functionId：${homeDataFunPrefix}_getHomeData`)
+    console.log(`functionId：${homeDataFunPrefix}_getHomeData`);
+    $.acHelpFlag = true;//该活动是否需要助力，true需要，false 不需要
     for (let i = 0; i < cookiesArr.length; i++) {
       cookie = cookiesArr[i];
       if (cookie) {
@@ -61,8 +62,14 @@ async function help() {
         console.log(`\n***************开始京东账号${i + 1} ${$.UserName}***************`)
         await interact_template_getHomeData();
       }
+      if (i === 0 && !$.acHelpFlag) {
+        console.log(`\n第${parseInt(j) + 1}个抽奖活动【${$.appId}】,不需要助力`);
+        break;
+      }
     }
-    $.allShareId[appIdArr[j]] = $.invites;
+    if ($.invites.length > 0) {
+      $.allShareId[appIdArr[j]] = $.invites;
+    }
   }
   // console.log('$.allShareId', JSON.stringify($.allShareId))
   if (!cookiesArr || cookiesArr.length < 2) return
@@ -70,17 +77,20 @@ async function help() {
     cookie = cookiesArr[i];
     $.index = i + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    for (let item of $.allShareId[Object.keys($.allShareId)[0]]) {
-      if ($.UserName === item['userName']) continue;
-      if (!item['taskToken'] && !item['taskId']) continue
-      console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${item['userName']}的第${item['index']}个抽奖活动【${item['appId']}】，邀请码 【${item['taskToken']}】\n`)
-      $.canHelp = true;
-      collectScoreFunPrefix = collectScoreFunPrefixArr[item['index'] - 1] || 'harmony'
-      // console.log(`functionId：${collectScoreFunPrefix}_collectScore`);
-      await harmony_collectScore(item['taskToken'], item['taskId']);
-      if (!$.canHelp) {
-        // console.log(`跳出\n`);
-        // break;//此处如果break，则遇到第一个活动就无助力机会时，不会继续助力第二个活动了
+    for (let oneAppId in $.allShareId) {
+      let oneAcHelpList = $.allShareId[oneAppId];
+      for (let j = 0; j < oneAcHelpList.length; j++) {
+        $.item = oneAcHelpList[j];
+        if ($.UserName === $.item['userName']) continue;
+        if (!$.item['taskToken'] && !$.item['taskId'] || $.item['max']) continue
+        console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.item['userName']}的第${$.item['index']}个抽奖活动【${$.item['appId']}】，邀请码 【${$.item['taskToken']}】\n`)
+        $.canHelp = true;
+        collectScoreFunPrefix = collectScoreFunPrefixArr[$.item['index'] - 1] || 'harmony'
+        await harmony_collectScore();
+        if (!$.canHelp) {
+          console.log(`跳出\n`);
+          break;//此处如果break，则遇到第一个活动就无助力机会时，不会继续助力第二个活动了
+        }
       }
     }
   }
@@ -100,11 +110,12 @@ function interact_template_getHomeData(timeout = 0) {
           'Accept-Encoding' : `gzip, deflate, br`,
           'Accept-Language' : `zh-cn`
         },
-        body : `functionId=${homeDataFunPrefix}_getHomeData&body={"appId":"${$.appId}","taskToken":""}&client=wh5&clientVersion=1.0.0`
+        body: `functionId=${homeDataFunPrefix}_getHomeData&body={"appId":"${$.appId}","taskToken":""}&client=wh5&clientVersion=1.0.0`
       }
 
       $.post(url, async (err, resp, data) => {
         try {
+          let invitesFlag = false;
           data = JSON.parse(data);
           if (data['code'] === 0) {
             if (data.data && data.data.bizCode === 0) {
@@ -112,16 +123,21 @@ function interact_template_getHomeData(timeout = 0) {
                 if ([14, 6].includes(item.taskType)) {
                   console.log(`邀请码：${item.assistTaskDetailVo.taskToken}`)
                   console.log(`邀请好友助力：${item.times}/${item['maxTimes']}\n`);
-                  if (item.assistTaskDetailVo.taskToken && item.taskId) {
+                  if (item.assistTaskDetailVo.taskToken && item.taskId && item.times !== item['maxTimes']) {
                     $.invites.push({
                       taskToken: item.assistTaskDetailVo.taskToken,
                       taskId: item.taskId,
                       userName: $.UserName,
                       appId: $.appId,
-                      index: $.appIndex
+                      index: $.appIndex,
+                      max: false
                     })
                   }
+                  invitesFlag = true;//该活动存在助力码
                 }
+              }
+              if (!invitesFlag) {
+                $.acHelpFlag = false;
               }
             } else {
               console.log(`获取抽奖活动数据失败：${data.data.bizMsg}`);
@@ -153,7 +169,7 @@ function interact_template_getHomeData(timeout = 0) {
   })
 }
 //做任务
-function harmony_collectScore(taskToken, taskId, timeout = 0) {
+function harmony_collectScore(timeout = 0) {
   // console.log(`助力 ${taskToken}`)
   return new Promise((resolve) => {
     setTimeout( ()=>{
@@ -168,10 +184,10 @@ function harmony_collectScore(taskToken, taskId, timeout = 0) {
           "Cookie": cookie,
           "Host": "api.m.jd.com",
           "Origin": "https://h5.m.jd.com",
-          "Referer": `https://h5.m.jd.com/babelDiy/Zeus/ahMDcVkuPyTd2zSBmWC11aMvb51/index.html?inviteId=${taskToken}`,
+          "Referer": `https://h5.m.jd.com/babelDiy/Zeus/ahMDcVkuPyTd2zSBmWC11aMvb51/index.html?inviteId=${$.item['taskToken']}`,
           "User-Agent": "jdapp;iPhone;9.4.6;14.3;88732f840b77821b345bf07fd71f609e6ff12f43;network/4g;ADID/B28DA848-0DA0-4AAA-AE7E-A6F55695C590;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,8;addressid/2005183373;supportBestPay/0;appBuild/167618;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
         },
-        body: `functionId=${collectScoreFunPrefix}_collectScore&body={"appId": "${$.appId}","taskToken":"${taskToken}","taskId":${taskId},"actionType": 0}&client=wh5&clientVersion=1.0.0`
+        body: `functionId=${collectScoreFunPrefix}_collectScore&body={"appId": "${$.appId}","taskToken":"${$.item['taskToken']}","taskId":${$.item['taskId']},"actionType": 0}&client=wh5&clientVersion=1.0.0`
       }
       $.post(url, async (err, resp, data) => {
         try {
@@ -182,6 +198,7 @@ function harmony_collectScore(taskToken, taskId, timeout = 0) {
               console.log(`助力结果：${data.data.bizMsg}\n`);
             } else {
               if (data['data']['bizCode'] === 108) $.canHelp = false;
+              if (data['data']['bizCode'] === 103) $.item['max'] = true;
               console.log(`助力失败：${data.data.bizMsg}\n`);
             }
           } else {
@@ -193,7 +210,7 @@ function harmony_collectScore(taskToken, taskId, timeout = 0) {
           resolve()
         }
       })
-    },timeout)
+    }, timeout)
   })
 }
 
