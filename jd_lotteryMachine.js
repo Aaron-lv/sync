@@ -5,7 +5,7 @@ github： https://github.com/yangtingxiao
 活动入口：京东APP中各种抽奖活动的汇总
 
 修改自用 By lxk0301
-更新时间：2021-05-21 16:10
+更新时间：2021-05-21 18:10
  */
 const $ = new Env('京东抽奖机&内部互助');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -217,10 +217,27 @@ function harmony_collectScore(timeout = 0) {
 
 function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(resolve => {
-    $.get({url, timeout: 10000}, async (err, resp, data) => {
+    const options = {
+      url: `${url}?${Date.now()}`, "timeout": 10000, headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }
+    };
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+      const tunnel = require("tunnel");
+      const agent = {
+        https: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.TG_PROXY_HOST,
+            port: process.env.TG_PROXY_PORT * 1
+          }
+        })
+      }
+      Object.assign(options, { agent })
+    }
+    $.get(options, async (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          console.log(`请求访问 【raw.githubusercontent.com】 的jd_lotteryMachine.js文件失败：${JSON.stringify(err)}\n\n下面使用 【cdn.jsdelivr.net】请求访问jd_lotteryMachine.js文件`)
         } else {
           $.body = data;
         }
@@ -232,9 +249,9 @@ function updateShareCodes(url = 'https://raw.githubusercontent.com/yangtingxiao/
     })
   })
 }
-function updateShareCodesCDN(url = 'https://raw.fastgit.org/yangtingxiao/QuantumultX/master/scripts/jd/jd_lotteryMachine.js') {
+function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/yangtingxiao/QuantumultX@master/scripts/jd/jd_lotteryMachine.js') {
   return new Promise(async resolve => {
-    $.get({url, timeout: 10000}, async (err, resp, data) => {
+    $.get({url: `${url}?${Date.now()}`, timeout: 10000}, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
