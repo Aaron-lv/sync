@@ -47,6 +47,7 @@ async function help() {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  console.log(`\n\n当前共有${appIdArr.length}个抽奖机活动\n\n`);
   for (let j in appIdArr) {
     $.invites = [];
     $.appId = appIdArr[j];
@@ -83,12 +84,12 @@ async function help() {
         $.item = oneAcHelpList[j];
         if ($.UserName === $.item['userName']) continue;
         if (!$.item['taskToken'] && !$.item['taskId'] || $.item['max']) continue
-        console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.item['userName']}的第${$.item['index']}个抽奖活动【${$.item['appId']}】，邀请码 【${$.item['taskToken']}】\n`)
+        console.log(`账号${i + 1} ${$.UserName} 去助力账号 ${$.item['userName']}的第${$.item['index']}个抽奖活动【${$.item['appId']}】，邀请码 【${$.item['taskToken']}】`)
         $.canHelp = true;
         collectScoreFunPrefix = collectScoreFunPrefixArr[$.item['index'] - 1] || 'harmony'
         await harmony_collectScore();
         if (!$.canHelp) {
-          console.log(`跳出\n`);
+          // console.log(`跳出`);
           break;//此处如果break，则遇到第一个活动就无助力机会时，不会继续助力第二个活动了
         }
       }
