@@ -53,13 +53,20 @@ if ($.isNode()) {
 }
 let inviteCodes = [];
 const JD_API_HOST = 'https://carnivalcity.m.jd.com';
-const activeEndTime = '2021/06/20 00:00:00+08:00';
+const activeEndTime = '2021/06/21 00:00:00+08:00';//活动结束时间
+let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   $.temp = [];
+  if (nowTime > new Date(activeEndTime).getTime()) {
+    //活动结束后弹窗提醒
+    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jingBeanNum}个\n请删除此脚本\n咱江湖再见`);
+    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`);
+    return
+  }
   await updateShareCodesCDN();
   await requireConfig();
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -812,16 +819,10 @@ function TotalBean() {
 }
 
 async function showMsg() {
-  let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
-  if (nowTime > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jingBeanNum}个\n请删除此脚本\n咱江湖再见`);
-    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`)
-  } else {
-    if ($.beans) {
-      allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n本次运行获得：${$.beans}京豆\n${message}活动地址：${JD_API_HOST}${$.index !== cookiesArr.length ? '\n\n' : ''}`
-    }
-    $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${message}具体详情点击弹窗跳转后即可查看`, {"open-url": JD_API_HOST});
+  if ($.beans) {
+    allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n本次运行获得：${$.beans}京豆\n${message}活动地址：${JD_API_HOST}${$.index !== cookiesArr.length ? '\n\n' : ''}`
   }
+  $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${message}具体详情点击弹窗跳转后即可查看`, {"open-url": JD_API_HOST});
 }
 
 function jsonParse(str) {
