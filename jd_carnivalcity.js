@@ -151,10 +151,10 @@ async function JD818() {
 }
 async function doHotProducttask() {
   $.hotProductList = $.hotProductList.filter(v => !!v && v['status'] === "1");
-  if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务`)
+  if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务,需等待6秒`)
   for (let item of $.hotProductList) {
     await doBrowse(item['id'], "", "hot", "browse", "browseHotSku");
-    await $.wait(200);
+    await $.wait(1000 * 6);
     if ($.browseId) {
       await getBrowsePrize($.browseId)
     }
@@ -242,7 +242,7 @@ function brandTaskInfo(brandId) {
               console.log(`\n开始做 品牌手机 【${data['data']['brandName']}】 任务`)
               console.log(`开始浏览 1-F 单品区 任务 ${sku['name']}`);
               await doBrowse(sku['id'], brandId, "brand", "presell", "browseSku");
-              await $.wait(200);
+              await $.wait(1000 * 6);
               if ($.browseId) await getBrowsePrize($.browseId, brandId);
             }
             for (let sku of $.shopTask.filter(vo => !!vo && vo['status'] !== '4')){
@@ -608,7 +608,7 @@ function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/gitupdate/update
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://jd.turinglabs.net/api/v2/jd/carnivalcity/read/20/`, 'timeout': 20000}, (err, resp, data) => {
+    $.get({url: `http://share.turinglabs.net/api/v3/carnivalcity/query/20/`, 'timeout': 20000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
