@@ -40,12 +40,12 @@ inputs:
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_health_collect
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖 #女装魔盒
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖 #女装魔盒 #跳跳乐
         parameters:
-          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery_nzmh
+          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery_nzmh_jump
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh
+          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh&jd_jump
     - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币
         parameters:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
@@ -58,12 +58,12 @@ inputs:
           cronExpression: "0 8 */3 * * * *"
           enable: true
           argument: jd_daily_egg
-    - timer: #东东超市 #十元街 #跳跳乐 #城城分现金
+    - timer: #东东超市 #十元街 #城城分现金
         parameters:
-          name: superMarket_syj_jump_city
+          name: superMarket_syj_city
           cronExpression: "0 15 */1 * * * *"
           enable: true
-          argument: jd_superMarket&jd_syj&jd_jump&jd_city
+          argument: jd_superMarket&jd_syj&jd_city
     - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒
         parameters:
           name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_price_sgmh
