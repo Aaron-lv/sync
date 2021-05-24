@@ -42,6 +42,7 @@ jobs:
       JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES}}
       JDCFD_SHARECODES: ${{ secrets.JDCFD_SHARECODES}}
       JDHEALTH_SHARECODES: ${{ secrets.JDHEALTH_SHARECODES}}
+      CITY_SHARECODES: ${{ secrets.CITY_SHARECODES}}
       JD_BEAN_STOP: ${{ secrets.JD_BEAN_STOP}}
       JD_BEAN_SIGN_STOP_NOTIFY: ${{ secrets.JD_BEAN_SIGN_STOP_NOTIFY}}
       JD_BEAN_SIGN_NOTIFY_SIMPLE: ${{ secrets.JD_BEAN_SIGN_NOTIFY_SIMPLE}}
@@ -135,6 +136,7 @@ jobs:
           if [ $JDSGMH_SHARECODES ]; then sed -i "/variables/a\      JDSGMH_SHARECODES: $JDSGMH_SHARECODES" serverless.yml; fi;
           if [ $JDCFD_SHARECODES ]; then sed -i "/variables/a\      JDCFD_SHARECODES: $JDCFD_SHARECODES" serverless.yml; fi;
           if [ $JDHEALTH_SHARECODES ]; then sed -i "/variables/a\      JDHEALTH_SHARECODES: $JDHEALTH_SHARECODES" serverless.yml; fi;
+          if [ $CITY_SHARECODES ]; then sed -i "/variables/a\      CITY_SHARECODES: $CITY_SHARECODES" serverless.yml; fi;
           if [ $JD_BEAN_STOP ]; then sed -i "/variables/a\      JD_BEAN_STOP: $JD_BEAN_STOP" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_STOP_NOTIFY ]; then sed -i "/variables/a\      JD_BEAN_SIGN_STOP_NOTIFY: $JD_BEAN_SIGN_STOP_NOTIFY" serverless.yml; fi;
           if [ $JD_BEAN_SIGN_NOTIFY_SIMPLE ]; then sed -i "/variables/a\      JD_BEAN_SIGN_NOTIFY_SIMPLE: $JD_BEAN_SIGN_NOTIFY_SIMPLE" serverless.yml; fi;
