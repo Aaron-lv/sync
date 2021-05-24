@@ -1,7 +1,7 @@
 /*
 城城领现金
 活动时间：2021-05-25到2021-06-03
-更新时间：2021-05-24 09:55
+更新时间：2021-05-24 014:55
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -37,8 +37,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
-  'RtGKi5X8P0rXFvnPT6txmoReYNzv0mAhDoQoWvuQ_TQLZQpw@RtGKzOn1R1imd4aZRdU2hBIBgJ03z2Yq-l50VjzK7d6LW8ENFw@RtGKzuryRFn2LdCbQoJggtEzmhdiJJUKv4qPggRZG_AEBjq-rg@HYbiyeWlRQmkfYP1V5h_msHdhHllBQpLhhZV4Prz1-z-TA',
-  'W9Ggu7nAFE36FNH4coB_muZefrJOOoQ3YkddtGEQ14i71Wc@RtGKzO2nRQ_yeNWTEYVi0zL5ya80x5O2HhNSBCPJUpbOAxnNEw@acO8lrnoDUajMs_WTop3g2W5wGQkrcfYTHg@yTRPHGQUmJgEqA4twVCRARSvFKyhBovMlRPJV2ccy-kksvim7mxvuW4ksCay@X92swe2tSUbvMoPWW5hqiOzqlo_K6RipsNQmYg@RtGKzLnwQg3ye9HJFNRm0bpznSx2vJAuAMEJSOnTgv99a34ctA@RtGKzOSgFAjyfYrJH9Aw1r5TtAQyzehJ7lnGnogvb30OX_Vr7g'
+  'RtGKzO2hSQ33LNbJFNwx1E-Q1tDn9K8F8qFofiSm-kb9IkmSbg@RtGKzuigFAr1K9HPQYBh1gAvRwvmoOS9ZN8FSDjHtppcL3RU5g',
+  'RtGKzuigFAr1K9HPQYBh1gAvRwvmoOS9ZN8FSDjHtppcL3RU5g@RtGKzO2hSQ33LNbJFNwx1E-Q1tDn9K8F8qFofiSm-kb9IkmSbg'
 ]
 !(async () => {
   if (!cookiesArr[0]) {
@@ -49,7 +49,7 @@ let inviteCodes = [
   if (exchangeFlag) {
     console.log(`脚本自动抽奖`)
   } else {
-    console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭`)
+    console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭(在6.2日自动开启抽奖),如需自动抽奖请设置环境变量  JD_CITY_EXCHANGE 为true`);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -74,7 +74,7 @@ let inviteCodes = [
       for (let i = 0; i < $.newShareCodes.length; ++i) {
         console.log(`开始助力 【${$.newShareCodes[i]}】`)
         let res = await getInfo($.newShareCodes[i])
-        if (res && res['data']['bizCode'] === 0) {
+        if (res && res['data'] && res['data']['bizCode'] === 0) {
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
             console.log(`助力次数已耗尽，跳出`)
             break
@@ -98,15 +98,16 @@ let inviteCodes = [
           }
         }
       } else {
-        // if (new Date().getDate() >= 24) {
-        //   const res = await city_lotteryAward();//抽奖
-        //   if (res && res > 0) {
-        //     for (let i = 0; i < new Array(res).fill('').length; i++) {
-        //       await $.wait(1000)
-        //       await city_lotteryAward();//抽奖
-        //     }
-        //   }
-        // }
+        //默认6.2开启抽奖
+        if ((new Date().getMonth()  + 1) === 6 && new Date().getDate() >= 2) {
+          const res = await city_lotteryAward();//抽奖
+          if (res && res > 0) {
+            for (let i = 0; i < new Array(res).fill('').length; i++) {
+              await $.wait(1000)
+              await city_lotteryAward();//抽奖
+            }
+          }
+        }
       }
       await $.wait(1000)
     }
@@ -146,19 +147,26 @@ function getInfo(inviteId, flag = false) {
           if (safeGet(data)) {
             // if (inviteId) $.log(`\n助力结果:\n${data}\n`)
             data = JSON.parse(data);
-            if (data.data && !data.data.result.userActBaseInfo.inviteId) {
-              console.log(`账号已黑，看不到邀请码`);
-            } else {
-              if (flag) console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data && data.data.result.userActBaseInfo.inviteId}\n`);
-            }
-            if (data.data && data['data']['bizCode'] === 0) {
-              for(let vo of data.data.result && data.data.result.mainInfos || []){
-                if (vo && vo.remaingAssistNum === 0 && vo.status === "1") {
-                  console.log(vo.roundNum)
-                  await receiveCash(vo.roundNum)
-                  await $.wait(2*1000)
+            if (data.code === 0) {
+              if (data.data && data['data']['bizCode'] === 0) {
+                if (flag) console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data && data.data.result.userActBaseInfo.inviteId}\n`);
+                for(let vo of data.data.result && data.data.result.mainInfos || []){
+                  if (vo && vo.remaingAssistNum === 0 && vo.status === "1") {
+                    console.log(vo.roundNum)
+                    await receiveCash(vo.roundNum)
+                    await $.wait(2*1000)
+                  }
+                }
+              } else {
+                console.log(`\n\n${inviteId ? '助力好友' : '获取邀请码'}失败:${data.data.bizMsg}`)
+                if (flag) {
+                  if (data.data && !data.data.result.userActBaseInfo.inviteId) {
+                    console.log(`账号已黑，看不到邀请码\n`);
+                  }
                 }
               }
+            } else {
+              console.log(`\n\ncity_getHomeData失败:${JSON.stringify(data)}\n`)
             }
           }
         }
