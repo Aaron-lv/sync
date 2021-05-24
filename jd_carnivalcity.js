@@ -140,6 +140,7 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
 async function JD818() {
   try {
     await indexInfo();//获取任务
+    await supportList();//助力情况
     await getHelp();//获取邀请码
     if ($.blockAccount) return
     await indexInfo(true);//获取任务
@@ -345,8 +346,8 @@ function indexInfo(flag = false) {
             $.brandList = data['data']['brandList'];
             $.browseshopList = data['data']['browseshopList'];
             if (flag) {
-              console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
-              message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
+              // console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
+              // message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
             }
           } else {
             console.log(`异常：${JSON.stringify(data)}`)
@@ -360,7 +361,58 @@ function indexInfo(flag = false) {
     })
   });
 }
-
+//获取助力信息
+function supportList() {
+  const options = taskUrl('/khc/index/supportList', { t: Date.now() })
+  return new Promise( (resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
+            message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  });
+}
+//积分抽奖
+function lottery() {
+  const options = taskUrl('/khc/record/lottery', { t: Date.now() })
+  return new Promise( (resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            if (data.data.prizeId !== 8) {
+              console.log(`积分抽奖获得:${data.data.prizeName}`);
+              message += `积分抽奖获得：${data.data.prizeName}\n`
+            } else {
+              console.log(`积分抽奖结果:${data['data']['prizeName']}}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  });
+}
 function myRank() {
   return new Promise(resolve => {
     const body = {
@@ -542,8 +594,11 @@ function getListIntegral() {
         } else {
           data = JSON.parse(data);
           if (data.code === 200) {
-            $.integralCount = data.data.integralNum;//累计活动积分
+            $.integralCount = data.data.integralNum || 0;//累计活动积分
             message += `累计获得积分：${$.integralCount}\n`;
+            for (let i = 0; i < parseInt($.integralCount / 50); i ++) {
+              await lottery();
+            }
           } else {
             console.log(`integralRecord失败：${JSON.stringify(data)}`);
           }
