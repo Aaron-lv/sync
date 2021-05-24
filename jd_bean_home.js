@@ -41,8 +41,8 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   $.newShareCodes = []
-  await getAuthorShareCode();
-  await getAuthorShareCode2();
+  // await getAuthorShareCode();
+  // await getAuthorShareCode2();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -68,42 +68,42 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-  for (let i = 0; i < cookiesArr.length; i++) {
-    $.index = i + 1;
-    if (cookiesArr[i]) {
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-      cookie = cookiesArr[i];
-      if ($.newShareCodes.length > 1) {
-        console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
-        // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-        // await help(code[0], code[1])
-        let code = $.newShareCodes[0];
-        await help(code[0], code[1]);
-      }
-      if (helpAuthor && $.authorCode) {
-        console.log(`\n【抢京豆】${$.UserName} 去帮助作者`)
-        for (let code of $.authorCode) {
-          const helpRes = await help(code.shareCode, code.groupCode);
-          if (helpRes && helpRes.data.respCode === 'SG209') {
-            break;
-          }
-        }
-      }
-      if (helpAuthor && $.authorCode2) {
-        for (let code of $.authorCode2) {
-          const helpRes = await help(code.shareCode, code.groupCode);
-          if (helpRes && helpRes.data.respCode === 'SG209') {
-            break;
-          }
-        }
-      }
-      for (let j = 1; j < $.newShareCodes.length; j++) {
-        console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`)
-        let code = $.newShareCodes[j];
-        await help(code[0], code[1])
-      }
-    }
-  }
+  // for (let i = 0; i < cookiesArr.length; i++) {
+  //   $.index = i + 1;
+  //   if (cookiesArr[i]) {
+  //     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+  //     cookie = cookiesArr[i];
+  //     if ($.newShareCodes.length > 1) {
+  //       console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
+  //       // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
+  //       // await help(code[0], code[1])
+  //       let code = $.newShareCodes[0];
+  //       await help(code[0], code[1]);
+  //     }
+  //     if (helpAuthor && $.authorCode) {
+  //       console.log(`\n【抢京豆】${$.UserName} 去帮助作者`)
+  //       for (let code of $.authorCode) {
+  //         const helpRes = await help(code.shareCode, code.groupCode);
+  //         if (helpRes && helpRes.data.respCode === 'SG209') {
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     if (helpAuthor && $.authorCode2) {
+  //       for (let code of $.authorCode2) {
+  //         const helpRes = await help(code.shareCode, code.groupCode);
+  //         if (helpRes && helpRes.data.respCode === 'SG209') {
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     for (let j = 1; j < $.newShareCodes.length; j++) {
+  //       console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`)
+  //       let code = $.newShareCodes[j];
+  //       await help(code[0], code[1])
+  //     }
+  //   }
+  // }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
