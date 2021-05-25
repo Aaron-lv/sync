@@ -412,7 +412,8 @@ async function dealReturn(type, data) {
       break
     case 'zoo_sign':
       if(data.code === 0 && data.data.bizCode === 0) {
-        console.log(`签到获得：${data.data.result.redPacketValue} 红包`);
+        console.log(`签到获得成功`);
+        if (data.data.result.redPacketValue) console.log(`签到获得：${data.data.result.redPacketValue} 红包`);
       }else{
         console.log(`签到失败`);
         console.log(data);
