@@ -157,7 +157,7 @@ async function zoo() {
         $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo
         for (let j = 0; j < $.activityInfoList.length; j++) {
           $.oneActivityInfo = $.activityInfoList[j];
-          if ($.oneActivityInfo.status !== 1) {
+          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
             continue;
           }
           $.callbackInfo = {};
