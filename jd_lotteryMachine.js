@@ -5,7 +5,7 @@ github： https://github.com/yangtingxiao
 活动入口：京东APP中各种抽奖活动的汇总
 
 修改自用 By lxk0301
-更新时间：2021-05-21 18:10
+更新时间：2021-05-25 8:50
  */
 const $ = new Env('京东抽奖机&内部互助');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -18,7 +18,7 @@ Object.keys(jdCookieNode).forEach((item) => {
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
 
-const appIdArr = ['1EFRRxA','1EFRQwA','1EFRYxQ','1EFRXxg','1EFVRwA','1EFRYxA','1EFRZwA','1EFRZwQ','1EFRYwA'];
+const appIdArr = ['1EFRRxA','1EFRQwA','1EFRYxQ','1EFRXxg','1EFVRwA','1EFVRxw','1EFRZwA','1EFRZwQ','1EFRYwA'];
 const homeDataFunPrefixArr = ['interact_template','interact_template','harmony_template','','','','','','','','','','','','','','','interact_template','interact_template'];
 const collectScoreFunPrefixArr = ['','','','','','','','','','','','','','','','','','interact_template','interact_template'];
 $.allShareId = {};
