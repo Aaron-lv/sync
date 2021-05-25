@@ -119,6 +119,15 @@ async function zoo() {
   await $.wait(1000);
   await takePostRequest('zoo_getHomeData');
   await $.wait(1000);
+  await takePostRequest('zoo_getSignHomeData');
+  await $.wait(1000);
+  if($.signHomeData.todayStatus === 0){
+    console.log(`去签到`);
+    await takePostRequest('zoo_sign');
+    await $.wait(1000);
+  }else{
+    console.log(`已签到`);
+  }
   await takePostRequest('zoo_getFeedDetail');
   await $.wait(1000);
   let raiseInfo = $.homeData.result.homeMainInfo.raiseInfo;
@@ -285,8 +294,16 @@ async function takePostRequest(type) {
       body = getBody(type);
       myRequest = await getPostRequest(`zoo_pk_assistGroup`, body);
       break;
+    case 'zoo_getSignHomeData':
+      body = `functionId=zoo_getSignHomeData&body={"notCount":"1"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_getSignHomeData`,body);
+      break;
+    case 'zoo_sign':
+      body = `functionId=zoo_sign&body={}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_sign`,body);
+      break;
     default:
-      console.log('111')
+      console.log(`错误${type}`);
   }
   return new Promise(async resolve => {
     $.post(myRequest, (err, resp, data) => {
@@ -384,6 +401,19 @@ async function dealReturn(type, data) {
       break;
     case 'zoo_pk_doPkSkill':
       if (data.data.bizCode === 0) console.log(`使用成功`);
+      break
+    case 'zoo_getSignHomeData':
+      if(data.code === 0) {
+        $.signHomeData = data.data.result;
+      }
+      break
+    case 'zoo_sign':
+      if(data.code === 0 && data.data.bizCode === 0) {
+        console.log(`签到获得：${data.data.result.redPacketValue} 红包`);
+      }else{
+        console.log(`签到失败`);
+        console.log(data);
+      }
       break
     default:
       console.log(`未判断的异常${type}`);
