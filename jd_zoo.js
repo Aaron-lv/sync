@@ -154,7 +154,7 @@ async function zoo() {
     for (let i = 0; i < $.taskList.length && $.secretp; i++) {
       $.oneTask = $.taskList[i];
       if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) {
-        $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo
+        $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
         for (let j = 0; j < $.activityInfoList.length; j++) {
           $.oneActivityInfo = $.activityInfoList[j];
           if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
@@ -183,6 +183,32 @@ async function zoo() {
         console.log(`满足升级条件，去升级`);
         await $.wait(1000);
         await takePostRequest('zoo_raise');
+      }
+    }
+    //==================================微信任务========================================================================
+    //functionId=zoo_getTaskDetail&body={"appSign":"2","channel":1,"shopSign":""}&client=wh5&clientVersion=1.0.0
+    $.wxTaskList = [];
+    await takePostRequest('wxTaskDetail');
+    for (let i = 0; i < $.wxTaskList.length; i++) {
+      $.oneTask = $.wxTaskList[i];
+      if($.oneTask.taskType === 2 || $.oneTask.status !== 1){continue;} //不做加购
+      $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
+      for (let j = 0; j < $.activityInfoList.length; j++) {
+        $.oneActivityInfo = $.activityInfoList[j];
+        if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+          continue;
+        }
+        $.callbackInfo = {};
+        console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+        await takePostRequest('zoo_collectScore');
+        if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+          await $.wait(8000);
+          let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+          await callbackResult(sendInfo)
+        } else  {
+          await $.wait(2000);
+          console.log(`任务完成`);
+        }
       }
     }
     //助力
@@ -222,10 +248,11 @@ async function zoo() {
     await takePostRequest('zoo_pk_getTaskDetail');
     let skillList = $.pkHomeData.result.groupInfo.skillList || [];
     //activityStatus === 1未开始，2 已开始
-    for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2; i++) {
+    $.doSkillFlag = true;
+    for (let i = 0; i < skillList.length && $.pkHomeData.result.activityStatus === 2 && $.doSkillFlag; i++) {
       if (Number(skillList[i].num) > 0) {
         $.skillCode = skillList[i].code;
-        for (let j = 0; j < Number(skillList[i].num); j++) {
+        for (let j = 0; j < Number(skillList[i].num) && $.doSkillFlag; j++) {
           console.log(`使用技能`);
           await takePostRequest('zoo_pk_doPkSkill');
           await $.wait(2000);
@@ -307,6 +334,10 @@ async function takePostRequest(type) {
     case 'zoo_sign':
       body = `functionId=zoo_sign&body={}&client=wh5&clientVersion=1.0.0`;
       myRequest = await getPostRequest(`zoo_sign`,body);
+      break;
+    case 'wxTaskDetail':
+      body = `functionId=zoo_getTaskDetail&body={"appSign":"2","channel":1,"shopSign":""}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_getTaskDetail`,body);
       break;
     default:
       console.log(`错误${type}`);
@@ -408,12 +439,16 @@ async function dealReturn(type, data) {
       break;
     case 'zoo_pk_doPkSkill':
       if (data.data.bizCode === 0) console.log(`使用成功`);
-      break
+      if (data.data.bizCode === -2) {
+        console.log(`队伍任务已经完成，无法释放技能!`);
+        $.doSkillFlag = false;
+      }
+      break;
     case 'zoo_getSignHomeData':
       if(data.code === 0) {
         $.signHomeData = data.data.result;
       }
-      break
+      break;
     case 'zoo_sign':
       if(data.code === 0 && data.data.bizCode === 0) {
         console.log(`签到获得成功`);
@@ -422,7 +457,12 @@ async function dealReturn(type, data) {
         console.log(`签到失败`);
         console.log(data);
       }
-      break
+      break;
+    case 'wxTaskDetail':
+      if (data.code === 0) {
+        $.wxTaskList = data.data.result.taskVos;
+      }
+      break;
     default:
       console.log(`未判断的异常${type}`);
   }
