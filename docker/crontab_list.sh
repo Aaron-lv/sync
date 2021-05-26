@@ -7,7 +7,7 @@
 #女装盲盒 活动时间：2021-05-1到2021-05-31
 35 1,22 * * * node /scripts/jd_nzmh.js >> /scripts/logs/jd_nzmh.log 2>&1
 
-#京东极速版红包(活动时间：2021-5-5至2021-5-5)
+#京东极速版红包(活动时间：2021-5-5至2021-5-31)
 45 0,23 * * * node /scripts/jd_speed_redpocke.js >> /scripts/logs/jd_speed_redpocke.log 2>&1
 
 #超级直播间红包雨(活动时间不定期，出现异常提示请忽略。红包雨期间会正常)
@@ -21,7 +21,7 @@
 #手机狂欢城
 0 0,12,18,21 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
 #618动物联萌
-13 0-23/2 * * * node /scripts/jd_zoo.js >> /scripts/logs/jd_zoo.log 2>&1
+33 * * * * node /scripts/jd_zoo.js >> /scripts/logs/jd_zoo.log 2>&1
 ##############长期活动##############
 # 签到
 7 0,17 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
