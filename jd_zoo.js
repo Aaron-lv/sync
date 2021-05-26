@@ -105,11 +105,12 @@ if ($.isNode()) {
     //pk助力
     if (new Date().getUTCHours() + 8 >= 9) {
       console.log(`\n******开始内部京东账号【怪兽大作战pk】助力*********\n`);
-      for (let i = 0; i < $.pkInviteList.length && pKHelpFlag; i++) {
+      for (let i = 0; i < $.pkInviteList.length && pKHelpFlag && $.canHelp; i++) {
         console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
         $.pkInviteId = $.pkInviteList[i];
         await takePostRequest('pkHelp');
       }
+      $.canHelp = true;
     }
     if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
     for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
@@ -565,6 +566,7 @@ async function dealReturn(type, data) {
         case -8:
           console.log(`已经助力过该队伍`);
           break;
+        case -6:
         case 108:
           console.log(`助力次数已用光`);
           $.canHelp = false;
