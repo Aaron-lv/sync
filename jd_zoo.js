@@ -66,7 +66,7 @@ if ($.isNode()) {
     '金融APP任务：已完成\n' +
     '活动时间：2021-05-24至2021-06-20\n' +
     '脚本更新时间：2021-05-26 20:50');
-  for (let i = 0; i < cookiesArr.length; i++) {
+  for (let i = 1; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.cookie = cookiesArr[i];
       $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -311,8 +311,10 @@ async function zoo() {
     $.jdjrTaskList = [];
     await takePostRequest('jdjrTaskDetail');
     await $.wait(1000);
+    console.log(JSON.stringify($.jdjrTaskList));
     for (let i = 0; i < $.jdjrTaskList.length; i++) {
       $.taskId = $.jdjrTaskList[i].id;
+      if($.taskId === '3980' || $.taskId === '3981' || $.taskId === '3982') continue;
       if($.jdjrTaskList[i].status === '1' || $.jdjrTaskList[i].status === '3'){
         console.log(`去做任务：${$.jdjrTaskList[i].name}`);
         await takePostRequest('jdjrAcceptTask');
