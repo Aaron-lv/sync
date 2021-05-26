@@ -467,18 +467,27 @@ async function dealReturn(type, data) {
     case 'help':
     case 'pkHelp':
       //console.log(data);
-      if (data.data.bizCode === 0) console.log(`助力成功`);
-      if (data.data.bizCode === -201) {
-        console.log(`助力已满`);
-        $.oneInviteInfo.max = true;
+      switch (data.data.bizCode) {
+        case 0:
+          console.log(`助力成功`);
+          break;
+        case -201:
+          console.log(`助力已满`);
+          $.oneInviteInfo.max = true;
+          break;
+        case -202:
+          console.log(`已助力`);
+          break;
+        case -8:
+          console.log(`已经助力过该队伍`);
+          break;
+        case 108:
+          console.log(`助力次数已用光`);
+          $.canHelp = false;
+          break;
+        default:
+          console.log(`${data}`);
       }
-      if (data.data.bizCode === -202) console.log(`已助力`);
-      if (data.data.bizCode === -8) console.log(`已经助力过该队伍`);
-      if (data.data.bizCode === 108) {
-        console.log(`助力次数已用光`);
-        $.canHelp = false;
-      }
-      //console.log(JSON.stringify(data));
       break;
     case 'zoo_pk_getHomeData':
       if (data.code === 0) {
