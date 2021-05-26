@@ -5,10 +5,11 @@ author:star
 活动入口：京东APP-》搜索 玩一玩-》瓜分20亿
 邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)
 PK互助：内部账号自行互助(排名靠前账号得到的机会多)
+小程序任务：已完成
 地图任务：未完成，后期添加
 金融APP任务：未完成，后期添加
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-25 22:50
+脚本更新时间：2021-05-26 9:23
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -55,10 +56,11 @@ if ($.isNode()) {
   console.log('活动入口：京东APP-》搜索 玩一玩-》瓜分20亿\n' +
       '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
       'PK互助：内部账号自行互助(排名靠前账号得到的机会多)\n' +
+      '小程序任务：已完成\n' +
       '地图任务：未完成，后期添加\n' +
       '金融APP任务：未完成，后期添加\n' +
       '活动时间：2021-05-24至2021-06-20\n' +
-      '脚本更新时间：2021-05-25 22:50');
+      '脚本更新时间：2021-05-26 9:23');
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.cookie = cookiesArr[i];
@@ -84,13 +86,15 @@ if ($.isNode()) {
     $.index = i + 1;
     //console.log($.inviteList);
     //pk助力
-    console.log(`\n******开始pk助力*********\n`);
-    for (let i = 0; i < $.pkInviteList.length && pKHelpFlag; i++) {
-      console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
-      $.pkInviteId = $.pkInviteList[i];
-      await takePostRequest('pkHelp');
+    if (new Date().getHours() >= 9) {
+      console.log(`\n******开始内部京东账号【怪兽大作战pk】助力*********\n`);
+      for (let i = 0; i < $.pkInviteList.length && pKHelpFlag; i++) {
+        console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
+        $.pkInviteId = $.pkInviteList[i];
+        await takePostRequest('pkHelp');
+      }
     }
-    console.log(`\n******开始邀请好友助力*********\n`);
+    console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
     for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
       $.oneInviteInfo = $.inviteList[j];
       if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
