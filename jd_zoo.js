@@ -77,8 +77,10 @@ if ($.isNode()) {
       await zoo()
     }
   }
-  if(pKHelpAuthorFlag){
-    $.innerPkInviteList = $.innerPkInviteList.sort(()=>Math.random() - 0.5);
+  let res = [];
+  if (new Date().getUTCHours() + 8 >= 17) res = await getAuthorShareCode() || [];
+  if (pKHelpAuthorFlag) {
+    $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res], [...$.innerPkInviteList, ...res].length);
     $.pkInviteList.push(...$.innerPkInviteList);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -100,7 +102,7 @@ if ($.isNode()) {
         await takePostRequest('pkHelp');
       }
     }
-    console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
+    if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
     for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
       $.oneInviteInfo = $.inviteList[j];
       if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
@@ -624,6 +626,12 @@ function getBody(type) {
   return taskBody
 }
 
+/**
+ * 随机从一数组里面取
+ * @param arr
+ * @param count
+ * @returns {Buffer}
+ */
 function getRandomArrayElements(arr, count) {
   var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
   while (i-- > min) {
@@ -634,7 +642,26 @@ function getRandomArrayElements(arr, count) {
   }
   return shuffled.slice(min);
 }
-
+function getAuthorShareCode(url = "http://cdn.annnibb.me/eb6fdc36b281b7d5eabf33396c2683a2.json") {
+  return new Promise(async resolve => {
+    $.get({url,headers:{
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }, "timeout": 10000}, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          if (data) data = JSON.parse(data)
+        }
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve(data || []);
+      }
+    })
+    await $.wait(10000)
+    resolve();
+  })
+}
 function randomWord(randomFlag, min, max) {
   let str = "",
       range = min,
