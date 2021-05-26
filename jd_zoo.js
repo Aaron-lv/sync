@@ -4,7 +4,7 @@ author:star
 解密参考自：https://github.com/yangtingxiao/QuantumultX/blob/master/scripts/jd/jd_zoo.js
 活动入口：京东APP-》搜索 玩一玩-》瓜分20亿
 邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)
-PK互助：内部账号自行互助(排名靠前账号得到的机会多)
+PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码
 小程序任务：已完成
 地图任务：未完成，后期添加
 金融APP任务：未完成，后期添加
@@ -38,7 +38,7 @@ $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-    'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHRryF8QHDHxAgiHVjUPNuVNIzLk',
+    'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHZg04xSunvZqdHKnylpSunootOm02pDQ',
     'sSKNX-MpqKOJsNv74MOnRO1-y24JzNJfEGle1Ooa7gtNStMf5n0b6pOxJ2-G',
     'sSKNX-MpqKOUsPHLzP-MQ8sgU5F_0euaHLLGd6Y_Ng7Xhu2RkM0EMvUKJQ',
 ];
@@ -61,7 +61,7 @@ if ($.isNode()) {
   }
   console.log('活动入口：京东APP-》搜索 玩一玩-》瓜分20亿\n' +
       '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
-      'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力内置助力码\n' +
+      'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
       '小程序任务：已完成\n' +
       '地图任务：未完成，后期添加\n' +
       '金融APP任务：未完成，后期添加\n' +
