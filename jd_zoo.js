@@ -72,9 +72,6 @@ if ($.isNode()) {
     }
   }
 
-  if ($.inviteList.length === 0 || cookiesArr.length < 2 || (new Date().getUTCHours() + 8) < 9) {
-    return;
-  }
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
     $.canHelp = true;
@@ -86,7 +83,7 @@ if ($.isNode()) {
     $.index = i + 1;
     //console.log($.inviteList);
     //pk助力
-    if (new Date().getHours() >= 9) {
+    if (new Date().getUTCHours() + 8 >= 9) {
       console.log(`\n******开始内部京东账号【怪兽大作战pk】助力*********\n`);
       for (let i = 0; i < $.pkInviteList.length && pKHelpFlag; i++) {
         console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
@@ -486,7 +483,7 @@ async function dealReturn(type, data) {
           $.canHelp = false;
           break;
         default:
-          console.log(`${data}`);
+          console.log(`怪兽大作战助力失败：${JSON.stringify(data)}`);
       }
       break;
     case 'zoo_pk_getHomeData':
