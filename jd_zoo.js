@@ -252,6 +252,21 @@ async function zoo() {
             }
           }
         }
+        // await $.wait(1000);
+        // let boxLotteryNum = $.shopResult.boxLotteryNum;
+        // for (let j = 0; j < boxLotteryNum; j++) {
+        //   console.log(`开始第${j+1}次拆盒`)
+        //   //抽奖
+        //   await takePostRequest('zoo_boxShopLottery');
+        //   await $.wait(3000);
+        // }
+        // let wishLotteryNum = $.shopResult.wishLotteryNum;
+        // for (let j = 0; j < wishLotteryNum; j++) {
+        //   console.log(`开始第${j+1}次能量抽奖`)
+        //   //抽奖
+        //   await takePostRequest('zoo_wishShopLottery');
+        //   await $.wait(3000);
+        // }
         await $.wait(3000);
       }
     }
@@ -420,6 +435,14 @@ async function takePostRequest(type) {
       body = `functionId=qryCompositeMaterials&body={"qryParam":"[{\\"type\\":\\"advertGroup\\",\\"mapTo\\":\\"resultData\\",\\"id\\":\\"05371960\\"}]","activityId":"2s7hhSTbhMgxpGoa9JDnbDzJTaBB","pageId":"","reqSrc":"","applyKey":"jd_star"}&client=wh5&clientVersion=1.0.0`;
       myRequest = await getPostRequest(`qryCompositeMaterials`,body);
       break;
+    case 'zoo_boxShopLottery':
+      body = `functionId=zoo_boxShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
+      break;
+    case `zoo_wishShopLottery`:
+      body = `functionId=zoo_wishShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
+      break;
     default:
       console.log(`错误${type}`);
   }
@@ -572,6 +595,12 @@ async function dealReturn(type, data) {
         $.shopInfoList = data.data.resultData.list;
         console.log(`获取到${$.shopInfoList.length}个店铺`);
       }
+      break
+    case 'zoo_boxShopLottery':
+      console.log(JSON.stringify(data));
+      break
+    case 'zoo_wishShopLottery':
+      console.log(JSON.stringify(data));
       break
     default:
       console.log(`未判断的异常${type}`);
