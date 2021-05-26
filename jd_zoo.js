@@ -311,7 +311,6 @@ async function zoo() {
     $.jdjrTaskList = [];
     await takePostRequest('jdjrTaskDetail');
     await $.wait(1000);
-    console.log(JSON.stringify($.jdjrTaskList));
     for (let i = 0; i < $.jdjrTaskList.length; i++) {
       $.taskId = $.jdjrTaskList[i].id;
       if($.taskId === '3980' || $.taskId === '3981' || $.taskId === '3982') continue;
