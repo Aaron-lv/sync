@@ -7,9 +7,9 @@ author:star
 PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码
 小程序任务：已完成
 地图任务：已添加，抽奖未添加
-金融APP任务：未完成，后期添加
+金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-26 18:00
+脚本更新时间：2021-05-26 20:50
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -63,9 +63,9 @@ if ($.isNode()) {
     'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
     '小程序任务：已完成\n' +
     '地图任务：已添加，抽奖暂未添加\n' +
-    '金融APP任务：未完成，后期添加\n' +
+    '金融APP任务：已完成\n' +
     '活动时间：2021-05-24至2021-06-20\n' +
-    '脚本更新时间：2021-05-26 9:55');
+    '脚本更新时间：2021-05-26 20:50');
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.cookie = cookiesArr[i];
@@ -308,19 +308,20 @@ async function zoo() {
       }
     }
     //=======================================================京东金融=================================================================================
-    // $.jdjrTaskList = [];
-    // await takePostRequest('jdjrTaskDetail');
-    // await $.wait(1000);
-    // console.log(`11111：${$.jdjrTaskList.length}`)
-    // for (let i = 0; i < $.jdjrTaskList.length; i++) {
-    //   if($.jdjrTaskList[i].status !== '1'){
-    //       continue;
-    //   }
-    //   $.taskId = $.jdjrTaskList[i].id;
-    //   console.log(`去做任务：${$.jdjrTaskList[i].name}`)
-    //   await takePostRequest('jdjrAcceptTask');
-    //   await $.wait(8000);
-    // }
+    $.jdjrTaskList = [];
+    await takePostRequest('jdjrTaskDetail');
+    await $.wait(1000);
+    for (let i = 0; i < $.jdjrTaskList.length; i++) {
+      $.taskId = $.jdjrTaskList[i].id;
+      if($.jdjrTaskList[i].status === '1' || $.jdjrTaskList[i].status === '3'){
+        console.log(`去做任务：${$.jdjrTaskList[i].name}`);
+        await takePostRequest('jdjrAcceptTask');
+        await $.wait(8000);
+        await takeGetRequest();
+      }else if($.jdjrTaskList[i].status === '2'){
+        console.log(`任务：${$.jdjrTaskList[i].name},已完成`);
+      }
+    }
     //======================================================怪兽大作战=================================================================================
     $.pkHomeData = {};
     await takePostRequest('zoo_pk_getHomeData');
@@ -662,6 +663,36 @@ async function dealReturn(type, data) {
       console.log(`未判断的异常${type}`);
   }
 }
+function takeGetRequest(){
+  return new Promise(async resolve => {
+    $.get({
+      url:`https://ms.jr.jd.com/gw/generic/mission/h5/m/finishReadMission?reqData={%22missionId%22:%22${$.taskId}%22,%22readTime%22:8}`,
+      headers:{
+        'Origin' : `https://prodev.m.jd.com`,
+        'Cookie': $.cookie,
+        'Connection' : `keep-alive`,
+        'Accept' : `*/*`,
+        'Referer' : `https://prodev.m.jd.com`,
+        'Host' : `ms.jr.jd.com`,
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        'Accept-Encoding' : `gzip, deflate, br`,
+        'Accept-Language' : `zh-cn`
+      }
+    }, (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.resultCode === 0) {
+          console.log(`任务完成`);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
 //领取奖励
 function callbackResult(info) {
   return new Promise((resolve) => {
@@ -677,7 +708,7 @@ function callbackResult(info) {
         'Accept-Encoding': `gzip, deflate, br`,
         'Accept-Language': `zh-cn`,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Referer': 'https://bunearth.m.jd.com/babelDiy/Zeus/4SJUHwGdUQYgg94PFzjZZbGZRjDd/index.html?jmddToSmartEntry=login'
+        'Referer': 'https://bunearth.m.jd.com'
       }
     }
 
