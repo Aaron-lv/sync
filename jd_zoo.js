@@ -70,7 +70,7 @@ if ($.isNode()) {
     }
   }
 
-  if ($.inviteList.length === 0 || cookiesArr.length < 2) {
+  if ($.inviteList.length === 0 || cookiesArr.length < 2 || (new Date().getUTCHours() + 8) < 9) {
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
