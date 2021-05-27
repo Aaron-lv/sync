@@ -7,7 +7,7 @@ author:star
 PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码
 小程序任务：已完成
 地图任务：已添加，抽奖未添加
-金融APP任务：已完成
+金融APP任务：已完成,下午2点到5点执行
 活动时间：2021-05-24至2021-06-20
 脚本更新时间：2021-05-26 20:50
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -38,7 +38,11 @@ $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-  'sSKNX-MpqKPS7Le4m5rbBpODDLhoZ9ruJViTqJpv4c2Lm2-TfJwzRBS82zBEzkA'
+  'sSKNX-MpqKPS7Le4m5rbBpODDLhoZ9ruJViTqJpv4c2Lm2-TfJwzRBS82zBEzkA',
+  'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHRryF8QHDHxAgiHVjUPNuVNIzLg',
+  'sSKNX-MpqKOJsNu-ys_QB8uQqFkCdEeVDMGDHZg04xSunvZqdHKnylpSunootOm02pDR',
+  'sSKNX-MpqKOJsNv74MOnRO1-y24JzNJfEGle1Ooa7gtNStMf5n0b6pOxJ2-H',
+  'sSKNX-MpqKOJsNu8mJ7RA9BJMup4tAAmPcPPPhBUWYKUJ19UKeC8EAoKeUXELis',
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -57,13 +61,13 @@ if ($.isNode()) {
     return;
   }
   console.log('活动入口：京东APP-》搜索 玩一玩-》瓜分20亿\n' +
-    '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
-    'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
-    '小程序任务：已完成\n' +
-    '地图任务：已添加，抽奖暂未添加\n' +
-    '金融APP任务：已完成\n' +
-    '活动时间：2021-05-24至2021-06-20\n' +
-    '脚本更新时间：2021-05-26 20:50');
+      '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
+      'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
+      '小程序任务：已完成\n' +
+      '地图任务：已添加，抽奖未添加\n' +
+      '金融APP任务：已完成,下午2点到5点执行\n' +
+      '活动时间：2021-05-24至2021-06-20\n' +
+      '脚本更新时间：2021-05-26 20:50');
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.cookie = cookiesArr[i];
