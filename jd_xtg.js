@@ -104,7 +104,8 @@ const JD_API_HOST = "https://guardianstarjd.m.jd.com/star";
         }
         continue;
       }
-      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓`);
+      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，京豆先到先得！！！！！！！！！！！
+请提前知晓`);
       // $.beanCount = beforeTotal && beforeTotal['base'].jdNum;
       for (let index = 0; index < starID.length; index++) {
         $.activeId = starID[index]['starId'];
