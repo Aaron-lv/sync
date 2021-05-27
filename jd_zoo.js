@@ -9,7 +9,7 @@ PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余
 地图任务：已添加，下午2点到5点执行,抽奖已添加(基本都是优惠券)
 金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-27 10:35
+脚本更新时间：2021-05-27 13:30
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -162,8 +162,6 @@ async function zoo() {
     }else{
       console.log(`已签到`);
     }
-    //await takePostRequest('zoo_getFeedDetail');
-    //await $.wait(1000);
     let raiseInfo = $.homeData.result.homeMainInfo.raiseInfo;
     if (Number(raiseInfo.totalScore) > Number(raiseInfo.nextLevelScore) && raiseInfo.buttonStatus === 1) {
       console.log(`满足升级条件，去升级`);
@@ -201,6 +199,23 @@ async function zoo() {
             console.log(`任务失败`);
             await $.wait(3000);
           }
+        }
+      }else if ($.oneTask.taskType == 2 && $.oneTask.status === 1){
+        console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
+        $.taskId = $.oneTask.taskId;
+        $.feedDetailInfo = {};
+        await takePostRequest('zoo_getFeedDetail');
+        let productList = $.feedDetailInfo.productInfoVos;
+        let needTime = Number($.feedDetailInfo.maxTimes) - Number($.feedDetailInfo.times);
+        for (let j = 0; j < productList.length && needTime > 0; j++) {
+          if(productList[j].status !== 1){
+            continue;
+          }
+          $.taskToken = productList[j].taskToken;
+          console.log(`加购：${productList[j].skuName}`);
+          await takePostRequest('add_car');
+          await $.wait(1000);
+          needTime --;
         }
       }
       await takePostRequest('zoo_getHomeData');
@@ -394,7 +409,7 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_collectProduceScore`, body);
       break;
     case 'zoo_getFeedDetail':
-      body = `functionId=zoo_getFeedDetail&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getFeedDetail&body={"taskId":"${$.taskId}"}&client=wh5&clientVersion=1.0.0`;
       myRequest = await getPostRequest(`zoo_getFeedDetail`, body);
       break;
     case 'zoo_getTaskDetail':
@@ -483,6 +498,10 @@ async function takePostRequest(type) {
     case 'jdjrAcceptTask':
       body = `reqData={"eid":"","sdkToken":"jdd014JYKVE2S6UEEIWPKA4B5ZKBS4N6Y6X5GX2NXL4IYUMHKF3EEVK52RQHBYXRZ67XWQF5N7XB6Y2YKYRTGQW4GV5OFGPDPFP3MZINWG2A01234567","id":"${$.taskId}"}`;
       myRequest = await getPostRequest(`acceptTask`,body);
+      break;
+    case 'add_car':
+      body = getBody(type);
+      myRequest = await getPostRequest(`zoo_collectScore`,body);
       break;
     default:
       console.log(`错误${type}`);
@@ -590,6 +609,10 @@ async function dealReturn(type, data) {
       }
       break;
     case 'zoo_getFeedDetail':
+      if (data.code === 0) {
+        $.feedDetailInfo = data.data.result.addProductVos[0];
+      }
+      break;
     case 'zoo_pk_collectScore':
       break;
     case 'zoo_pk_doPkSkill':
@@ -679,6 +702,19 @@ async function dealReturn(type, data) {
         console.log(`领任务成功`);
       }
       break;
+    case 'add_car':
+      if (data.code === 0) {
+        let acquiredScore = data.data.result.acquiredScore;
+        if(Number(acquiredScore) > 0){
+          console.log(`加购成功,获得金币:${acquiredScore}`);
+        }else{
+          console.log(`加购成功`);
+        }
+      }else{
+        console.log(JSON.stringify(data));
+        console.log(`加购失败`);
+      }
+      break
     default:
       console.log(`未判断的异常${type}`);
   }
@@ -782,7 +818,9 @@ function getBody(type) {
     taskBody = `functionId=zoo_collectProduceScore&body={"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_0\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}"}&client=wh5&clientVersion=1.0.0`;
   } else if(type === 'zoo_getWelfareScore'){
     taskBody = `functionId=zoo_getWelfareScore&body={"type":2,"currentScence":${$.currentScence},"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}"}&client=wh5&clientVersion=1.0.0`;
-  } else {
+  } else if(type === 'add_car'){
+    taskBody = `functionId=${type}&body={"taskId":"${$.taskId}","taskToken":"${$.taskToken}","actionType":1,"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}"}&client=wh5&clientVersion=1.0.0`
+  }else{
     taskBody = `functionId=${type}&body={"taskId":"${$.oneTask.taskId}","taskToken":"${$.oneActivityInfo.taskToken}","actionType":1,"ss":"{\\"extraData\\":{\\"is_trust\\":true,\\"sign\\":\\"${sign}\\",\\"fpb\\":\\"\\",\\"time\\":${time},\\"encrypt\\":\\"3\\",\\"nonstr\\":\\"${nonstr}\\",\\"jj\\":\\"\\",\\"cf_v\\":\\"1.0.2\\",\\"client_version\\":\\"2.2.1\\",\\"buttonid\\":\\"jmdd-react-smash_62\\",\\"sceneid\\":\\"homePageh5\\"},\\"secretp\\":\\"${$.secretp}\\",\\"random\\":\\"${rnd}\\"}","itemId":"${$.oneActivityInfo.itemId}","shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`
   }
   return taskBody
