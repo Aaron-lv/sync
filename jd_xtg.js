@@ -172,8 +172,8 @@ async function showMsg() {
     if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`)
   } else {
     if ($.beanCount) {
-      $.msg($.name, ``, `京东账号${$.index} ${$.nickName || $.UserName}星推官活动获得：${$.beanCount}京豆`);
-      allMsg += `京东账号${$.index} ${$.nickName || $.UserName}星推官活动获得：${$.beanCount}京豆\n`;
+      $.msg($.name, ``, `京东账号${$.index} ${$.nickName || $.UserName}\n星推官活动获得：${$.beanCount}京豆`);
+      allMsg += `京东账号${$.index} ${$.nickName || $.UserName}\n星推官活动获得：${$.beanCount}京豆\n`;
     }
   }
 }
