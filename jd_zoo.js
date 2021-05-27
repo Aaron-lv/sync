@@ -6,10 +6,10 @@ author:star
 邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)
 PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码
 小程序任务：已完成
-地图任务：已添加，下午2点到5点执行,抽奖未添加
+地图任务：已添加，下午2点到5点执行,抽奖已添加(基本都是优惠券)
 金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-26 20:50
+脚本更新时间：2021-05-27 10:35
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -64,7 +64,7 @@ if ($.isNode()) {
       '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
       'PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
       '小程序任务：已完成\n' +
-      '地图任务：已添加，下午2点到5点执行,抽奖未添加\n' +
+      '地图任务：已添加，下午2点到5点执行,抽奖已添加\n' +
       '金融APP任务：已完成\n' +
       '活动时间：2021-05-24至2021-06-20\n' +
       '脚本更新时间：2021-05-26 20:50');
@@ -267,14 +267,14 @@ async function zoo() {
             }
           }
         }
-        // await $.wait(1000);
-        // let boxLotteryNum = $.shopResult.boxLotteryNum;
-        // for (let j = 0; j < boxLotteryNum; j++) {
-        //   console.log(`开始第${j+1}次拆盒`)
-        //   //抽奖
-        //   await takePostRequest('zoo_boxShopLottery');
-        //   await $.wait(3000);
-        // }
+        await $.wait(1000);
+        let boxLotteryNum = $.shopResult.boxLotteryNum;
+        for (let j = 0; j < boxLotteryNum; j++) {
+          console.log(`开始第${j+1}次拆盒`)
+          //抽奖
+          await takePostRequest('zoo_boxShopLottery');
+          await $.wait(3000);
+        }
         // let wishLotteryNum = $.shopResult.wishLotteryNum;
         // for (let j = 0; j < wishLotteryNum; j++) {
         //   console.log(`开始第${j+1}次能量抽奖`)
@@ -639,7 +639,22 @@ async function dealReturn(type, data) {
       }
       break
     case 'zoo_boxShopLottery':
-      console.log(JSON.stringify(data));
+      let result = data.data.result;
+      switch (result.awardType) {
+        case 8:
+          console.log(`获得金币：${result.rewardScore}`);
+          break;
+        case 5:
+          console.log(`获得：adidas能量`);
+          break;
+        case 2:
+        case 3:
+          console.log(`获得优惠券：${result.couponInfo.usageThreshold} 优惠：${result.couponInfo.quota}，${result.couponInfo.useRange}`);
+          break;
+        default:
+          console.log(`抽奖获得未知`);
+          console.log(JSON.stringify(data));
+      }
       break
     case 'zoo_wishShopLottery':
       console.log(JSON.stringify(data));
