@@ -533,9 +533,13 @@ async function dealReturn(type, data) {
       break;
     case 'zoo_getHomeData':
       if (data.code === 0) {
-        $.homeData = data.data;
-        $.secretp = data.data.result.homeMainInfo.secretp;
-        $.secretpInfo[$.UserName] = $.secretp;
+        if (data.data['bizCode'] === 0) {
+          $.homeData = data.data;
+          $.secretp = data.data.result.homeMainInfo.secretp;
+          $.secretpInfo[$.UserName] = $.secretp;
+          $.userInfo = data.data.result.homeMainInfo
+          console.log(`\n\n当前分红：${$.userInfo.raiseInfo.redNum}份，当前等级:${$.userInfo.raiseInfo.scoreLevel}\n当前金币${$.userInfo.raiseInfo.remainScore}，下一关需要${$.userInfo.raiseInfo.nextLevelScore - $.userInfo.raiseInfo.curLevelStartScore}\n\n`);
+        }
       }
       break;
     case 'helpHomeData':
