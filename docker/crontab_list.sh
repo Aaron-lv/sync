@@ -24,7 +24,7 @@
 33 * * * * node /scripts/jd_zoo.js >> /scripts/logs/jd_zoo.log 2>&1
 
 #家电星推官 活动时间：2021年5月27日 00:00:00-2021年6月18日 23:59:59
-33 * * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
+0 0 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
 ##############长期活动##############
 # 签到
 7 0,17 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
