@@ -25,8 +25,10 @@
 
 #家电星推官 活动时间：2021年5月27日 00:00:00-2021年6月18日 23:59:59
 0 0 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
-
+#家电星推官 活动时间：2021年5月27日 00:00:00-2021年6月18日 23:59:59
 0 0 * * * node /scripts/jd_xtg_help.js >> /scripts/logs/jd_xtg_help.log 2>&1
+#金榜创造营 活动时间：2021-05-21至2021-12-31
+0 1,22 * * * node /scripts/jd_gold_creator.js >> /scripts/logs/jd_gold_creator.log 2>&1
 ##############长期活动##############
 # 签到
 7 0,17 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
