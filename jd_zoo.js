@@ -117,6 +117,7 @@ if ($.isNode()) {
         console.log(`${$.UserName} 去助力PK码 ${$.pkInviteList[i]}`);
         $.pkInviteId = $.pkInviteList[i];
         await takePostRequest('pkHelp');
+        await $.wait(2000);
       }
       $.canHelp = true;
     }
@@ -564,6 +565,7 @@ async function dealReturn(type, data) {
       }
       if(data.code === 0 && data.data && data.data.bizCode === -1002){
         $.hotFlag = true;
+        console.log(`该账户脚本执行任务火爆，暂停执行任务，请手动做任务或者等待解决脚本火爆问题`)
       }
       break;
     case 'zoo_getTaskDetail':
