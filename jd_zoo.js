@@ -35,13 +35,12 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [
+$.pkInviteList = [];
+$.secretpInfo = {};
+$.innerPkInviteList = [
   'sSKNX-MpqKOJsNu8mJ7RA9BJMup4tAAmPcPPPhBUWYKUJ19UKeC8EAoKeUXELiQ',
   'sSKNX-MpqKPS7Le4m5rbBpODDLhoZ9ruJViTqJpv4c2Lm2-TfJwzRBS82zBEzk8',
   'sSKNX-MpqKOJsNvSzMSZfAM9H7GwE_7GAGP6h5-yWMFC6rsV_bSQHlBmw28K',
-];
-$.secretpInfo = {};
-$.innerPkInviteList = [
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -557,6 +556,9 @@ async function dealReturn(type, data) {
         console.log(`收取成功，获得：${data.data.result.produceScore}`);
       }else{
         console.log(JSON.stringify(data));
+      }
+      if(data.code === 0 && data.data && data.data.bizCode === -1002){
+        $.hotFlag = true;
       }
       break;
     case 'zoo_getTaskDetail':
