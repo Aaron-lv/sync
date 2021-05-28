@@ -9,7 +9,7 @@ PK互助：内部账号自行互助(排名靠前账号得到的机会多),多余
 地图任务：已添加，下午2点到5点执行,抽奖已添加(基本都是优惠券)
 金融APP任务：已完成
 活动时间：2021-05-24至2021-06-20
-脚本更新时间：2021-05-27 13:30
+脚本更新时间：2021-05-27 20:55
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -35,7 +35,9 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [];
+$.pkInviteList = [
+  'sSKNX-MpqKOJsNu8mJ7RA9BJMup4tAAmPcPPPhBUWYKUJ19UKeC8EAoKeUXELiQ',
+];
 $.secretpInfo = {};
 $.innerPkInviteList = [
 ];
@@ -150,6 +152,8 @@ async function zoo() {
     }
     await $.wait(1000);
     await takePostRequest('zoo_getHomeData');
+    $.userInfo =$.homeData.result.homeMainInfo
+    console.log(`\n\n当前分红：${$.userInfo.raiseInfo.redNum}份，当前等级:${$.userInfo.raiseInfo.scoreLevel}\n当前金币${$.userInfo.raiseInfo.remainScore}，下一关需要${$.userInfo.raiseInfo.nextLevelScore - $.userInfo.raiseInfo.curLevelStartScore}\n\n`);
     await $.wait(1000);
     await takePostRequest('zoo_getSignHomeData');
     await $.wait(1000);
@@ -368,7 +372,7 @@ async function zoo() {
       }
     }
     await $.wait(1000);
-    await takePostRequest('zoo_pk_getTaskDetail');
+    //await takePostRequest('zoo_pk_getTaskDetail');
     let skillList = $.pkHomeData.result.groupInfo.skillList || [];
     //activityStatus === 1未开始，2 已开始
     $.doSkillFlag = true;
@@ -536,8 +540,6 @@ async function dealReturn(type, data) {
           $.homeData = data.data;
           $.secretp = data.data.result.homeMainInfo.secretp;
           $.secretpInfo[$.UserName] = $.secretp;
-          $.userInfo = data.data.result.homeMainInfo
-          console.log(`\n\n当前分红：${$.userInfo.raiseInfo.redNum}份，当前等级:${$.userInfo.raiseInfo.scoreLevel}\n当前金币${$.userInfo.raiseInfo.remainScore}，下一关需要${$.userInfo.raiseInfo.nextLevelScore - $.userInfo.raiseInfo.curLevelStartScore}\n\n`);
         }
       }
       break;
