@@ -103,6 +103,7 @@ async function getDetail() {
   }
 }
 function goldCreatorTab() {
+  $.subTitleInfos = [];
   return new Promise(resolve => {
     const body = {"subTitleId":"","isPrivateVote":"0"};
     const options = taskUrl('goldCreatorTab', body)
@@ -115,7 +116,7 @@ function goldCreatorTab() {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.code === '0') {
-              $.subTitleInfos = data.result.subTitleInfos;
+              $.subTitleInfos = data.result.subTitleInfos || [];
               let unVoted = $.subTitleInfos.length
               console.log(`共有${$.subTitleInfos.length}个主题`);
               $.stageId = data.result.mainTitleHeadInfo.stageId;
@@ -123,6 +124,8 @@ function goldCreatorTab() {
               await goldCreatorDetail($.subTitleInfos[0]['matGrpId'], $.subTitleInfos[0]['subTitleId'], $.subTitleInfos[0]['taskId'], $.subTitleInfos[0]['batchId'], true);
               $.subTitleInfos = $.subTitleInfos.filter(vo => !!vo && vo['hasVoted'] === '0');
               console.log(`已投票${unVoted - $.subTitleInfos.length}主题\n`);
+            } else {
+              console.log(`goldCreatorTab 异常：${JSON.stringify(data)}`)
             }
           }
         }
@@ -136,6 +139,9 @@ function goldCreatorTab() {
 }
 //获取每个主题下面待投票的商品
 function goldCreatorDetail(groupId, subTitleId, taskId, batchId, flag = false) {
+  $.skuList = [];
+  $.taskList = [];
+  $.remainVotes = 0;
   return new Promise(resolve => {
     const body = {
       groupId,
@@ -155,15 +161,17 @@ function goldCreatorDetail(groupId, subTitleId, taskId, batchId, flag = false) {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.code === '0') {
-              $.remainVotes = data.result.remainVotes;
-              $.skuList = data.result.skuList;
-              $.taskList = data.result.taskList;
+              $.remainVotes = data.result.remainVotes || 0;
+              $.skuList = data.result.skuList || [];
+              $.taskList = data.result.taskList || [];
               if (flag) {
                 await doTask2(batchId);
               } else {
                 console.log(`当前剩余投票次数：${$.remainVotes}`);
                 await doTask(subTitleId, taskId, batchId);
               }
+            } else {
+              console.log(`goldCreatorDetail 异常：${JSON.stringify(data)}`)
             }
           }
         }
