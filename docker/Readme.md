@@ -244,6 +244,8 @@ jd_scripts
    
    `rm -rf  logs/*.log` 删除logs文件夹里面所有的日志文件（linux）
 
+   `docker exec -it jd_scripts /bin/sh -c ' ls jd_*.js | grep -v jd_crazy_joy_coin.js |xargs -i node {}'` 执行所有定时任务
+
 - 如果是群晖用户，在docker注册表搜`jd_scripts`，双击下载映像。
 不需要`docker-compose.yml`，只需建个logs/目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入json配置新建容器。
 若要自定义`my_crontab_list.sh`，再建个`my_crontab_list.sh`文件，配置参考`jd_scripts.my_crontab_list.syno.json`。
