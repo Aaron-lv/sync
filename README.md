@@ -93,8 +93,9 @@
 |59|[jd_syj.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js)|赚京豆|赚京豆(微信小程序)-赚京豆-签到领京豆|
 |60|[jd_unsubscribe.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_unsubscribe.js)|取关京东店铺和商品||
 |61|[jd_xtg.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xtg.js)|家电星推官||
-|62|[jd_zoo.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zoo.js)|618动物联萌|京东APP-》搜索 玩一玩-》瓜分20亿|
-|63|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
+|62|[jd_xtg_help.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_xtg_help.js)|家电星推官好友互助||
+|63|[jd_zoo.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zoo.js)|618动物联萌|京东APP-》搜索 玩一玩-》瓜分20亿|
+|64|[jx_sign.js](https://gitee.com/lxk0301/jd_scripts/raw/master/jx_sign.js)|京喜签到||
 <!-- 清单标记结束 -->
 <!-- 此表格由 update_list.sh 脚本自动生成，请不要人工修改。 -->
 <!-- 这是隐藏信息，用来给 update_list.sh 脚本提供标记信息的，用于自动生成上面的脚本清单，请勿删除这里的标记信息。 -->
