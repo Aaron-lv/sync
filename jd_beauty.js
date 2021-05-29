@@ -446,6 +446,7 @@ async function mr() {
           }
           break
         case "product_producing":
+          // console.log('product_producing', vo);
           if (vo.code === '200' || vo.code === 200) {
             for (let product of vo.data) {
               if (product.num === product.produce_num) {
@@ -497,9 +498,14 @@ async function mr() {
           }
           break
         case "to_exchange":
-          console.log(`兑换${vo?.data?.coins/-100}京豆成功;${JSON.stringify(vo)}`)
+          if (vo?.data) {
+            console.log(`兑换${vo?.data?.coins/-100}京豆成功;${JSON.stringify(vo)}`)
+          } else {
+            console.log(`兑换京豆失败：${JSON.stringify(vo)}`)
+          }
           break
         case "get_produce_material":
+          console.log('get_produce_material', vo?.msg);
           $.material = vo.data
           break
         case "to_employee":
