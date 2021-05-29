@@ -1,11 +1,5 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-11-10 14:10:27 
- * @Last Modified by: LXK9301
- * @Last Modified time: 2020-11-20 14:11:01
- */
-/*
-TODO
+Last Modified time: 2020-11-20 14:11:01
 活动入口：京东金融-天天提鹅
 定时收鹅蛋,兑换金币
 已支持IOS双京东账号,Node.js支持N个京东账号

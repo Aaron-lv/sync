@@ -1,10 +1,4 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-11-03 09:25:47
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-5-25 09:27:07
- */
-/*
 京东手机狂欢城活动，每日可获得20+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
 活动时间: 2021-5-24至2021-6-20
 活动入口：暂无 [活动地址](https://carnivalcity.m.jd.com/)

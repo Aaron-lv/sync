@@ -1,7 +1,4 @@
 /*
- * @Author: lxk0301 https://gitee.com/lxk0301
- */
-/*
 京东多合一签到,自用,可N个京东账号
 活动入口：各处的签到汇总
 Node.JS专用

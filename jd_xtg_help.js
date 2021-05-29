@@ -1,10 +1,4 @@
 /*
- * @Author: LXK9301
- * @Date: 2020-10-21 17:04:04
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-05-27 19:15:04
- */
-/*
 家电星推官好友互助脚本
 家电星推官活动地址：https://3.cn/-1eD1VOa?_ts=1622072397979&utm_source=iosapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=CopyURL&ad_od=share&gx=RnFtxGZZPTONndRP--twDLBLeC4DoX3_2wf2
 活动时间：2021年5月27日 00:00:00-2021年6月18日 23:59:59

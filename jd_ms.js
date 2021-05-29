@@ -1,11 +1,6 @@
 /*
- * @Author: shylocks https://github.com/shylocks
- * @Date: 2021-01-13 22:01:41
- * @Last Modified by:   star
- * @Last Modified time: 2021-05-22 8:55:00
- */
-/*
 京东秒秒币
+Last Modified time: 2021-05-22 8:55:00
 一天签到100币左右，100币可兑换1毛钱红包，推荐攒着配合农场一起用
 活动时间：长期活动
 更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_ms.js

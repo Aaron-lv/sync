@@ -1,11 +1,6 @@
 /*
- * @Author: LXK9301
- * @Date: 2020-11-03 18:12:38
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-05-19 16:27:18
-*/
-/*
 京东全民开红包
+Last Modified time: 2021-05-19 16:27:18
 活动入口：京东APP首页-领券-锦鲤红包。[活动地址](https://happy.m.jd.com/babelDiy/zjyw/3ugedFa7yA6NhxLN5gw2L3PF9sQC/index.html)
 未实现功能：领3张券功能
 

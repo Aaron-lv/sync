@@ -1,10 +1,5 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-07-16 18:54:16
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-2-19 10:22:37
- */
-/*
+Last Modified time: 2021-2-19 10:22:37
 活动入口：京东APP我的-更多工具-宠汪汪
 最近经常出现给偷好友积分与狗粮失败的情况，故建议cron设置为多次
 jd宠汪汪偷好友积分与狗粮,及给好友喂食

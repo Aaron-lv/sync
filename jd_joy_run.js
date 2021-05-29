@@ -1,10 +1,5 @@
 /*
- * @Author: lxk0301 https://github.com/lxk0301
- * @Date: 2020-06-16 18:54:16
- * @Last Modified by: lxk0301
- * @Last Modified time: 2021-4-29 21:22:37
- */
-/*
+Last Modified time: 2021-4-29 21:22:37
 宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
 活动入口：京东APP我的-更多工具-宠汪汪
 token时效很短，几个小时就失效了,闲麻烦的放弃就行
