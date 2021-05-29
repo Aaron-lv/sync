@@ -1,10 +1,4 @@
 /*
- * @Author: shylocks https://github.com/shylocks
- * @Date: 2021-01-20 13:27:41
- * @Last Modified by:   shylocks
- * @Last Modified time: 2021-01-20 21:27:41
- */
-/*
 集鞭炮赢京豆
 活动入口：京东APP首页-发现好货-悬浮窗领京豆
 地址：https://linggame.jd.com/babelDiy/Zeus/heA49fhvyw9UakaaS3UUJRL7v3o/index.html

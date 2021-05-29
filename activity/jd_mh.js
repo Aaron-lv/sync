@@ -1,10 +1,4 @@
 /*
- * @Author: shylocks https://github.com/shylocks
- * @Date: 2021-01-11 16:25:41
- * @Last Modified by:   shylocks
- * @Last Modified time: 2021-01-11 18:25:41
- */
-/*
 盲盒抽京豆
 活动时间：2021年1月6日～2021年2月5日
 更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mh.js

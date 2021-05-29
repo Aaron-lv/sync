@@ -1,10 +1,4 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-11-27 09:19:21
- * @Last Modified by: shylocks https://github.com/shylocks
- * @Last Modified time: 2020-12-7 17:39:02
- */
-/*
 京东代属脚本，类似十元街，⚠️⚠️⚠️⚠️限校园用户可使用,其他用户签到失败无京豆
 一周签到下来可获得30京豆，一天任意时刻运行一次即可
 

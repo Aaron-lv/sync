@@ -1,10 +1,4 @@
 /*
- * @Author: shylocks https://github.com/shylocks
- * @Date: 2021-01-11 16:25:41
- * @Last Modified by:   shylocks
- * @Last Modified time: 2021-01-11 18:25:41
- */
-/*
 小鸽有礼
 抽奖可获得京豆和快递优惠券
 活动时间：2021年1月15日至2021年2月19日

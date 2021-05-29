@@ -1,10 +1,4 @@
 /*
- * @Author: shylocks https://github.com/shylocks
- * @Date: 2021-01-27 16:25:41
- * @Last Modified by:   shylocks
- * @Last Modified time: 2021-01-27 21:25:41
- */
-/*
 京东超级盒子
 活动时间：未知
 更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js
