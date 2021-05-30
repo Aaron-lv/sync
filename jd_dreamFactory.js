@@ -1,6 +1,6 @@
 /*
 京东京喜工厂
-更新时间：2021-4-21
+更新时间：2021-5-30
 修复做任务、收集电力出现火爆，不能完成任务，重新计算h5st验证
 参考自 ：https://www.orzlee.com/web-development/2021/03/03/lxk0301-jingdong-signin-scriptjingxi-factory-solves-the-problem-of-unable-to-signin.html
 活动入口：京东APP-游戏与互动-查看更多-京喜工厂
@@ -147,7 +147,6 @@ async function jdDreamFactory() {
     await QueryAllTuan();
     await exchangeProNotify();
     await showMsg();
-    if (helpAu === true) await helpAuthor();
   } catch (e) {
     $.logErr(e)
   }
@@ -1053,11 +1052,11 @@ function CreateTuan() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['ret'] === 0) {
-              console.log(`开团成功tuanId为\n${data.data['tuanId']}`);
+              console.log(`【开团成功】tuanId为 ${data.data['tuanId']}`);
               $.tuanIds.push(data.data['tuanId']);
             } else {
               //{"msg":"活动已结束，请稍后再试~","nowTime":1621551005,"ret":10218}
-              if (data['res'] === 10218 && $.index === 1) {
+              if (data['ret'] === 10218 && $.index === 1) {
                 //只发送一次
                 $.msg($.name, '', `京喜工厂拼团瓜分电力活动团ID（activeId）已失效\n请自行抓包替换(Node环境变量为TUAN_ACTIVEID，iOS端在BoxJx)或者联系作者等待更新`);
                 if ($.isNode()) await notify.sendNotify($.name, `京喜工厂拼团瓜分电力活动团ID（activeId）已失效\n请自行抓包替换(Node环境变量为TUAN_ACTIVEID，iOS端在BoxJx)或者联系作者等待更新`)
@@ -1346,21 +1345,26 @@ function shareCodesFormat() {
 }
 function requireConfig() {
   return new Promise(async resolve => {
+    process.env.TUAN_ACTIVEID = 'u9pm44YKSBNDQTgn7sOCEg=='
     tuanActiveId = $.isNode() ? (process.env.TUAN_ACTIVEID || tuanActiveId) : ($.getdata('tuanActiveId') || tuanActiveId);
-    if (!tuanActiveId) await updateTuanIdsCDN();
-    if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-      tuanActiveId = $.tuanConfigs['tuanActiveId'];
-      console.log(`拼团活动ID: 获取成功 ${tuanActiveId}`)
-    } else {
-      if (!$.tuanConfigs) {
-        await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
-        if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-          tuanActiveId = $.tuanConfigs['tuanActiveId'];
-          console.log(`拼团活动ID: 获取成功 ${tuanActiveId}`)
-        } else {
-          console.log(`拼团活动ID：获取失败，将采取脚本内置活动ID`)
+    if (!tuanActiveId) {
+      await updateTuanIdsCDN();
+      if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
+        tuanActiveId = $.tuanConfigs['tuanActiveId'];
+        console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
+      } else {
+        if (!$.tuanConfigs) {
+          await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
+          if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
+            tuanActiveId = $.tuanConfigs['tuanActiveId'];
+            console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
+          } else {
+            console.log(`拼团活动ID：获取失败，将采取脚本内置活动ID\n`)
+          }
         }
       }
+    } else {
+      console.log(`自定义拼团活动ID: 获取成功 ${tuanActiveId}`)
     }
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
