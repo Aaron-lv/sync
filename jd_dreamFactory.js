@@ -1345,7 +1345,6 @@ function shareCodesFormat() {
 }
 function requireConfig() {
   return new Promise(async resolve => {
-    process.env.TUAN_ACTIVEID = 'u9pm44YKSBNDQTgn7sOCEg=='
     tuanActiveId = $.isNode() ? (process.env.TUAN_ACTIVEID || tuanActiveId) : ($.getdata('tuanActiveId') || tuanActiveId);
     if (!tuanActiveId) {
       await updateTuanIdsCDN();
