@@ -48,50 +48,55 @@ if ($.isNode()) {
           $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
           console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
           await partyNight();
-          await $.wait(3000);
+          //await $.wait(1000);
      }
-     //助力-------------------------
-     for (let i = 0; i < cookiesArr.length; i++) {
-          $.index = i + 1;
-          $.cookie = cookiesArr[i];
-          $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-          console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-          $.canHelp = true;
-          for (let j = 0; j < $.inviteCodeList.length && $.canHelp; j++) {
-               await $.wait(2000);
-               $.oneInviteInfo = $.inviteCodeList[j];
-               if($.oneInviteInfo.use === $.UserName){
-                    continue;
-               }
-               if($.oneInviteInfo.max){
-                    continue;
-               }
-               $.inviteCode = $.oneInviteInfo.inviteCode;
-               console.log(`${$.UserName}去助力${$.oneInviteInfo.use},助力码：${$.inviteCode}`)
-               await takePostRequest('partyTonight_assist');
-          }
-          //await $.wait(3000);
-     }
+     // //助力-------------------------
+     // for (let i = 0; i < cookiesArr.length; i++) {
+     //      $.index = i + 1;
+     //      $.cookie = cookiesArr[i];
+     //      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+     //      console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+     //      $.canHelp = true;
+     //      for (let j = 0; j < $.inviteCodeList.length && $.canHelp; j++) {
+     //           await $.wait(2000);
+     //           $.oneInviteInfo = $.inviteCodeList[j];
+     //           if($.oneInviteInfo.use === $.UserName){
+     //                continue;
+     //           }
+     //           if($.oneInviteInfo.max){
+     //                continue;
+     //           }
+     //           $.inviteCode = $.oneInviteInfo.inviteCode;
+     //           console.log(`${$.UserName}去助力${$.oneInviteInfo.use},助力码：${$.inviteCode}`)
+     //           await takePostRequest('partyTonight_assist');
+     //      }
+     //      //await $.wait(3000);
+     // }
 })()
-     .catch((e) => {
-          $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-     })
-     .finally(() => {
-          $.done();
-     })
+  .catch((e) => {
+       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+       $.done();
+  })
 
 async function partyNight(){
-     $.mainInfo = {};
-     await takePostRequest('partyTonight_init');
-     if(JSON.stringify($.mainInfo) === '{}'){
-          return ;
-     }else {
-          console.log('获取活动信息成功');
+     // $.mainInfo = {};
+     // await takePostRequest('partyTonight_init');
+     // if(JSON.stringify($.mainInfo) === '{}'){
+     //      return ;
+     // }else {
+     //      console.log('获取活动信息成功');
+     // }
+     console.log('开始抽奖');
+     $.runFlag = true;
+     for (let i = 0; i < 10 && $.runFlag; i++) {
+          await takePostRequest('partyTonight_lottery');
+          await $.wait(2000);
      }
      //预约
-     await $.wait(2000);
-     await takePostRequest('partyTonight_remind');
-
+     //await $.wait(2000);
+     //await takePostRequest('partyTonight_remind');
 }
 
 async function takePostRequest(type) {
@@ -109,6 +114,10 @@ async function takePostRequest(type) {
           case 'partyTonight_assist':
                body = `functionId=partyTonight_assist&body={"inviteCode":"${$.inviteCode}"}&client=wh5&clientVersion=1.0.0&uuid=`;
                myRequest = getPostRequest(`partyTonight_assist`, body);
+               break;
+          case 'partyTonight_lottery':
+               body = `functionId=partyTonight_lottery&body={}&client=wh5&clientVersion=1.0.0&uuid=`;
+               myRequest = getPostRequest(`partyTonight_lottery`, body);
                break;
           default:
                console.log(`错误${type}`);
@@ -143,11 +152,11 @@ function dealReturn(type, data) {
                          console.log(`助力已满`);
                     }else{
                          $.inviteCodeList.push(
-                              {
-                                   'inviteCode':$.inviteCode,
-                                   'use':$.UserName,
-                                   'max':false
-                              }
+                           {
+                                'inviteCode':$.inviteCode,
+                                'use':$.UserName,
+                                'max':false
+                           }
                          )
                     }
                }else{
@@ -171,8 +180,24 @@ function dealReturn(type, data) {
                }
                console.log(JSON.stringify(data));
                break;
+          case 'partyTonight_lottery':
+               if (data.code === 0 && data.data && data.data.bizCode === 0) {
+                    let result = data.data.result;
+                    if(result.type === 1){
+                         console.log(`获得红包：${result.hongbaoValue}`);
+                    }else if(result.type === 2){
+                         console.log(`获得优惠券：`);
+                    }else if(result.type === 3){
+                         console.log(`获得京东：${result.beanCount}`);
+                    }else{
+                         console.log(JSON.stringify(data));
+                    }
+               }else {
+                    $.runFlag = false;
+                    console.log(JSON.stringify(data));
+               }
+               break;
           default:
-               console.log(`未判断的异常${type}`);
      }
 }
 
