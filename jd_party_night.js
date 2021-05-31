@@ -50,7 +50,11 @@ if ($.isNode()) {
                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
                console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
                await partyNight();
-               await $.wait(1500);
+               if(cookiesArr.length>5){
+                    await $.wait(1500);
+               }else{
+                    await $.wait(5000);
+               }
           }
      }
 
