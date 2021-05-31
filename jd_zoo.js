@@ -820,7 +820,6 @@ async function getPostRequest(type, body) {
 }
 
 function getBody(type) {
-
   let rnd = Math.floor(1e6 + 9e6 * Math.random()).toString()
   let ss = JSON.stringify({"extraData" : {"log": "-1", "sceneid": "QD216hPageh5"}, "secretp": $.secretp, "random": rnd.toString()});
   let taskBody = '';
