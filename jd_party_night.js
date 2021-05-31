@@ -42,14 +42,18 @@ if ($.isNode()) {
           $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
           return;
      }
-     for (let i = 0; i < cookiesArr.length; i++) {
-          $.index = i + 1;
-          $.cookie = cookiesArr[i];
-          $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-          console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-          await partyNight();
-          //await $.wait(1000);
+     for (let i = 0; i < 5; i++) {
+          console.log(`开始第${i+1}次抽奖`);
+          for (let i = 0; i < cookiesArr.length; i++) {
+               $.index = i + 1;
+               $.cookie = cookiesArr[i];
+               $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+               console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+               await partyNight();
+               await $.wait(1500);
+          }
      }
+
      // //助力-------------------------
      // for (let i = 0; i < cookiesArr.length; i++) {
      //      $.index = i + 1;
@@ -90,11 +94,11 @@ async function partyNight(){
      // }
 
      $.runFlag = true;
-     for (let i = 0; i < 10 && $.runFlag; i++) {
-          console.log(`开始第${i+1}次抽奖`);
+     //for (let i = 0; i < 10 && $.runFlag; i++) {
+
           await takePostRequest('partyTonight_lottery');
-          await $.wait(5000);
-     }
+          //await $.wait(5000);
+     //}
      //预约
      //await $.wait(2000);
      //await takePostRequest('partyTonight_remind');
