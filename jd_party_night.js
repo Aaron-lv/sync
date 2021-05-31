@@ -88,9 +88,10 @@ async function partyNight(){
      // }else {
      //      console.log('获取活动信息成功');
      // }
-     console.log('开始抽奖');
+
      $.runFlag = true;
      for (let i = 0; i < 10 && $.runFlag; i++) {
+          console.log(`开始第${i+1}次抽奖`);
           await takePostRequest('partyTonight_lottery');
           await $.wait(2000);
      }
