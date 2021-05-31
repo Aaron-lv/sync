@@ -189,7 +189,7 @@ function dealReturn(type, data) {
                     }else if(result.type === 2){
                          console.log(`获得优惠券：`);
                     }else if(result.type === 3){
-                         console.log(`获得京东：${result.beanCount}`);
+                         console.log(`获得京豆：${result.beanCount}`);
                     }else{
                          console.log(JSON.stringify(data));
                     }
