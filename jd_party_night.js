@@ -93,7 +93,7 @@ async function partyNight(){
      for (let i = 0; i < 10 && $.runFlag; i++) {
           console.log(`开始第${i+1}次抽奖`);
           await takePostRequest('partyTonight_lottery');
-          await $.wait(2000);
+          await $.wait(5000);
      }
      //预约
      //await $.wait(2000);
