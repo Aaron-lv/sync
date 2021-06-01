@@ -197,7 +197,7 @@ function harmony_collectScore(timeout = 0) {
           data = JSON.parse(data);
           if (data['code'] === 0) {
             if (data['data']['bizCode'] === 0) {
-              console.log(`助力结果：${data.data.bizMsg}\n`);
+              console.log(`助力结果：${data.data.bizMsg}🎉\n`);
             } else {
               if (data['data']['bizCode'] === 108) $.canHelp = false;
               if (data['data']['bizCode'] === 103) $.item['max'] = true;
