@@ -15,8 +15,6 @@
 
 #每日抽奖(活动时间：2021-05-01至2021-05-31)
 13 1,22,23 * * * node /scripts/jd_daily_lottery.js >> /scripts/logs/jd_daily_lottery.log 2>&1
-#城城领现金
-33 * * * * node /scripts/jd_city.js >> /scripts/logs/jd_city.log 2>&1
 
 #手机狂欢城
 0 0,12,18,21 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
