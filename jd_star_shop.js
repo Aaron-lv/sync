@@ -35,13 +35,17 @@ $.authorCodeList = [
 let cookiesArr = [];
 let uniqueIdList = [
      {'id':'637BQA','name':'成毅'},{'id':'XLDYRJ','name':'白宇'},{'id':'94FEDQ','name':'任嘉伦'},{'id':'GN949D','name':'刘宇宁'},{'id':'WG73ME','name':'李光洁'},{'id':'5JFCD6','name':'李纹翰'},
-     {'id':'YCDXNN','name':'蔡徐坤'},{'id':'CX522V','name':'邓伦'},{'id':'877JM4','name':'张哲瀚'},{'id':'D22Q7C','name':'孟美岐'},{'id':'TRU6GG','name':'王一博'},{'id':'K6DARX','name':'龚俊'},
+     {'id':'YCDXNN','name':'蔡徐坤'},{'id':'CX522V','name':'邓伦'},{'id':'877JM4','name':'张哲瀚'},{'id':'D22Q7C','name':'孟美岐'},{'id':'K6DARX','name':'龚俊'},
      {'id':'S99D9G','name':'刘浩存'},{'id':'ET5F23','name':'吴尊'},{'id':'TXU6GB','name':'刘雨欣'},{'id':'FBFN48','name':'李宇春'},{'id':'UK2SUY','name':'虞书欣'},{'id':'VS4PEM','name':'热依扎'},
      {'id':'QE9757','name':'黄弈'},{'id':'2PFR4L','name':'张云龙'},{'id':'4A2M7K','name':'张伯芝'},{'id':'J8UWSP','name':'戚薇'},{'id':'3FU8S5','name':'周柯宇'},{'id':'P94VEU','name':'林志玲'},
      {'id':'LW4LCK','name':'田鸿杰'},{'id':'MW9U5Z','name':'吴宇恒'},{'id':'AVDKNT','name':'张嘉倪'},{'id':'3PU8SZ','name':'阿云嘎'},{'id':'ZQ7TQR','name':'马家辉'}, {'id':'VZ4PEY','name':'翟潇闻'},
      {'id':'ZH7TQ6','name':'李一桐'},{'id':'4C2M75','name':'张馨予'},{'id':'E55F2M','name':'雷米'},{'id':'M79U5N','name':'无穷小亮'},{'id':'762GUB','name':'刘昊然'},{'id':'8K7JM3','name':'止庵'},
-     {'id':'ND55FR','name':'刘诗诗'},
+
 ];
+/**奖品只有优惠券，不做他们家的任务
+ *{'id':'TRU6GG','name':'王一博'}
+ *{'id':'ND55FR','name':'刘诗诗'}
+ * */
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])

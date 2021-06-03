@@ -28,12 +28,12 @@ inputs:
           cronExpression: "0 0 0 * * * *"
           enable: true
           argument: jd_blueCoin&jd_club_lottery&jd_car_exchange&jd_xtg&jd_xtg_help
-    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版签到 #京东家庭号 #金榜创造营
+    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场 #京东极速版签到 #京东家庭号 #金榜创造营 #明星小店
         parameters:
-          name: fruit_pet_bookshop_jxnc_speedsign_family_goldcreator
+          name: fruit_pet_bookshop_jxnc_speedsign_family_goldcreator_starshop
           cronExpression: "0 5 6-18/6,8 * * * *"
           enable: true
-          argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc&jd_speed_sign&jd_family&jd_gold_creator
+          argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc&jd_speed_sign&jd_family&jd_gold_creator&jd_star_shop
     - timer: #宠汪汪喂食 #宠汪汪 #摇钱树 #京东种豆得豆 #京喜工厂 #东东工厂 #东东健康社区收集能量
         parameters:
           name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_healthcollect
