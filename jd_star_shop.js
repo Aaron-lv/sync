@@ -105,10 +105,10 @@ if ($.isNode()) {
     })
 
 async function main() {
-  console.log(`开始执行星店长任务`);
-  await xdz();
-  console.log(`星店长任务执行完毕`);
-  console.log(`\n`);
+  // console.log(`开始执行星店长任务`);
+  // await xdz();
+  // console.log(`星店长任务执行完毕`);
+  // console.log(`\n`);
   let sendMessage = '';
   uniqueIdList = getRandomArrayElements(uniqueIdList, uniqueIdList.length);
   console.log(`现共查询到${uniqueIdList.length}个明星小店\n`);
