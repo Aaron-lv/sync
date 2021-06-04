@@ -284,8 +284,9 @@ function startGame() {
               await $.wait(10*1000)
               await reportGame(data.result.passScore + 2)
             } else {
-              if (data.retCode === '1102') $.canDo = false
+              // if (data.retCode === '1102') $.canDo = false
               console.log(`游戏开始失败`, JSON.stringify(data))
+              $.canDo = false
             }
           }
         }
