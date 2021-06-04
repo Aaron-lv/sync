@@ -136,11 +136,14 @@ async function main() {
       }else{
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},已填写地址`);
       }
-    } else  {
+    } else if ($.rewards[i].prizeType === 10) {
+         console.log(`获得京豆`);
+    } else {
       console.log(`获得其他：${$.rewards[i].prizeDesc || ''}`);
     }
   }
   if(sendMessage){
+    sendMessage += `填写收货地址路径：\n京东首页，搜索明星（蔡徐坤），进入明星小店，我的礼物，填写收货地址`;
     await notify.sendNotify(`星店长`, sendMessage);
   }
 }
