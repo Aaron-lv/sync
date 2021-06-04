@@ -5,7 +5,7 @@
 明星小店(星店长)
 助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码
 抽奖：是否中奖没判断，需自行查看
-更新时间：2021-06-03
+更新时间：2021-06-04
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -64,7 +64,7 @@ if ($.isNode()) {
   console.log('明星小店(星店长)\n' +
       '助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码\n' +
       '抽奖：是否中奖没判断，需自行查看\n' +
-      '更新时间：2021-06-03');
+      '更新时间：2021-06-04');
   for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;
     $.cookie = cookiesArr[i];
@@ -105,6 +105,10 @@ if ($.isNode()) {
     })
 
 async function main() {
+  console.log(`开始执行星店长任务`);
+  await xdz();
+  console.log(`星店长任务执行完毕`);
+  console.log(`\n`);
   let sendMessage = '';
   uniqueIdList = getRandomArrayElements(uniqueIdList, uniqueIdList.length);
   console.log(`现共查询到${uniqueIdList.length}个明星小店\n`);
@@ -146,6 +150,172 @@ async function main() {
     sendMessage += `填写收货地址路径：\n京东首页，搜索明星（蔡徐坤），进入明星小店，我的礼物，填写收货地址`;
     await notify.sendNotify(`星店长`, sendMessage);
   }
+}
+
+async function xdz(){
+  $.shopId = 'GN949D';
+  $.tokenId = 'jd6df03bd53f0f292f';
+  $.xdzInfo = {};
+  await getXdzInfo();
+  if(JSON.stringify($.xdzInfo) === '{}'){
+    console.log(`获取活动数据为空`);
+    return ;
+  }
+  $.xdzUseInfo = [];
+  await getXdzUseInfo();
+  if(JSON.stringify($.xdzUseInfo) === '{}'){
+    console.log(`获取用户数据为空`);
+    return ;
+  }
+  let tasksList =  $.xdzUseInfo.tasks;
+  for (let i = 0; i < tasksList.length; i++) {
+    $.oneTask = tasksList[i];
+    if($.oneTask.status !== 1){
+      continue;
+    }
+    if($.oneTask.taskType !== '22' && $.oneTask.taskType !== '6'){
+      console.log(`执行任务：${$.oneTask.taskName}`);
+      let subItem = $.oneTask.subItem;
+      for (let j = 0; j < subItem.length; j++) {
+        $.subItemInfo = subItem[j];
+        if(!$.subItemInfo.itemToken &&  $.subItemInfo.status !==1 ){
+          continue;
+        }
+        await doXdzTask();
+        await $.wait(2000);
+      }
+    }
+  }
+  let awardVoList = $.xdzInfo.awardVoList;
+  for (let i = 0; i < awardVoList.length; i++) {
+    $.oneAwardInfo = awardVoList[i];
+    if($.oneAwardInfo.status === 1 && $.oneAwardInfo.grade === 1){
+      console.log(`执行抽奖`);
+      drawAward();
+      await $.wait(2000);
+    }
+  }
+}
+async function drawAward(){
+  const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22token%22:%22${$.tokenId}%22%7D&appid=xdz&functionId=mcxhd_starmall_drawAward&t=${Date.now()}&loginWQBiz=`;
+  const method = `GET`;
+  const headers = {
+    'Origin': `https://h5.m.jd.com`,
+    'Cookie': $.cookie,
+    'Accept-Encoding': `gzip, deflate, br`,
+    'Accept-Language': `zh-cn`,
+    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'Referer': `https://h5.m.jd.com/babelDiy/Zeus/3Vuj8Uw26NEDNRjaT2uspf2pphK/index.html`,
+    'Content-Type':`application/x-www-form-urlencoded;charset=UTF-8`,
+    'Accept': `application/json, text/plain, */*`,
+    'Host': `api.m.jd.com`,
+  };
+  const myRequest = {url: url, method: method, headers: headers,};
+  return new Promise(async resolve => {
+    $.get(myRequest, (err, resp, data) => {
+      try {
+        console.log(`抽奖结果`);
+        console.log(data);
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+async function doXdzTask(){
+  const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22itemToken%22:%22${$.subItemInfo.itemToken}%22,%22token%22:%22${$.tokenId}%22%7D&appid=xdz&functionId=mcxhd_starmall_doTask&t=${Date.now()}&loginWQBiz=`;
+  const method = `GET`;
+  const headers = {
+    'Origin': `https://h5.m.jd.com`,
+    'Cookie': $.cookie,
+    'Accept-Encoding': `gzip, deflate, br`,
+    'Accept-Language': `zh-cn`,
+    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'Referer': `https://h5.m.jd.com/babelDiy/Zeus/3Vuj8Uw26NEDNRjaT2uspf2pphK/index.html`,
+    'Content-Type':`application/x-www-form-urlencoded;charset=UTF-8`,
+    'Accept': `application/json, text/plain, */*`,
+    'Host': `api.m.jd.com`,
+  };
+  const myRequest = {url: url, method: method, headers: headers,};
+  return new Promise(async resolve => {
+    $.get(myRequest, (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.retCode === '200') {
+          console.log(`任务完成，获得星力值：${data.result.score}`);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+async function getXdzUseInfo(){
+  const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22token%22:%22${$.tokenId }%22%7D&appid=xdz&functionId=mcxhd_starmall_taskList&t=${Date.now()}&loginWQBiz=`;
+  const method = `GET`;
+  const headers = {
+    'Origin': `https://h5.m.jd.com`,
+    'Cookie': $.cookie,
+    'Accept-Encoding': `gzip, deflate, br`,
+    'Accept-Language': `zh-cn`,
+    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'Referer': `https://h5.m.jd.com/babelDiy/Zeus/3Vuj8Uw26NEDNRjaT2uspf2pphK/index.html`,
+    'Content-Type':`application/x-www-form-urlencoded;charset=UTF-8`,
+    'Accept': `application/json, text/plain, */*`,
+    'Host': `api.m.jd.com`,
+  };
+  const myRequest = {url: url, method: method, headers: headers,};
+  return new Promise(async resolve => {
+    $.get(myRequest, (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.retCode === '200') {
+          $.xdzUseInfo = data.result;
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+async function getXdzInfo(){
+  const url = `https://api.m.jd.com/?body=%7B%22shopId%22:%22${$.shopId}%22,%22token%22:%22${$.tokenId }%22%7D&appid=xdz&functionId=mcxhd_starmall_getStarShopPage&t=${Date.now()}&loginWQBiz=`;
+  const method = `GET`;
+  const headers = {
+    'Origin': `https://h5.m.jd.com`,
+    'Cookie': $.cookie,
+    'Accept-Encoding': `gzip, deflate, br`,
+    'Accept-Language': `zh-cn`,
+    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'Referer': `https://h5.m.jd.com/babelDiy/Zeus/3Vuj8Uw26NEDNRjaT2uspf2pphK/index.html`,
+    'Content-Type':`application/x-www-form-urlencoded;charset=UTF-8`,
+    'Accept': `application/json, text/plain, */*`,
+    'Host': `api.m.jd.com`,
+  };
+  const myRequest = {url: url, method: method, headers: headers,};
+  return new Promise(async resolve => {
+    $.get(myRequest, (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.retCode === '200') {
+          $.xdzInfo = data.result;
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 
 async function getReward() {
@@ -322,8 +492,13 @@ function dealReturn(type, data) {
       break;
     case 'activityStarBackDrawPrize':
       if (data.code === 0) {
-        console.log(JSON.stringify(data));
+        if(data.data.prizeType === 0){
+          console.log(`未抽中`);
+        }else{
+          console.log(`恭喜你、抽中了`);
+        }
       }
+      console.log(JSON.stringify(data));
       break;
     default:
       console.log('异常');
