@@ -1,6 +1,21 @@
 /*
 author：tg@chenxing666
 新潮品牌狂欢
+脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
+==============Quantumult X==============
+[task_local]
+#新潮品牌狂欢
+4 10 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mcxhd.js, tag=新潮品牌狂欢, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+
+==============Loon==============
+[Script]
+cron "4 10 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mcxhd.js,tag=新潮品牌狂欢
+
+================Surge===============
+新潮品牌狂欢 = type=cron,cronexp="4 10 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mcxhd.js
+
+===============小火箭==========
+新潮品牌狂欢 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mcxhd.js, cronexpr="4 10 * * *", timeout=3600, enable=true
 */
 const $ = new Env('新潮品牌狂欢');
 
@@ -52,10 +67,12 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await showMsg();
     }
   }
+  console.log(`\n开始自己京东内部相互助力\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      for(let vo of $.shareCodeList){
+      for (let vo of $.shareCodeList) {
+        if (!vo) continue;
         await doTask(vo)
       }
     }
@@ -231,7 +248,7 @@ function taskList() {
                     if (vo.taskType === '6'){
                       const shareCode = bo.itemToken
                       console.log(`好友助力码:${shareCode}`)
-                      $.shareCodeList.push(shareCode)
+                      if (shareCode) $.shareCodeList.push(shareCode)
                     }
                     else if(vo.taskType!=='9') {
                       await doTask(bo.itemToken)
@@ -269,7 +286,9 @@ function startGame() {
               await $.wait(10*1000)
               await reportGame(data.result.passScore + 2)
             } else {
-              console.log(`游戏开始失败`)
+              // if (data.retCode === '1102') $.canDo = false
+              console.log(`游戏开始失败`, JSON.stringify(data))
+              $.canDo = false
             }
           }
         }
