@@ -67,10 +67,12 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await showMsg();
     }
   }
+  console.log(`\n开始自己京东内部相互助力\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      for(let vo of $.shareCodeList){
+      for (let vo of $.shareCodeList) {
+        if (!vo) continue;
         await doTask(vo)
       }
     }
@@ -246,7 +248,7 @@ function taskList() {
                     if (vo.taskType === '6'){
                       const shareCode = bo.itemToken
                       console.log(`好友助力码:${shareCode}`)
-                      $.shareCodeList.push(shareCode)
+                      if (shareCode) $.shareCodeList.push(shareCode)
                     }
                     else if(vo.taskType!=='9') {
                       await doTask(bo.itemToken)
