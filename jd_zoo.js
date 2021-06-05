@@ -207,7 +207,7 @@ async function zoo() {
             await $.wait(3000);
           }
         }
-      } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.taskId === 11){
+      } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 2){
         console.log(`做任务：${$.oneTask.taskName};等待完成 (实际不会添加到购物车)`);
         $.taskId = $.oneTask.taskId;
         $.feedDetailInfo = {};
@@ -224,7 +224,7 @@ async function zoo() {
           await $.wait(1500);
           needTime --;
         }
-      }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.taskId === 24){
+      }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0){
         $.activityInfoList = $.oneTask.productInfoVos ;
         for (let j = 0; j < $.activityInfoList.length; j++) {
           $.oneActivityInfo = $.activityInfoList[j];
