@@ -618,8 +618,8 @@ function userInfo() {
                 }
                 if (production.status === 3) {
                   $.log(`\n\n商品生产已失效`)
-                  $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}超时未完成已失效，请选择新商品进行制造`)
-                  allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}超时未完成已失效，请选择新商品进行制造${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+                  $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n【超时未完成】已失效，请选择新商品进行制造`)
+                  allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}\n【超时未完成】已失效，请选择新商品进行制造${$.index !== cookiesArr.length ? '\n\n' : ''}`;
                 }
               } else {
                 $.unActive = false;//标记是否开启了京喜活动或者选购了商品进行生产
