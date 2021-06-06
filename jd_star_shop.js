@@ -28,7 +28,9 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.inviteCodeList = [];
 $.authorCodeList = [
-  'rQI0TkBIzVwHI4fxBQnt6v0doiabNQfNdJglrUVhOP0','Rcl-dpjMZKyZUzie7lg4ow','lqU3wfq2eBw8N6pRbRBGHg','xsK-EVpDVVszF0j95pGD6g',
+  'hwm7S-8XHxl5Mpx4rzdPiBOa77Iohk-EgLxyNxi_FdE','3utidIhY2dRDe2mK6T_5G7yh_gGf1xD4vLB_05gZbw4',
+  'XkpuXLAvubVHX1_5cgppVA','GYv6SLEM1HE774Oiszj3hJbzz_B9k-Nh-4lrWMylsG8',
+  'nhIeMSk2UO5fhA0PGLTw3j151Q5TP8LOnxNdkyUCmMk','OB_OCfnuZze9If-n96DCsXt8Zdz3_0X0y2IZLo_V_n4',
   'r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY', 'Mve7TKmP8UKnC9IULuBrQHzgY54j_0U5BLm5Ox6aigY',
 ];
 let cookiesArr = [];
@@ -133,7 +135,7 @@ if ($.isNode()) {
     }
     await main();
   }
-  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, $.authorCodeList.length));
+  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, 3));
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -159,16 +161,20 @@ async function main() {
   uniqueIdList = getRandomArrayElements(uniqueIdList, uniqueIdList.length);
   console.log(`现共查询到${uniqueIdList.length}个明星小店\n`);
   for (let j = 0; j < uniqueIdList.length; j++) {
-    $.uniqueId = uniqueIdList[j].id;
-    $.helpCode = '';
-    console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
-    await starShop();
-    await $.wait(1000);
-    if (j === 0) {
-      console.log(`互助码：${$.helpCode}`);
-      $.inviteCodeList.push($.helpCode);
+    try{
+      $.uniqueId = uniqueIdList[j].id;
+      $.helpCode = '';
+      console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
+      await starShop();
+      await $.wait(1000);
+      if (j === 0) {
+        console.log(`互助码：${$.helpCode}`);
+        $.inviteCodeList.push($.helpCode);
+      }
+      console.log(`\n`);
+    }catch (e) {
+      console.log(JSON.stringify(e.message));
     }
-    console.log(`\n`);
   }
   console.log(`=============${$.UserName }：星店长奖励汇总================`);
   await $.wait(1000);
