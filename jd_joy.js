@@ -494,7 +494,7 @@ function appScanMarket(type, body) {
     const host = `jdjoy.jd.com`;
     const reqSource = 'h5';
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/${type}&invokeKey=Oex5GmEuqGep1WLC`,
+      url: `//jdjoy.jd.com/common/pet/${type}?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC`,
       // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
       method: "POST",
       data: body,
@@ -622,7 +622,7 @@ function appGetPetTaskConfig() {
     const host = `jdjoy.jd.com`;
     const reqSource = 'h5';
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/getPetTaskConfig&invokeKey=Oex5GmEuqGep1WLC",
+      url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC",
       // url: `//draw.jdfcloud.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5`,
       method: "GET",
       data: {},
@@ -717,7 +717,7 @@ function getPetTaskConfig() {
     const reqSource = 'weapp';
     let opt = {
       // url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5",
-      url: "//draw.jdfcloud.com//common/pet/getPetTaskConfig&invokeKey=Oex5GmEuqGep1WLC",
+      url: "//draw.jdfcloud.com//common/pet/getPetTaskConfig?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC",
       method: "GET",
       data: {},
       credentials: "include",
