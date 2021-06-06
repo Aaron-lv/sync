@@ -108,7 +108,7 @@ function feedPets(feedNum) {
     console.log(`实际的喂食数量::${feedNum}g\n`);
     let opt = {
       url: `//jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5`,
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
+      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC",
       method: "GET",
       data: {},
       credentials: "include",
@@ -175,7 +175,7 @@ function ThreeMeals() {
   return new Promise(resolve => {
     let opt = {
       url: "//jdjoy.jd.com/common/pet/getFood?taskType=ThreeMeals&reqSource=h5",
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
+      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC",
       method: "GET",
       data: {},
       credentials: "include",
