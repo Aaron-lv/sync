@@ -5,7 +5,7 @@
 明星小店(星店长)
 助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码
 抽奖：是否中奖没判断，需自行查看
-更新时间：2021-06-04
+更新时间：2021-06-06
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -67,7 +67,7 @@ if ($.isNode()) {
   console.log('明星小店(星店长)\n' +
       '助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码\n' +
       '抽奖：是否中奖没判断，需自行查看\n' +
-      '更新时间：2021-06-04\n');
+      '更新时间：2021-06-06\n');
 
   // console.log(`==================开始执行星店长任务==================`);
   // for (let i = 0; i < cookiesArr.length; i++) {
@@ -186,7 +186,7 @@ async function main() {
     } else if ($.rewards[i].prizeType === 5) {
       if(!$.rewards[i].fillReceiverFlag){
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},未填写地址`);
-        sendMessage += `${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
+        sendMessage += `【京东账号${$.index}】${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
       }else{
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},已填写地址`);
       }
