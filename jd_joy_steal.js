@@ -1,5 +1,5 @@
 /*
-Last Modified time: 2021-2-19 10:22:37
+Last Modified time: 2021-6-6 10:22:37
 活动入口：京东APP我的-更多工具-宠汪汪
 最近经常出现给偷好友积分与狗粮失败的情况，故建议cron设置为多次
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
@@ -287,7 +287,7 @@ function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     let opt = {
       url: `//draw.jdfcloud.com//common/pet/api/getFriends?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=weapp`,
-      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5`,
+      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC`,
       method: "GET",
       data: {},
       credentials: "include",
@@ -472,7 +472,7 @@ function getRandomFood(friendPin) {
 function getCoinChanges() {
   return new Promise(resolve => {
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/getCoinChanges?changeDate=${Date.now()}&reqSource=h5`,
+      url: `//jdjoy.jd.com/common/pet/getCoinChanges?changeDate=${Date.now()}&reqSource=h5&invokeKey=Oex5GmEuqGep1WLC`,
       // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
       method: "GET",
       data: {},
@@ -597,7 +597,7 @@ function TotalBean() {
 }
 function taskUrl(functionId, friendPin) {
   let opt = {
-    url: `//jdjoy.jd.com/common/pet/${functionId}?friendPin=${encodeURI(friendPin)}&reqSource=h5`,
+    url: `//jdjoy.jd.com/common/pet/${functionId}?friendPin=${encodeURI(friendPin)}&reqSource=h5&invokeKey=Oex5GmEuqGep1WLC`,
     // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5`,
     method: "GET",
     data: {},
