@@ -255,7 +255,7 @@ function getExchangeRewards() {
 function exchange(saleInfoId, orderSource) {
   let body = {"buyParam":{"orderSource":orderSource,"saleInfoId":saleInfoId},"deviceInfo":{}}
   let opt = {
-    "url": "//jdjoy.jd.com/common/gift/new/exchange&invokeKey=Oex5GmEuqGep1WLC",
+    "url": "//jdjoy.jd.com/common/gift/new/exchange?reqSource=h5&invokeKey=Oex5GmEuqGep1WLC",
     "data":body,
     "credentials":"include","method":"POST","header":{"content-type":"application/json"}
   }
