@@ -35,13 +35,9 @@ const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助
 let cookiesArr = [];
 $.cookie = '';
 $.inviteList = [];
-$.pkInviteList = [
-  "sSKNX-MpqKOJsNu8mJ7RA9BJMup4tAAmPcPPPhBUWYKUJ19UKeC8EAoKeUXELi4u",
-];
+$.pkInviteList = [];
 $.secretpInfo = {};
-$.innerPkInviteList = [
-
-];
+$.innerPkInviteList = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
