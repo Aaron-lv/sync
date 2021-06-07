@@ -37,9 +37,7 @@ $.cookie = '';
 $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
-$.innerPkInviteList = [
-
-];
+$.innerPkInviteList = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -93,6 +91,12 @@ if ($.isNode()) {
   if (new Date().getHours()>= 9) {
     res = await getAuthorShareCode() || [];
     res2 = await getAuthorShareCode('http://cdn.trueorfalse.top/e528ffae31d5407aac83b8c37a4c86bc/') || [];
+  }
+  if (new Date().getHours() === 9 || (new Date().getHours() === 10 && new Date().getMinutes() < 11)) {
+    $.innerPkInviteList.push('sSKNX-MpqKPS7Le4m5rbBpODDLhoZ9ruJViTqJpv4c2Lm2-TfJwzRBS82zBEzkXK');
+    $.innerPkInviteList.push('sSKNX-MpqKOJsNvSzMSZfAM9H7GwE_7GAGP6h5-yWMFC6rsV_bSQHlBmw28Arg');
+    $.innerPkInviteList.push('sSKNX-MpqKOJsNvM-u2vdyHH5x3rrYdCxJ-sE_oy8C69xCinRiEdQ3bib4w42g');
+    $.innerPkInviteList.push('sSKNX-MpqKOJsNu-ms-IVdCm3z528hK5o2UJgQWu0nCM-DsOo6H6pwAnkox1F2YO');
   }
   if (pKHelpAuthorFlag) {
     $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res, ...res2, ...res3], [...$.innerPkInviteList, ...res, ...res2, ...res3].length);
