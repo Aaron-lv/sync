@@ -162,11 +162,11 @@ async function PrizeIndex() {
       console.log(`\n\n温馨提示：需兑换商品的名称设置请尽量与其他商品有区分度，否则可能会兑换成其他类似商品\n\n`)
       let prizeId = '', i;
       for (let index = 0; index < prizeList.length; index ++) {
-        if (prizeList[index].title.indexOf(coinToBeans) > -1) {
+        if (prizeList[index].name.indexOf(coinToBeans) > -1) {
           prizeId = prizeList[index].prizeId;
           i = index;
-          $.title = prizeList[index].title;
-          $.blueCost = prizeList[index].blueCost;
+          $.title = prizeList[index].name;
+          $.blueCost = prizeList[index].cost;
           $.type = prizeList[index].type;
           $.beanType = prizeList[index].hasOwnProperty('beanType');
         }
@@ -192,8 +192,8 @@ async function PrizeIndex() {
           $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
         }
       } else {
-        console.log(`奖品兑换列表[${coinToBeans}]已下架，请检查活动页面是否存在此商品，如存在请检查您的输入是否正确`);
-        $.beanerr = `奖品兑换列表[${coinToBeans}]已下架`;
+        console.log(`奖品兑换列表【${coinToBeans}】已下架，请检查活动页面是否存在此商品，如存在请检查您的输入是否正确`);
+        $.beanerr = `奖品兑换列表【${coinToBeans}】已下架`;
       }
     }
   }
