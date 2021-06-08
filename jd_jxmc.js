@@ -327,8 +327,7 @@ function dealReturn(type, data) {
       data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
       if (data.ret === 0) {
         $.mowingInfo = data.data;
-        console.log(`获得金币：${ $.mowingInfo.addcoins || $.mowingInfo.addcoin }`)
-        if (!$.mowingInfo.addcoins && !$.mowingInfo.addcoin) console.log(`请检查【新手指导任务-割草与割鸡腿】是否已手动完成\n`);
+        console.log(`获得金币：${ ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0 }`)
       }
       break;
     case 'GetSelfResult':
