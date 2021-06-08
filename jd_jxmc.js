@@ -324,7 +324,7 @@ function dealReturn(type, data) {
       if (data.ret === 0) {
         $.mowingInfo = data.data;
         console.log(`获得金币：${ $.mowingInfo.addcoins || $.mowingInfo.addcoin }`)
-        if (!$.mowingInfo.addcoins && !$.mowingInfo.addcoin) console.log(`请检查【新手指导任务】是否已手动完成\n`);
+        if (!$.mowingInfo.addcoins && !$.mowingInfo.addcoin) console.log(`请检查【新手指导任务-割草与割鸡腿】是否已手动完成\n`);
       }
       break;
     case 'GetSelfResult':
