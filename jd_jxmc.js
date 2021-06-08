@@ -87,114 +87,118 @@ if ($.isNode()) {
     })
 
 async function pasture() {
-  $.homeInfo = {};
-  $.petidList = [];
-  $.crowInfo = {};
-  await takeGetRequest('GetHomePageInfo');
-  if (JSON.stringify($.homeInfo) === '{}') {
-    return;
-  } else {
-    if (!$.homeInfo.petinfo) {
-      console.log(`\n温馨提示：${$.UserName} 请先手动完成【新手指导任务】再运行脚本再运行脚本\n`);
+  try {
+    $.homeInfo = {};
+    $.petidList = [];
+    $.crowInfo = {};
+    await takeGetRequest('GetHomePageInfo');
+    if (JSON.stringify($.homeInfo) === '{}') {
       return;
-    }
-    console.log('获取活动信息成功');
-    for (let i = 0; i < $.homeInfo.petinfo.length; i++) {
-      $.onepetInfo = $.homeInfo.petinfo[i];
-      $.petidList.push($.onepetInfo.petid);
-      if ($.onepetInfo.cangetborn === 1) {
-        console.log(`开始收鸡蛋`);
-        await takeGetRequest('GetEgg');
-        await $.wait(1000);
-      }
-    }
-    $.crowInfo = $.homeInfo.cow;
-  }
-
-  await $.wait(2000);
-  if ($.crowInfo.lastgettime) {
-    console.log('收奶牛金币');
-    await takeGetRequest('cow');
-    await $.wait(2000);
-  }
-  $.taskList = [];
-  $.dateType = ``;
-  for (let j = 2; j >= 0; j--) {
-    if (j === 0) {
-      $.dateType = ``;
     } else {
-      $.dateType = j;
-    }
-    await takeGetRequest('GetUserTaskStatusList');
-    await $.wait(2000);
-    await doTask();
-    await $.wait(2000);
-    if (j === 2) {
-      //割草
-      console.log(`\n开始进行10次割草`);
-      for (let i = 0; i < 10; i++) {
-        $.mowingInfo = {};
-        console.log(`开始第${i + 1}次割草`);
-        await takeGetRequest('mowing');
-        await $.wait(2000);
-        if ($.mowingInfo.surprise === true) {
-          //除草礼盒
-          console.log(`领取除草礼盒`);
-          await takeGetRequest('GetSelfResult');
-          await $.wait(5000);
+      if (!$.homeInfo.petinfo) {
+        console.log(`\n温馨提示：${$.UserName} 请先手动完成【新手指导任务】再运行脚本再运行脚本\n`);
+        return;
+      }
+      console.log('获取活动信息成功');
+      for (let i = 0; i < $.homeInfo.petinfo.length; i++) {
+        $.onepetInfo = $.homeInfo.petinfo[i];
+        $.petidList.push($.onepetInfo.petid);
+        if ($.onepetInfo.cangetborn === 1) {
+          console.log(`开始收鸡蛋`);
+          await takeGetRequest('GetEgg');
+          await $.wait(1000);
         }
       }
-      //横扫鸡腿
-      console.log(`\n开始进行10次横扫鸡腿`);
-      for (let i = 0; i < 10; i++) {
-        console.log(`开始第${i + 1}次横扫鸡腿`);
-        await takeGetRequest('jump');
-        await $.wait(2000);
-      }
+      $.crowInfo = $.homeInfo.cow;
     }
-  }
-  await takeGetRequest('GetHomePageInfo');
-  await $.wait(2000);
 
-  if (Number($.homeInfo.coins) > 5000) {
-    let canBuyTimes = Math.floor(Number($.homeInfo.coins) / 5000);
-    console.log(`\n共有金币${$.homeInfo.coins},可以购买${canBuyTimes}次白菜`);
-    for (let j = 0; j < canBuyTimes; j++) {
-      console.log(`第${j + 1}次购买白菜`);
-      await takeGetRequest('buy');
+    await $.wait(2000);
+    if ($.crowInfo.lastgettime) {
+      console.log('收奶牛金币');
+      await takeGetRequest('cow');
       await $.wait(2000);
+    }
+    $.taskList = [];
+    $.dateType = ``;
+    for (let j = 2; j >= 0; j--) {
+      if (j === 0) {
+        $.dateType = ``;
+      } else {
+        $.dateType = j;
+      }
+      await takeGetRequest('GetUserTaskStatusList');
+      await $.wait(2000);
+      await doTask();
+      await $.wait(2000);
+      if (j === 2) {
+        //割草
+        console.log(`\n开始进行10次割草`);
+        for (let i = 0; i < 10; i++) {
+          $.mowingInfo = {};
+          console.log(`开始第${i + 1}次割草`);
+          await takeGetRequest('mowing');
+          await $.wait(2000);
+          if ($.mowingInfo.surprise === true) {
+            //除草礼盒
+            console.log(`领取除草礼盒`);
+            await takeGetRequest('GetSelfResult');
+            await $.wait(5000);
+          }
+        }
+        //横扫鸡腿
+        console.log(`\n开始进行10次横扫鸡腿`);
+        for (let i = 0; i < 10; i++) {
+          console.log(`开始第${i + 1}次横扫鸡腿`);
+          await takeGetRequest('jump');
+          await $.wait(2000);
+        }
+      }
     }
     await takeGetRequest('GetHomePageInfo');
     await $.wait(2000);
-  }
-  let materialinfoList = $.homeInfo.materialinfo;
-  for (let j = 0; j < materialinfoList.length; j++) {
-    if (materialinfoList[j].type !== 1) {
-      continue;
-    }
-    if (Number(materialinfoList[j].value) > 10) {
-      $.canFeedTimes = Math.floor(Number(materialinfoList[j].value) / 10);
-      console.log(`\n共有白菜${materialinfoList[j].value}颗，每次喂10颗，可以喂${$.canFeedTimes}次`);
-      $.runFeed = true;
-      for (let k = 0; k < $.canFeedTimes && $.runFeed && k < 40; k++) {
-        $.pause = false;
-        console.log(`开始第${k + 1}次喂白菜`);
-        await takeGetRequest('feed');
+
+    if (Number($.homeInfo.coins) > 5000) {
+      let canBuyTimes = Math.floor(Number($.homeInfo.coins) / 5000);
+      console.log(`\n共有金币${$.homeInfo.coins},可以购买${canBuyTimes}次白菜`);
+      for (let j = 0; j < canBuyTimes; j++) {
+        console.log(`第${j + 1}次购买白菜`);
+        await takeGetRequest('buy');
         await $.wait(2000);
-        if ($.pause) {
-          await takeGetRequest('GetHomePageInfo');
-          await $.wait(1000);
-          for (let n = 0; n < $.homeInfo.petinfo.length; n++) {
-            $.onepetInfo = $.homeInfo.petinfo[n];
-            if ($.onepetInfo.cangetborn === 1) {
-              console.log(`开始收鸡蛋`);
-              await takeGetRequest('GetEgg');
-              await $.wait(1000);
+      }
+      await takeGetRequest('GetHomePageInfo');
+      await $.wait(2000);
+    }
+    let materialinfoList = $.homeInfo.materialinfo;
+    for (let j = 0; j < materialinfoList.length; j++) {
+      if (materialinfoList[j].type !== 1) {
+        continue;
+      }
+      if (Number(materialinfoList[j].value) > 10) {
+        $.canFeedTimes = Math.floor(Number(materialinfoList[j].value) / 10);
+        console.log(`\n共有白菜${materialinfoList[j].value}颗，每次喂10颗，可以喂${$.canFeedTimes}次`);
+        $.runFeed = true;
+        for (let k = 0; k < $.canFeedTimes && $.runFeed && k < 40; k++) {
+          $.pause = false;
+          console.log(`开始第${k + 1}次喂白菜`);
+          await takeGetRequest('feed');
+          await $.wait(2000);
+          if ($.pause) {
+            await takeGetRequest('GetHomePageInfo');
+            await $.wait(1000);
+            for (let n = 0; n < $.homeInfo.petinfo.length; n++) {
+              $.onepetInfo = $.homeInfo.petinfo[n];
+              if ($.onepetInfo.cangetborn === 1) {
+                console.log(`开始收鸡蛋`);
+                await takeGetRequest('GetEgg');
+                await $.wait(1000);
+              }
             }
           }
         }
       }
     }
+  } catch (e) {
+    $.logErr(e)
   }
 }
 
@@ -356,11 +360,11 @@ function dealReturn(type, data) {
       data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
       if (data.ret === 0) {
         console.log(`投喂成功`);
-      } else if (data.ret === 2020 && data.data.maintaskId === 'pause') {
+      } else if (data.ret === 2020) {
         console.log(`投喂失败，需要先收取鸡蛋`);
         $.pause = true;
       } else {
-        console.log(`投喂失败，未知错误`);
+        console.log(`投喂失败，${data.message}`);
         console.log(JSON.stringify(data));
         $.runFeed = false;
       }
