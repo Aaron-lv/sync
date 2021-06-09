@@ -2,7 +2,7 @@
 京喜财富岛
 根据github@MoPoQAQ 财富岛脚本修改而来。无需京喜token,只需京东cookie即可.
 cron 5 8,13,19 * * * jd_cfd.js
-更新时间：2021-6-3
+更新时间：2021-6-9
 活动入口：京喜APP-我的-京喜财富岛
 
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -102,7 +102,7 @@ $.appId = 10009;
       console.log(`账号${$.UserName} 去参加 ${id} 寻宝大作战`)
       await joinGroup(id)
       if (!$.canHelp) break
-      await $.wait(8000)
+      await $.wait(1000 * 10)
     }
     if (!$.canHelp) continue
     console.log(`\n\n寻宝大作战，助力作者\n`);
