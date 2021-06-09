@@ -1,11 +1,8 @@
 #!name=lxk0301 iOS Tasks&Cookies Module
 #!desc=iOS Tasks&Cookies 模块配置
 
-# Task&Cookies模块配置 By lxk0301
-# GitHub主页(https://gitee.com/lxk0301/jd_scripts/tree/master)
+# Task&Cookies模块配置 
 # TG讨论组 (https://t.me/JD_fruit_pet)
-# TG通知频道 (https://t.me/jdfruit)
-# Surge的Task&Cookies脚本模块地址: https://gitee.com/lxk0301/jd_scripts/raw/master/Surge/lxk0301_Task.sgmodule.sgmodule
 
 [Script]
 京东资产变动通知 = type=cron,cronexp="2 9 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_bean_change.js
