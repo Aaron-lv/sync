@@ -332,7 +332,7 @@ function dealReturn(type, data) {
         $.mowingInfo = data.data;
         let add = ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0;
         console.log(`获得金币：${add}`);
-        if(Numbe(add) >0 ){
+        if(Number(add) >0 ){
           $.runFlag = true;
         }else{
           $.runFlag = false;
