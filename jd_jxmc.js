@@ -132,8 +132,9 @@ async function pasture() {
       await $.wait(2000);
       if (j === 2) {
         //割草
-        console.log(`\n开始进行10次割草`);
-        for (let i = 0; i < 10; i++) {
+        console.log(`\n开始进行割草`);
+        $.runFlag = true;
+        for (let i = 0; i < 30 && $.runFlag; i++) {
           $.mowingInfo = {};
           console.log(`开始第${i + 1}次割草`);
           await takeGetRequest('mowing');
@@ -145,9 +146,11 @@ async function pasture() {
             await $.wait(5000);
           }
         }
+
         //横扫鸡腿
-        console.log(`\n开始进行10次横扫鸡腿`);
-        for (let i = 0; i < 10; i++) {
+        $.runFlag = true;
+        console.log(`\n开始进行横扫鸡腿`);
+        for (let i = 0; i < 30 && $.runFlag; i++) {
           console.log(`开始第${i + 1}次横扫鸡腿`);
           await takeGetRequest('jump');
           await $.wait(2000);
@@ -327,7 +330,14 @@ function dealReturn(type, data) {
       data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
       if (data.ret === 0) {
         $.mowingInfo = data.data;
-        console.log(`获得金币：${ ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0 }`)
+        let add = ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0;
+        console.log(`获得金币：${add}`);
+        if(Numbe(add) >0 ){
+          $.runFlag = true;
+        }else{
+          $.runFlag = false;
+          console.log(`未获得金币暂停${type}`);
+        }
       }
       break;
     case 'GetSelfResult':
