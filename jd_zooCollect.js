@@ -6,17 +6,17 @@
 ============Quantumultx===============
 [task_local]
 #618动物联萌收集金币
-0-59/30 * * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zooCollect.js, tag=618动物联萌收集金币, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0-59/30 * * * * jd_zooCollect.js, tag=618动物联萌收集金币, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0-59/30 * * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zooCollect.js,tag=618动物联萌收集金币
+cron "0-59/30 * * * *" script-path=jd_zooCollect.js,tag=618动物联萌收集金币
 
 ===============Surge=================
-618动物联萌收集金币 = type=cron,cronexp="0-59/30 * * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zooCollect.js
+618动物联萌收集金币 = type=cron,cronexp="0-59/30 * * * *",wake-system=1,timeout=3600,script-path=jd_zooCollect.js
 
 ============小火箭=========
-618动物联萌收集金币 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zooCollect.js, cronexpr="0-59/30 * * * *", timeout=3600, enable=true
+618动物联萌收集金币 = type=cron,script-path=jd_zooCollect.js, cronexpr="0-59/30 * * * *", timeout=3600, enable=true
  */
 const $ = new Env('618动物联萌收集金币');
 //Node.js用户请在jdCookie.js处填写京东ck;
