@@ -84,7 +84,7 @@ async function jsRedPacket() {
     await reward_query();
     for (let i = 0; i < 3; ++i) {
       await redPacket();//开红包
-      await $.wait(500)
+      await $.wait(2000)
     }
     await getPacketList();//领红包提现
     await signPrizeDetailList();
