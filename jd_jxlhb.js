@@ -282,13 +282,21 @@ function getAuthorShareCode(url) {
 }
 
 function taskurl(function_path, body = '', stk) {
-  function returnRandom(v1, v2) {
-    return v1 + v2
-  }
   let url = `${BASE_URL}/${function_path}?activeId=${$.activeId}&publishFlag=1&channel=7&${body}&sceneval=2&g_login_type=1&timestamp=${Date.now()}&_=${Date.now() + 2}&_ste=1`
-  const deviceId = returnRandom(returnRandom(Math.random().toString(36).slice(2, 10), Math.random().toString(36).slice(2, 10)) + Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 10), Math.random().toString(36).slice(2, 10));
+  const deviceId = `${
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10)
+  }`
   url += `&phoneid=${deviceId}`
-  url += `&stepreward_jstoken=${returnRandom(returnRandom(Math.random().toString(36).slice(2, 10), Math.random().toString(36).slice(2, 10)), Math.random().toString(36).slice(2, 10)) + Math.random().toString(36).slice(2, 10)}`
+  url += `&stepreward_jstoken=${
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10) +
+    Math.random().toString(36).slice(2, 10)
+  }`
   if (stk) {
       url += '&_stk=' + encodeURIComponent(stk)
   }
