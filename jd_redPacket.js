@@ -245,22 +245,16 @@ async function doTask() {
 async function red() {
   $.hasSendNumber = 0;
   $.assistants = 0;
-  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.result
-  ) {
+  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.result) {
     const rewards = $.h5activityIndex.data.result.rewards || [];
     $.hasSendNumber = $.h5activityIndex.data.result.hasSendNumber;
     if ($.h5activityIndex.data.result.assistants) {
       $.assistants = $.h5activityIndex.data.result.assistants.length || 0;
     }
   }
-  if (
-    $.h5activityIndex &&
-    $.h5activityIndex.data &&
-    $.h5activityIndex.data.biz_code === 10002
-  ) {
+  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 10002) {
     await h5launch();
-  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 20001
-  ) {
+  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 20001) {
     const id = $.h5activityIndex.data.result.redpacketInfo.id;
     if (id) $.redPacketId.push(id);
     console.log(`\n\n当前待拆红包ID:${$.h5activityIndex.data.result.redpacketInfo.id}，进度：再邀${$.h5activityIndex.data.result.requireAssistNum}个好友，开第${$.hasSendNumber + 1}个红包。当前已拆红包：${$.hasSendNumber}个，剩余${$.h5activityIndex.data.result.remainRedpacketNumber}个红包待开，已有${$.assistants}好友助力\n\n`);
@@ -273,8 +267,7 @@ async function red() {
         await $.wait(500);
       }
     }
-  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 20002
-  ) {
+  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 20002) {
     console.log(`\n${$.h5activityIndex.data.biz_msg}\n`);
   }
 }
