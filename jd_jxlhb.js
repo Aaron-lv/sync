@@ -29,14 +29,11 @@ if ($.isNode()) {
   });
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  cookiesArr = [
-    $.getdata("CookieJD"),
-    $.getdata("CookieJD2"),
-    ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
+  cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 $.packetIdArr = [];
 $.activeId = '489177';
-const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
+const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -98,8 +95,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     cookie = cookiesArr[i];
     $.canOpenGrade = true;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-    const grades = [1, 2, 3, 4, 5, 6];
-    for (let grade of grades) {
+    for (let grade of $.grades) {
       if (!$.canOpenGrade) break;
       if (!$.packetIdArr[i]) continue;
       console.log(`\n【${$.UserName}】去拆第${grade}个红包`);
@@ -159,9 +155,15 @@ function getUserInfo() {
           // console.log('获取助力码', data)
           data = JSON.parse(data)
           if (data.iRet === 0) {
+            $.grades = [];
+            let grades = data.Data.gradeConfig
+            for(let key of Object.keys(grades)){
+              let vo = grades[key]
+              $.grades.push(vo.dwGrade)
+            }
             console.log(`获取助力码成功：${data.Data.strUserPin}\n`);
-            if (data.Data['dwCurrentGrade'] >= 6) {
-              console.log(`6个阶梯红包已全部拆完\n`)
+            if (data.Data['dwCurrentGrade'] >= $.grades[$.grades.length - 1]) {
+              console.log(`${$.grades[$.grades.length - 1]}个阶梯红包已全部拆完\n`)
             } else {
               if (data.Data.strUserPin) {
                 $.packetIdArr.push({
@@ -303,7 +305,7 @@ function taskurl(function_path, body = '', stk) {
   return {
       'url': url,
       'headers': {
-          'Host': 'wq.jd.com',
+          'Host': 'm.jingxi.com',
           'Cookie': cookie,
           'accept': "*/*",
           'user-agent': `jdpingou;iPhone;4.8.2;14.5.1;${deviceId};network/wifi;model/iPhone13,4;appBuild/100546;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/318;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
