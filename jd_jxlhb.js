@@ -73,19 +73,19 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
     for (let code of $.packetIdArr) {
       if (!code) continue;
       if ($.UserName === code['userName']) continue;
-      if (!$.canHelp) break
-      if ($.max) break
       console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
       await enrollFriend(code['strUserPin']);
+      if ($.max) break
+      if (!$.canHelp) break
       await $.wait(2500);
     }
     if ($.canHelp) {
       console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
       for (let item of $.authorMyShareIds) {
         if (!item) continue;
-        if (!$.canHelp) break
         console.log(`【${$.UserName}】去助力作者的邀请码：${item}`);
         await enrollFriend(item);
+        if (!$.canHelp) break
         await $.wait(2500);
       }
     }
@@ -96,10 +96,10 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
     $.canOpenGrade = true;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     for (let grade of $.grades) {
-      if (!$.canOpenGrade) break;
       if (!$.packetIdArr[i]) continue;
       console.log(`\n【${$.UserName}】去拆第${grade}个红包`);
       await openRedPack($.packetIdArr[i]['strUserPin'], grade);
+      if (!$.canOpenGrade) break;
       await $.wait(1000);
     }
   }
