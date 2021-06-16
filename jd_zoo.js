@@ -594,7 +594,7 @@ async function dealReturn(type, data) {
       if (data.code === 0) {
         if (data.data.bizCode === -2) {
           console.log(data.data.bizMsg)
-          return
+          break
         }
         console.log(`互助码：${data.data.result.inviteId || '助力已满，获取助力码失败'}`);
         if (data.data.result.inviteId) {
@@ -685,6 +685,10 @@ async function dealReturn(type, data) {
       break;
     case 'wxTaskDetail':
       if (data.code === 0) {
+        if (data.data.bizCode === -2) {
+          console.log(data.data.bizMsg)
+          break
+        }
         $.wxTaskList = data.data.result.taskVos;
       }
       break;
