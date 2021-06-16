@@ -425,15 +425,15 @@ async function takePostRequest(type) {
   let myRequest = ``;
   switch (type) {
     case 'zoo_signSingle':
-      body = `functionId=zoo_signSingle&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_signSingle&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_signSingle`, body);
       break;
     case 'zoo_getHomeData':
-      body = `functionId=zoo_getHomeData&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getHomeData&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getHomeData`, body);
       break;
     case 'helpHomeData':
-      body = `functionId=zoo_getHomeData&body={"inviteId":"${$.inviteId}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getHomeData&body={"inviteId":"${$.inviteId}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getHomeData`, body);
       break;
     case 'zoo_collectProduceScore':
@@ -441,11 +441,11 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_collectProduceScore`, body);
       break;
     case 'zoo_getFeedDetail':
-      body = `functionId=zoo_getFeedDetail&body={"taskId":"${$.taskId}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getFeedDetail&body={"taskId":"${$.taskId}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getFeedDetail`, body);
       break;
     case 'zoo_getTaskDetail':
-      body = `functionId=zoo_getTaskDetail&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getTaskDetail&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getTaskDetail`, body);
       break;
     case 'zoo_collectScore':
@@ -454,7 +454,7 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_collectScore`, body);
       break;
     case 'zoo_raise':
-      body = `functionId=zoo_raise&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_raise&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_raise`, body);
       break;
     case 'help':
@@ -463,11 +463,11 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_collectScore`, body);
       break;
     case 'zoo_pk_getHomeData':
-      body = `functionId=zoo_pk_getHomeData&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_pk_getHomeData&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_pk_getHomeData`, body);
       break;
     case 'zoo_pk_getTaskDetail':
-      body = `functionId=zoo_pk_getTaskDetail&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_pk_getTaskDetail&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_pk_getTaskDetail`, body);
       break;
     case 'zoo_pk_collectScore':
@@ -476,7 +476,7 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_pk_collectScore`, body);
       break;
     case 'zoo_pk_doPkSkill':
-      body = `functionId=zoo_pk_doPkSkill&body={"skillType":"${$.skillCode}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_pk_doPkSkill&body={"skillType":"${$.skillCode}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_pk_doPkSkill`, body);
       break;
     case 'pkHelp':
@@ -484,19 +484,19 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_pk_assistGroup`, body);
       break;
     case 'zoo_getSignHomeData':
-      body = `functionId=zoo_getSignHomeData&body={"notCount":"1"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getSignHomeData&body={"notCount":"1"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getSignHomeData`,body);
       break;
     case 'zoo_sign':
-      body = `functionId=zoo_sign&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_sign&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_sign`,body);
       break;
     case 'wxTaskDetail':
-      body = `functionId=zoo_getTaskDetail&body={"appSign":"2","channel":1,"shopSign":""}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_getTaskDetail&body={"appSign":"2","channel":1,"shopSign":""}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_getTaskDetail`,body);
       break;
     case 'zoo_shopLotteryInfo':
-      body = `functionId=zoo_shopLotteryInfo&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_shopLotteryInfo&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_shopLotteryInfo`,body);
       break;
     case 'zoo_bdCollectScore':
@@ -504,19 +504,19 @@ async function takePostRequest(type) {
       myRequest = await getPostRequest(`zoo_bdCollectScore`,body);
       break;
     case 'qryCompositeMaterials':
-      body = `functionId=qryCompositeMaterials&body={"qryParam":"[{\\"type\\":\\"advertGroup\\",\\"mapTo\\":\\"resultData\\",\\"id\\":\\"05371960\\"}]","activityId":"2s7hhSTbhMgxpGoa9JDnbDzJTaBB","pageId":"","reqSrc":"","applyKey":"jd_star"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=qryCompositeMaterials&body={"qryParam":"[{\\"type\\":\\"advertGroup\\",\\"mapTo\\":\\"resultData\\",\\"id\\":\\"05371960\\"}]","activityId":"2s7hhSTbhMgxpGoa9JDnbDzJTaBB","pageId":"","reqSrc":"","applyKey":"jd_star"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`qryCompositeMaterials`,body);
       break;
     case 'zoo_boxShopLottery':
-      body = `functionId=zoo_boxShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_boxShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
       break;
     case `zoo_wishShopLottery`:
-      body = `functionId=zoo_wishShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_wishShopLottery&body={"shopSign":"${$.shopSign}"}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_boxShopLottery`,body);
       break;
     case `zoo_myMap`:
-      body = `functionId=zoo_myMap&body={}&client=wh5&clientVersion=1.0.0`;
+      body = `functionId=zoo_myMap&body={}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
       myRequest = await getPostRequest(`zoo_myMap`,body);
       break;
     case 'zoo_getWelfareScore':
@@ -801,7 +801,7 @@ function takeGetRequest(){
 function callbackResult(info) {
   return new Promise((resolve) => {
     let url = {
-      url: `https://api.m.jd.com/?functionId=qryViewkitCallbackResult&client=wh5&clientVersion=1.0.0&body=${info}&_timestamp=` + Date.now(),
+      url: `https://api.m.jd.com/?functionId=qryViewkitCallbackResult&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf&body=${info}&_timestamp=` + Date.now(),
       headers: {
         'Origin': `https://bunearth.m.jd.com`,
         'Cookie': $.cookie,
@@ -853,17 +853,17 @@ async function getPostRequest(type, body) {
 function getPostBody(type) {
   let taskBody = '';
   if (type === 'help') {
-    taskBody = `functionId=zoo_collectScore&body=${JSON.stringify({"taskId": 2,"inviteId":$.inviteId,"actionType":1,"ss" :getBody()})}&client=wh5&clientVersion=1.0.0`
+    taskBody = `functionId=zoo_collectScore&body=${JSON.stringify({"taskId": 2,"inviteId":$.inviteId,"actionType":1,"ss" :getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`
   } else if (type === 'pkHelp') {
-    taskBody = `functionId=zoo_pk_assistGroup&body=${JSON.stringify({"confirmFlag": 1,"inviteId" : $.pkInviteId,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0`;
+    taskBody = `functionId=zoo_pk_assistGroup&body=${JSON.stringify({"confirmFlag": 1,"inviteId" : $.pkInviteId,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
   } else if (type === 'zoo_collectProduceScore') {
-    taskBody = `functionId=zoo_collectProduceScore&body=${JSON.stringify({"ss" :getBody()})}&client=wh5&clientVersion=1.0.0`;
+    taskBody = `functionId=zoo_collectProduceScore&body=${JSON.stringify({"ss" :getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
   } else if(type === 'zoo_getWelfareScore'){
-    taskBody = `functionId=zoo_getWelfareScore&body=${JSON.stringify({"type": 2,"currentScence":$.currentScence,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0`;
+    taskBody = `functionId=zoo_getWelfareScore&body=${JSON.stringify({"type": 2,"currentScence":$.currentScence,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`;
   } else if(type === 'add_car'){
-    taskBody = `functionId=zoo_collectScore&body=${JSON.stringify({"taskId": $.taskId,"taskToken":$.taskToken,"actionType":1,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0`
+    taskBody = `functionId=zoo_collectScore&body=${JSON.stringify({"taskId": $.taskId,"taskToken":$.taskToken,"actionType":1,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`
   }else{
-    taskBody = `functionId=${type}&body=${JSON.stringify({"taskId": $.oneTask.taskId,"actionType":1,"taskToken" : $.oneActivityInfo.taskToken,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0`
+    taskBody = `functionId=${type}&body=${JSON.stringify({"taskId": $.oneTask.taskId,"actionType":1,"taskToken" : $.oneActivityInfo.taskToken,"ss" : getBody()})}&client=wh5&clientVersion=1.0.0&uuid=ef746bc0663f7ca06cdd1fa724c15451900039cf`
   }
   return taskBody
 }
