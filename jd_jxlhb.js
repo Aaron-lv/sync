@@ -75,7 +75,7 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
       if ($.UserName === code['userName']) continue;
       console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
       await enrollFriend(code['strUserPin']);
-      if ($.max) break
+      if ($.max) continue
       if (!$.canHelp) break
       await $.wait(2500);
     }
@@ -85,6 +85,7 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
         if (!item) continue;
         console.log(`【${$.UserName}】去助力作者的邀请码：${item}`);
         await enrollFriend(item);
+        if ($.max) continue
         if (!$.canHelp) break
         await $.wait(2500);
       }
