@@ -36,7 +36,7 @@ const pKHelpFlag = true;//是否PK助力  true 助力，false 不助力
 const pKHelpAuthorFlag = true;//是否助力作者PK  true 助力，false 不助力
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [];
-let joyToken = "MDFJb0lXQzAxMQ==.eFl7ZHt7V39md3BceylzHi4eHRtxW30HPXhDf3t3ZV43ZT14ETkOBSFALWISIAV6Yic5InBiDXAuJjAkdFI3.66c2abd5";
+let joyToken = "";
 $.cookie = '';
 $.inviteList = [];
 $.pkInviteList = [];
@@ -62,6 +62,7 @@ if ($.isNode()) {
       '脚本更新时间：2021-06-16 22:45\n'
       );
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS
+  await getToken();
   if (cookiesArr.length) cookiesArr = cookiesArr.map(ck => ck  + `joyytoken=50084${joyToken};`)
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -876,6 +877,30 @@ function getRandomArrayElements(arr, count) {
     shuffled[i] = temp;
   }
   return shuffled.slice(min);
+}
+
+function getToken(timeout = 0){
+  return new Promise((resolve) => {
+    setTimeout( ()=>{
+      let url = {
+        url : `https://bh.m.jd.com/gettoken`,
+        headers : {
+          'Content-Type' : `text/plain;charset=UTF-8`
+        },
+        body : `content={"appname":"50084","whwswswws":"","jdkey":"","body":{"platform":"1"}}`
+      }
+      $.post(url, async (err, resp, data) => {
+        try {
+          data = JSON.parse(data);
+          joyToken = data.joyytoken;
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      })
+    },timeout)
+  })
 }
 
 function getAuthorShareCode(url) {
