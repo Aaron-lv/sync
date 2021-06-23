@@ -101,12 +101,12 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     }
   }
 })()
-  .catch((e) => {
-    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-  })
-  .finally(() => {
-    $.done();
-  })
+    .catch((e) => {
+      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+    })
+    .finally(() => {
+      $.done();
+    })
 
 async function redPacket() {
   try {
@@ -261,18 +261,18 @@ async function red() {
 function taskHomePage() {
   return new Promise((resolve) => {
     $.post(taskUrl(arguments.callee.name.toString(), {"clientInfo":{}}), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
-            console.log(JSON.stringify(err));
-          } else {
-            $.taskHomePageData = JSON.parse(data);
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          $.taskHomePageData = JSON.parse(data);
         }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
     })
   })
 }
@@ -283,19 +283,19 @@ function startTask(taskType) {
   data['token'] = $.md5($.md5("j" + JSON.stringify(data) + "D"))
   return new Promise((resolve) => {
     $.post(taskUrl(arguments.callee.name.toString(), data), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
-            console.log(JSON.stringify(err));
-          } else {
-            console.log(`领取任务：${data}`)
-            data = JSON.parse(data);
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          console.log(`领取任务：${data}`)
+          data = JSON.parse(data);
         }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
     })
   })
 }
@@ -327,19 +327,19 @@ function getTaskDetailForColor(taskType) {
   const data = {"clientInfo":{}, taskType};
   return new Promise((resolve) => {
     $.post(taskUrl(arguments.callee.name.toString(), data), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
-            console.log(JSON.stringify(err));
-          } else {
-            // console.log('getTaskDetailForColor', data);
-            data = JSON.parse(data);
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          // console.log('getTaskDetailForColor', data);
+          data = JSON.parse(data);
         }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
     })
   })
 }
@@ -350,19 +350,19 @@ function taskReportForColor(taskType, detailId) {
   //console.log(`活动id：：：${detailId}\n`)
   return new Promise((resolve) => {
     $.post(taskUrl(arguments.callee.name.toString(), data), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
-            console.log(JSON.stringify(err));
-          } else {
-            // console.log(`taskReportForColor`, data);
-            data = JSON.parse(data);
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          // console.log(`taskReportForColor`, data);
+          data = JSON.parse(data);
         }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
     })
   })
 }
@@ -371,22 +371,22 @@ function receiveTaskRedpacket(taskType) {
   const body = {"clientInfo":{}, taskType};
   return new Promise((resolve) => {
     $.post(taskUrl(arguments.callee.name.toString(), body), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
-            console.log(JSON.stringify(err));
-          } else {
-            data = JSON.parse(data);
-            if (data.data.success && data.data.biz_code === 0) {
-              console.log(`红包领取成功，获得${data.data.result.discount}元\n`)
-              $.discount += Number(data.data.result.discount);
-            }
+      try {
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data.data.success && data.data.biz_code === 0) {
+            console.log(`红包领取成功，获得${data.data.result.discount}元\n`)
+            $.discount += Number(data.data.result.discount);
           }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
         }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
     })
   })
 }

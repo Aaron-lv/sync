@@ -10,7 +10,6 @@
 
 京东保价页面脚本：https://static.360buyimg.com/siteppStatic/script/priceskus-phone.js
 iOS同时支持使用 NobyDa 与 domplin 脚本的京东 cookie
-活动时间：2021-2-14至2021-3-3
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
 活动入口：京东保价
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -107,6 +106,7 @@ if ($.isNode()) {
         console.log(`----------`);
         let taskList = [];
         for (let order of $.orderList) {
+          await $.wait(1000);
           taskList.push(historyResultQuery(order));
         }
         await Promise.all(taskList);
@@ -126,7 +126,7 @@ if ($.isNode()) {
             await getApplyResult();
           }
         }
-        showMsg();
+        await showMsg();
       } catch (e) {
         $.logErr(e)
       }
@@ -474,20 +474,21 @@ function taskUrl(functionid, body) {
   };
 }
 
-function showMsg() {
+async function showMsg() {
   console.log(`🧮 本次价格保护金额：${$.refundtotalamount}💰`);
   if ($.refundtotalamount) {
     $.msg(
       $.name,
       ``,
       `京东账号${$.index} ${$.nickName || $.UserName}\n🎉 本次价格保护金额：${
-        $.refundtotalamount
+        $.refundtotalamount.toFixed(2)
       }💰`,
       {
         'open-url':
           'https://msitepp-fm.jd.com/rest/priceprophone/priceProPhoneMenu',
       }
     );
+    if ($.isNode()) await notify.sendNotify($.name, `京东账号${$.index} ${$.nickName || $.UserName}\n本次价格保护金额：${$.refundtotalamount.toFixed(2)}💰`);
   }
 }
 

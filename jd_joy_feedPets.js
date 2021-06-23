@@ -32,13 +32,9 @@ const $ = new Env('宠汪汪🐕喂食');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-
-const validator = require('./JDJRValidator.js');
-$.get = validator.injectToRequest($.get.bind($));
-$.post = validator.injectToRequest($.post.bind($));
-
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -86,6 +82,9 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,
           }
         }
       }
+      $.validate = '';
+      const zooFaker = require('./utils/JDJRValidator_Pure');
+      $.validate = await zooFaker.injectToRequest()
       await feedPets(FEED_NUM);//喂食
       await ThreeMeals();//三餐
       await showMsg();
@@ -106,7 +105,7 @@ function showMsg() {
   }
 }
 function feedPets(feedNum) {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     console.log(`您设置的喂食数量::${FEED_NUM}g\n`);
     if (FEED_NUM === 0) { console.log(`跳出喂食`);resolve();return }
     console.log(`实际的喂食数量::${feedNum}g\n`);
@@ -118,7 +117,7 @@ function feedPets(feedNum) {
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     const options = {
       url,
       headers: {
@@ -164,6 +163,8 @@ function feedPets(feedNum) {
           } else {
             console.log(`其他状态${$.data.errorCode}`)
           }
+        } else {
+          console.log(`喂食失败:${JSON.stringify($.data)}\n`);
         }
       } catch (e) {
         $.logErr(e, resp);

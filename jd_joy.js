@@ -35,13 +35,9 @@ const $ = new Env('宠汪汪');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+let allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', allMessage = '';
-
-const validator = require('./JDJRValidator.js');
-$.get = validator.injectToRequest($.get.bind($));
-$.post = validator.injectToRequest($.post.bind($));
-
+let cookiesArr = [], cookie = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -84,6 +80,9 @@ const weAppUrl = 'https://draw.jdfcloud.com//pet';
       }
       message = '';
       subTitle = '';
+      $.validate = '';
+      const zooFaker = require('./utils/JDJRValidator_Pure');
+      $.validate = await zooFaker.injectToRequest()
       await jdJoy();
       await showMsg();
       // await joinTwoPeopleRun();
@@ -231,7 +230,7 @@ async function joinTwoPeopleRun() {
 }
 //日常任务
 async function petTask() {
-  for (let item of $.getPetTaskConfigRes.datas) {
+  for (let item of $.getPetTaskConfigRes.datas || []) {
     const joinedCount = item.joinedCount || 0;
     if (item['receiveStatus'] === 'chance_full') {
       console.log(`${item.taskName} 任务已完成`)
@@ -314,7 +313,6 @@ async function petTask() {
         if (!shop.status) {
           const followShopRes = await followShop(shop.shopId);
           console.log(`关注店铺${shop.name}结果::${JSON.stringify(followShopRes)}`)
-          await $.wait(5000)
         }
       }
     }
@@ -331,7 +329,6 @@ async function petTask() {
           };
           const scanMarketRes = await scanMarket('scan', body);
           console.log(`逛会场-${scanMarketItem.marketName}结果::${JSON.stringify(scanMarketRes)}`)
-          await $.wait(5000)
         }
       }
     }
@@ -348,7 +345,7 @@ async function petTask() {
           };
           const scanMarketRes = await scanMarket('scan', body);
           console.log(`浏览频道-${followChannelItem.channelName}结果::${JSON.stringify(scanMarketRes)}`)
-          await $.wait(5000)
+          await $.wait(5000);
         }
       }
     }
@@ -362,7 +359,6 @@ async function petTask() {
           const scanMarketRes = await scanMarket('followGood', body, 'application/x-www-form-urlencoded');
           // const scanMarketRes = await appScanMarket('followGood', `sku=${followGoodItem.sku}&reqSource=h5`, 'application/x-www-form-urlencoded');
           console.log(`关注商品-${followGoodItem.skuName}结果::${JSON.stringify(scanMarketRes)}`)
-          await $.wait(5000)
         }
       }
     }
@@ -377,7 +373,6 @@ async function petTask() {
           const body = {"taskType":"ViewVideo","reqSource":"weapp"}
           let sanVideoRes = await scanMarket('scan', body);
           console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
-          await $.wait(15000)
         }
       }
     }
@@ -387,14 +382,14 @@ async function appPetTask() {
   await appGetPetTaskConfig();
   // console.log('$.appGetPetTaskConfigRes', $.appGetPetTaskConfigRes.success)
   if ($.appGetPetTaskConfigRes.success) {
-    for (let item of $.appGetPetTaskConfigRes.datas) {
+    for (let item of $.appGetPetTaskConfigRes.datas || []) {
       if (item['taskType'] === 'ScanMarket' && item['receiveStatus'] === 'chance_left') {
         const scanMarketList = item.scanMarketList;
         for (let scan of scanMarketList) {
-          if (!scan.status) {
-            const body = { marketLink: `${scan.marketLink || scan.marketLinkH5}`, taskType: 'ScanMarket'}
+          if (!scan.status && scan.showDest === 'h5') {
+            const body = { marketLink: `${scan.marketLink || scan.marketLinkH5}`, taskType: 'ScanMarket', reqSource: 'h5'}
             await appScanMarket('scan', body);
-            await $.wait(5000)
+            await $.wait(5000);
           }
         }
       }
@@ -403,16 +398,18 @@ async function appPetTask() {
 }
 function getDeskGoodDetails() {
   return new Promise(resolve => {
+    // const url = `${JD_API_HOST}/getDeskGoodDetails`;
     const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/getDeskGoodDetails?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//jdjoy.jd.com/common/pet/getDeskGoodDetails?invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -438,14 +435,13 @@ function followScan(sku) {
       sku
     }
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/scan?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
+      url: "//jdjoy.jd.com/common/pet/scan?invokeKey=NRp8OPxZMFXmGkaE",
       method: "POST",
       data: body,
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     $.post(taskPostUrl(url, JSON.stringify(body), reqSource, host, 'application/json'), (err, resp, data) => {
       try {
         if (err) {
@@ -468,18 +464,17 @@ function scanMarket(type, body, cType = 'application/json') {
     const host = `draw.jdfcloud.com`;
     const reqSource = 'weapp';
     let opt = {
-      // url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5",
-      url: `//draw.jdfcloud.com/common/pet/${type}?reqSource=weapp&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/${type}?invokeKey=NRp8OPxZMFXmGkaE`,
       method: "POST",
       data: body,
       credentials: "include",
       header: {"content-type": cType}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     if (cType === 'application/json') {
       body = JSON.stringify(body)
     }
-    $.post(taskPostUrl(url, body, reqSource, host, cType), (err, resp, data) => {
+    $.post(taskPostUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), body, reqSource, host, cType), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -501,14 +496,13 @@ function appScanMarket(type, body) {
     const host = `jdjoy.jd.com`;
     const reqSource = 'h5';
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/${type}?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
+      url: `//jdjoy.jd.com/common/pet/${type}?invokeKey=NRp8OPxZMFXmGkaE`,
       method: "POST",
       data: body,
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     $.post(taskPostUrl(url, JSON.stringify(body), reqSource, host, 'application/json'), (err, resp, data) => {
       try {
         if (err) {
@@ -529,16 +523,18 @@ function appScanMarket(type, body) {
 //领取狗粮API
 function getFood(type) {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/getFood?reqSource=weapp&taskType=${type}`;
     const host = `draw.jdfcloud.com`;
+    const reqSource = 'weapp';
     let opt = {
-      url: `//draw.jdfcloud.com/common/pet/getFood?reqSource=weapp&taskType=${type}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/getFood?reqSource=weapp&taskType=${type}&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -556,18 +552,19 @@ function getFood(type) {
 //关注店铺api
 function followShop(shopId) {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/followShop`;
     const body = `shopId=${shopId}`;
     const reqSource = 'weapp';
     const host = 'draw.jdfcloud.com';
     let opt = {
-      url: "//draw.jdfcloud.com/common/pet/followShop?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//draw.jdfcloud.com/common/pet/followShop?invokeKey=NRp8OPxZMFXmGkaE",
       method: "POST",
       data: body,
       credentials: "include",
       header: {"content-type":"application/x-www-form-urlencoded"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.post(taskPostUrl(url, body, reqSource, host,'application/x-www-form-urlencoded'), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.post(taskPostUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), body, reqSource, host,'application/x-www-form-urlencoded'), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -584,16 +581,18 @@ function followShop(shopId) {
 }
 function enterRoom() {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/enterRoom/h5?reqSource=weapp&invitePin=&openId=`;
     const host = `draw.jdfcloud.com`;
+    const reqSource = 'weapp';
     let opt = {
-      url: `//draw.jdfcloud.com/common/pet/enterRoom/h5?reqSource=h5&invitePin=&openId=&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/enterRoom/h5?invitePin=&openId=&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.post({...taskUrl(url, host),body:'{}'}, (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.post({...taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource),body:'{}'}, (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -618,8 +617,16 @@ function enterRoom() {
 function appGetPetTaskConfig() {
   return new Promise(resolve => {
     const host = `jdjoy.jd.com`;
-    const url = "https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE"
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const reqSource = 'h5';
+    let opt = {
+      url: "//jdjoy.jd.com/common/pet/getPetTaskConfig?invokeKey=NRp8OPxZMFXmGkaE",
+      method: "GET",
+      data: {},
+      credentials: "include",
+      header: {"content-type": "application/json"}
+    }
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -641,16 +648,18 @@ function feedPets(feedNum) {
     console.log(`您设置的喂食数量:${FEED_NUM}g\n`);
     if (FEED_NUM === 0) { console.log(`跳出喂食`);resolve();return }
     console.log(`实际的喂食数量:${feedNum}g\n`);
+    // const url = `${weAppUrl}/feed?feedCount=${feedNum}&reqSource=weapp`;
     const host = `draw.jdfcloud.com`;
+    const reqSource = 'weapp';
     let opt = {
-      url: `//draw.jdfcloud.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/feed?feedCount=${feedNum}&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), async (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource), async (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -696,9 +705,20 @@ function feedPets(feedNum) {
 }
 function getPetTaskConfig() {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/getPetTaskConfig?reqSource=weapp`;
+    // const host = `jdjoy.jd.com`;
+    // const reqSource = 'h5';
     const host = `draw.jdfcloud.com`;
-    const url = "https://draw.jdfcloud.com//common/pet/getPetTaskConfig?reqSource=weapp&invokeKey=NRp8OPxZMFXmGkaE"
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const reqSource = 'weapp';
+    let opt = {
+      url: "//draw.jdfcloud.com//common/pet/getPetTaskConfig?invokeKey=NRp8OPxZMFXmGkaE",
+      method: "GET",
+      data: {},
+      credentials: "include",
+      header: {"content-type": "application/json"}
+    }
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -717,16 +737,18 @@ function getPetTaskConfig() {
 //查询赛跑信息API
 function getPetRace() {
   return new Promise(resolve => {
+    // const url = `${JD_API_HOST}/combat/detail/v2?help=false`;
     const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/combat/detail/v2?help=false&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//jdjoy.jd.com/common/pet/combat/detail/v2?help=false&invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -746,16 +768,17 @@ function getPetRace() {
 //查询赛跑排行榜
 function getRankList() {
   return new Promise(resolve => {
+    // const url = `${JD_API_HOST}/combat/getRankList`;
     $.raceUsers = [];
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/combat/getRankList?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//jdjoy.jd.com/common/pet/combat/getRankList?invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, `jdjoy.jd.com`), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, `jdjoy.jd.com`, 'h5'), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -780,16 +803,18 @@ function runMatch(teamLevel, timeout = 5000) {
   console.log(`正在参赛中，请稍等${timeout / 1000}秒，以防多个账号匹配到统一赛场\n`)
   return new Promise(async resolve => {
     await $.wait(timeout);
+    // const url = `${JD_API_HOST}/combat/match?teamLevel=${teamLevel}`;
     const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/combat/match?teamLevel=${teamLevel}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//jdjoy.jd.com/common/pet/combat/match?teamLevel=${teamLevel}&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -809,16 +834,18 @@ function runMatch(teamLevel, timeout = 5000) {
 //查询应援团信息API
 function getBackupInfo() {
   return new Promise(resolve => {
+    // const url = `${JD_API_HOST}/combat/getBackupInfo`;
     const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/combat/getBackupInfo?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//jdjoy.jd.com/common/pet/combat/getBackupInfo?invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -838,15 +865,16 @@ function getBackupInfo() {
 //查询赛跑获得多少积分
 function getWinCoin() {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/combat/detail/v2?help=false&reqSource=weapp`;
     let opt = {
-      url: "//draw.jdfcloud.com/common/pet/combat/detail/v2?help=false&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//draw.jdfcloud.com/common/pet/combat/detail/v2?help=false&invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, 'draw.jdfcloud.com'), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), 'draw.jdfcloud.com', `weapp`), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -868,16 +896,18 @@ function getWinCoin() {
 //领取赛跑奖励API
 function receiveJoyRunAward() {
   return new Promise(resolve => {
+    // const url = `${JD_API_HOST}/combat/receive`;
     const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/combat/receive?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE",
+      url: "//jdjoy.jd.com/common/pet/combat/receive?invokeKey=NRp8OPxZMFXmGkaE",
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, host), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -918,15 +948,16 @@ async function energySupplyStation(showOrder) {
 }
 function getSupplyInfo(showOrder) {
   return new Promise(resolve => {
+    // const url = `${weAppUrl}/combat/getSupplyInfo?showOrder=${showOrder}`;
     let opt = {
-      url: `//draw.jdfcloud.com/common/pet/combat/getSupplyInfo?showOrder=${showOrder}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/combat/getSupplyInfo?showOrder=${showOrder}&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
-    $.get(taskUrl(url, 'draw.jdfcloud.com'), (err, resp, data) => {
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), 'draw.jdfcloud.com', `weapp`), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -997,11 +1028,12 @@ function TotalBean() {
     })
   })
 }
-function taskUrl(url, Host) {
+function taskUrl(url, Host, reqSource) {
   return {
     url: url,
     headers: {
       'Cookie': cookie,
+      // 'reqSource': reqSource,
       'Host': Host,
       'Connection': 'keep-alive',
       'Content-Type': 'application/json',

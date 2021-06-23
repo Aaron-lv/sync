@@ -39,11 +39,6 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-
-const validator = require('./JDJRValidator.js');
-$.get = validator.injectToRequest($.get.bind($));
-$.post = validator.injectToRequest($.post.bind($));
-
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -89,6 +84,9 @@ Date.prototype.Format = function (fmt) { //author: meizz
         continue
       }
       // console.log(`本地时间与京东服务器时间差(毫秒)：${await get_diff_time()}`);
+      $.validate = '';
+      const zooFaker = require('./utils/JDJRValidator_Pure');
+      $.validate = await zooFaker.injectToRequest()
       console.log(`脚本开始请求时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
       await joyReward();
     }
@@ -224,7 +222,7 @@ function getExchangeRewards() {
   }
   return new Promise((resolve) => {
     const option = {
-      url: "https:"+ taroRequest(opt)['url'],
+      url: "https:"+ taroRequest(opt)['url'] + $.validate,
       headers: {
         "Host": "jdjoy.jd.com",
         "Content-Type": "application/json",
@@ -266,7 +264,7 @@ function exchange(saleInfoId, orderSource) {
   }
   return new Promise((resolve) => {
     const option = {
-      url: "https:"+ taroRequest(opt)['url'],
+      url: "https:"+ taroRequest(opt)['url'] + $.validate,
       body: `${JSON.stringify(body)}`,
       headers: {
         "Host": "jdjoy.jd.com",

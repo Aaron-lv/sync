@@ -36,11 +36,6 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-
-const validator = require('./JDJRValidator.js');
-$.get = validator.injectToRequest($.get.bind($));
-$.post = validator.injectToRequest($.post.bind($));
-
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -52,7 +47,7 @@ if ($.isNode()) {
 let message = '', subTitle = '';
 
 let jdNotify = false;//是否开启静默运行，false关闭静默运行(即通知)，true打开静默运行(即不通知)
-let jdJoyHelpFeed = true;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认给好友喂食
+let jdJoyHelpFeed = true;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认不给好友喂食
 let jdJoyStealCoin = true;//是否偷好友积分与狗粮，false为否，true为是，默认是偷
 const JD_API_HOST = 'https://jdjoy.jd.com/pet';
 //是否给好友喂食
@@ -81,7 +76,7 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -99,6 +94,9 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       }
       message = '';
       subTitle = '';
+      $.validate = '';
+      const zooFaker = require('./utils/JDJRValidator_Pure');
+      $.validate = await zooFaker.injectToRequest()
       await jdJoySteal();
       await showMsg();
     }
@@ -165,6 +163,8 @@ async function jdJoySteal() {
             $.log('已过晚餐时间, 暂不能偷好友狗粮\n')
             break
           }
+          //没状态用来做判断是否达到偷狗粮上限,故只能写死查到200个好友还没偷满狗粮就跳出.
+          if (i > 10) break
           console.log(`偷好友狗粮 开始查询第${i}页好友\n`);
           await getFriends(i);
           $.allFriends = $.getFriendsData.datas;
@@ -203,28 +203,29 @@ async function stealFriendsFood() {
   for (let friends of $.allFriends) {
     const { friendPin, status, stealStatus } = friends;
     $.stealStatus = stealStatus;
-    console.log(`stealFriendsFood---好友【${friendPin}】--偷食状态：${stealStatus}\n`);
+    // console.log(`stealFriendsFood---好友【${friendPin}】--偷食状态：${stealStatus}\n`);
     // console.log(`stealFriendsFood---好友【${friendPin}】--喂食状态：${status}\n`);
-    if (stealStatus === 'can_steal') {
-      //可偷狗粮
-      //偷好友狗粮
-      console.log(`发现好友【${friendPin}】可偷狗粮\n`)
-      await enterFriendRoom(friendPin);
-      await doubleRandomFood(friendPin);
-      const getRandomFoodRes = await getRandomFood(friendPin);
-      console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
-      if (getRandomFoodRes && getRandomFoodRes.success) {
-        if (getRandomFoodRes.errorCode === 'steal_ok') {
-          $.stealFood += getRandomFoodRes.data;
-        } else if (getRandomFoodRes.errorCode === 'chance_full') {
-          console.log('偷好友狗粮已达上限，跳出循环');
-          break;
-        }
-      }
-    } else if (stealStatus === 'chance_full') {
-      console.log('偷好友狗粮已达上限，跳出循环');
-      break;
-    }
+    await enterFriendRoom(friendPin);
+    // if (stealStatus === 'can_steal') {
+    //   //可偷狗粮
+    //   //偷好友狗粮
+    //   console.log(`发现好友【${friendPin}】可偷狗粮\n`)
+    //   await enterFriendRoom(friendPin);
+    //   await doubleRandomFood(friendPin);
+    //   const getRandomFoodRes = await getRandomFood(friendPin);
+    //   console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
+    //   if (getRandomFoodRes && getRandomFoodRes.success) {
+    //     if (getRandomFoodRes.errorCode === 'steal_ok') {
+    //       $.stealFood += getRandomFoodRes.data;
+    //     } else if (getRandomFoodRes.errorCode === 'chance_full') {
+    //       console.log('偷好友狗粮已达上限，跳出循环');
+    //       break;
+    //     }
+    //   }
+    // } else if (stealStatus === 'chance_full') {
+    //   console.log('偷好友狗粮已达上限，跳出循环');
+    //   break;
+    // }
   }
 }
 //偷好友积分
@@ -254,31 +255,33 @@ async function helpFriendsFeed() {
       console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
-        console.log(`\nhelpFriendsFeed---好友【${friendPin}】--喂食状态：${status}`);
-        if (status === 'not_feed') {
-          const helpFeedRes = await helpFeed(friendPin);
-          // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
-          $.helpFeedStatus = helpFeedRes.errorCode;
-          if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
-            console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
-            if (!ctrTemp) {
-              $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
-              $.HelpFeedFlag = false;
-              break
-            }
-            $.helpFood += 10;
-          } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
-            console.log('喂食已达上限,不再喂食\n')
-            break
-          } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
-            console.log('帮好友喂食失败，您的狗粮不足10g\n')
-            break
-          } else {
-            console.log(JSON.stringify(helpFeedRes))
-          }
-        } else if (status === 'time_error') {
-          console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
-        }
+        // console.log(`\nhelpFriendsFeed---好友【${friendPin}】--喂食状态：${status}`);
+        if (!$.HelpFeedFlag) break
+        await enterFriendRoom(friendPin);
+        // if (status === 'not_feed') {
+        //   const helpFeedRes = await helpFeed(friendPin);
+        //   // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
+        //   $.helpFeedStatus = helpFeedRes.errorCode;
+        //   if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
+        //     console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
+        //     if (!ctrTemp) {
+        //       $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
+        //       $.HelpFeedFlag = false;
+        //       break
+        //     }
+        //     $.helpFood += 10;
+        //   } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
+        //     console.log('喂食已达上限,不再喂食\n')
+        //     break
+        //   } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
+        //     console.log('帮好友喂食失败，您的狗粮不足10g\n')
+        //     break
+        //   } else {
+        //     console.log(JSON.stringify(helpFeedRes))
+        //   }
+        // } else if (status === 'time_error') {
+        //   console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
+        // }
       }
     } else {
       console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处')
@@ -291,14 +294,14 @@ async function helpFriendsFeed() {
 function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     let opt = {
-      url: `//draw.jdfcloud.com//common/pet/api/getFriends?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=weapp&invokeKey=NRp8OPxZMFXmGkaE`,
-      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com//common/pet/getFriendActions?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=weapp&invokeKey=NRp8OPxZMFXmGkaE`,
+      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5`,
       method: "GET",
       data: {},
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     const options = {
       url,
       headers: {
@@ -358,7 +361,7 @@ async function stealFriendCoin(friendPin) {
 function enterFriendRoom(friendPin) {
   console.log(`\nfriendPin:: ${friendPin}\n`);
   return new Promise(async resolve => {
-    $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
+    $.get(taskUrl('enterFriendRoom', (friendPin)), async (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -371,6 +374,51 @@ function enterFriendRoom(friendPin) {
             data = JSON.parse(data);
             console.log(`可偷狗粮：${data.data.stealFood}`)
             console.log(`可偷积分：${data.data.friendHomeCoin}`)
+            console.log(`可帮喂：${data.data.helpFeedStatus}`)
+            if (data.data.stealFood && data.data.stealFood > 0) {
+              await doubleRandomFood(friendPin);
+              const getRandomFoodRes = await getRandomFood(friendPin);
+              console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
+              if (getRandomFoodRes && getRandomFoodRes.success) {
+                if (getRandomFoodRes.errorCode === 'steal_ok') {
+                  $.stealFood += getRandomFoodRes.data;
+                } else if (getRandomFoodRes.errorCode === 'chance_full') {
+                  console.log('偷好友狗粮已达上限，跳出循环');
+                  $.stealStatus = "chance_full"
+                  // break;
+                }
+              }
+            }
+            if ($.help_feed < 200) {
+              if (data.data.helpFeedStatus === 'not_feed') {
+                const helpFeedRes = await helpFeed(friendPin);
+                // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
+                $.helpFeedStatus = helpFeedRes.errorCode;
+                if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
+                  console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
+                  if (!ctrTemp) {
+                    $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
+                    $.HelpFeedFlag = false;
+                    // break
+                  }
+                  $.helpFood += 10;
+                } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
+                  console.log('喂食已达上限,不再喂食\n')
+                  $.HelpFeedFlag = false;
+                  $.helpFeedStatus = "chance_full";
+                  // break
+                } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
+                  console.log('帮好友喂食失败，您的狗粮不足10g\n')
+                  $.HelpFeedFlag = false;
+                  $.helpFeedStatus = "food_insufficient";
+                  // break
+                } else {
+                  console.log(JSON.stringify(helpFeedRes))
+                }
+              } else if (data.data.helpFeedStatus === 'time_error') {
+                console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
+              }
+            }
           } else {
             console.log(`京豆api返回数据为空，请检查自身原因`)
           }
@@ -484,7 +532,7 @@ function getCoinChanges() {
       credentials: "include",
       header: {"content-type": "application/json"}
     }
-    const url = "https:"+ taroRequest(opt)['url']
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     const options = {
       url,
       headers: {
@@ -609,7 +657,7 @@ function taskUrl(functionId, friendPin) {
     credentials: "include",
     header: {"content-type": "application/json"}
   }
-  const url = "https:"+ taroRequest(opt)['url']
+  const url = "https:"+ taroRequest(opt)['url'] + $.validate;
   return {
     url,
     headers: {

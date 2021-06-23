@@ -33,7 +33,8 @@ if ($.isNode()) {
 }
 $.packetIdArr = [];
 $.activeId = '489177';
-const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
+const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
+
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -100,7 +101,6 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
       if (!$.packetIdArr[i]) continue;
       console.log(`\n【${$.UserName}】去拆第${grade}个红包`);
       await openRedPack($.packetIdArr[i]['strUserPin'], grade);
-      if (!$.canOpenGrade) break;
       await $.wait(1000);
     }
   }
@@ -195,7 +195,7 @@ function enrollFriend(strPin) {
       try {
         if (err) {
           console.log(`\n${$.name}:  API查询请求失败 ‼️‼️`)
-          $.logErr(err);
+          $.log(JSON.stringify(err));
         } else {
           // console.log('助力结果', data)
           data = JSON.parse(data)
@@ -306,7 +306,7 @@ function taskurl(function_path, body = '', stk) {
   return {
       'url': url,
       'headers': {
-          'Host': 'm.jingxi.com',
+          'Host': 'wq.jd.com',
           'Cookie': cookie,
           'accept': "*/*",
           'user-agent': `jdpingou;iPhone;4.8.2;14.5.1;${deviceId};network/wifi;model/iPhone13,4;appBuild/100546;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/318;pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
