@@ -23,7 +23,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let activityType = '';
 let activityCode = '';
 // const activityInfoList = [
-//   {'activityType':'WonderfulLuckDrawApi','activityCode':'1384416160044290048','title':'小鸽有礼'},
+//   {'activityType':'WonderfulLuckDrawApi','activityCode':'1384416160044290048','title':'小哥有礼'},
 //   {'activityType':'luckdraw','activityCode':'1397744980537114624','title':'每日转盘'}
 // ];
 const activityInfoList = [];
@@ -69,9 +69,9 @@ let allMessage = '';
         activityType = activityInfoList[j].activityType;
         activityCode = activityInfoList[j].activityCode;
         console.log(`=============${activityInfoList[j].title}=============`)
-      await dailyLottery()
+        await dailyLottery()
+      }
     }
-  }
   }
   console.log(`\=============每日抽奖互助=============`)
   activityType = activityInfoList[1].activityType;
@@ -102,12 +102,12 @@ let allMessage = '';
     notify.sendNotify('小哥有礼-每日抽奖',allMessage);
   }
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
 
 async function dailyLottery() {
   $.lotteryInfo = {};

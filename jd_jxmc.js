@@ -113,12 +113,12 @@ if ($.isNode()) {
     }
   }
 })()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+  .catch((e) => {
+    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+    $.done();
+  })
 
 async function pasture() {
   try {
@@ -215,10 +215,10 @@ async function pasture() {
       console.log(`\n共有金币${$.homeInfo.coins},可以购买${canBuyTimes}次白菜`);
       if(Number(materialNumber) < 400){
         for (let j = 0; j < canBuyTimes && j < 4; j++) {
-        console.log(`第${j + 1}次购买白菜`);
-        await takeGetRequest('buy');
-        await $.wait(2000);
-      }
+          console.log(`第${j + 1}次购买白菜`);
+          await takeGetRequest('buy');
+          await $.wait(2000);
+        }
         await takeGetRequest('GetHomePageInfo');
         await $.wait(2000);
       }else{
@@ -377,7 +377,12 @@ async function takeGetRequest(type) {
   return new Promise(async resolve => {
     $.get(myRequest, (err, resp, data) => {
       try {
-        dealReturn(type, data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`API请求失败，请检查网路重试`)
+        } else {
+          dealReturn(type, data);
+        }
       } catch (e) {
         console.log(data);
         $.logErr(e, resp)
@@ -401,17 +406,22 @@ function dealReturn(type, data) {
     case 'mowing':
     case 'jump':
     case 'cow':
-      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
-      if (data.ret === 0) {
-        $.mowingInfo = data.data;
-        let add = ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0;
-        console.log(`获得金币：${add}`);
-        if(Number(add) >0 ){
-          $.runFlag = true;
-        }else{
-          $.runFlag = false;
-          console.log(`未获得金币暂停${type}`);
+      data = data.match(new RegExp(/jsonpCBK.?\((.*);*/));
+      if (data && data[1]) {
+        data = JSON.parse(data[1]);
+        if (data.ret === 0) {
+          $.mowingInfo = data.data;
+          let add = ($.mowingInfo.addcoins || $.mowingInfo.addcoin) ? ($.mowingInfo.addcoins || $.mowingInfo.addcoin) : 0;
+          console.log(`获得金币：${add}`);
+          if(Number(add) >0 ){
+            $.runFlag = true;
+          }else{
+            $.runFlag = false;
+            console.log(`未获得金币暂停${type}`);
+          }
         }
+      } else {
+        console.log(`cow 数据异常：${data}\n`);
       }
       break;
     case 'GetSelfResult':
@@ -610,18 +620,18 @@ async function requestAlgo() {
 
 Date.prototype.Format = function (fmt) {
   var e,
-      n = this, d = fmt, l = {
-        "M+": n.getMonth() + 1,
-        "d+": n.getDate(),
-        "D+": n.getDate(),
-        "h+": n.getHours(),
-        "H+": n.getHours(),
-        "m+": n.getMinutes(),
-        "s+": n.getSeconds(),
-        "w+": n.getDay(),
-        "q+": Math.floor((n.getMonth() + 3) / 3),
-        "S+": n.getMilliseconds()
-      };
+    n = this, d = fmt, l = {
+      "M+": n.getMonth() + 1,
+      "d+": n.getDate(),
+      "D+": n.getDate(),
+      "h+": n.getHours(),
+      "H+": n.getHours(),
+      "m+": n.getMinutes(),
+      "s+": n.getSeconds(),
+      "w+": n.getDay(),
+      "q+": Math.floor((n.getMonth() + 3) / 3),
+      "S+": n.getMilliseconds()
+    };
   /(y+)/i.test(d) && (d = d.replace(RegExp.$1, "".concat(n.getFullYear()).substr(4 - RegExp.$1.length)));
   for (var k in l) {
     if (new RegExp("(".concat(k, ")")).test(d)) {

@@ -40,30 +40,30 @@ inputs:
           cronExpression: "0 3 */1 * * * *"
           enable: true
           argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_health_collect
-    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖 #女装魔盒 #5G超级盲盒 #京小兑
+    - timer: #宠汪汪积分兑换京豆 #签到领现金 #点点券 #东东小窝 #京喜财富岛 #京东直播 #东东健康社区 #每日抽奖 #女装魔盒 #5G超级盲盒 #东东电竞经理
         parameters:
-          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery_nzmh_mohe_jxd
+          name: joyreward_cash_necklace_smallhome_cfd_live_health_dailylottery_nzmh_mohe_esManager
           cronExpression: "0 0 0-16/8,20 * * * *"
           enable: true
-          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh&jd_mohe&jd_jxd
+          argument: jd_joy_reward&jd_cash&jd_necklace&jd_small_home&jd_cfd&jd_live&jd_health&jd_daily_lottery&jd_nzmh&jd_mohe&jd_esManager
     - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #京东抽奖机 #京东汽车 #京东秒秒币
         parameters:
           name: redPacket_shop_unsubscribe_lotteryMachine_car_ms
           cronExpression: "0 10 0 * * * *"
           enable: true
           argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_lotteryMachine&jd_car&jd_ms
-    - timer: #天天提鹅 #京喜牧场
+    - timer: #天天提鹅 #京喜牧场 #京东到家农场 #京东到家鲜豆庄园 #京东到家鲜豆任务
         parameters:
-          name: dailyegg_jxmc
+          name: dailyegg_jxmc_jddjfruit_jddjplantBeans_jddjdailyTask
           cronExpression: "0 8 */3 * * * *"
           enable: true
-          argument: jd_daily_egg&jd_jxmc
-    - timer: #东东超市 #十元街 #翻翻乐
+          argument: jd_daily_egg&jd_jxmc&jd_jddj_fruit&jd_jddj_plantBeans&jd_jddj_dailyTask
+    - timer: #东东超市 #十元街 #翻翻乐 #京东到家收集水滴
         parameters:
-          name: superMarket_syj_bigwinner
+          name: superMarket_syj_bigwinner_jddjfruitcollect
           cronExpression: "0 15 */1 * * * *"
           enable: true
-          argument: jd_superMarket&jd_syj&jd_big_winner
+          argument: jd_superMarket&jd_syj&jd_big_winner&jd_jddj_fruit_collect
     - timer: #京豆变动通知 #疯狂的joy #监控crazyJoy分红 #京东排行榜 #领京豆额外奖励 #京东保价 #闪购盲盒 #京喜领88元红包
         parameters:
           name: beanchange_crazyjoy_crazyjoybonus_rankingList_beanhome_price_sgmh_jxlhb

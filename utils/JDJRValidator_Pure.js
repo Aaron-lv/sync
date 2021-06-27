@@ -1,3 +1,8 @@
+/*
+由于 canvas 依赖系统底层需要编译且预编译包在 github releases 上，改用另一个纯 js 解码图片。若想继续使用 canvas 可调用 runWithCanvas 。
+
+添加 injectToRequest 用以快速修复需验证的请求。eg: $.get=injectToRequest($.get.bind($))
+ */
 const https = require('https');
 const http = require('http');
 const stream = require('stream');
@@ -28,10 +33,14 @@ class PNGDecoder extends PNG {
 
   decodeToPixels() {
     return new Promise((resolve) => {
-      this.decode((pixels) => {
-        this.pixels = pixels;
-        resolve();
-      });
+      try {
+        this.decode((pixels) => {
+          this.pixels = pixels;
+          resolve();
+        });
+      } catch (e) {
+        console.info(e)
+      }
     });
   }
 
@@ -65,10 +74,13 @@ class PuzzleRecognizer {
   }
 
   async run() {
-    await this.bg.decodeToPixels();
-    await this.patch.decodeToPixels();
-
-    return this.recognize();
+    try {
+      await this.bg.decodeToPixels();
+      await this.patch.decodeToPixels();
+      return this.recognize();
+    } catch (e) {
+      console.info(e)
+    }
   }
 
   recognize() {
@@ -213,55 +225,63 @@ class JDJRValidator {
   }
 
   async run() {
-    const tryRecognize = async () => {
-      const x = await this.recognize();
+    try {
+      const tryRecognize = async () => {
+        const x = await this.recognize();
 
-      if (x > 0) {
-        return x;
+        if (x > 0) {
+          return x;
+        }
+        // retry
+        return await tryRecognize();
+      };
+      const puzzleX = await tryRecognize();
+      // console.log(puzzleX);
+      const pos = new MousePosFaker(puzzleX).run();
+      const d = getCoordinate(pos);
+
+      // console.log(pos[pos.length-1][2] -Date.now());
+      // await sleep(4500);
+      await sleep(pos[pos.length - 1][2] - Date.now());
+      const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data});
+
+      if (result.message === 'success') {
+        console.log(result);
+        // console.log('JDJRValidator: %fs', (Date.now() - this.t) / 1000);
+        return result;
+      } else {
+        console.count(JSON.stringify(result));
+        await sleep(300);
+        return await this.run();
       }
-      // retry
-      return await tryRecognize();
-    };
-    const puzzleX = await tryRecognize();
-    // console.log(puzzleX);
-    const pos = new MousePosFaker(puzzleX).run();
-    const d = getCoordinate(pos);
-
-    // console.log(pos[pos.length-1][2] -Date.now());
-    // await sleep(4500);
-    await sleep(pos[pos.length - 1][2] - Date.now());
-    const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data});
-
-    if (result.message === 'success') {
-      console.log(result);
-      // console.log('JDJRValidator: %fs', (Date.now() - this.t) / 1000);
-      return result;
-    } else {
-      console.count(JSON.stringify(result));
-      await sleep(300);
-      return await this.run();
+    } catch (e) {
+      console.info(e)
     }
   }
 
   async recognize() {
-    const data = await JDJRValidator.jsonp('/slide/g.html', {e: ''});
-    const {bg, patch, y} = data;
-    // const uri = 'data:image/png;base64,';
-    // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
-    const re = new PuzzleRecognizer(bg, patch, y);
-    const puzzleX = await re.run();
+    try {
+      const data = await JDJRValidator.jsonp('/slide/g.html', {e: ''});
+      const {bg, patch, y} = data;
+      // const uri = 'data:image/png;base64,';
+      // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
+      const re = new PuzzleRecognizer(bg, patch, y);
+      const puzzleX = await re.run();
 
-    if (puzzleX > 0) {
-      this.data = {
-        c: data.challenge,
-        w: re.w,
-        e: '',
-        s: '',
-        o: '',
-      };
-      this.x = puzzleX;
+      if (puzzleX > 0) {
+        this.data = {
+          c: data.challenge,
+          w: re.w,
+          e: '',
+          s: '',
+          o: '',
+        };
+        this.x = puzzleX;
+      }
+      return puzzleX;
+    } catch (e) {
+      console.info(e)
     }
-    return puzzleX;
   }
 
   async report(n) {
@@ -494,31 +514,39 @@ class MousePosFaker {
 // new JDJRValidator().report(1000);
 // console.log(getCoordinate(new MousePosFaker(100).run()));
 
-// function injectToRequest(fn) {
-//   return (opts, cb) => {
-//     fn(opts, async (err, resp, data) => {
-//       if (err) {
-//         console.error('Failed to request.');
-//         return;
-//       }
-//
-//       if (data.search('验证') > -1) {
-//         console.log('JDJRValidator trying......');
-//         const res = await new JDJRValidator().run();
-//
-//         opts.url += `&validate=${res.validate}`;
-//         fn(opts, cb);
-//       } else {
-//         cb(err, resp, data);
-//       }
-//     });
-//   };
-// }
+function injectToRequest2(fn) {
+  return (opts, cb) => {
+    fn(opts, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.error('Failed to request.');
+          return;
+        }
+        if (data.search('验证') > -1) {
+          console.time('宠汪汪拼图耗时');
+          console.log('JDJRValidator trying......');
+          const res = await new JDJRValidator().run();
+          if (res) {
+            opts.url += `&validate=${res.validate}`;
+            console.timeEnd('宠汪汪拼图耗时');
+          }
+          fn(opts, cb);
+        } else {
+          cb(err, resp, data);
+        }
+      } catch (e) {
+        console.info(e)
+      }
+    });
+  };
+}
 
-async function injectToRequest(fn) {
+async function injectToRequest() {
   console.log('JDJRValidator trying......');
   const res = await new JDJRValidator().run();
   return `&validate=${res.validate}`
 }
-
-exports.injectToRequest = injectToRequest;
+module.exports = {
+  injectToRequest,
+  injectToRequest2
+}
