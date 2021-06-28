@@ -1,7 +1,7 @@
 # 每3天的23:50分清理一次日志(互助码不清理，proc_file.sh对该文件进行了去重)
 50 23 */3 * * find /scripts/logs -name '*.log' | grep -v 'sharecodeCollection' | xargs rm -rf
 # 收集助力码
-30 * * * * sh +x /scripts/docker/auto_help.sh collect >> /scripts/logs/auto_help_collect.log 2>&1
+30 * * * * sh /scripts/docker/auto_help.sh collect >> /scripts/logs/auto_help_collect.log 2>&1
 
 ##############短期活动##############
 # 女装盲盒 活动时间：2021-05-24到2021-06-22
@@ -18,8 +18,6 @@
 0 0-23/4 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
 # 明星小店(星店长，2021-06-10)
 0 1,21 * * * node /scripts/jd_star_shop.js >> /scripts/logs/jd_star_shop.log 2>&1
-# 省钱大赢家之翻翻乐
-10,40 * * * * node /scripts/jd_big_winner.js >> /scripts/logs/jd_big_winner.log 2>&1
 
 ##############长期活动##############
 # 签到
