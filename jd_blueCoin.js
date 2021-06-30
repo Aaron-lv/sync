@@ -116,7 +116,7 @@ async function PrizeIndex() {
         $.beanerr = `东哥今天不给换`;
         return ;
       }
-      if (prizeList[1] && prizeList[1].inStock === 506) {
+      if (prizeList[1] && prizeList[1].status === 2) {
         $.beanerr = `失败，1000京豆领光了，请明天再来`;
         return ;
       }
@@ -143,7 +143,7 @@ async function PrizeIndex() {
         $.beanerr = `东哥今天不给换`;
         return ;
       }
-      if (prizeList[0] && prizeList[0].inStock === 506) {
+      if (prizeList[0] && prizeList[0].status === 2) {
         console.log(`失败，万能的京豆领光了，请明天再来`);
         $.beanerr = `失败，万能的京豆领光了，请明天再来`;
         return ;
@@ -351,7 +351,7 @@ function smtg_obtainPrize(prizeId, timeout = 0, functionId = 'smt_exchangePrize'
               }
             }
           }
-          await  smtg_obtainPrize(prizeId,3000);
+          await smtg_obtainPrize(prizeId, 3000);
         } catch (e) {
           $.logErr(e, resp);
         } finally {
