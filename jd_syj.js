@@ -52,7 +52,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     await $.wait(1000)
     $.authorTuanList = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_zz.json') || [];
   }
-  await getRandomCode();
+  // await getRandomCode();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
