@@ -361,9 +361,11 @@ async function petTask() {
         if (!followGoodItem.status) {
           const body = `sku=${followGoodItem.sku}&reqSource=h5`;
           await doScanMarket('follow_good', followGoodItem.sku);
+          await $.wait(1000)
           const scanMarketRes = await scanMarket('followGood', body, 'application/x-www-form-urlencoded');
           // const scanMarketRes = await appScanMarket('followGood', `sku=${followGoodItem.sku}&reqSource=h5`, 'application/x-www-form-urlencoded');
           console.log(`关注商品-${followGoodItem.skuName}结果::${JSON.stringify(scanMarketRes)}`)
+          await $.wait(5000)
         }
       }
     }
