@@ -307,8 +307,11 @@ async function petTask() {
       const followShops = item.followShops;
       for (let shop of followShops) {
         if (!shop.status) {
+          await dofollowShop(shop.shopId);
+          await $.wait(1000)
           const followShopRes = await followShop(shop.shopId);
           console.log(`关注店铺${shop.name}结果::${JSON.stringify(followShopRes)}`)
+          await $.wait(5000)
         }
       }
     }
@@ -319,12 +322,15 @@ async function petTask() {
       for (let scanMarketItem of scanMarketList) {
         if (!scanMarketItem.status) {
           const body = {
-            "marketLink": scanMarketItem.marketLink,
+            "marketLink": `${scanMarketItem.marketLink || scanMarketItem.marketLinkH5}`,
             "taskType": "ScanMarket",
             //"reqSource": "weapp"
           };
+          await doScanMarket('scan', encodeURI(body["marketLink"]));
+          await $.wait(1000)
           const scanMarketRes = await scanMarket('scan', body);
           console.log(`逛会场-${scanMarketItem.marketName}结果::${JSON.stringify(scanMarketRes)}`)
+          await $.wait(5000)
         }
       }
     }
@@ -339,6 +345,8 @@ async function petTask() {
             "taskType": "FollowChannel",
             "reqSource": "weapp"
           };
+          await doScanMarket('follow_channel', followChannelItem.channelId);
+          await $.wait(1000)
           const scanMarketRes = await scanMarket('scan', body);
           console.log(`浏览频道-${followChannelItem.channelName}结果::${JSON.stringify(scanMarketRes)}`)
           await $.wait(5000);
@@ -352,6 +360,7 @@ async function petTask() {
       for (let followGoodItem of followGoodList) {
         if (!followGoodItem.status) {
           const body = `sku=${followGoodItem.sku}&reqSource=h5`;
+          await doScanMarket('follow_good', followGoodItem.sku);
           const scanMarketRes = await scanMarket('followGood', body, 'application/x-www-form-urlencoded');
           // const scanMarketRes = await appScanMarket('followGood', `sku=${followGoodItem.sku}&reqSource=h5`, 'application/x-www-form-urlencoded');
           console.log(`关注商品-${followGoodItem.skuName}结果::${JSON.stringify(scanMarketRes)}`)
@@ -360,7 +369,7 @@ async function petTask() {
     }
     //看激励视频
     if (item['taskType'] === 'ViewVideo') {
-      console.log('----浏览频道----');
+      console.log('----激励视频----');
       if (item.taskChance === joinedCount) {
         console.log('今日激励视频已看完')
       } else {
@@ -485,6 +494,34 @@ function scanMarket(type, body, cType = 'application/json') {
     })
   })
 }
+function doScanMarket(type, body) {
+  return new Promise(resolve => {
+    const host = `draw.jdfcloud.com`;
+    const reqSource = 'weapp';
+    let opt = {
+      url: `//draw.jdfcloud.com/common/pet/icon/click?iconCode=${type}&linkAddr=${body}&invokeKey=NRp8OPxZMFXmGkaE`,
+      method: "GET",
+      credentials: "include",
+      header: {"content-type": "application/json"}
+    }
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+   // console.log(url);
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
 //app逛会场
 function appScanMarket(type, body) {
   return new Promise(resolve => {
@@ -575,6 +612,33 @@ function followShop(shopId) {
     })
   })
 }
+function dofollowShop(shopId) {
+  return new Promise(resolve => {
+    const reqSource = 'weapp';
+    const host = 'draw.jdfcloud.com';
+    let opt = {
+      url: `//draw.jdfcloud.com/common/pet/icon/click?iconCode=follow_shop&linkAddr=${shopId}&invokeKey=NRp8OPxZMFXmGkaE`,
+      method: "GET",
+      credentials: "include",
+      header: {"content-type":"application/x-www-form-urlencoded"}
+    }
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.get(taskUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
 function enterRoom() {
   return new Promise(resolve => {
     // const url = `${weAppUrl}/enterRoom/h5?reqSource=weapp&invitePin=&openId=`;
