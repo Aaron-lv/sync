@@ -76,7 +76,7 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       $.isLogin = true;
       $.nickName = '';
       $.HelpFeedFlag = ctrTemp;
-      if (!ctrTemp) $.HelpFeedFlag = true
+      // if (!ctrTemp) $.HelpFeedFlag = true
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
