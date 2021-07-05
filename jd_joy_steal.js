@@ -25,6 +25,7 @@ cron "10 0-21/3 * * *" script-path=jd_joy_steal.js,tag=宠汪汪偷好友积分�
 const $ = new Env('宠汪汪偷好友积分与狗粮');
 const zooFaker = require('./utils/JDJRValidator_Pure');
 $.get = zooFaker.injectToRequest2($.get.bind($));
+$.post = zooFaker.injectToRequest2($.post.bind($));
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -42,7 +43,7 @@ if ($.isNode()) {
 let message = '', subTitle = '';
 
 let jdNotify = false;//是否开启静默运行，false关闭静默运行(即通知)，true打开静默运行(即不通知)
-let jdJoyHelpFeed = true;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认不给好友喂食
+let jdJoyHelpFeed = true;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认给好友喂食
 let jdJoyStealCoin = true;//是否偷好友积分与狗粮，false为否，true为是，默认是偷
 const JD_API_HOST = 'https://jdjoy.jd.com/pet';
 //是否给好友喂食
@@ -76,7 +77,7 @@ if ($.isNode() && process.env.jdJoyStealCoin) {
       $.isLogin = true;
       $.nickName = '';
       $.HelpFeedFlag = ctrTemp;
-      // if (!ctrTemp) $.HelpFeedFlag = true
+      if (!ctrTemp) $.HelpFeedFlag = true
       await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
@@ -111,6 +112,7 @@ async function jdJoySteal() {
     $.stealStatus = null;
     $.helpFeedStatus = null;
     message += `【京东账号${$.index}】${$.nickName}\n`;
+    await enterRoom()
     await getFriends();//查询是否有好友
     await getCoinChanges();//查询喂食好友和偷好友积分是否已达上限
     if ($.getFriendsData && $.getFriendsData.success) {
@@ -158,8 +160,6 @@ async function jdJoySteal() {
             $.log('已过晚餐时间, 暂不能偷好友狗粮\n')
             break
           }
-          //没状态用来做判断是否达到偷狗粮上限,故只能写死查到200个好友还没偷满狗粮就跳出.
-          if (i > 10) break
           console.log(`偷好友狗粮 开始查询第${i}页好友\n`);
           await getFriends(i);
           $.allFriends = $.getFriendsData.datas;
@@ -198,29 +198,28 @@ async function stealFriendsFood() {
   for (let friends of $.allFriends) {
     const { friendPin, status, stealStatus } = friends;
     $.stealStatus = stealStatus;
-    // console.log(`stealFriendsFood---好友【${friendPin}】--偷食状态：${stealStatus}\n`);
+    console.log(`stealFriendsFood---好友【${friendPin}】--偷食状态：${stealStatus}\n`);
     // console.log(`stealFriendsFood---好友【${friendPin}】--喂食状态：${status}\n`);
-    await enterFriendRoom(friendPin);
-    // if (stealStatus === 'can_steal') {
-    //   //可偷狗粮
-    //   //偷好友狗粮
-    //   console.log(`发现好友【${friendPin}】可偷狗粮\n`)
-    //   await enterFriendRoom(friendPin);
-    //   await doubleRandomFood(friendPin);
-    //   const getRandomFoodRes = await getRandomFood(friendPin);
-    //   console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
-    //   if (getRandomFoodRes && getRandomFoodRes.success) {
-    //     if (getRandomFoodRes.errorCode === 'steal_ok') {
-    //       $.stealFood += getRandomFoodRes.data;
-    //     } else if (getRandomFoodRes.errorCode === 'chance_full') {
-    //       console.log('偷好友狗粮已达上限，跳出循环');
-    //       break;
-    //     }
-    //   }
-    // } else if (stealStatus === 'chance_full') {
-    //   console.log('偷好友狗粮已达上限，跳出循环');
-    //   break;
-    // }
+    if (stealStatus === 'can_steal') {
+      //可偷狗粮
+      //偷好友狗粮
+      console.log(`发现好友【${friendPin}】可偷狗粮\n`)
+      await enterFriendRoom(friendPin);
+      await doubleRandomFood(friendPin);
+      const getRandomFoodRes = await getRandomFood(friendPin);
+      console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
+      if (getRandomFoodRes && getRandomFoodRes.success) {
+        if (getRandomFoodRes.errorCode === 'steal_ok') {
+          $.stealFood += getRandomFoodRes.data;
+        } else if (getRandomFoodRes.errorCode === 'chance_full') {
+          console.log('偷好友狗粮已达上限，跳出循环');
+          break;
+        }
+      }
+    } else if (stealStatus === 'chance_full') {
+      console.log('偷好友狗粮已达上限，跳出循环');
+      break;
+    }
   }
 }
 //偷好友积分
@@ -250,33 +249,31 @@ async function helpFriendsFeed() {
       console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
-        // console.log(`\nhelpFriendsFeed---好友【${friendPin}】--喂食状态：${status}`);
-        if (!$.HelpFeedFlag) break
-        await enterFriendRoom(friendPin);
-        // if (status === 'not_feed') {
-        //   const helpFeedRes = await helpFeed(friendPin);
-        //   // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
-        //   $.helpFeedStatus = helpFeedRes.errorCode;
-        //   if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
-        //     console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
-        //     if (!ctrTemp) {
-        //       $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
-        //       $.HelpFeedFlag = false;
-        //       break
-        //     }
-        //     $.helpFood += 10;
-        //   } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
-        //     console.log('喂食已达上限,不再喂食\n')
-        //     break
-        //   } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
-        //     console.log('帮好友喂食失败，您的狗粮不足10g\n')
-        //     break
-        //   } else {
-        //     console.log(JSON.stringify(helpFeedRes))
-        //   }
-        // } else if (status === 'time_error') {
-        //   console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
-        // }
+        console.log(`\nhelpFriendsFeed---好友【${friendPin}】--喂食状态：${status}`);
+        if (status === 'not_feed') {
+          const helpFeedRes = await helpFeed(friendPin);
+          // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
+          $.helpFeedStatus = helpFeedRes.errorCode;
+          if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
+            console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
+            if (!ctrTemp) {
+              $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
+              $.HelpFeedFlag = false;
+              break
+            }
+            $.helpFood += 10;
+          } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
+            console.log('喂食已达上限,不再喂食\n')
+            break
+          } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
+            console.log('帮好友喂食失败，您的狗粮不足10g\n')
+            break
+          } else {
+            console.log(JSON.stringify(helpFeedRes))
+          }
+        } else if (status === 'time_error') {
+          console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
+        }
       }
     } else {
       console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处')
@@ -286,11 +283,39 @@ async function helpFriendsFeed() {
     $.helpFood = '已达上限(已帮喂20个好友获得200积分)'
   }
 }
+function enterRoom() {
+  return new Promise(resolve => {
+    // const url = `${weAppUrl}/enterRoom/h5?reqSource=weapp&invitePin=&openId=`;
+    const host = `draw.jdfcloud.com`;
+    const reqSource = 'weapp';
+    let opt = {
+      url: `//draw.jdfcloud.com/common/pet/enterRoom/h5?invitePin=&openId=&invokeKey=NRp8OPxZMFXmGkaE`,
+      method: "GET",
+      data: {},
+      credentials: "include",
+      header: {"content-type": "application/json"}
+    }
+    const url = "https:"+ taroRequest(opt)['url'] + $.validate;
+    $.post({...taskPostUrl(url.replace(/reqSource=h5/, 'reqSource=weapp'), host, reqSource),body:'{}'}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('JSON.parse(data)', JSON.parse(data))
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     let opt = {
-      url: `//draw.jdfcloud.com//common/pet/getFriendActions?itemsPerPage=20&currentPage=${currentPage * 1}&reqSource=weapp&invokeKey=NRp8OPxZMFXmGkaE`,
-      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5`,
+      url: `//draw.jdfcloud.com//common/pet/api/getFriends?itemsPerPage=20&currentPage=${currentPage * 1}&invokeKey=NRp8OPxZMFXmGkaE`,
+      // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
@@ -298,10 +323,10 @@ function getFriends(currentPage = '1') {
     }
     const url = "https:"+ taroRequest(opt)['url'] + $.validate;
     const options = {
-      url,
+      url: url.replace(/reqSource=h5/, 'reqSource=weapp'),
       headers: {
         'Cookie': cookie,
-        'reqSource': 'h5',
+        // 'reqSource': 'h5',
         'Host': 'draw.jdfcloud.com',
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
@@ -356,7 +381,7 @@ async function stealFriendCoin(friendPin) {
 function enterFriendRoom(friendPin) {
   console.log(`\nfriendPin:: ${friendPin}\n`);
   return new Promise(async resolve => {
-    $.get(taskUrl('enterFriendRoom', (friendPin)), async (err, resp, data) => {
+    $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -369,51 +394,6 @@ function enterFriendRoom(friendPin) {
             data = JSON.parse(data);
             console.log(`可偷狗粮：${data.data.stealFood}`)
             console.log(`可偷积分：${data.data.friendHomeCoin}`)
-            console.log(`可帮喂：${data.data.helpFeedStatus}`)
-            if (data.data.stealFood && data.data.stealFood > 0) {
-              await doubleRandomFood(friendPin);
-              const getRandomFoodRes = await getRandomFood(friendPin);
-              console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
-              if (getRandomFoodRes && getRandomFoodRes.success) {
-                if (getRandomFoodRes.errorCode === 'steal_ok') {
-                  $.stealFood += getRandomFoodRes.data;
-                } else if (getRandomFoodRes.errorCode === 'chance_full') {
-                  console.log('偷好友狗粮已达上限，跳出循环');
-                  $.stealStatus = "chance_full"
-                  // break;
-                }
-              }
-            }
-            if ($.help_feed < 200) {
-              if (data.data.helpFeedStatus === 'not_feed') {
-                const helpFeedRes = await helpFeed(friendPin);
-                // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
-                $.helpFeedStatus = helpFeedRes.errorCode;
-                if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
-                  console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
-                  if (!ctrTemp) {
-                    $.log('为完成为好友单独喂食一次的任务，故此处进行喂食一次')
-                    $.HelpFeedFlag = false;
-                    // break
-                  }
-                  $.helpFood += 10;
-                } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
-                  console.log('喂食已达上限,不再喂食\n')
-                  $.HelpFeedFlag = false;
-                  $.helpFeedStatus = "chance_full";
-                  // break
-                } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
-                  console.log('帮好友喂食失败，您的狗粮不足10g\n')
-                  $.HelpFeedFlag = false;
-                  $.helpFeedStatus = "food_insufficient";
-                  // break
-                } else {
-                  console.log(JSON.stringify(helpFeedRes))
-                }
-              } else if (data.data.helpFeedStatus === 'time_error') {
-                console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
-              }
-            }
           } else {
             console.log(`京豆api返回数据为空，请检查自身原因`)
           }
@@ -520,7 +500,7 @@ function getRandomFood(friendPin) {
 function getCoinChanges() {
   return new Promise(resolve => {
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/getCoinChanges?changeDate=${Date.now()}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//jdjoy.jd.com/common/pet/getCoinChanges?changeDate=${Date.now()}&invokeKey=NRp8OPxZMFXmGkaE`,
       // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5",
       method: "GET",
       data: {},
@@ -532,7 +512,7 @@ function getCoinChanges() {
       url,
       headers: {
         'Cookie': cookie,
-        'reqSource': 'h5',
+        // 'reqSource': 'h5',
         'Host': 'jdjoy.jd.com',
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
@@ -643,9 +623,25 @@ function TotalBean() {
     })
   })
 }
+function taskPostUrl(url, Host, reqSource) {
+  return {
+    url: url,
+    headers: {
+      'Cookie': cookie,
+      // 'reqSource': reqSource,
+      'Host': Host,
+      'Connection': 'keep-alive',
+      'Content-Type': 'application/json',
+      'Referer': 'https://jdjoy.jd.com/pet/index',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Accept-Language': 'zh-cn',
+      'Accept-Encoding': 'gzip, deflate, br',
+    }
+  }
+}
 function taskUrl(functionId, friendPin) {
   let opt = {
-    url: `//jdjoy.jd.com/common/pet/${functionId}?friendPin=${encodeURI(friendPin)}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+    url: `//jdjoy.jd.com/common/pet/${functionId}?friendPin=${encodeURI(friendPin)}&invokeKey=NRp8OPxZMFXmGkaE`,
     // url: `//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5`,
     method: "GET",
     data: {},
@@ -657,7 +653,7 @@ function taskUrl(functionId, friendPin) {
     url,
     headers: {
       'Cookie': cookie,
-      'reqSource': 'h5',
+      // 'reqSource': 'h5',
       'Host': 'jdjoy.jd.com',
       'Connection': 'keep-alive',
       'Content-Type': 'application/json',

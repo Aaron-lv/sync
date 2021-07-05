@@ -323,8 +323,7 @@ async function petTask() {
         if (!scanMarketItem.status) {
           const body = {
             "marketLink": `${scanMarketItem.marketLink || scanMarketItem.marketLinkH5}`,
-            "taskType": "ScanMarket",
-            //"reqSource": "weapp"
+            "taskType": "ScanMarket"
           };
           await doScanMarket('scan', encodeURI(body["marketLink"]));
           await $.wait(1000)
@@ -342,8 +341,7 @@ async function petTask() {
         if (!followChannelItem.status) {
           const body = {
             "channelId": followChannelItem.channelId,
-            "taskType": "FollowChannel",
-            "reqSource": "weapp"
+            "taskType": "FollowChannel"
           };
           await doScanMarket('follow_channel', followChannelItem.channelId);
           await $.wait(1000)
@@ -359,7 +357,7 @@ async function petTask() {
       const followGoodList = item.followGoodList;
       for (let followGoodItem of followGoodList) {
         if (!followGoodItem.status) {
-          const body = `sku=${followGoodItem.sku}&reqSource=h5`;
+          const body = `sku=${followGoodItem.sku}`;
           await doScanMarket('follow_good', followGoodItem.sku);
           await $.wait(1000)
           const scanMarketRes = await scanMarket('followGood', body, 'application/x-www-form-urlencoded');
@@ -377,7 +375,7 @@ async function petTask() {
       } else {
         for (let i = 0; i < new Array(item.taskChance - joinedCount).fill('').length; i++) {
           console.log(`开始第${i+1}次看激励视频`);
-          const body = {"taskType":"ViewVideo","reqSource":"weapp"}
+          const body = {"taskType":"ViewVideo"}
           let sanVideoRes = await scanMarket('scan', body);
           console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
         }
@@ -394,7 +392,7 @@ async function appPetTask() {
         const scanMarketList = item.scanMarketList;
         for (let scan of scanMarketList) {
           if (!scan.status && scan.showDest === 'h5') {
-            const body = { marketLink: `${scan.marketLink || scan.marketLinkH5}`, taskType: 'ScanMarket', reqSource: 'h5'}
+            const body = { marketLink: `${scan.marketLink || scan.marketLinkH5}`, taskType: 'ScanMarket'}
             await appScanMarket('scan', body);
             await $.wait(5000);
           }
@@ -438,7 +436,6 @@ function followScan(sku) {
     const reqSource = 'h5';
     const body = {
       "taskType": "ScanDeskGood",
-      "reqSource": "h5",
       sku
     }
     let opt = {
@@ -562,7 +559,7 @@ function getFood(type) {
     const host = `draw.jdfcloud.com`;
     const reqSource = 'weapp';
     let opt = {
-      url: `//draw.jdfcloud.com/common/pet/getFood?reqSource=weapp&taskType=${type}&invokeKey=NRp8OPxZMFXmGkaE`,
+      url: `//draw.jdfcloud.com/common/pet/getFood?taskType=${type}&invokeKey=NRp8OPxZMFXmGkaE`,
       method: "GET",
       data: {},
       credentials: "include",
@@ -995,7 +992,7 @@ async function energySupplyStation(showOrder) {
       const { marketList } = $.getSupplyInfoRes.data;
       for (let list of marketList) {
         if (!list['status']) {
-          await scanMarket('combat/supply', { showOrder, 'supplyType': 'scan_market', 'taskInfo': list.marketLink || list['marketLinkH5'], 'reqSource': 'weapp' });
+          await scanMarket('combat/supply', { showOrder, 'supplyType': 'scan_market', 'taskInfo': list.marketLink || list['marketLinkH5'] });
           await getSupplyInfo(showOrder);
         } else {
           $.log(`能力补给站 ${$.getSupplyInfoRes.data.addDistance}km里程 已领取\n`);
@@ -1113,7 +1110,7 @@ function taskPostUrl(url, body, reqSource, Host, ContentType) {
     headers: {
       'Cookie': cookie,
       'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-      'reqSource': reqSource,
+      // 'reqSource': reqSource,
       'Content-Type': ContentType,
       'Host': Host,
       'Referer': 'https://jdjoy.jd.com/pet/index',
