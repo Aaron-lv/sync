@@ -41,7 +41,6 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   $.newShareCodes = []
-  $.authorCode = []
   $.authorCode = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/jd_updateBeanHome.json')
   if (!$.authorCode) {
     $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateBeanHome.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
@@ -76,28 +75,43 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;
     if (cookiesArr[i]) {
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       cookie = cookiesArr[i];
+      $.canHelp = true;
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ($.newShareCodes.length > 1) {
         console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
         // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
         // await help(code[0], code[1])
         let code = $.newShareCodes[0];
-        await help(code[0], code[1]);
+        if(code[2] && code[2] ===  $.UserName){
+          //不助力自己
+        } else {
+          await help(code[0], code[1]);
+        }
       }
-      if (helpAuthor && $.authorCode) {
+      if (helpAuthor && $.authorCode && $.canHelp) {
         console.log(`\n【抢京豆】${$.UserName} 去帮助作者`)
         for (let code of $.authorCode) {
           const helpRes = await help(code.shareCode, code.groupCode);
-          if (helpRes && helpRes.data.respCode === 'SG209') {
-            break;
+          if (helpRes && helpRes['code'] === '0') {
+            if (helpRes && helpRes.data && helpRes.data.respCode === 'SG209') {
+              console.log(`${helpRes.data.helpToast}\n`);
+              break;
+            }
+          } else {
+            console.log(`助力异常:${JSON.stringify(helpRes)}\n`);
           }
         }
       }
-      for (let j = 1; j < $.newShareCodes.length; j++) {
-        console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`)
+      for (let j = 1; j < $.newShareCodes.length && $.canHelp; j++) {
         let code = $.newShareCodes[j];
-        await help(code[0], code[1])
+        if(code[2] && code[2] ===  $.UserName){
+          //不助力自己
+        } else {
+          console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`);
+          await help(code[0], code[1]);
+          await $.wait(2000);
+        }
       }
     }
   }
@@ -110,24 +124,28 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   })
 
 async function jdBeanHome() {
-  $.doneState = false
-  // for (let i = 0; i < 3; ++i) {
-  //   await doTask2()
-  //   await $.wait(1000)
-  //   if ($.doneState) break
-  // }
-  do {
-    await doTask2()
-    await $.wait(3000)
-  } while (!$.doneState)
-  await $.wait(1000)
-  await award("feeds")
-  await $.wait(1000)
-  await getUserInfo()
-  await $.wait(1000)
-  await getTaskList();
-  await receiveJd2();
-  await showMsg();
+  try {
+    $.doneState = false
+    // for (let i = 0; i < 3; ++i) {
+    //   await doTask2()
+    //   await $.wait(1000)
+    //   if ($.doneState) break
+    // }
+    do {
+      await doTask2()
+      await $.wait(3000)
+    } while (!$.doneState)
+    await $.wait(1000)
+    await award("feeds")
+    await $.wait(1000)
+    await getUserInfo()
+    await $.wait(1000)
+    await getTaskList();
+    await receiveJd2();
+    await showMsg();
+  } catch (e) {
+    $.logErr(e)
+  }
 }
 
 function getRandomInt(min, max) {
@@ -201,7 +219,6 @@ function getAuthorShareCode(url) {
     })
   })
 }
-
 function getUserInfo() {
   return new Promise(resolve => {
     $.post(taskUrl('signBeanGroupStageIndex', 'body'), async (err, resp, data) => {
@@ -225,7 +242,7 @@ function getUserInfo() {
                   await help(shareCode, groupCode, 1)
                 }
                 console.log(`\n京东账号${$.index} ${$.nickName || $.UserName} 抢京豆邀请码：${shareCode}\n`);
-                $.newShareCodes.push([shareCode, groupCode])
+                $.newShareCodes.push([shareCode, groupCode, $.UserName])
               }
             }
           }
@@ -253,7 +270,7 @@ function hitGroup() {
             if (data.data.respCode === "SG150") {
               let {shareCode, groupCode} = data.data.signGroupMain
               if (shareCode) {
-                $.newShareCodes.push([shareCode, groupCode])
+                $.newShareCodes.push([shareCode, groupCode, $.UserName])
                 console.log('开团成功')
                 console.log(`\n京东账号${$.index} ${$.nickName || $.UserName} 抢京豆邀请码：${shareCode}\n`);
                 await help(shareCode, groupCode, 1)
@@ -297,7 +314,12 @@ function help(shareCode, groupCode, isTask = 0) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            console.log(`【抢京豆】${data.data.helpToast}`)
+            if (data.code === '0') {
+              console.log(`【抢京豆】${data.data.helpToast}`)
+            }
+            if(data.code === '0' && data.data && data.data.respCode === 'SG209') {
+              $.canHelp = false;
+            }
           }
         }
       } catch (e) {

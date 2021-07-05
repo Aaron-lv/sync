@@ -31,7 +31,7 @@ cron "0 2 * * *" script-path=jd_price.js,tag=京东保价
  */
 
 const $ = new Env('京东保价');
-
+const notify = $.isNode() ? require('./sendNotify') : '';
 const selfDomain = 'https://msitepp-fm.jd.com/';
 const unifiedGatewayName = 'https://api.m.jd.com/';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

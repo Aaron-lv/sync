@@ -1,6 +1,6 @@
 /*
-赚京豆脚本，一：做任务 天天领京豆(加速领京豆)、三：赚京豆-瓜分京豆
-Last Modified time: 2021-5-21 17:58:02
+赚京豆脚本，一：做任务 天天领京豆(加速领京豆)
+Last Modified time: 2021-7-3 17:58:02
 活动入口：赚京豆(微信小程序)-赚京豆-签到领京豆
 更新地址：jd_syj.js
 已支持IOS双京东账号, Node.js支持N个京东账号
@@ -698,7 +698,7 @@ function openTuan() {
 function getAuthorShareCode(url) {
   return new Promise(resolve => {
     const options = {
-      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+      url: `${url}?${Date.now()}`, "timeout": 10000, headers: {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }
     };
@@ -728,7 +728,6 @@ function getAuthorShareCode(url) {
     })
   })
 }
-
 async function getRandomCode() {
   await $.http.get({url: `http://go.chiang.fun/read/zuan/${randomCount}`, timeout: 10000}).then(async (resp) => {
     if (resp.statusCode === 200) {

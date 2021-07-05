@@ -50,7 +50,6 @@ let allMessage = '';
     return;
   }
   await requireConfig()
-  $.authorCode = []
   $.authorCode = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/jd_updateCash.json')
   if (!$.authorCode) {
     $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateCash.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
@@ -497,7 +496,6 @@ function getAuthorShareCode(url) {
     })
   })
 }
-
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {

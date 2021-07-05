@@ -16,8 +16,8 @@
 0 1,22 * * * node /scripts/jd_gold_creator.js >> /scripts/logs/jd_gold_creator.log 2>&1
 # 5G超级盲盒(活动时间：2021-06-2到2021-07-31)
 0 0-23/4 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
-# 明星小店(星店长，2021-06-10)
-0 1,21 * * * node /scripts/jd_star_shop.js >> /scripts/logs/jd_star_shop.log 2>&1
+# 酷跑零食街
+18 7,12,20 * * * node /scripts/jd_foodRunning.js >> /scripts/logs/jd_foodRunning.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -124,9 +124,11 @@
 15 0,12,22 * * * node /scripts/jd_jxmc.js >> /scripts/logs/jd_jxmc.log 2>&1
 # 点点券
 10 0,1,20 * * * node /scripts/jd_necklace.js >> /scripts/logs/jd_necklace.log 2>&1
-# 京小兑
-30 8,16,20 * * * node /scripts/jd_jxd.js >> /scripts/logs/jd_jxd.log 2>&1
 # 京小鸽
 30 2,20 * * * node /scripts/jd_jxg.js >> /scripts/logs/jd_jxg.log 2>&1
+# 天天加速
+30 12 * * * node /scripts/jd_speed.js >> /scripts/logs/jd_speed.log 2>&1
 #电竞经理
 30 3,12,22 * * * node /scripts/jd_esManager.js >> /scripts/logs/jd_esManager.log 2>&1
+# 送豆得豆
+24 0 * * * node /scripts/jd_sendBeans.js >> /scripts/logs/jd_sendBeans.log 2>&1

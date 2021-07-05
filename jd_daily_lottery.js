@@ -22,11 +22,10 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let activityType = '';
 let activityCode = '';
-// const activityInfoList = [
-//   {'activityType':'WonderfulLuckDrawApi','activityCode':'1384416160044290048','title':'小哥有礼'},
-//   {'activityType':'luckdraw','activityCode':'1397744980537114624','title':'每日转盘'}
-// ];
-const activityInfoList = [];
+const activityInfoList = [
+  {'activityType':'WonderfulLuckDrawApi','activityCode':'1410048365793640448','title':'小哥有礼'},
+  {'activityType':'luckdraw','activityCode':'1407251415377641472','title':'每日转盘'}
+];
 $.helpCodeList = [];
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -73,31 +72,31 @@ let allMessage = '';
       }
     }
   }
-  console.log(`\=============每日抽奖互助=============`)
-  activityType = activityInfoList[1].activityType;
-  activityCode = activityInfoList[1].activityCode;
-  for (let i = 0; i < $.helpCodeList.length && cookiesArr.length > 0; i++) {
-    if ($.helpCodeList[i].needHelp === 0) {
-      continue;
-    }
-    for (let j = 0; j < cookiesArr.length && $.helpCodeList[i].needHelp !== 0; j++) {
-      $.helpFlag = '';
-      cookie = cookiesArr[j];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-      if ($.helpCodeList[i].use === $.UserName) {
-        continue;
-      }
-      console.log(`${$.UserName}助力:${$.helpCodeList[i].helpCpde}`);
-      $.oneCode = $.helpCodeList[i].helpCpde;
-      //await helpFriend($.helpCodeList[i].helpCpde);
-      await takePosttRequest('helpFriend');
-      if ($.helpFlag === true) {
-        $.helpCodeList[i].needHelp -= 1;
-      }
-      cookiesArr.splice(j, 1);
-      j--;
-    }
-  }
+  // console.log(`\=============每日抽奖互助=============`)
+  // activityType = activityInfoList[1].activityType;
+  // activityCode = activityInfoList[1].activityCode;
+  // for (let i = 0; i < $.helpCodeList.length && cookiesArr.length > 0; i++) {
+  //   if ($.helpCodeList[i].needHelp === 0) {
+  //     continue;
+  //   }
+  //   for (let j = 0; j < cookiesArr.length && $.helpCodeList[i].needHelp !== 0; j++) {
+  //     $.helpFlag = '';
+  //     cookie = cookiesArr[j];
+  //     $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+  //     if ($.helpCodeList[i].use === $.UserName) {
+  //       continue;
+  //     }
+  //     console.log(`${$.UserName}助力:${$.helpCodeList[i].helpCpde}`);
+  //     $.oneCode = $.helpCodeList[i].helpCpde;
+  //     //await helpFriend($.helpCodeList[i].helpCpde);
+  //     await takePosttRequest('helpFriend');
+  //     if ($.helpFlag === true) {
+  //       $.helpCodeList[i].needHelp -= 1;
+  //     }
+  //     cookiesArr.splice(j, 1);
+  //     j--;
+  //   }
+  // }
   if(allMessage){
     notify.sendNotify('小哥有礼-每日抽奖',allMessage);
   }
@@ -132,7 +131,7 @@ async function dailyLottery() {
   let drawNum = $.lotteryInfo.content.drawNum || 0;
   console.log(`共有${drawNum}次抽奖机会`);
   for (let i = 0; i < drawNum; i++) {
-    $.drawNumber = 1 + 1;
+    $.drawNumber = i + 1;
     await $.wait(1000);
     //执行抽奖
     await takePosttRequest('draw');
@@ -238,11 +237,7 @@ function dealReturn(functionId, data) {
 
 
           }else if(contentList[i].type === 102){
-            if(activityType === 'WonderfulLuckDrawApi'){
-              bean += 5;
-            }else{
               bean += 2;
-            }
           }else{
             console.log(contentList[i].name);
             allMessage += `第${$.index}个账号，${$.UserName},获得:${contentList[i].name}\n`;
