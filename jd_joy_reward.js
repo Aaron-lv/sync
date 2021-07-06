@@ -24,8 +24,8 @@ cron "0 0-16/8 * * *" script-path=jd_joy_reward.js,tag=宠汪汪积分兑换奖�
 // prettier-ignore
 const $ = new Env('宠汪汪积分兑换奖品');
 const zooFaker = require('./utils/JDJRValidator_Pure');
-$.get = zooFaker.injectToRequest2($.get.bind($));
-$.post = zooFaker.injectToRequest2($.post.bind($));
+// $.get = zooFaker.injectToRequest2($.get.bind($));
+// $.post = zooFaker.injectToRequest2($.post.bind($));
 let allMessage = '';
 let joyRewardName = 0;//是否兑换京豆，默认0不兑换京豆，其中20为兑换20京豆,500为兑换500京豆，0为不兑换京豆.数量有限先到先得
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -68,20 +68,19 @@ Date.prototype.Format = function (fmt) { //author: meizz
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '' || $.UserName;
-      // await TotalBean();
+      await TotalBean();
       console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
-        // if ($.isNode()) {
-        //   await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-        // }
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        }
         continue
       }
       // console.log(`本地时间与京东服务器时间差(毫秒)：${await get_diff_time()}`);
       $.validate = '';
-      // const zooFaker = require('./utils/JDJRValidator_Pure');
-      // $.validate = await zooFaker.injectToRequest()
+      $.validate = await zooFaker.injectToRequest()
       console.log(`脚本开始请求时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
       await joyReward();
     }
@@ -100,6 +99,13 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 async function joyReward() {
   try {
+    let timel = new Date().Format("ss")
+    var timea = 59;
+    if(timel < 59) {
+      let timec = (timea - timel) * 1000;
+      console.log(`等待时间 ${timec / 1000}`);
+      await zooFaker.sleep(timec)
+    }
     await getExchangeRewards();
     if ($.getExchangeRewardsRes && $.getExchangeRewardsRes.success) {
       // console.log('success', $.getExchangeRewardsRes);
@@ -217,7 +223,7 @@ function getExchangeRewards() {
   }
   return new Promise((resolve) => {
     const option = {
-      url: "https:"+ taroRequest(opt)['url'] + $.validate,
+      url: "https:" + taroRequest(opt)['url'] + $.validate,
       headers: {
         "Host": "jdjoy.jd.com",
         "Content-Type": "application/json",
@@ -259,7 +265,7 @@ function exchange(saleInfoId, orderSource) {
   }
   return new Promise((resolve) => {
     const option = {
-      url: "https:"+ taroRequest(opt)['url'] + $.validate,
+      url: "https:" + taroRequest(opt)['url'] + $.validate,
       body: `${JSON.stringify(body)}`,
       headers: {
         "Host": "jdjoy.jd.com",
