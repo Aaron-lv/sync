@@ -138,17 +138,17 @@ async function PrizeIndex() {
         $.beanerr = `东哥今天不给换`;
         return ;
       }
-      if (prizeList[1] && prizeList[1].status === 2) {
-        $.beanerr = `失败，1000京豆领光了，请明天再来`;
-        return ;
-      }
+      // if (prizeList[1] && prizeList[1].status === 2) {
+      //   $.beanerr = `失败，1000京豆领光了，请明天再来`;
+      //   return ;
+      // }
       if (prizeList[1] && prizeList[1].limit === prizeList[1] && prizeList[1].finished) {
         $.beanerr = `${prizeList[1].name}`;
         return ;
       }
       //兑换1000京豆
       if ($.totalBlue > $.blueCost) {
-        for (let j = 0; j < 10; ++j) {
+        for (let j = 0; j <= 10; j++) {
           await smtg_obtainPrize(prizeList[1].prizeId);
         }
       } else {
@@ -165,18 +165,20 @@ async function PrizeIndex() {
         $.beanerr = `东哥今天不给换`;
         return ;
       }
-      if (prizeList[0] && prizeList[0].status === 2) {
-        console.log(`失败，万能的京豆领光了，请明天再来`);
-        $.beanerr = `失败，万能的京豆领光了，请明天再来`;
-        return ;
-      }
+      // if (prizeList[0] && prizeList[0].status === 2) {
+      //   console.log(`失败，万能的京豆领光了，请明天再来`);
+      //   $.beanerr = `失败，万能的京豆领光了，请明天再来`;
+      //   return ;
+      // }
       if ((prizeList[0] && prizeList[0].limit) === (prizeList[0] && prizeList[0].finished)) {
         $.beanerr = `${prizeList[0].name}`;
         return ;
       }
       //兑换万能的京豆(1-20京豆)
       if ($.totalBlue > $.blueCost) {
-        await smtg_obtainPrize(prizeList[0].prizeId, 1000);
+        for (let j = 0; j <= 10; j++) {
+          await smtg_obtainPrize(prizeList[0].prizeId, 1000);
+        }
       } else {
         console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
         $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
@@ -207,9 +209,13 @@ async function PrizeIndex() {
         }
         if ($.totalBlue > $.blueCost) {
           if ($.type === 4 && !$.beanType) {
-            await smtg_obtainPrize(prizeId, 0, "smtg_lockMaterialPrize")
+            for (let j = 0; j <= 10; j++) {
+              await smtg_obtainPrize(prizeId, 0, "smtg_lockMaterialPrize")
+            }
           } else {
-            await smtg_obtainPrize(prizeId);
+            for (let j = 0; j <= 10; j++) {
+              await smtg_obtainPrize(prizeId);
+            }
           }
         } else {
           console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
