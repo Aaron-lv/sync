@@ -39,12 +39,26 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
+Date.prototype.Format = function (fmt) { //author: meizz
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "S": this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  for (let i =0; i < cookiesArr.length; i++) {
+  for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -60,7 +74,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       //console.log($.coincount);
       $.isLogin = true;
       $.nickName = '';
-      // await TotalBean();
+      await TotalBean();
       console.log(`\n****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       // console.log(`目前暂无兑换酒类的奖品功能，即使输入酒类名称，脚本也会提示下架\n`)
       if (!$.isLogin) {
@@ -96,7 +110,15 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
+
 async function PrizeIndex() {
+  let timel = new Date().Format("ss")
+  let timea = 59;
+  if(timel < 59) {
+    let timec = (timea - timel) * 1000;
+    console.log(`等待时间 ${timec / 1000}`);
+    await sleep(timec)
+  }
   await smtg_queryPrize();
   // await smtg_materialPrizeIndex();//兑换酒类奖品，此兑换API与之前的兑换京豆类的不一致，故目前无法进行
   // await Promise.all([
@@ -388,7 +410,9 @@ function smtgHome() {
     })
   })
 }
-
+async function sleep(timeout) {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+}
 //通知
 function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);

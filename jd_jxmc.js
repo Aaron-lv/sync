@@ -1,6 +1,6 @@
 /*
 惊喜牧场
-更新时间：2021-6-8
+更新时间：2021-6-18
 活动入口：京喜APP-我的-京喜牧场
 温馨提示：请先手动完成【新手指导任务】再运行脚本
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -42,10 +42,7 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  cookiesArr = [
-    $.getdata("CookieJD"),
-    $.getdata("CookieJD2"),
-    ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
+  cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 !(async () => {
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
@@ -79,8 +76,8 @@ if ($.isNode()) {
   }
   console.log('\n##################开始账号内互助#################\n');
   let newCookiesArr = [];
-  for(let i = 0;i<$.helpCkList.length;i+=4){
-    newCookiesArr.push($.helpCkList.slice(i,i+4))
+  for(let i = 0; i < $.helpCkList.length; i += 4) {
+    newCookiesArr.push($.helpCkList.slice(i, i + 4))
   }
   for (let i = 0; i < newCookiesArr.length; i++) {
     let thisCookiesArr = newCookiesArr[i];
@@ -104,7 +101,7 @@ if ($.isNode()) {
         $.oneCodeInfo = codeList[k];
         if(codeList[k].name === $.UserName){
           continue;
-        }else{
+        } else {
           console.log(`\n${$.UserName}去助力${codeList[k].name},助力码：${codeList[k].code}\n`);
           await takeGetRequest('help');
           await $.wait(2000);

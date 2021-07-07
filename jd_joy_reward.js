@@ -100,7 +100,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 async function joyReward() {
   try {
     let timel = new Date().Format("ss")
-    var timea = 59;
+    let timea = 59;
     if(timel < 59) {
       let timec = (timea - timel) * 1000;
       console.log(`等待时间 ${timec / 1000}`);
