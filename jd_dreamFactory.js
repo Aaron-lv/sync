@@ -153,17 +153,16 @@ async function jdDreamFactory() {
   }
 }
 
-function getActiveId() {
+function getActiveId(url = 'https://wqsd.jd.com/pingou/dream_factory/index.html') {
   return new Promise(async resolve => {
-    $.get({
-      url: 'https://wqsd.jd.com/pingou/dream_factory/',
-      "timeout": 10000,
-      "headers": {
+    const options = {
+      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }
-    }, async (err, resp, data) => {
+    };
+    $.get(options, async (err, resp, data) => {
       try {
-        if (err) {
+        if(err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
@@ -178,13 +177,13 @@ function getActiveId() {
                 const link = item.link;
                 if (new Date(item.end).getTime() > Date.now()) {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
-                    console.log(`\n获取团活动ID成功: ${link.match(/activeId=(.*),/)[1]}\n有效时段：${start} - ${end}`);
+                    console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}`);
                     tuanActiveId = link.match(/activeId=(.*),/)[1];
                     break
                   }
                 } else {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
-                    console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时段：${start} - ${end}\n已过期团ID`);
+                    console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}\n团ID已过期`);
                     tuanActiveId = '';
                   }
                 }
