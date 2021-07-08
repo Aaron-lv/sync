@@ -179,7 +179,7 @@ async function movement() {
         break;
       }
     }
-
+    console.log(`做任务`);
     await takePostRequest('olympicgames_getTaskDetail');
     await $.wait(1000);
     //做任务
@@ -200,7 +200,7 @@ async function movement() {
             let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
             await callbackResult(sendInfo)
           } else if ($.oneTask.taskType === 5 || $.oneTask.taskType === 3 || $.oneTask.taskType === 26) {
-            await $.wait(2000);
+            await $.wait(getRndInteger(7000, 1500));
             console.log(`任务完成`);
           } else if ($.oneTask.taskType === 21) {
             let data = $.callbackInfo
@@ -211,11 +211,11 @@ async function movement() {
             } else {
               console.log(JSON.stringify($.callbackInfo));
             }
-            await $.wait(2000);
+            await $.wait(getRndInteger(500, 1000));
           } else {
             console.log($.callbackInfo);
             console.log(`任务失败`);
-            await $.wait(3000);
+            await $.wait(getRndInteger(2000, 3000));
           }
         }
       } else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 2){
@@ -232,7 +232,7 @@ async function movement() {
           $.taskToken = productList[j].taskToken;
           console.log(`加购：${productList[j].skuName}`);
           await takePostRequest('add_car');
-          await $.wait(1500);
+          await $.wait(getRndInteger(700, 1500));
           needTime --;
         }
       }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0){
@@ -246,78 +246,78 @@ async function movement() {
           console.log(`做任务：浏览${$.oneActivityInfo.skuName};等待完成`);
           await takePostRequest('olympicgames_doTaskDetail');
           if ($.oneTask.taskType === 2) {
-            await $.wait(2000);
+            await $.wait(getRndInteger(1000, 2000));
             console.log(`任务完成`);
           } else {
             console.log($.callbackInfo);
             console.log(`任务失败`);
-            await $.wait(3000);
+            await $.wait(getRndInteger(2000, 3000));
           }
         }
       }
     }
     // 店铺
-    if (new Date().getHours() >= 14 && new Date().getHours() <= 17 && !$.hotFlag){// 为了避免代码执行太久，下午2点到5点才做店铺任务
-      console.log(`去做店铺任务`);
-      $.shopInfoList = [];
-      await takePostRequest('qryCompositeMaterials');
-      for (let i = 0; i < $.shopInfoList.length; i++) {
-        $.shopSign = $.shopInfoList[i].extension.shopId;
-        console.log(`执行第${i+1}个店铺任务：${$.shopInfoList[i].name} ID:${$.shopSign}`);
-        $.shopResult = {};
-        await takePostRequest('olympicgames_shopLotteryInfo');
-        await $.wait(1000);
-        if(JSON.stringify($.shopResult) === `{}`) continue;
-        $.shopTask = $.shopResult.taskVos;
-        for (let i = 0; i < $.shopTask.length; i++) {
-          $.oneTask = $.shopTask[i];
-          if($.oneTask.taskType === 14 || $.oneTask.status !== 1){continue;} //不做邀请
-          $.activityInfoList = $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.shoppingActivityVos || $.oneTask.browseShopVo || $.oneTask.simpleRecordInfoVo;
-          if($.oneTask.taskType === 12){//签到
-            if($.shopResult.dayFirst === 0){
-              $.oneActivityInfo =  $.activityInfoList;
-              console.log(`店铺签到`);
-              await takePostRequest('olympicgames_bdDoTask');
-            }
+    console.log(`去做店铺任务`);
+    $.shopInfoList = [];
+    await takePostRequest('qryCompositeMaterials');
+    for (let i = 0; i < $.shopInfoList.length; i++) {
+      let taskbool = false
+      $.shopSign = $.shopInfoList[i].extension.shopId;
+      console.log(`执行第${i+1}个店铺任务：${$.shopInfoList[i].name} ID:${$.shopSign}`);
+      $.shopResult = {};
+      await takePostRequest('olympicgames_shopLotteryInfo');
+      await $.wait(1000);
+      if(JSON.stringify($.shopResult) === `{}`) continue;
+      $.shopTask = $.shopResult.taskVos;
+      for (let i = 0; i < $.shopTask.length; i++) {
+        $.oneTask = $.shopTask[i];
+        if($.oneTask.taskType === 21 || $.oneTask.taskType === 14 || $.oneTask.status !== 1){continue;} //不做入会，不做邀请
+        taskbool = true
+        $.activityInfoList = $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.shoppingActivityVos || $.oneTask.browseShopVo || $.oneTask.simpleRecordInfoVo;
+        if($.oneTask.taskType === 12){//签到
+          if($.shopResult.dayFirst === 0){
+            $.oneActivityInfo =  $.activityInfoList;
+            console.log(`店铺签到`);
+            await takePostRequest('olympicgames_bdDoTask');
+          }
+          continue;
+        }
+        for (let j = 0; j < $.activityInfoList.length; j++) {
+          $.oneActivityInfo = $.activityInfoList[j];
+          if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
             continue;
           }
-          for (let j = 0; j < $.activityInfoList.length; j++) {
-            $.oneActivityInfo = $.activityInfoList[j];
-            if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
-              continue;
-            }
-            $.callbackInfo = {};
-            console.log(`做任务：${$.oneActivityInfo.subtitle || $.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
-            await takePostRequest('olympicgames_doTaskDetail');
-            if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
-              await $.wait(8000);
-              let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
-              await callbackResult(sendInfo)
-            } else  {
-              await $.wait(2000);
-              console.log(`任务完成`);
-            }
+          $.callbackInfo = {};
+          console.log(`做任务：${$.oneActivityInfo.subtitle || $.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+          await takePostRequest('olympicgames_doTaskDetail');
+          if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+            await $.wait(8000);
+            let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+            await callbackResult(sendInfo)
+          } else  {
+            await $.wait(2000);
+            console.log(`任务完成`);
           }
         }
-        await $.wait(1000);
-        let boxLotteryNum = $.shopResult.boxLotteryNum;
-        for (let j = 0; j < boxLotteryNum; j++) {
-          console.log(`开始第${j+1}次拆盒`)
-          //抽奖
-          await takePostRequest('olympicgames_boxShopLottery');
-          await $.wait(3000);
-        }
-        // let wishLotteryNum = $.shopResult.wishLotteryNum;
-        // for (let j = 0; j < wishLotteryNum; j++) {
-        //   console.log(`开始第${j+1}次能量抽奖`)
-        //   //抽奖
-        //   await takePostRequest('zoo_wishShopLottery');
-        //   await $.wait(3000);
-        // }
+      }
+      if(taskbool) await $.wait(1000);
+      let boxLotteryNum = $.shopResult.boxLotteryNum;
+      for (let j = 0; j < boxLotteryNum; j++) {
+        console.log(`开始第${j+1}次拆盒`)
+        //抽奖
+        await takePostRequest('olympicgames_boxShopLottery');
         await $.wait(3000);
       }
+      // let wishLotteryNum = $.shopResult.wishLotteryNum;
+      // for (let j = 0; j < wishLotteryNum; j++) {
+      //   console.log(`开始第${j+1}次能量抽奖`)
+      //   //抽奖
+      //   await takePostRequest('zoo_wishShopLottery');
+      //   await $.wait(3000);
+      // }
+      if(taskbool) await $.wait(3000);
     }
-    // qryCompositeMaterials
+
     $.Shend = false
     await $.wait(1000);
     console.log('\n百元守卫站')
@@ -441,6 +441,8 @@ async function dealReturn(type, data) {
     case 'olympicgames_collectCurrency':
       if (data.code === 0 && data.data && data.data.result) {
         console.log(`收取成功，当前卡币：${data.data.result.poolCurrency}`);
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
       } else {
         console.log(JSON.stringify(data));
       }
@@ -478,6 +480,10 @@ async function dealReturn(type, data) {
           });
         }
         $.taskList = data.data.result.taskVos;
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
+      } else {
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olypicgames_guradHome':
@@ -582,21 +588,27 @@ async function dealReturn(type, data) {
       }
       break;
     case 'olympicgames_boxShopLottery':
-      let result = data.data.result;
-      switch (result.awardType) {
-        case 8:
-          console.log(`获得金币：${result.rewardScore}`);
-          break;
-        case 5:
-          console.log(`获得：adidas能量`);
-          break;
-        case 2:
-        case 3:
-          console.log(`获得优惠券：${result.couponInfo.usageThreshold} 优惠：${result.couponInfo.quota}，${result.couponInfo.useRange}`);
-          break;
-        default:
-          console.log(`抽奖获得未知`);
-          console.log(JSON.stringify(data));
+      if(data.data && data.data.result){
+        let result = data.data.result;
+        switch (result.awardType) {
+          case 8:
+            console.log(`获得金币：${result.rewardScore}`);
+            break;
+          case 5:
+            console.log(`获得：adidas能量`);
+            break;
+          case 2:
+          case 3:
+            console.log(`获得优惠券：${result.couponInfo.usageThreshold} 优惠：${result.couponInfo.quota}，${result.couponInfo.useRange}`);
+            break;
+          default:
+            console.log(`抽奖获得未知`);
+            console.log(JSON.stringify(data));
+        }
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
+      } else {
+        console.log(JSON.stringify(data));
       }
       break
     default:
