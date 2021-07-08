@@ -204,12 +204,12 @@ async function movement() {
             console.log(`任务完成`);
           } else if ($.oneTask.taskType === 21) {
             let data = $.callbackInfo
-            if(data.data && data.data.bizCode === 0){
+            if(data.data && data.data.bizCode === 0) {
               console.log(`获得：${data.data.result.score}`);
-            }else if(data.data && data.data.bizMsg){
+            } else if(data.data && data.data.bizMsg) {
               console.log(data.data.bizMsg);
-            }else{
-            console.log(JSON.stringify($.callbackInfo));
+            } else {
+              console.log(JSON.stringify($.callbackInfo));
             }
             await $.wait(2000);
           } else {
@@ -463,7 +463,7 @@ async function dealReturn(type, data) {
       } else if (data.data && data.data.bizMsg) {
         console.log(data.data.bizMsg);
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_getTaskDetail':
@@ -492,7 +492,7 @@ async function dealReturn(type, data) {
       } else if (data.data && data.data.bizMsg) {
         console.log(data.data.bizMsg);
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_doTaskDetail':
@@ -512,7 +512,7 @@ async function dealReturn(type, data) {
           console.log(`加购成功`);
         }
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
         console.log(`加购失败`);
       }
       break
@@ -528,7 +528,7 @@ async function dealReturn(type, data) {
         }
         console.log(data.data.bizMsg);
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_speedTraining':
@@ -541,7 +541,7 @@ async function dealReturn(type, data) {
         }
         console.log(data.data.bizMsg);
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_startTraining':
@@ -554,11 +554,11 @@ async function dealReturn(type, data) {
         }
         console.log(data.data.bizMsg);
       } else {
-        console.log(res);
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_tiroGuide':
-      console.log(res);
+      console.log(JSON.stringify(data));
       break;
     case 'olympicgames_shopLotteryInfo':
       if (data.code === 0) {
