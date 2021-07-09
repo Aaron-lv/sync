@@ -231,8 +231,6 @@ async function movement() {
               console.log(`获得：${data.data.result.score}`);
             } else if(data.data && data.data.bizMsg) {
               console.log(data.data.bizMsg);
-            } else {
-              console.log(JSON.stringify($.callbackInfo));
             }
             await $.wait(getRndInteger(500, 1000));
           } else {
