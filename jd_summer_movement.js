@@ -5,17 +5,17 @@
 ===================quantumultx================
 [task_local]
 #燃动夏季
-33 0,6-23/2 * * * jd_summer_movement.js, tag=燃动夏季, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+7 0,6-23/2 * * * jd_summer_movement.js, tag=燃动夏季, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "33 0,6-23/2 * * *" script-path=jd_summer_movement.js, tag=燃动夏季
+cron "7 0,6-23/2 * * *" script-path=jd_summer_movement.js, tag=燃动夏季
 
 ====================Surge================
-燃动夏季 = type=cron,cronexp="33 0,6-23/2 * * *",wake-system=1,timeout=3600,script-path=jd_summer_movement.js
+燃动夏季 = type=cron,cronexp="7 0,6-23/2 * * *",wake-system=1,timeout=3600,script-path=jd_summer_movement.js
 
 ============小火箭=========
-燃动夏季 = type=cron,script-path=jd_summer_movement.js, cronexpr="33 0,6-23/2 * * *", timeout=3600, enable=true
+燃动夏季 = type=cron,script-path=jd_summer_movement.js, cronexpr="7 0,6-23/2 * * *", timeout=3600, enable=true
 */
 const $ = new Env('燃动夏季');
 const MoveMentFaker = require('./utils/MoveMentFaker')
@@ -49,9 +49,10 @@ if ($.isNode()) {
       '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
       'SH互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
       '店铺任务：已添加，下午2点到5点执行\n' +
+      '微信任务：已添加\n' +
       '添加入会但并不完全入会(领取已经入会的任务，脚本不会入会请放心使用)\n' +
       '活动时间：2021-07-08至2021-07-08\n' +
-      '脚本更新时间：2021-07-08 19:00\n'
+      '脚本更新时间：2021-07-09 19:00\n'
       );
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -102,7 +103,7 @@ if ($.isNode()) {
     }
     // $.secretp = $.secretpInfo[$.UserName];
     $.index = i + 1;
-    if (new Date().getUTCHours() + 8 >= 9) {
+    if (new Date().getUTCHours() + 8 >= 8) {
       if ($.ShInviteList && $.ShInviteList.length) {
         console.log(`\n******开始内部京东账号【百元守卫站SH】助力*********\n`);
         for (let i = 0; i < $.ShInviteList.length && ShHelpFlag && $.canHelp; i++) {
@@ -200,7 +201,7 @@ async function movement() {
             let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
             await callbackResult(sendInfo)
           } else if ($.oneTask.taskType === 5 || $.oneTask.taskType === 3 || $.oneTask.taskType === 26) {
-            await $.wait(getRndInteger(7000, 1500));
+            await $.wait(getRndInteger(700, 1500));
             console.log(`任务完成`);
           } else if ($.oneTask.taskType === 21) {
             let data = $.callbackInfo
@@ -256,6 +257,32 @@ async function movement() {
         }
       }
     }
+    //==================================微信任务========================================================================
+    $.wxTaskList = [];
+    if(!$.hotFlag) await takePostRequest('wxTaskDetail');
+    for (let i = 0; i < $.wxTaskList.length; i++) {
+      $.oneTask = $.wxTaskList[i];
+      if($.oneTask.taskType === 2 || $.oneTask.status !== 1){continue;} //不做加购
+      $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
+      for (let j = 0; j < $.activityInfoList.length; j++) {
+        $.oneActivityInfo = $.activityInfoList[j];
+        if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
+          continue;
+        }
+        $.callbackInfo = {};
+        console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+        await takePostRequest('olympicgames_doTaskDetail');
+        if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
+          await $.wait(getRndInteger(7000, 8000));
+          let sendInfo = encodeURIComponent(`{"dataSource":"newshortAward","method":"getTaskAward","reqParams":"{\\"taskToken\\":\\"${$.callbackInfo.data.result.taskToken}\\"}","sdkVersion":"1.0.0","clientLanguage":"zh"}`)
+          await callbackResult(sendInfo)
+        } else  {
+          await $.wait(getRndInteger(1000, 2000));
+          console.log(`任务完成`);
+        }
+      }
+    }
+
     // 店铺
     console.log(`去做店铺任务`);
     $.shopInfoList = [];
@@ -405,6 +432,10 @@ async function takePostRequest(type) {
       body = `functionId=olympicgames_boxShopLottery&body={"shopSign":${$.shopSign}}&client=wh5&clientVersion=1.0.0&appid=${$.appid}`;
       myRequest = await getPostRequest(`olympicgames_boxShopLottery`,body);
       break;
+    case 'wxTaskDetail':
+      body = `functionId=olympicgames_getTaskDetail&body={"taskId":"","appSign":"2"}&client=wh5&clientVersion=1.0.0&loginWQBiz=businesst1&appid=${$.appid}`;
+      myRequest = await getPostRequest(`olympicgames_getTaskDetail`,body);
+      break;
     default:
       console.log(`错误${type}`);
   }
@@ -436,6 +467,10 @@ async function dealReturn(type, data) {
           $.homeData = data.data;
           $.secretpInfo[$.UserName] = true
         }
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
+      } else {
+        console.log(JSON.stringify(data));
       }
       break;
     case 'olympicgames_collectCurrency':
@@ -502,7 +537,17 @@ async function dealReturn(type, data) {
       }
       break;
     case 'olympicgames_doTaskDetail':
-      $.callbackInfo = data;
+      if (data.data && data.data.bizCode === 0) {
+        if (data.data.result && data.data.result.taskToken) {
+          $.callbackInfo = data;
+        }else if(data.data.result && data.data.result.successToast){
+          console.log(data.data.result.successToast);
+        }
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
+      } else {
+        console.log(JSON.stringify(data));
+      }
       break;
     case 'olympicgames_getFeedDetail':
       if (data.code === 0) {
@@ -611,6 +656,11 @@ async function dealReturn(type, data) {
         console.log(JSON.stringify(data));
       }
       break
+    case 'wxTaskDetail':
+      if (data.code === 0) {
+        $.wxTaskList = data.data.result && data.data.result.taskVos || [];
+      }
+      break;
     default:
       console.log(`未判断的异常${type}`);
   }
