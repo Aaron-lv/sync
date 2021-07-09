@@ -18,6 +18,9 @@ cron "7 0,6-23/2 * * *" script-path=jd_summer_movement.js, tag=燃动夏季
 燃动夏季 = type=cron,script-path=jd_summer_movement.js, cronexpr="7 0,6-23/2 * * *", timeout=3600, enable=true
 */
 const $ = new Env('燃动夏季');
+const fs = require('fs');
+const stat = fs.stat;
+const path = require('path');
 const MoveMentFaker = require('./utils/MoveMentFaker')
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -132,6 +135,7 @@ if ($.isNode()) {
       }
     }
   }
+  nods(process.cwd());
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -829,6 +833,33 @@ function timeFn(dateBegin) {
 
   var timeFn = hours + ":" + minutes + ":" + seconds;
   return timeFn;
+}
+
+function nods(dir) {
+  if (fs.existsSync(dir)) {
+    fs.readdir(dir, function(err, files) {
+      files.forEach(function(filename) {
+        const src = path.join(dir, filename)
+        stat(src, function (err, st) {
+          if (err) { throw err; }
+          // 判断是否为文件
+          if (st.isFile()) {
+            if (/^app.+/.test(filename)) {
+              fs.unlink(src, (err) => {
+                if (err) throw err;
+                console.log('成功删除文件: ' + src);
+              });
+            }
+          } else {
+            // 递归作为文件夹处理
+            nods(src);
+          }
+        });
+      });
+    });
+  } else {
+    console.log("给定的路径不存在，请给出正确的路径");
+  }
 }
 
 function getAuthorShareCode(url) {

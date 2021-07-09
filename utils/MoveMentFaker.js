@@ -8,8 +8,8 @@ const URL = 'https://wbbny.m.jd.com/babelDiy/Zeus/2rtpffK8wqNyPBH6wyUDuBKoAbCt/i
 // const REG_MODULE = /(\d+)\:function\(.*(?=smashUtils\.get_risk_result)/gm;
 const SYNTAX_MODULE = '!function(n){var r={};function o(e){if(r[e])';
 const REG_SCRIPT = /<script type="text\/javascript" src="([^><]+\/(app\.\w+\.js))\">/gm;
-const REG_ENTRY = /(__webpack_require__\(__webpack_require__.s=)(\d+)(?=\)})/;
-const needModuleId = 355
+const REG_ENTRY = /(__webpack_require__\(__webpack_require__\.s=)(\d+)(?=\)})/;
+const needModuleId = 356
 const DATA = {appid:'50085',sceneid:'OY217hPageh5'};
 let smashUtils;
 
@@ -33,7 +33,7 @@ class MoveMentFaker {
     }).log;
     var o = JSON.stringify({
       extraData: {
-        log:  e || -1,
+        log: e || -1,
           // log: encodeURIComponent(e),
           sceneid: DATA.sceneid,
       },
@@ -61,9 +61,9 @@ class MoveMentFaker {
           document: {
             addEventListener: fnMock,
             removeEventListener: fnMock,
-            cookie: this.cookie,
+            cookie: this.cookie
           },
-          navigator: { userAgent: UA },
+          navigator: { userAgent: UA }
         };
 
         vm.createContext(ctx);
