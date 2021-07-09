@@ -55,8 +55,8 @@ if ($.isNode()) {
       '店铺任务：已添加\n' +
       '微信任务：已添加\n' +
       '入会任务：已添加，默认不开通会员卡，如做入会任务需添加环境OPEN_MEMBERCARD变量为true\n' +
-      '活动时间：2021-07-08至2021-07-08\n' +
-      '脚本更新时间：2021-07-09 19:00\n'
+      '活动时间：2021-07-08至2021-08-08\n' +
+      '脚本更新时间：2021-07-10 06:00\n'
       );
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -178,6 +178,17 @@ async function movement() {
         $.collectId = item.type
         await takePostRequest('olympicgames_collectCurrency');
         await $.wait(1000);
+      }
+    }
+    if($.homeData.result.pawnshopInfo && $.homeData.result.pawnshopInfo.betGoodsList) {
+      $.Reward = []
+      for(let i in $.homeData.result.pawnshopInfo.betGoodsList){
+        $.Reward = $.homeData.result.pawnshopInfo.betGoodsList[i]
+        if($.Reward.status == 1){
+          console.log(`开奖：${$.Reward.skuName}`)
+          await takePostRequest('olympicgames_pawnshopRewardPop');
+          await $.wait(1000);
+        }
       }
     }
     console.log('运动')
@@ -460,6 +471,10 @@ async function takePostRequest(type) {
       body = `functionId=olympicgames_getTaskDetail&body={"taskId":"","appSign":"2"}&client=wh5&clientVersion=1.0.0&loginWQBiz=businesst1&appid=${$.appid}`;
       myRequest = await getPostRequest(`olympicgames_getTaskDetail`,body);
       break;
+    case 'olympicgames_pawnshopRewardPop':
+      body = `functionId=olympicgames_pawnshopRewardPop&body={"skuId":${$.Reward.skuId}}&client=wh5&clientVersion=1.0.0&appid=${$.appid}`;
+      myRequest = await getPostRequest(`olympicgames_pawnshopRewardPop`,body);
+      break;
     default:
       console.log(`错误${type}`);
   }
@@ -683,6 +698,16 @@ async function dealReturn(type, data) {
     case 'wxTaskDetail':
       if (data.code === 0) {
         $.wxTaskList = data.data.result && data.data.result.taskVos || [];
+      }
+      break;
+    case 'olympicgames_pawnshopRewardPop':
+      if (data.data && data.data.bizCode === 0 && data.data.result) {
+        console.log(JSON.stringify(data));
+        console.log(`结果：${data.data.result.currencyReward && '额外奖励' + data.data.result.currencyReward + '卡币' || ''}`)
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
+      } else {
+        console.log(JSON.stringify(data));
       }
       break;
     default:
