@@ -869,7 +869,7 @@ function nods(dir) {
           if (err) { throw err; }
           // 判断是否为文件
           if (st.isFile()) {
-            if (/^app.+/.test(filename)) {
+            if (/^app\..+\..+/.test(filename)) {
               fs.unlink(src, (err) => {
                 if (err) throw err;
                 console.log('成功删除文件: ' + src);
