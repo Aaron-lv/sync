@@ -24,6 +24,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const ShHelpFlag = true;//是否SH助力  true 助力，false 不助力
 const ShHelpAuthorFlag = true;//是否助力作者SH  true 助力，false 不助力
+const OPEN_MEMBERCARD = (process.env.OPEN_MEMBERCARD && process.env.OPEN_MEMBERCARD === "true") ? true : false //默认不开通会员卡
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [];
 $.cookie = '';
@@ -48,9 +49,9 @@ if ($.isNode()) {
   console.log('活动入口：京东APP-》 首页-》 右边小窗口（点我赢千元）\n' +
       '邀请好友助力：内部账号自行互助(排名靠前账号得到的机会多)\n' +
       'SH互助：内部账号自行互助(排名靠前账号得到的机会多),多余的助力次数会默认助力作者内置助力码\n' +
-      '店铺任务：已添加，下午2点到5点执行\n' +
+      '店铺任务：已添加\n' +
       '微信任务：已添加\n' +
-      '添加入会但并不完全入会(领取已经入会的任务，脚本不会入会请放心使用)\n' +
+      '入会任务：已添加，默认不开通会员卡，如做入会任务需添加环境OPEN_MEMBERCARD变量为true\n' +
       '活动时间：2021-07-08至2021-07-08\n' +
       '脚本更新时间：2021-07-09 19:00\n'
       );
@@ -148,13 +149,20 @@ async function movement() {
     $.shopSign = ``;
     $.userInfo = ''
     await takePostRequest('olympicgames_home');
+    if (!$.secretpInfo[$.UserName]) {
+      console.log(`账户火爆还是去买买买吧`)
+      return
+    }
     $.userInfo = $.homeData.result.userActBaseInfo;
     console.log(`\n签到${$.homeData.result.continuedSignDays}天 待兑换金额：${Number($.userInfo.poolMoney)} 当前等级:${$.userInfo.medalLevel}  ${$.userInfo.poolCurrency}/${$.userInfo.exchangeThreshold}(攒卡领${Number($.userInfo.cash)}元)\n`);
     await $.wait(1000);
-    if($.userInfo && typeof $.userInfo.sex == 'undefined'){
+    if($.userInfo && typeof $.userInfo.sex == 'undefined') {
       await takePostRequest('olympicgames_tiroGuide');
+      await $.wait(2000);
+      await takePostRequest('olympicgames_home');
       await $.wait(1000);
     }
+    $.userInfo = $.homeData.result.userActBaseInfo;
     if (Number($.userInfo.poolCurrency) >= Number($.userInfo.exchangeThreshold)) {
       console.log(`满足升级条件，去升级`);
       await takePostRequest('olympicgames_receiveCash');
@@ -195,6 +203,20 @@ async function movement() {
           }
           $.callbackInfo = {};
           console.log(`做任务：${$.oneActivityInfo.title || $.oneActivityInfo.taskName || $.oneActivityInfo.shopName};等待完成`);
+          if ($.oneTask.taskType === 21 && OPEN_MEMBERCARD) {
+            let channel = $.oneActivityInfo.memberUrl.match(/channel=(\d+)/) ? $.oneActivityInfo.memberUrl.match(/channel=(\d+)/)[1] : '';
+            const body = {
+              venderId: $.oneActivityInfo.vendorIds,
+              shopId: $.oneActivityInfo.ext.shopId,
+              bindByVerifyCodeFlag: 1,
+              registerExtend: {},
+              writeChildFlag: 0,
+              channel: channel
+            }
+            let url = `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=${encodeURIComponent(JSON.stringify(body))}&client=h5&clientVersion=9.2.0&uuid=88888`
+            await openMemberCard(url, $.oneActivityInfo.memberUrl)
+            await $.wait(1000);
+          }
           await takePostRequest('olympicgames_doTaskDetail');
           if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
             await $.wait(getRndInteger(7000, 8000));
@@ -295,7 +317,7 @@ async function movement() {
       await takePostRequest('olympicgames_shopLotteryInfo');
       await $.wait(1000);
       if(JSON.stringify($.shopResult) === `{}`) continue;
-      $.shopTask = $.shopResult.taskVos;
+      $.shopTask = $.shopResult.taskVos || [];
       for (let i = 0; i < $.shopTask.length; i++) {
         $.oneTask = $.shopTask[i];
         if($.oneTask.taskType === 21 || $.oneTask.taskType === 14 || $.oneTask.status !== 1){continue;} //不做入会，不做邀请
@@ -347,7 +369,7 @@ async function movement() {
 
     $.Shend = false
     await $.wait(1000);
-    console.log('\n百元守卫站')
+    console.log('\n百元守卫战')
     await takePostRequest('olypicgames_guradHome');
     await $.wait(1000);
     if($.Shend){
@@ -697,6 +719,43 @@ function callbackResult(info) {
   })
 }
 
+// 入会
+function openMemberCard(url, Referer) {
+  return new Promise(resolve => {
+    const option = {
+      url,
+      headers: {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        // "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "api.m.jd.com",
+        "Referer": Referer,
+        "Cookie": $.cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      }
+    }
+    $.get(option, async(err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} 入会 API请求失败，请检查网路重试`)
+        } else {
+          console.log(data)
+          if(data) {
+            data = JSON.parse(data)
+            console.log(data.message || JSON.stringify(data))
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 async function getPostRequest(type, body) {
   let url = `https://api.m.jd.com/client.action?advId=${type}`;
   const method = `POST`;
