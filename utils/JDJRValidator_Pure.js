@@ -215,7 +215,7 @@ const DATA = {
   "product": "embed",
   "lang": "zh_CN",
 };
-const SERVER = 'iv.jd.com';
+const SERVER = '61.49.99.122';
 
 class JDJRValidator {
   constructor() {
@@ -307,7 +307,7 @@ class JDJRValidator {
       const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
       const extraData = {callback: fnId};
       const query = new URLSearchParams({...DATA, ...{"scene": scene}, ...extraData, ...data}).toString();
-      const url = `https://${SERVER}${api}?${query}`;
+      const url = `http://${SERVER}${api}?${query}`;
       const headers = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip,deflate,br',
@@ -318,7 +318,7 @@ class JDJRValidator {
         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
         'User-Agent': UA,
       };
-      const req = https.get(url, {headers}, (response) => {
+      const req = http.get(url, {headers}, (response) => {
         let res = response;
         if (res.headers['content-encoding'] === 'gzip') {
           const unzipStream = new stream.PassThrough();
