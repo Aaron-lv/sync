@@ -113,8 +113,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 async function PrizeIndex() {
   let timel = new Date().Format("ss")
-  let timea = 59;
-  if(timel < 59) {
+  let timea = 58;
+  if(timel < 58) {
     let timec = (timea - timel) * 1000;
     console.log(`等待时间 ${timec / 1000}`);
     await sleep(timec)
