@@ -96,7 +96,7 @@ if ($.isNode()) {
   if (ShHelpAuthorFlag) {
     $.innerShInviteList = getRandomArrayElements([...$.innerShInviteList, ...res], [...$.innerShInviteList, ...res].length);
     $.ShInviteList.push(...$.innerShInviteList);
-    $.inviteList = getRandomArrayElements([...$.inviteList, ...res2], [...$.inviteList, ...res2].length);
+    $.inviteList.push(...res2);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
@@ -230,7 +230,7 @@ async function movement() {
             }
             let url = `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=${encodeURIComponent(JSON.stringify(body))}&client=h5&clientVersion=9.2.0&uuid=88888`
             await openMemberCard(url, $.oneActivityInfo.memberUrl)
-            await $.wait(1000);
+            await $.wait(2000);
           }
           await takePostRequest('olympicgames_doTaskDetail');
           if ($.callbackInfo.code === 0 && $.callbackInfo.data && $.callbackInfo.data.result && $.callbackInfo.data.result.taskToken) {
