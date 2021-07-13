@@ -745,7 +745,7 @@ function getTaskList(taskType) {
               if($.allTask.length === 0) {
                 console.log(`【📆日常任务】已做完`)
               } else {
-                console.log(`\n获取【📆日常任务】列表 ${msg}，总共${$.allTask.length}个任务！\n${$.showLog ? data : ""}`);
+                console.log(`获取【📆日常任务】列表 ${msg}，总共${$.allTask.length}个任务！\n${$.showLog ? data : ""}`);
               }
             }
           } catch (e) {
@@ -767,7 +767,7 @@ function getTaskList(taskType) {
               if($.allTask.length === 0) {
                 console.log(`【🎖成就任务】没有可领奖的任务\n`)
               } else {
-                console.log(`\n获取【🎖成就任务】列表 ${msg}，总共${$.allTask.length}个任务！\n${$.showLog ? data : ""}`);
+                console.log(`获取【🎖成就任务】列表 ${msg}，总共${$.allTask.length}个任务！\n${$.showLog ? data : ""}`);
               }
             }
           } catch (e) {
@@ -805,9 +805,9 @@ function browserTask(taskType) {
       case 1://成就任务
         for (let i = 0; i < $.allTask.length; i++) {
           const taskinfo = $.allTask[i];
-          console.log(`\n开始第${i + 1}个【🎖成就任务】：${taskinfo.taskName}`);
+          console.log(`开始第${i + 1}个【🎖成就任务】：${taskinfo.taskName}\n`);
           if(taskinfo.completedTimes < taskinfo.targetTimes){
-            console.log(`\n${taskinfo.taskName}【领成就奖励】：该成就任务未达到门槛}`);
+            console.log(`【领成就奖励】${taskinfo.taskName} 该成就任务未达到门槛\n`);
           } else {
             //领奖励
             await awardTask(1, taskinfo);
@@ -828,7 +828,7 @@ function doTask(taskinfo) {
     const { taskId, completedTimes, targetTimes, taskName } = taskinfo;
     if (parseInt(completedTimes) >= parseInt(targetTimes)) {
       resolve(false);
-      console.log(`\n${taskName}【做日常任务】： mission success`);
+      console.log(`【做日常任务】${taskName} 任务已做完，去领奖\n`);
       return;
     }
     $.get(taskListUrl(`DoTask`, `taskId=${taskId}`), (err, resp, data) => {
@@ -868,7 +868,7 @@ function awardTask(taskType, taskinfo) {
               } else {
                 str = msg + prizeInfo ? ` 获得金币 ¥ ${JSON.parse(prizeInfo).ddwCoin}` : '';
               }
-              console.log(`\n【领日常奖励】${taskName} ${str}\n${$.showLog ? data : ''}`);
+              console.log(`【领日常奖励】${taskName} ${str}\n${$.showLog ? data : ''}`);
             }
           } catch (e) {
             $.logErr(e, resp);
@@ -888,7 +888,7 @@ function awardTask(taskType, taskinfo) {
               if(msg.indexOf('活动太火爆了') !== -1) {
                 console.log(`活动太火爆了`)
               } else {
-                console.log(`\n【领成就奖励】${taskName} 获得财富值：¥ ${JSON.parse(prizeInfo).ddwMoney}\n${$.showLog ? data : ''}`);
+                console.log(`【领成就奖励】${taskName} 获得财富值：¥ ${JSON.parse(prizeInfo).ddwMoney}\n${$.showLog ? data : ''}`);
               }
             }
           } catch (e) {
