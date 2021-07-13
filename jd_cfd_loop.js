@@ -118,9 +118,11 @@ async function queryshell() {
           for (let key of Object.keys(data.Data.NormShell)) {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
-              await pickshell(vo.dwType)
+              await pickshell(`dwType=${vo.dwType}`)
+              await $.wait(1000)
             }
           }
+          console.log('')
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -139,6 +141,24 @@ function pickshell(body) {
           console.log(`${$.name} pickshell API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
+          let dwName
+          switch (data.Data.strFirstDesc) {
+            case '捡到珍珠了，看起来很贵的样子':
+              dwName = '小珍珠'
+              break
+            case '捡到小海螺了，做成项链一定很漂亮':
+              dwName = '小海螺'
+              break 
+            case '把我放在耳边，就能听到大海的声音了~':
+              dwName = '大海螺'
+              break
+            case '只要诚心祈祷，愿望就会实现哦~':
+              dwName = '海星'
+              break
+            default:
+              break
+          }
+          console.log(`捡贝壳：捡到了${dwName}`)
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -159,7 +179,7 @@ async function speedUp() {
           console.log(`${$.name} SpeedUp API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          console.log(`今日热气球已接待 ${data.dwTodaySpeedPeople} 人`)
+          console.log(`今日热气球已接待 ${data.dwTodaySpeedPeople} 人\n`)
         }
       } catch (e) {
         $.logErr(e, resp);
