@@ -74,7 +74,7 @@ $.appId = 10028;
       $.isLogin = true;
       $.nickName = '';
       await TotalBean();
-      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
@@ -133,7 +133,11 @@ async function cfd() {
 
     //每日签到
     await $.wait(2000)
-    await getTakeAggrPage()
+    await getTakeAggrPage('sign')
+
+    //助力奖励
+    await $.wait(2000)
+    await getTakeAggrPage('helpdraw')
 
     //卖贝壳
     await $.wait(2000)
@@ -200,7 +204,7 @@ async function querystorageroom() {
           console.log(`${$.name} querystorageroom API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          console.log(`卖贝壳`)
+          console.log(`\n卖贝壳`)
           let bags = []
           for (let key of Object.keys(data.Data.Office)) {
             let vo = data.Data.Office[key]
@@ -242,7 +246,7 @@ function sellgoods(body) {
           if (data.iRet === 0) {
             console.log(`贝壳出售成功：获得${data.Data.ddwCoin}金币、${data.Data.ddwMoney}财富\n`)
           } else {
-            console.log(`贝壳出售失败`)
+            console.log(`贝壳出售失败\n`)
           }
         }
       } catch (e) {
@@ -255,36 +259,74 @@ function sellgoods(body) {
 }
 
 // 每日签到
-async function getTakeAggrPage() {
+async function getTakeAggrPage(type) {
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`story/GetTakeAggrPage`), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} GetTakeAggrPage API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data);
-          console.log(`每日签到`)
-          for (let key of Object.keys(data.Data.Sign.SignList)) {
-            let vo = data.Data.Sign.SignList[key]
-            if (vo.dwDayId === data.Data.Sign.dwTodayId) {
-              if (vo.dwStatus !== 1) {
-                const body = `ddwCoin=${vo.ddwCoin}&ddwMoney=${vo.ddwMoney}&dwPrizeType=${vo.dwPrizeType}&strPrizePool=${vo.strPrizePool}&dwPrizeLv=${vo.dwBingoLevel}`
-                await rewardSign(body)
-                await $.wait(1000)
-              } else {
-                console.log(`今日已签到\n`)
-                break
+    switch (type) {
+      case 'sign':
+        $.get(taskUrl(`story/GetTakeAggrPage`), async (err, resp, data) => {
+          try {
+            if (err) {
+              console.log(`${JSON.stringify(err)}`)
+              console.log(`${$.name} GetTakeAggrPage API请求失败，请检查网路重试`)
+            } else {
+              data = JSON.parse(data);
+              console.log(`每日签到`)
+              for (let key of Object.keys(data.Data.Sign.SignList)) {
+                let vo = data.Data.Sign.SignList[key]
+                if (vo.dwDayId === data.Data.Sign.dwTodayId) {
+                  if (vo.dwStatus !== 1) {
+                    const body = `ddwCoin=${vo.ddwCoin}&ddwMoney=${vo.ddwMoney}&dwPrizeType=${vo.dwPrizeType}&strPrizePool=${vo.strPrizePool}&dwPrizeLv=${vo.dwBingoLevel}`
+                    await rewardSign(body)
+                    await $.wait(1000)
+                  } else {
+                    console.log(`今日已签到\n`)
+                    break
+                  }
+                }
               }
             }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve();
           }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    })
+        })
+        break
+      case 'helpdraw':
+        $.get(taskUrl(`story/GetTakeAggrPage`), async (err, resp, data) => {
+          try {
+            if (err) {
+              console.log(`${JSON.stringify(err)}`)
+              console.log(`${$.name} GetTakeAggrPage API请求失败，请检查网路重试`)
+            } else {
+              data = JSON.parse(data);
+              console.log(`领助力奖励`)
+              let helpNum = []
+              for (let key of Object.keys(data.Data.Employee.EmployeeList)) {
+                let vo = data.Data.Employee.EmployeeList[key]
+                if (vo.dwStatus !== 1) {
+                  helpNum.push(vo.dwId)
+                }
+              }
+              if (helpNum.length !== 0) {
+                for (let j = 0; j < helpNum.length; j++) {
+                  await helpdraw(helpNum[j])
+                  await $.wait(2000)
+                }
+              } else {
+                console.log(`暂无可领助力奖励`)
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve();
+          }
+        })
+        break
+      default:
+        break
+    }
   })
 }
 function rewardSign(body) {
@@ -304,6 +346,33 @@ function rewardSign(body) {
             } else if (data.Data.strPrizeName) {
               console.log(`签到成功，获得${data.Data.strPrizeName}\n`)
             }
+          } else {
+            console.log(`签到失败\n`)
+            console.log(data.sErrMsg)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function helpdraw(dwUserId) {
+  return new Promise((resolve) => {
+    $.get(taskUrl(`story/helpdraw`, `dwUserId=${dwUserId}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} helpdraw API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.iRet === 0 || data.sErrMsg === "success") {
+            console.log(`领取助力奖励成功，获得${data.Data.ddwCoin}金币`)
+          } else {
+            console.log(`领取助力奖励失败`)
+            console.log(data.sErrMsg)
           }
         }
       } catch (e) {
@@ -621,6 +690,12 @@ function helpByStage(shareCodes) {
           } else if (data.iRet === 2232 || data.sErrMsg === '今日助力次数达到上限，明天再来帮忙吧~') {
             console.log(data.sErrMsg)
             $.canHelp = false
+          } else if (data.iRet === 9999 || data.sErrMsg === '您还没有登录，请先登录哦~') {
+            console.log(data.sErrMsg)
+            $.canHelp = false
+          } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
+            console.log(data.sErrMsg)
+            $.canHelp = false
           } else {
             console.log(data.sErrMsg)
           }
@@ -791,10 +866,10 @@ function browserTask(taskType) {
         for (let i = 0; i < $.allTask.length; i++) {
           const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes
           const taskinfo = $.allTask[i];
-          console.log(`开始第${i + 1}个【📆日常任务】：${taskinfo.taskName}\n`);
+          console.log(`开始第${i + 1}个【📆日常任务】${taskinfo.taskName}\n`);
           for (let i = start; i < end; i++) {
             //做任务
-            console.log(`【📆日常任务】：${taskinfo.taskName} 进度：${i + 1}/${end}`)
+            console.log(`【📆日常任务】${taskinfo.taskName} 进度：${i + 1}/${end}`)
             await doTask(taskinfo);
             await $.wait(2000);
           }
@@ -805,7 +880,7 @@ function browserTask(taskType) {
       case 1://成就任务
         for (let i = 0; i < $.allTask.length; i++) {
           const taskinfo = $.allTask[i];
-          console.log(`开始第${i + 1}个【🎖成就任务】：${taskinfo.taskName}\n`);
+          console.log(`开始第${i + 1}个【🎖成就任务】${taskinfo.taskName}\n`);
           if(taskinfo.completedTimes < taskinfo.targetTimes){
             console.log(`【领成就奖励】${taskinfo.taskName} 该成就任务未达到门槛\n`);
           } else {
@@ -888,7 +963,7 @@ function awardTask(taskType, taskinfo) {
               if(msg.indexOf('活动太火爆了') !== -1) {
                 console.log(`活动太火爆了`)
               } else {
-                console.log(`【领成就奖励】${taskName} 获得财富值：¥ ${JSON.parse(prizeInfo).ddwMoney}\n${$.showLog ? data : ''}`);
+                console.log(`【领成就奖励】${taskName} 获得财富值 ¥ ${JSON.parse(prizeInfo).ddwMoney}\n${$.showLog ? data : ''}`);
               }
             }
           } catch (e) {
