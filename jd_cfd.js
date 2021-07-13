@@ -127,14 +127,14 @@ async function cfd() {
   try {
     let beginInfo = await getUserInfo();
     if (beginInfo.Fund.ddwFundTargTm === 0) {
-      console.log(`还未开通活动，尝试初始化\n`)
+      console.log(`还未开通活动，尝试初始化`)
       await noviceTask()
       await $.wait(2000)
-      beginInfo = await getUserInfo();
+      beginInfo = await getUserInfo(false);
       if (beginInfo.Fund.ddwFundTargTm !== 0) {
-        console.log(`初始化成功`)
+        console.log(`初始化成功\n`)
       } else {
-        console.log(`初始化失败`)
+        console.log(`初始化失败\n`)
         return
       }
     }
