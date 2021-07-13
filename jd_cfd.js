@@ -57,6 +57,7 @@ $.appId = 10028;
   }
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
+  await $.wait(1000)
   let res = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/cfd.json')
   if (!res) {
     $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/cfd.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
@@ -124,10 +125,18 @@ $.appId = 10028;
 
 async function cfd() {
   try {
-    const beginInfo = await getUserInfo();
+    let beginInfo = await getUserInfo();
     if (beginInfo.Fund.ddwFundTargTm === 0) {
-      console.log(`还未开通活动，请先开通\n`)
-      return
+      console.log(`还未开通活动，尝试初始化\n`)
+      await noviceTask()
+      await $.wait(2000)
+      beginInfo = await getUserInfo();
+      if (beginInfo.Fund.ddwFundTargTm !== 0) {
+        console.log(`初始化成功`)
+      } else {
+        console.log(`初始化失败`)
+        return
+      }
     }
 
     //每日签到
@@ -976,6 +985,76 @@ function awardTask(taskType, taskinfo) {
         break
     }
   });
+}
+
+// 新手任务
+async function noviceTask(){
+  let body = ``
+  await init(`user/guideuser`, body)
+  body = `strMark=guider_step&strValue=welcom&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_over_flag&strValue=999&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_step&strValue=999&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_step&strValue=999&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_over_flag&strValue=999&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_step&strValue=gift_redpack&dwType=2`
+  await init(`user/SetMark`, body)
+  body = `strMark=guider_step&strValue=none&dwType=2`
+  await init(`user/SetMark`, body)
+}
+async function init(function_path, body) {
+  return new Promise(async (resolve) => {
+    $.get(taskUrl(function_path, body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} init API请求失败，请检查网路重试`)
+        } else {
+          if (function_path == "user/SetMark") opId = 23
+          if (function_path == "user/guideuser") opId = 27
+          data = JSON.parse(data);
+          contents = `1771|${opId}|${data.iRet}|0|${data.sErrMsg || 0}`
+          await biz(contents)
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function biz(contents){
+  return new Promise(async (resolve) => {
+    let option = {
+      url:`https://m.jingxi.com/webmonitor/collect/biz.json?contents=${contents}&t=${Math.random()}&sceneval=2`,
+      headers: {
+        Cookie: cookie,
+        Accept: "*/*",
+        Connection: "keep-alive",
+        Referer: "https://st.jingxi.com/fortune_island/index.html?ptag=138631.26.55",
+        "Accept-Encoding": "gzip, deflate, br",
+        Host: 'm.jingxi.com',
+        "User-Agent": `jdpingou;iPhone;3.15.2;14.2.1;ea00763447803eb0f32045dcba629c248ea53bb3;network/wifi;model/iPhone13,2;appBuild/100365;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/0;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2015_311210;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`,
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+      }
+    }
+    $.get(option, async (err, resp, _data) => {
+      try {
+        // console.log(_data)
+      }
+      catch (e) {
+        $.logErr(e, resp);
+      }
+      finally {
+        resolve();
+      }
+    })
+  })
 }
 
 function taskUrl(function_path, body) {
