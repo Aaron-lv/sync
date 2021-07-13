@@ -353,6 +353,8 @@ function rewardSign(body) {
               console.log(`签到成功，获得${data.Data.ddwMoney}财富\n`)
             } else if (data.Data.strPrizeName) {
               console.log(`签到成功，获得${data.Data.strPrizeName}\n`)
+            } else {
+              console.log(`签到成功，很遗憾未中奖~\n`)
             }
           } else {
             console.log(`签到失败\n`)
@@ -579,7 +581,11 @@ function employTourGuide(body, buildNmae) {
           console.log(`${$.name} EmployTourGuide API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          if (data.iRet === 0) console.log(`【${buildNmae}】雇佣导游成功`)
+          if (data.iRet === 0) {
+            console.log(`【${buildNmae}】雇佣导游成功`)
+          } else {
+            console.log(`【${buildNmae}】导游下班了~`)
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -619,37 +625,36 @@ async function getBuildInfo(body, strBuildIndex, type = true) {
                 break
             }
             // console.log(data)
-            if (data.dwCanLvlUp === 1) {
-              if (data.dwBuildLvl === 0) {
-                console.log(`创建建筑`)
-                console.log(`【${buildNmae}】当前建筑还未创建，开始创建`)
-                await createbuilding(`strBuildIndex=${data.strBuildIndex}`, buildNmae)
-                await $.wait(2000)
-                data = await getBuildInfo(twobody, strBuildIndex, false)
-                await $.wait(2000)
-              }
-              console.log(`收金币`)
-              const body = `strBuildIndex=${data.strBuildIndex}&dwType=1`
-              let collectCoinRes = await collectCoin(body)
-              console.log(`【${buildNmae}】收集${collectCoinRes.ddwCoin}金币`)
+            if (data.dwBuildLvl === 0) {
+              console.log(`创建建筑`)
+              console.log(`【${buildNmae}】当前建筑还未创建，开始创建`)
+              await createbuilding(`strBuildIndex=${data.strBuildIndex}`, buildNmae)
               await $.wait(2000)
-              await getUserInfo(false)
-              console.log(`升级建筑`)
-              console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
-              if(data.dwCanLvlUp === 1 && $.info.ddwCoinBalance >= data.ddwNextLvlCostCoin) {
-                console.log(`【${buildNmae}】满足升级条件，开始升级`)
-                const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
-                let buildLvlUpRes = await buildLvlUp(body)
-                if (buildLvlUpRes.iRet === 0) {
-                  console.log(`【${buildNmae}】升级成功\n`)
-                } else {
-                  console.log(`${buildLvlUpRes}\n`)
-                  await $.wait(2000)
-                }
-              } else {
-                console.log(`【${buildNmae}】不满足升级条件，跳过升级\n`)
-              }
+              data = await getBuildInfo(twobody, strBuildIndex, false)
+              await $.wait(2000)
             }
+            console.log(`收金币`)
+            const body = `strBuildIndex=${data.strBuildIndex}&dwType=1`
+            let collectCoinRes = await collectCoin(body)
+            console.log(`【${buildNmae}】收集${collectCoinRes.ddwCoin}金币`)
+            await $.wait(2000)
+            await getUserInfo(false)
+            console.log(`升级建筑`)
+            console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
+            if(data.dwCanLvlUp === 1 && $.info.ddwCoinBalance >= data.ddwNextLvlCostCoin) {
+              console.log(`【${buildNmae}】满足升级条件，开始升级`)
+              const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
+              let buildLvlUpRes = await buildLvlUp(body)
+              if (buildLvlUpRes.iRet === 0) {
+                console.log(`【${buildNmae}】升级成功\n`)
+              } else {
+                console.log(`${buildLvlUpRes}\n`)
+                await $.wait(2000)
+              }
+            } else {
+              console.log(`【${buildNmae}】不满足升级条件，跳过升级\n`)
+            }
+          
           }
         }
       } catch (e) {
