@@ -602,11 +602,11 @@ async function dealReturn(type, data) {
           } else {
             console.log(`加购成功`);
           }
-      } else if (data.data && data.data.bizMsg) {
-        console.log(data.data.bizMsg);
-      } else {
-        console.log(JSON.stringify(data));
-      }
+        } else if (data.data && data.data.bizMsg) {
+          console.log(data.data.bizMsg);
+        } else {
+          console.log(JSON.stringify(data));
+        }
       }
       break
     case 'shHelp':
