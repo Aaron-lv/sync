@@ -159,6 +159,15 @@ async function cfd() {
     await $.wait(2000)
     await getActTask()
 
+    //升级建筑
+    await $.wait(2000)
+    for(let key of Object.keys($.info.buildInfo.buildList)) {
+      let vo = $.info.buildInfo.buildList[key]
+      let body = `strBuildIndex=${vo.strBuildIndex}`
+      await getBuildInfo(body, vo.strBuildIndex)
+      await $.wait(1000)
+    }
+
     //雇导游
     await $.wait(2000);
     await employTourGuideInfo();
@@ -175,15 +184,6 @@ async function cfd() {
     await getTaskList(1);
     await $.wait(2000);
     await browserTask(1);
-
-    //建筑升级
-    await $.wait(2000)
-    for(let key of Object.keys($.info.buildInfo.buildList)) {
-      let vo = $.info.buildInfo.buildList[key]
-      let body = `strBuildIndex=${vo.strBuildIndex}`
-      await getBuildInfo(body, vo.strBuildIndex)
-      await $.wait(1000)
-    }
 
     const endInfo = await getUserInfo(false);
     $.result.push(
@@ -590,8 +590,9 @@ function employTourGuide(body, buildNmae) {
   })
 }
 
-// 建筑升级
-async function getBuildInfo(body, strBuildIndex) {
+// 升级建筑
+async function getBuildInfo(body, strBuildIndex, type = true) {
+  let twobody = body
   return new Promise(async (resolve) => {
     $.get(taskUrl(`user/GetBuildInfo`, body), async (err, resp, data) => {
       try {
@@ -600,48 +601,61 @@ async function getBuildInfo(body, strBuildIndex) {
           console.log(`${$.name} GetBuildInfo API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          let buildNmae;
-          switch(strBuildIndex) {
-            case 'food':
-              buildNmae = '京喜美食城'
-              break
-            case 'sea':
-              buildNmae = '京喜旅馆'
-              break
-            case 'shop':
-              buildNmae = '京喜商店'
-              break
-            case 'fun':
-              buildNmae = '京喜游乐场'
-            default:
-              break
-          }
-          console.log(`收金币`)
-          const body = `strBuildIndex=${data.strBuildIndex}&dwType=1`
-          let collectCoinRes = await collectCoin(body)
-          console.log(`【${buildNmae}】收集${collectCoinRes.ddwCoin}金币`)
-          await $.wait(2000)
-          await getUserInfo(false)
-          console.log(`建筑升级`)
-          console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
-          if(data.dwCanLvlUp === 1 && $.info.ddwCoinBalance >= data.ddwNextLvlCostCoin) {
-            console.log(`【${buildNmae}】满足升级条件，开始升级`)
-            const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
-            let buildLvlUpRes = await buildLvlUp(body)
-            if (buildLvlUpRes.iRet === 0) {
-              console.log(`【${buildNmae}】升级成功\n`)
-            } else {
-              console.log(`${buildLvlUpRes}\n`)
-              await $.wait(2000)
+          if (type) {
+            let buildNmae;
+            switch(strBuildIndex) {
+              case 'food':
+                buildNmae = '京喜美食城'
+                break
+              case 'sea':
+                buildNmae = '京喜旅馆'
+                break
+              case 'shop':
+                buildNmae = '京喜商店'
+                break
+              case 'fun':
+                buildNmae = '京喜游乐场'
+              default:
+                break
             }
-          } else {
-            console.log(`【${buildNmae}】不满足升级条件，跳过升级\n`)
+            // console.log(data)
+            if (data.dwCanLvlUp === 1) {
+              if (data.dwBuildLvl === 0) {
+                console.log(`创建建筑`)
+                console.log(`【${buildNmae}】当前建筑还未创建，开始创建`)
+                await createbuilding(`strBuildIndex=${data.strBuildIndex}`, buildNmae)
+                await $.wait(2000)
+                data = await getBuildInfo(twobody, strBuildIndex, false)
+                await $.wait(2000)
+              }
+              console.log(`收金币`)
+              const body = `strBuildIndex=${data.strBuildIndex}&dwType=1`
+              let collectCoinRes = await collectCoin(body)
+              console.log(`【${buildNmae}】收集${collectCoinRes.ddwCoin}金币`)
+              await $.wait(2000)
+              await getUserInfo(false)
+              console.log(`升级建筑`)
+              console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
+              if(data.dwCanLvlUp === 1 && $.info.ddwCoinBalance >= data.ddwNextLvlCostCoin) {
+                console.log(`【${buildNmae}】满足升级条件，开始升级`)
+                const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
+                let buildLvlUpRes = await buildLvlUp(body)
+                if (buildLvlUpRes.iRet === 0) {
+                  console.log(`【${buildNmae}】升级成功\n`)
+                } else {
+                  console.log(`${buildLvlUpRes}\n`)
+                  await $.wait(2000)
+                }
+              } else {
+                console.log(`【${buildNmae}】不满足升级条件，跳过升级\n`)
+              }
+            }
           }
         }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
-        resolve();
+        resolve(data);
       }
     })
   })
@@ -678,6 +692,25 @@ function buildLvlUp(body) {
         $.logErr(e, resp);
       } finally {
         resolve(data);
+      }
+    })
+  })
+}
+function createbuilding(body, buildNmae) {
+  return new Promise(async (resolve) => {
+    $.get(taskUrl(`user/createbuilding`, body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} createbuilding API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.iRet === 0) console.log(`【${buildNmae}】创建成功`)
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
       }
     })
   })
