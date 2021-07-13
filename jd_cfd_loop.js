@@ -80,8 +80,9 @@ async function cfd() {
       console.log(`还未开通活动，请先开通\n`)
       return
     }
+    await $.wait(2000)
     await speedUp()
-    await $.wait(1000)
+    await $.wait(2000)
     await queryshell()
   } catch (e) {
     $.logErr(e)
@@ -102,7 +103,7 @@ async function queryshell() {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
               await pickshell(`dwType=${vo.dwType}`)
-              await $.wait(1000)
+              await $.wait(2000)
             }
           }
           console.log('')
