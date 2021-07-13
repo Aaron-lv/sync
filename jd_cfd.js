@@ -1,6 +1,5 @@
 /*
 京喜财富岛
-根据github@MoPoQAQ 财富岛脚本修改而来。无需京喜token,只需京东cookie即可.
 cron 5 8,13,19 * * * jd_cfd.js
 更新时间：2021-6-9
 活动入口：京喜APP-我的-京喜财富岛
@@ -136,11 +135,15 @@ async function cfd() {
     await $.wait(2000)
     await getTakeAggrPage()
 
+    //卖贝壳
+    await $.wait(2000)
+    await querystorageroom()
+  
     //倒垃圾
     // await $.wait(2000)
     // await queryRubbishInfo()
 
-    //每日任务
+    //每日任务领奖
     await $.wait(2000)
     await getActTask()
 
@@ -187,7 +190,71 @@ async function cfd() {
   }
 }
 
-//每日签到
+// 卖贝壳
+async function querystorageroom() {
+  return new Promise(async (resolve) => {
+    $.get(taskUrl(`story/querystorageroom`), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} querystorageroom API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          console.log(`卖贝壳`)
+          let bags = []
+          for (let key of Object.keys(data.Data.Office)) {
+            let vo = data.Data.Office[key]
+            bags.push(vo.dwType)
+            bags.push(vo.dwCount)
+          }
+          if (bags.length !== 0) {
+            let strTypeCnt = ''
+            for (let j = 0; j < bags.length; j++) {
+              if (j % 2 === 0) {
+                strTypeCnt += `${bags[j]}:`
+              } else {
+                strTypeCnt += `${bags[j]}|`
+              }
+            }
+            await $.wait(1000)
+            await sellgoods(`strTypeCnt=${strTypeCnt}&dwSceneId=1`)
+          } else {
+            console.log(`背包是空的，快去捡贝壳吧\n`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function sellgoods(body) {
+  return new Promise((resolve) => {
+    $.get(taskUrl(`story/sellgoods`, body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} sellgoods API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.iRet === 0) {
+            console.log(`贝壳出售成功：获得${data.Data.ddwCoin}金币、${data.Data.ddwMoney}财富\n`)
+          } else {
+            console.log(`贝壳出售失败`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
+// 每日签到
 async function getTakeAggrPage() {
   return new Promise(async (resolve) => {
     $.get(taskUrl(`story/GetTakeAggrPage`), async (err, resp, data) => {
@@ -248,7 +315,7 @@ function rewardSign(body) {
   })
 }
 
-//倒垃圾
+// 倒垃圾
 async function queryRubbishInfo() {
   return new Promise(async (resolve) => {
     $.get(taskUrl(`story/QueryRubbishInfo`), async (err, resp, data) => {
@@ -279,7 +346,6 @@ async function queryRubbishInfo() {
     })
   })
 }
-
 function rubbishOper(dwType, body = '') {
   return new Promise((resolve) => {
     switch(dwType) {
@@ -322,7 +388,7 @@ function rubbishOper(dwType, body = '') {
   })
 }
 
-//每日任务
+// 每日任务领奖
 async function getActTask() {
   return new Promise(async (resolve) => {
     $.get(taskUrl(`story/GetActTask`), async (err, resp, data) => {
@@ -540,6 +606,7 @@ function buildLvlUp(body) {
   })
 }
 
+// 助力
 function helpByStage(shareCodes) {
   return new Promise((resolve) => {
     $.get(taskUrl(`story/helpbystage`, `strShareId=${shareCodes}`), (err, resp, data) => {
@@ -600,6 +667,7 @@ function getAuthorShareCode(url) {
   })
 }
 
+// 获取用户信息
 function getUserInfo(showInvite = true) {
   return new Promise(async (resolve) => {
     $.get(taskUrl(`user/QueryUserInfo`), (err, resp, data) => {
@@ -661,7 +729,7 @@ function getUserInfo(showInvite = true) {
   });
 }
 
-//任务赚财富
+//任务
 function getTaskList(taskType) {
   return new Promise(async (resolve) => {
     switch (taskType){
