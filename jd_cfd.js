@@ -654,7 +654,6 @@ async function getBuildInfo(body, strBuildIndex, type = true) {
             } else {
               console.log(`【${buildNmae}】不满足升级条件，跳过升级\n`)
             }
-          
           }
         }
       } catch (e) {
@@ -741,7 +740,7 @@ function helpByStage(shareCodes) {
             $.canHelp = false
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
             console.log(data.sErrMsg)
-            $.canHelp = false
+            // $.canHelp = false
           } else {
             console.log(data.sErrMsg)
           }
