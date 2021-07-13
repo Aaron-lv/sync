@@ -79,10 +79,9 @@ $.appId = 10028;
           }
           continue
         }
-        $.allTask = []
         $.info = {}
         await cfd();
-        let time = getRndInteger(1000, 2000)
+        let time = getRndInteger(2000, 5000)
         await $.wait(time)
       }
     }
@@ -99,6 +98,7 @@ async function cfd() {
       return
     }
     await speedUp()
+    await $.wait(1000)
     await queryshell()
   } catch (e) {
     $.logErr(e)
