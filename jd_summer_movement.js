@@ -595,15 +595,18 @@ async function dealReturn(type, data) {
       break;
     case 'add_car':
       if (data.code === 0) {
-        let acquiredScore = data.data.result.acquiredScore;
-        if (Number(acquiredScore) > 0) {
-          console.log(`加购成功,获得金币:${acquiredScore}`);
-        } else {
-          console.log(`加购成功`);
-        }
+        if (data.data && data.data.bizCode === 0 && data.data.result && data.data.result.acquiredScore) {
+          let acquiredScore = data.data.result.acquiredScore;
+          if (Number(acquiredScore) > 0) {
+            console.log(`加购成功,获得金币:${acquiredScore}`);
+          } else {
+            console.log(`加购成功`);
+          }
+      } else if (data.data && data.data.bizMsg) {
+        console.log(data.data.bizMsg);
       } else {
         console.log(JSON.stringify(data));
-        console.log(`加购失败`);
+      }
       }
       break
     case 'shHelp':
@@ -725,7 +728,7 @@ function callbackResult(info) {
         'Connection': `keep-alive`,
         'Accept': `*/*`,
         'Host': `api.m.jd.com`,
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        'User-Agent': ($.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")).replace(/jdapp/, 'jdltapp'),
         'Accept-Encoding': `gzip, deflate, br`,
         'Accept-Language': `zh-cn`,
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -760,7 +763,7 @@ function openMemberCard(url, Referer) {
         "Host": "api.m.jd.com",
         "Referer": Referer,
         "Cookie": $.cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        "User-Agent": ($.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")).replace(/jdapp/, 'jdltapp'),
       }
     }
     $.get(option, async(err, resp, data) => {
@@ -794,7 +797,7 @@ async function getPostRequest(type, body) {
     'Content-Type': `application/x-www-form-urlencoded`,
     'Host': `api.m.jd.com`,
     'Connection': `keep-alive`,
-    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'User-Agent': ($.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")).replace(/jdapp/, 'jdltapp'),
     'Referer': `https://wbbny.m.jd.com`,
     'Accept-Language': `zh-cn`
   };
