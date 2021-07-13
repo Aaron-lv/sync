@@ -64,7 +64,6 @@ $.appId = 10028;
     res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/cfd.json')
   }
   $.strMyShareIds = [...(res && res.shareId || [])]
-  $.strGroupIds = [...(res && res.strGroupIds || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -110,7 +109,7 @@ $.appId = 10028;
     if (!$.canHelp) continue
     if ($.strMyShareIds && $.strMyShareIds.length) {
       console.log(`\n助力作者\n`);
-      for (let id of $.strGroupIds) {
+      for (let id of $.strMyShareIds) {
         console.log(`账号${$.UserName} 去助力 ${id}`)
         await helpByStage(id)
         if (!$.canHelp) break
