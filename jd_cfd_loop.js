@@ -142,7 +142,11 @@ function pickshell(body) {
             default:
               break
           }
-          console.log(`捡贝壳：捡到了${dwName}`)
+          if (data.iRet === 0) {
+            console.log(`捡贝壳成功：捡到了${dwName}`)
+          } else {
+            console.log(`捡贝壳失败：${data.sErrMsg}`)
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -163,7 +167,11 @@ async function speedUp() {
           console.log(`${$.name} SpeedUp API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data);
-          console.log(`今日热气球已接待 ${data.dwTodaySpeedPeople} 人\n`)
+          if (data.iRet === 0) {
+            console.log(`热气球接客成功：已接待 ${data.dwTodaySpeedPeople} 人\n`)
+          } else {
+            console.log(`热气球接客失败：${data.sErrMsg}\n`)
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
