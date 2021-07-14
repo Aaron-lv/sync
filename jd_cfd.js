@@ -379,7 +379,7 @@ function helpdraw(dwUserId) {
         } else {
           data = JSON.parse(data);
           if (data.iRet === 0 || data.sErrMsg === "success") {
-            console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币`)
+            console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币 ${data.Data.StagePrizeInfo.ddwMoney}财富 ${data.Data.StagePrizeInfo.strPrizeName}红包`)
           } else {
             console.log(`领取助力奖励失败：${data.sErrMsg}`)
           }
