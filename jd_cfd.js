@@ -164,6 +164,10 @@ async function cfd() {
       await $.wait(1000)
     }
 
+    //合成珍珠
+    await $.wait(2000)
+    await composeGameState()
+
     //接待贵宾
     console.log(`接待贵宾`)
     if ($.info.StoryInfo.StoryList) {
@@ -221,6 +225,122 @@ async function cfd() {
   } catch (e) {
     $.logErr(e)
   }
+}
+
+// 合成珍珠
+async function composeGameState(type = true) {
+  return new Promise(async (resolve) => {
+    $.get(taskUrl(`user/ComposeGameState`, `dwFirst=1`), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} ComposeGameState API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (type) {
+            console.log(`合成珍珠`)
+            if (data.iRet === 0) {
+              if (data.dwCurProgress < data.stagelist[data.stagelist.length - 1].dwCurStageEndCnt && data.strDT) {
+                let count = data.stagelist[data.stagelist.length - 1].dwCurStageEndCnt
+                console.log(`当前已合成${data.dwCurProgress}颗珍珠，还需合成珍珠${count - data.dwCurProgress}颗\n`)
+                for (let j = data.dwCurProgress; j < count; j++) {
+                  let num = Math.ceil(Math.random() * 12 + 12)
+                  console.log(`合成珍珠：模拟操作${num}次`)
+                  for (let v = 0; v < num; v++) {
+                    console.log(`模拟操作进度：${v + 1}/${num}`)
+                    await $.wait(5000)
+                    await realTmReport(data.strMyShareId)
+                  }
+                  let res = await composeGameAddProcess(data.strDT)
+                  if (res.iRet === 0) {
+                    console.log(`\n合成珍珠成功：${j + 1}/${count}\n`)
+                  } else {
+                    console.log(`\n合成珍珠失败：${data.sErrMsg}\n`)
+                  }
+                }
+                let composeGameStateRes = await composeGameState(false)
+                console.log("合成珍珠领奖")
+                for (let key of Object.keys(composeGameStateRes.stagelist)) {
+                  let vo = composeGameStateRes.stagelist[key]
+                  if (vo.dwIsAward == 0 && composeGameStateRes.dwCurProgress >= vo.dwCurStageEndCnt) {
+                    await $.wait(2000)
+                    await composeGameAward(vo.dwCurStageEndCnt)
+                  }
+                }
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function realTmReport(strMyShareId) {
+  return new Promise((resolve) => {
+    $.get(taskUrl(`user/RealTmReport`, `dwIdentityType=0&strBussKey=composegame&strMyShareId=${strMyShareId}&ddwCount=5`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} RealTmReport API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function composeGameAddProcess(strDT) {
+  return new Promise((resolve) => {
+    $.get(taskUrl(`user/ComposeGameAddProcess`, `strBT=${strDT}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} ComposeGameAddProcess API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function composeGameAward(dwCurStageEndCnt) {
+  return new Promise((resolve) => {
+    $.get(taskUrl(`user/ComposeGameAward`, `dwCurStageEndCnt=${dwCurStageEndCnt}`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} ComposeGameAward API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.iRet === 0) {
+            if (data.dwPrizeType === 0) {
+              console.log(`合成珍珠领奖成功：获得${data.ddwCoin}金币`)
+            } else if (data.dwPrizeType === 1) {
+              console.log(`合成珍珠领奖成功：获得${data.ddwMoney}财富\n`)
+            }
+          } else {
+            console.log(`合成珍珠领奖失败：${data.sErrMsg}\n`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 
 // 接待贵宾
@@ -433,7 +553,7 @@ function helpdraw(dwUserId) {
           data = JSON.parse(data);
           if (data.iRet === 0 || data.sErrMsg === "success") {
             if (data.Data.StagePrizeInfo) {
-              console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币 ${data.Data.StagePrizeInfo.ddwMoney}财富 ${data.Data.StagePrizeInfo.strPrizeName}红包`)
+              console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币 ${data.Data.StagePrizeInfo.ddwMoney}财富 ${data.Data.StagePrizeInfo.strPrizeName || `0元`}红包`)
             } else {
               console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币`)
             }
