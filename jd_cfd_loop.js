@@ -80,7 +80,7 @@ async function cfd() {
       console.log(`还未开通活动，请先开通\n`)
       return
     }
-    await $.wait(1000)
+    await $.wait(2000)
     await speedUp()
     await $.wait(2000)
     await queryshell()
@@ -166,8 +166,8 @@ async function queryshell() {
           for (let key of Object.keys(data.Data.NormShell)) {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
-              await pickshell(`dwType=${vo.dwType}`)
               await $.wait(1000)
+              await pickshell(`dwType=${vo.dwType}`)
             }
           }
           console.log('')
@@ -210,8 +210,8 @@ async function pickshell(body) {
             console.log(`捡贝壳成功：捡到了${dwName}`)
           } else if (data.iRet === 5403 || data.sErrMsg === '这种小贝壳背包放不下啦，先去卖掉一些吧~') {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
-            await querystorageroom()
             await $.wait(1000)
+            await querystorageroom()
           } else {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
           }
