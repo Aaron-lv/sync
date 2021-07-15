@@ -702,7 +702,6 @@ async function queryRubbishInfo() {
             for (let key of Object.keys(data.Data.StoryInfo.StoryList)) {
               let vo = data.Data.StoryInfo.StoryList[key]
               if (vo.Rubbish) {
-                console.log(vo.Rubbish.dwIsFirstGame)
                 console.log(`获取到垃圾信息`)
                 await $.wait(2000)
                 let rubbishOperRes = await rubbishOper('1')
@@ -744,7 +743,6 @@ function rubbishOper(dwType, body = '') {
               console.log(`${$.name} RubbishOper API请求失败，请检查网路重试`)
             } else {
               data = JSON.parse(data);
-              console.log(data)
             }
           } catch (e) {
             $.logErr(e, resp);
