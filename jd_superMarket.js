@@ -1608,12 +1608,15 @@ async function barGain() {
     await $.post(options, (err, ersp, data) => {})
   }
 }
+
 async function bigWinner() {
-  let res = await getAuthorShareCode2('https://raw.githubusercontent.com/gitupdate/updateTeam/master/shareCodes/bigWinner.json'), res2 = [];
+  let res = await getAuthorShareCode2('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/bigWinner.json')
   if (!res) {
-    res = await getAuthorShareCode2('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/bigWinner.json')
+    $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/bigWinner.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
+    await $.wait(1000)
+    res = await getAuthorShareCode2('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/bigWinner.json')
   }
-  $.codeList = getRandomArrayElements([...(res2 || []), ...(res || [])], [...(res2 || []), ...(res || [])].length);
+  $.codeList = getRandomArrayElements([...(res || [])], [...(res || [])].length);
   for (let vo of $.codeList) {
     if (!vo['inviter']) continue
     await _618(vo['redEnvelopeId'], vo['inviter'], '1');
@@ -1621,7 +1624,7 @@ async function bigWinner() {
   }
 }
 
-function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'DA4SkG7NXupA9sksI00L0g') {
+function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'yMVR-_QKRd2Mq27xguJG-w') {
   return new Promise(resolve => {
     $.get({
       url: `https://api.m.jd.com/?functionId=openRedEnvelopeInteract&body={%22linkId%22:%22${linkId}%22,%22redEnvelopeId%22:%22${redEnvelopeId}%22,%22inviter%22:%22${inviter}%22,%22helpType%22:%22${helpType}%22}&t=${+new Date()}&appid=activities_platform&clientVersion=3.5.0`,
@@ -1631,7 +1634,7 @@ function _618(redEnvelopeId, inviter, helpType = '1', linkId = 'DA4SkG7NXupA9sks
         'origin': 'https://618redpacket.jd.com',
         'user-agent': 'jdltapp;iPhone;3.5.0;14.2;network/wifi;hasUPPay/0;pushNoticeIsOpen/0;lang/zh_CN;model/iPhone10,2;hasOCPay/0;appBuild/1066;supportBestPay/0;pv/7.0;apprpd/;Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
         'accept-language': 'zh-cn',
-        'referer': `https://618redpacket.jd.com/?activityId=DA4SkG7NXupA9sksI00L0g&redEnvelopeId=${redEnvelopeId}&inviterId=${inviter}&helpType=1&lng=&lat=&sid=`,
+        'referer': `https://618redpacket.jd.com/?activityId=yMVR-_QKRd2Mq27xguJG-w&redEnvelopeId=${redEnvelopeId}&inviterId=${inviter}&helpType=1&lng=&lat=&sid=`,
         'Cookie': cookie
       }
     }, (err, resp, data) => {
