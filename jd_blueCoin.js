@@ -113,7 +113,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 async function PrizeIndex() {
   let nowtime = new Date().Format("ss")
-  let starttime = process.env.SM_STARTTIME ? process.env.SM_STARTTIME : 58;
+  let starttime = process.env.SM_STARTTIME ? process.env.SM_STARTTIME : 59;
   if(nowtime < 59) {
     let sleeptime = (starttime - nowtime) * 1000;
     console.log(`等待时间 ${sleeptime / 1000}`);
