@@ -1,6 +1,6 @@
 /*
 惊喜牧场
-更新时间：2021-6-18
+更新时间：2021-7-17
 活动入口：京喜APP-我的-京喜牧场
 温馨提示：请先手动完成【新手指导任务】再运行脚本
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -52,7 +52,7 @@ if ($.isNode()) {
     return;
   }
   console.log('惊喜牧场\n' +
-      '更新时间：2021-6-18\n' +
+      '更新时间：2021-7-17\n' +
       '活动入口：京喜APP-我的-京喜牧场\n' +
       '温馨提示：请先手动完成【新手指导任务】再运行脚本')
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -72,7 +72,7 @@ if ($.isNode()) {
       continue
     }
     await pasture();
-    await $.wait(1000);
+    await $.wait(2000);
   }
   console.log('\n##################开始账号内互助#################\n');
   let newCookiesArr = [];
@@ -151,7 +151,26 @@ async function pasture() {
       }
       $.crowInfo = $.homeInfo.cow;
     }
-
+    $.GetVisitBackInfo = {};
+    await $.wait(2000);
+    await takeGetRequest('GetVisitBackInfo');
+    if($.GetVisitBackInfo.iscandraw === 1){
+      await $.wait(2000);
+      await takeGetRequest('GetVisitBackCabbage');
+    }
+    await $.wait(2000);
+    $.GetSignInfo = {};
+    await takeGetRequest('GetSignInfo');
+    if(JSON.stringify($.GetSignInfo) !== '{}' && $.GetSignInfo.signlist){
+      let signList = $.GetSignInfo.signlist;
+      for (let j = 0; j < signList.length; j++) {
+        if(signList[j].fortoday && !signList[j].hasdone){
+          await $.wait(2000);
+          console.log(`去签到`);
+          await takeGetRequest('GetSignReward');
+        }
+      }
+    }
     await $.wait(2000);
     if ($.crowInfo.lastgettime) {
       console.log('收奶牛金币');
@@ -178,7 +197,7 @@ async function pasture() {
           $.mowingInfo = {};
           console.log(`开始第${i + 1}次割草`);
           await takeGetRequest('mowing');
-          await $.wait(1000);
+          await $.wait(2000);
           if ($.mowingInfo.surprise === true) {
             //除草礼盒
             console.log(`领取除草礼盒`);
@@ -237,7 +256,7 @@ async function pasture() {
           $.pause = false;
           console.log(`开始第${k + 1}次喂白菜`);
           await takeGetRequest('feed');
-          await $.wait(2000);
+          await $.wait(4000);
           if ($.pause) {
             await takeGetRequest('GetHomePageInfo');
             await $.wait(1000);
@@ -367,6 +386,25 @@ async function takeGetRequest(type) {
       url = `https://m.jingxi.com/jxmc/operservice/EnrollFriend?sharekey=${$.oneCodeInfo.code}&channel=7&sceneid=1001&_stk=channel%2Csceneid%2Csharekey&_ste=1`;
       url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
       myRequest = getGetRequest(`help`, url);
+    case 'GetVisitBackInfo':
+      url = `https://m.jingxi.com/jxmc/queryservice/GetVisitBackInfo?channel=7&sceneid=1001&_stk=channel%2Csceneid&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`GetVisitBackInfo`, url);
+      break;
+    case 'GetVisitBackCabbage':
+      url = `https://m.jingxi.com/jxmc/operservice/GetVisitBackCabbage?channel=7&sceneid=1001&_stk=channel%2Csceneid&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`GetVisitBackCabbage`, url);
+      break;
+    case 'GetSignInfo':
+      url = `https://m.jingxi.com/jxmc/queryservice/GetSignInfo?channel=7&sceneid=1001&_stk=channel%2Csceneid&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`GetSignInfo`, url);
+      break;
+    case 'GetSignReward':
+      url = `https://m.jingxi.com/jxmc/operservice/GetSignReward?channel=7&sceneid=1001&currdate=${$.GetSignInfo.currdate}&_stk=channel%2Ccurrdate%2Csceneid&_ste=1`;
+      url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`GetSignReward`, url);
       break;
     default:
       console.log(`错误${type}`);
@@ -377,6 +415,8 @@ async function takeGetRequest(type) {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`API请求失败，请检查网路重试`)
+          $.runFlag = false;
+          console.log(`请求失败`)
         } else {
           dealReturn(type, data);
         }
@@ -485,6 +525,31 @@ function dealReturn(type, data) {
         $.oneCodeInfo.max = true;
       }else{
         console.log(JSON.stringify(data))
+      }
+      break;
+    case 'GetVisitBackInfo':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        $.GetVisitBackInfo = data.data;
+      }
+      //console.log(JSON.stringify(data));
+      break;
+    case 'GetVisitBackCabbage':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        console.log(`收取白菜成功，获得${data.data.drawnum}`);
+      }
+      break;
+    case 'GetSignInfo':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        $.GetSignInfo = data.data;
+      }
+      break;
+    case 'GetSignReward':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        console.log(`签到成功`);
       }
       break;
     default:
