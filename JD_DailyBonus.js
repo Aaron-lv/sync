@@ -1501,7 +1501,7 @@ function TotalBean() {
   return new Promise(resolve => {
     if (disable("Qbear")) return resolve()
     $nobyda.get({
-      url: 'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion',
+      url: 'https://wq.jd.com/user_new/info/GetJDUserInfoUnion',
       headers: {
         Cookie: KEY
       }
