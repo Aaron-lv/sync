@@ -112,12 +112,12 @@ Date.prototype.Format = function (fmt) { //author: meizz
   .finally(() => $.done())
 
 async function PrizeIndex() {
-  let timel = new Date().Format("ss")
-  let timea = 58;
-  if(timel < 58) {
-    let timec = (timea - timel) * 1000;
-    console.log(`等待时间 ${timec / 1000}`);
-    await sleep(timec)
+  let nowtime = new Date().Format("ss")
+  let starttime = process.env.SM_STARTTIME ? process.env.SM_STARTTIME : 58;
+  if(nowtime < 59) {
+    let sleeptime = (starttime - nowtime) * 1000;
+    console.log(`等待时间 ${sleeptime / 1000}`);
+    await sleep(sleeptime)
   }
   await smtg_queryPrize();
   // await smtg_materialPrizeIndex();//兑换酒类奖品，此兑换API与之前的兑换京豆类的不一致，故目前无法进行
