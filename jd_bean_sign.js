@@ -16,7 +16,7 @@ const fs = require('fs')
 const download = require('download');
 let resultPath = "./result.txt";
 let JD_DailyBonusPath = "./utils/JD_DailyBonus.js";
-let outPutUrl = './';
+let outPutUrl = './utils';
 let NodeSet = 'CookieSet.json';
 let cookiesArr = [], cookie = '', allMessage = '';
 

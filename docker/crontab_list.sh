@@ -19,7 +19,7 @@
 # 酷跑零食街
 18 7,12,20 * * * node /scripts/jd_foodRunning.js >> /scripts/logs/jd_foodRunning.log 2>&1
 # 燃动夏季
-7 0,6-23/2 * * * node /scripts/jd_summer_movement.js >> /scripts/logs/jd_summer_movement.log 2>&1
+# 7 0,6-23/2 * * * node /scripts/jd_summer_movement.js >> /scripts/logs/jd_summer_movement.log 2>&1
 # 省钱大赢家翻翻乐(7.15-8.15)
 20 * * * * node /scripts/jd_big_winner.js >> /scripts/logs/jd_big_winner.log 2>&1
 
@@ -127,7 +127,7 @@
 # 京喜牧场
 15 0-23/3 * * * node /scripts/jd_jxmc.js >> /scripts/logs/jd_jxmc.log 2>&1
 # 点点券
-10 0,1,20 * * * node /scripts/jd_necklace.js >> /scripts/logs/jd_necklace.log 2>&1
+# 10 0,1,20 * * * node /scripts/jd_necklace.js >> /scripts/logs/jd_necklace.log 2>&1
 # 京小鸽
 30 2,20 * * * node /scripts/jd_jxg.js >> /scripts/logs/jd_jxg.log 2>&1
 # 天天加速
