@@ -703,7 +703,7 @@ async function queryRubbishInfo() {
               if (vo.Rubbish) {
                 await $.wait(2000)
                 let rubbishOperRes = await rubbishOper('1')
-                if (rubbishOperRes.Data.ThrowRubbish.Game) {
+                if (Object.keys(rubbishOperRes.Data.ThrowRubbish.Game).length) {
                   console.log(`获取垃圾信息成功：本次需要垃圾分类`)
                   for (let key of Object.keys(rubbishOperRes.Data.ThrowRubbish.Game.RubbishList)) {
                     let vo = rubbishOperRes.Data.ThrowRubbish.Game.RubbishList[key]
