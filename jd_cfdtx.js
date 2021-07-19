@@ -1,7 +1,7 @@
 /*
 京喜财富岛提现
 cron 59 23 * * * jd_cfdtx.js
-更新时间：2021-7-13
+更新时间：2021-7-20
 活动入口：京喜APP-我的-京喜财富岛提现
 
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -106,7 +106,7 @@ async function cfd() {
   try {
     if (nowTimes.getHours() === 23 && nowTimes.getMinutes() === 59) {
       let nowtime = new Date().Format("ss")
-      let starttime = process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME : 59;
+      let starttime = process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME : 60;
       if(nowtime < 59) {
         let sleeptime = (starttime - nowtime) * 1000;
         console.log(`等待时间 ${sleeptime / 1000}\n`);
