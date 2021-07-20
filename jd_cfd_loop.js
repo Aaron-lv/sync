@@ -1,7 +1,7 @@
 /*
 京喜财富岛热气球挂机
 
-更新时间：2021-7-13
+更新时间：2021-7-21
 活动入口：京喜APP-我的-京喜财富岛
 */
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
@@ -59,7 +59,7 @@ $.appId = 10028;
         }
         $.info = {}
         await cfd();
-        let time = process.env.CFD_LOOP_SLEEPTIME ? process.env.CFD_LOOP_SLEEPTIME : 2000
+        let time = process.env.CFD_LOOP_SLEEPTIME ? process.env.CFD_LOOP_SLEEPTIME : 5000
         await $.wait(time)
       }
     }
@@ -79,7 +79,7 @@ async function cfd() {
       await $.wait(2000)
       await speedUp()
     } else {
-       console.log(`热气球接客已达上限，跳过执行`)
+      console.log(`热气球接客已达上限，跳过执行\n`)
     }
     await $.wait(2000)
     await queryshell()
