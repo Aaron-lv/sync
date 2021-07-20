@@ -112,7 +112,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
   .finally(() => $.done())
 
 async function PrizeIndex() {
-  let nowtime = new Date().Format("ss")
+  let nowtime = new Date().Format("s.S")
   let starttime = process.env.SM_STARTTIME ? process.env.SM_STARTTIME : 59;
   if(nowtime < 59) {
     let sleeptime = (starttime - nowtime) * 1000;

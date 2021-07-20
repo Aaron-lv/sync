@@ -406,7 +406,7 @@ function getCoordinate(c) {
   return b.join("")
 }
 
-const HZ = 25;
+const HZ = 5;
 
 class MousePosFaker {
   constructor(puzzleX) {

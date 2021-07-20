@@ -105,7 +105,7 @@ async function cfd() {
   try {
     nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
     if ((nowTimes.getHours() === 11 || nowTimes.getHours() === 23) && nowTimes.getMinutes() === 59) {
-      let nowtime = new Date().Format("ss")
+      let nowtime = new Date().Format("s.S")
       let starttime = process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME : 60;
       if(nowtime < 59) {
         let sleeptime = (starttime - nowtime) * 1000;
@@ -169,6 +169,7 @@ async function userCashOutState(type = true) {
           if (type) {
             if (data.dwTodayIsCashOut !== 1) {
               if (data.ddwUsrTodayGetRich >= data.ddwTodayTargetUnLockRich) {
+                nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
                 if (nowTimes.getHours() >= 0 && nowTimes.getHours() < 12) {
                   data.UsrCurrCashList = data.UsrCurrCashList.filter((x) => x.ddwMoney / 100 >= 1)
                 } else if (nowTimes.getHours() === 12 && nowTimes.getMinutes() <= 10) {
