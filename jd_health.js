@@ -1,5 +1,4 @@
 /*
-author: 疯疯
 东东健康社区
 更新时间：2021-4-22
 活动入口：京东APP首页搜索 "玩一玩"即可
@@ -22,14 +21,14 @@ cron "13 1,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
-let cookiesArr = [],
-  cookie = "",
-  message;
+const notify = $.isNode() ? require('./sendNotify') : "";
+let cookiesArr = [], cookie = "", allMessage = "", message;
 const inviteCodes = [
   `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
   `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
   `T0225KkcRh9P9FbRKUygl_UJcgCjVfnoaW5kRrbA@T0159KUiH11Mq1bSKBoCjVfnoaW5kRrbA`,
 ]
+let reward = process.env.JD_HEALTH_REWARD_NAME ? process.env.JD_HEALTH_REWARD_NAME : ''
 const randomCount = $.isNode() ? 20 : 5;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -38,29 +37,19 @@ if ($.isNode()) {
   console.log(`如果出现提示 ?.data. 错误，请升级nodejs版本(进入容器后，apk add nodejs-current)`)
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === "false") console.log = () => {};
 } else {
-  cookiesArr = [
-    $.getdata("CookieJD"),
-    $.getdata("CookieJD2"),
-    ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
+  cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 const JD_API_HOST = "https://api.m.jd.com/client.action";
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg(
-      $.name,
-      "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取",
-      "https://bean.m.jd.com/",
-      {"open-url": "https://bean.m.jd.com/"}
-    );
+    $.msg($.name, "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取", "https://bean.m.jd.com/", {"open-url": "https://bean.m.jd.com/"});
     return;
   }
   await requireConfig()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(
-        cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]
-      );
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
       $.index = i + 1;
       message = "";
       console.log(`\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
@@ -68,6 +57,9 @@ const JD_API_HOST = "https://api.m.jd.com/client.action";
       await main()
       await showMsg()
     }
+  }
+  if ($.isNode() && allMessage) {
+    await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })()
   .catch((e) => {
@@ -94,6 +86,11 @@ async function main() {
     await helpFriends()
     await getTaskDetail(22);
     await getTaskDetail(-1)
+
+    if (reward) {
+      await getCommodities()
+    }
+
   } catch (e) {
     $.logErr(e)
   }
@@ -175,6 +172,59 @@ function getTaskDetail(taskId = '') {
           resolve()
         }
       })
+  })
+}
+
+async function getCommodities() {
+  return new Promise(async resolve => {
+    const options = taskUrl('jdhealth_getCommodities')
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (safeGet(data)) {
+          data = $.toObj(data)
+          let beans = data.data.result.jBeans.filter(x => x.status !== 1)
+          if (beans.length !== 0) {
+            for (let key of Object.keys(beans)) {
+              let vo = beans[key]
+              if (vo.title === reward && $.score >= vo.exchangePoints) {
+                await $.wait(1000)
+                await exchange(vo.type, vo.id)
+              }
+            }
+          } else {
+            console.log(`兑换京豆次数已达上限`)
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve(data)
+      }
+    })
+  })
+}
+function exchange(commodityType, commodityId) {
+  return new Promise(resolve => {
+    const options = taskUrl('jdhealth_exchange', {commodityType, commodityId})
+    $.post(options, (err, resp, data) => {
+      try {
+        if (safeGet(data)) {
+          data = $.toObj(data)
+          if (data.data.bizCode === 0 || data.data.bizMsg === "success") {
+            $.score = data.data.result.userScore
+            console.log(`兑换${data.data.result.jingBeanNum}京豆成功`)
+            message += `兑换${data.data.result.jingBeanNum}京豆成功\n`
+            if ($.isNode()) {
+              allMessage += `【京东账号${$.index}】 ${$.UserName}\n兑换${data.data.result.jingBeanNum}京豆成功🎉${$.index !== cookiesArr.length ? '\n\n' : ''}`
+            }
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve(data)
+      }
+    })
   })
 }
 
