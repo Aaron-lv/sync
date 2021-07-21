@@ -59,7 +59,7 @@ $.appId = 10028;
         }
         $.info = {}
         await cfd();
-        let time = process.env.CFD_LOOP_SLEEPTIME ? process.env.CFD_LOOP_SLEEPTIME : 5000
+        let time = process.env.CFD_LOOP_SLEEPTIME ? (process.env.CFD_LOOP_SLEEPTIME * 1 > 1000 ? process.env.CFD_LOOP_SLEEPTIME : process.env.CFD_LOOP_SLEEPTIME * 1000) : 5000
         await $.wait(time)
       }
     }
@@ -165,7 +165,7 @@ async function queryshell() {
           for (let key of Object.keys(data.Data.NormShell)) {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
-              await $.wait(1000)
+              await $.wait(2000)
               await pickshell(`dwType=${vo.dwType}`)
             }
           }
@@ -209,7 +209,7 @@ async function pickshell(body) {
             console.log(`捡贝壳成功：捡到了${dwName}`)
           } else if (data.iRet === 5403 || data.sErrMsg === '这种小贝壳背包放不下啦，先去卖掉一些吧~') {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
-            await $.wait(1000)
+            await $.wait(2000)
             await querystorageroom()
           } else {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
