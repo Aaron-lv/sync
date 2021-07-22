@@ -2,23 +2,23 @@
 领京豆额外奖励&抢京豆
 脚本自带助力码，介意者可将 29行 helpAuthor 变量设置为 false
 活动入口：京东APP首页-领京豆
-更新地址：jd_bean_home.js
+更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #领京豆额外奖励
-10 7 * * * jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true
+23 1,12,22 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "10 7 * * *" script-path=jd_bean_home.js, tag=领京豆额外奖励
+cron "23 1,12,22 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励
 
 ===============Surge=================
-领京豆额外奖励 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=3600,script-path=jd_bean_home.js
+领京豆额外奖励 = type=cron,cronexp="23 1,12,22 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js
 
 ============小火箭=========
-领京豆额外奖励 = type=cron,script-path=jd_bean_home.js, cronexpr="10 7 * * *", timeout=3600, enable=true
+领京豆额外奖励 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, cronexpr="23 1,12,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env('领京豆额外奖励');
 
@@ -144,6 +144,9 @@ async function jdBeanHome() {
     await getTaskList();
     await receiveJd2();
 
+    await morningGetBean()
+    await $.wait(1000)
+
     await beanTaskList(1)
     $.doneState = false
     do {
@@ -159,7 +162,34 @@ async function jdBeanHome() {
   }
 }
 
-// 领京豆任务
+// 早起福利
+function morningGetBean() {
+  return new Promise(resolve => {
+    $.post(taskBeanUrl('morningGetBean', {"fp":"-1","shshshfp":"-1","shshshfpa":"-1","referUrl":"-1","userAgent":"-1","jda":"-1","rnVersion":"3.9"}), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} morningGetBean API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.data.awardResultFlag === "1") {
+              console.log(`早起福利领取成功：${data.data.bizMsg}`)
+            } else if (data.data.awardResultFlag === "2") {
+              console.log(`早起福利领取失败：${data.data.bizMsg}`)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+// 升级领京豆任务
 async function beanTaskList(type) {
   return new Promise(resolve => {
     $.post(taskBeanUrl('beanTaskList', {"viewChannel":"myjd"}), async (err, resp, data) => {
