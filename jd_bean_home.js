@@ -177,6 +177,8 @@ function morningGetBean() {
               console.log(`早起福利领取成功：${data.data.bizMsg}`)
             } else if (data.data.awardResultFlag === "2") {
               console.log(`早起福利领取失败：${data.data.bizMsg}`)
+            } else {
+              console.log(`早起福利领取失败：${data.data.bizMsg}`)
             }
           }
         }
