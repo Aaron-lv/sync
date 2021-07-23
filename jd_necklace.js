@@ -1,6 +1,6 @@
 /*
 点点券，可以兑换无门槛红包（1元，5元，10元，100元，部分红包需抢购）
-Last Modified time: 2021-06-29 10:27:14
+Last Modified time: 2021-07-23 10:27
 活动入口：京东APP-领券中心/券后9.9-领点点券 [活动地址](https://h5.m.jd.com/babelDiy/Zeus/41Lkp7DumXYCFmPYtU3LTcnTTXTX/index.html)
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===============Quantumultx===============
@@ -19,16 +19,13 @@ cron "10 0,20 * * *" script-path=jd_necklace.js,tag=点点券
 点点券 = type=cron,script-path=jd_necklace.js, cronexpr="10 0,20 * * *", timeout=3600, enable=true
  */
 const $ = new Env('点点券');
-const fs = require('fs');
-const stat = fs.stat;
-const path = require('path');
 let allMessage = ``;
 const notify = $.isNode() ? require('./sendNotify') : '';
-const zooFaker = require('./utils/ZooFaker_Necklace');
+const zooFaker = require('./utils/ZooFaker_Necklace').utils;
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/41Lkp7DumXYCFmPYtU3LTcnTTXTX/index.html%22%20%7D`
-let message = '';
+let message = '', joyToken = '';
 let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000);
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', hasSend = false;
@@ -47,9 +44,11 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
-      cookie = cookiesArr[i];
+      await getToken();
+      cookie = cookiesArr[i] + `joyytoken=50082${joyToken};`;
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
@@ -68,7 +67,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       await jd_necklace();
     }
   }
-  nods(process.cwd());
   if ($.isNode() && allMessage) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: openUrl })
   }
@@ -101,41 +99,15 @@ async function jd_necklace() {
 function showMsg() {
   return new Promise(async resolve => {
     if (nowTimes.getHours() >= 20) {
-      $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n当前${$.name}：${$.totalScore}个\n可兑换无门槛红包：${$.totalScore / 1000}元\n点击弹窗即可去兑换(注：此红包具有时效性)`, { 'open-url': openUrl});
+      $.msg($.name, '', `京东账号${$.index} ${$.nickName || $.UserName}\n当前${$.name}：${$.totalScore}个\n可兑换无门槛红包：${$.totalScore / 1000}元\n点击弹窗即可去兑换(注：此红包具有时效性)`, { 'open-url': openUrl});
     }
     // 云端大于10元无门槛红包时进行通知推送
     // if ($.isNode() && $.totalScore >= 20000 && nowTimes.getHours() >= 20) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前${$.name}：${$.totalScore}个\n可兑换无门槛红包：${$.totalScore / 1000}元\n点击链接即可去兑换(注：此红包具有时效性)\n↓↓↓ \n\n ${openUrl} \n\n ↑↑↑`, { url: openUrl })
     if ($.isNode() && nowTimes.getHours() >= 20 && (process.env.DDQ_NOTIFY_CONTROL ? process.env.DDQ_NOTIFY_CONTROL === 'false' : !!1)) {
-      allMessage += `京东账号${$.index} ${$.nickName}\n当前${$.name}：${$.totalScore}个\n可兑换无门槛红包：${$.totalScore / 1000}元\n(京东APP->领券->左上角点点券.注：此红包具有时效性)${$.index !== cookiesArr.length ? '\n\n' : `\n\n↓↓↓ \n https://h5.m.jd.com/babelDiy/Zeus/41Lkp7DumXYCFmPYtU3LTcnTTXTX/index.html \n\n ↑↑↑\n\n点点券将在每年 6月21日和11月14日 00:00 清空，请注意兑换`}`
+      allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n当前${$.name}：${$.totalScore}个\n可兑换无门槛红包：${$.totalScore / 1000}元\n(京东APP->领券->左上角点点券.注：此红包具有时效性)${$.index !== cookiesArr.length ? '\n\n' : `\n\n↓↓↓ \n https://h5.m.jd.com/babelDiy/Zeus/41Lkp7DumXYCFmPYtU3LTcnTTXTX/index.html \n\n ↑↑↑\n\n点点券将在每年 6月21日和11月14日 00:00 清空，请注意兑换`}`
     }
     resolve()
   })
-}
-function nods(dir) {
-  if (fs.existsSync(dir)) {
-    fs.readdir(dir, function(err, files) {
-      files.forEach(function(filename) {
-        const src = path.join(dir, filename)
-        stat(src, function (err, st) {
-          if (err) { throw err; }
-          // 判断是否为文件
-          if (st.isFile()) {
-            if (/^main\..+\..+/.test(filename)) {
-              fs.unlink(src, (err) => {
-                if (err) throw err;
-                console.log('成功删除文件: ' + src);
-              });
-            }
-          } else {
-            // 递归作为文件夹处理
-            nods(src);
-          }
-        });
-      });
-    });
-  } else {
-    console.log("给定的路径不存在，请给出正确的路径");
-  }
 }
 async function doTask() {
   for (let item of $.taskConfigVos) {
@@ -209,7 +181,7 @@ function formatInt(num, prec = 1, ceil = false) {
 //每日签到福利
 function necklace_sign() {
   return new Promise(async resolve => {
-    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'sign' });
+    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'sign', 'joyToken': joyToken });
     $.post(taskPostUrl("necklace_sign", body), async (err, resp, data) => {
       try {
         if (err) {
@@ -242,7 +214,7 @@ function necklace_sign() {
 //兑换无门槛红包
 function necklace_exchangeGift(scoreNums) {
   return new Promise(async resolve => {
-    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'exchangeGift', 'id': scoreNums });
+    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'exchangeGift', 'id': scoreNums, 'joyToken': joyToken });
     console.log(`\n使用${scoreNums}个点点券兑换${scoreNums / 1000}元无门槛红包`);
     $.post(taskPostUrl("necklace_exchangeGift", body), async (err, resp, data) => {
       try {
@@ -276,7 +248,7 @@ function necklace_exchangeGift(scoreNums) {
 //领取奖励
 function necklace_chargeScores(bubleId) {
   return new Promise(async resolve => {
-    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'chargeScores', 'id': bubleId, 'giftConfigId': $.giftConfigId });
+    const body = await zooFaker.getBody({ 'cookie': cookie, 'action': 'chargeScores', 'id': bubleId, 'giftConfigId': $.giftConfigId, 'joyToken': joyToken });
     $.post(taskPostUrl("necklace_chargeScores", body), async (err, resp, data) => {
       try {
         if (err) {
@@ -312,7 +284,7 @@ function necklace_startTask(taskId, functionId = 'necklace_startTask', itemId = 
       currentDate: $.lastRequestTime.replace(/:/g, "%3A"),
     }
     if (functionId === 'necklace_startTask') {
-      body = await zooFaker.getBody({ 'id': taskId, 'cookie': cookie, 'action': 'startTask' })
+      body = await zooFaker.getBody({ 'id': taskId, 'cookie': cookie, 'action': 'startTask', 'joyToken': joyToken })
     }
     if (itemId && functionId === 'necklace_reportTask') body['itemId'] = itemId;
     $.post(taskPostUrl(functionId, body), async (err, resp, data) => {
@@ -470,7 +442,7 @@ function getCcTaskList(functionId, body, type = '3') {
         "Origin": "https://h5.m.jd.com",
         "Cookie": cookie,
         "Referer": "https://h5.m.jd.com/babelDiy/Zeus/4ZK4ZpvoSreRB92RRo8bpJAQNoTq/index.html",
-        "User-Agent": ($.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")).replace(/jdapp/, 'jdltapp'),
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       }
     }
     $.post((options), async (err, resp, data) => {
@@ -522,9 +494,32 @@ function taskPostUrl(function_id, body = {}) {
       "sec-fetch-dest": "empty",
       "sec-fetch-mode": "cors",
       "sec-fetch-site": "same-site",
-      "user-agent": ($.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")).replace(/jdapp/, 'jdltapp')
+      "user-agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
   }
+}
+function getToken(timeout = 0){
+  return new Promise((resolve) => {
+    setTimeout( ()=>{
+      let url = {
+        url : `https://bh.m.jd.com/gettoken`,
+        headers : {
+          'Content-Type' : `text/plain;charset=UTF-8`
+        },
+        body : `content={"appname":"50082","whwswswws":"","jdkey":"","body":{"platform":"1"}}`
+      }
+      $.post(url, async (err, resp, data) => {
+        try {
+          data = JSON.parse(data);
+          joyToken = data.joyytoken;
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      })
+    },timeout)
+  })
 }
 function TotalBean() {
   return new Promise(async resolve => {
