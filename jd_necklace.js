@@ -422,6 +422,10 @@ async function doAppTask(type = '3', id) {
 }
 function getCcTaskList(functionId, body, type = '3') {
   let url = `https://api.m.jd.com/client.action?functionId=${functionId}`;
+  if (functionId === 'reportSinkTask') {
+    url += body
+    body = ''
+  }
   return new Promise(resolve => {
     const options = {
       url,
