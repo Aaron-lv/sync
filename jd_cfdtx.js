@@ -115,15 +115,15 @@ async function cfd() {
       }
     }
 
+    if ($.num % 2 !== 0) {
+      console.log(`等待`)
+      await $.wait(2000)
+    }
+
     const beginInfo = await getUserInfo(false);
     if (beginInfo.Fund.ddwFundTargTm === 0) {
       console.log(`还未开通活动，请先开通\n`)
       return
-    }
-
-    if ($.num % 2 !== 0) {
-      console.log(`等待`)
-      await $.wait(2000)
     }
 
     console.log(`获取提现资格`)
