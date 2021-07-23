@@ -75,7 +75,7 @@ async function cfd() {
       console.log(`还未开通活动，请先开通\n`)
       return
     }
-    if ($.info.buildInfo.dwTodaySpeedPeople !== 501) {
+    if ($.info.buildInfo.dwTodaySpeedPeople !== 500) {
       await $.wait(2000)
       await speedUp()
     } else {
