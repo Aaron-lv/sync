@@ -141,7 +141,7 @@ async function receiveBubbles() {
     for (let item of $.bubbles) {
       if (!item.id) continue;
       await necklace_chargeScores(item.id);
-      await $.wait(1000)
+      await $.wait(2000)
     }
   } else {
     console.log(`\n当前暂无可领取点点券`);
@@ -393,6 +393,7 @@ function necklace_homePage() {
 }
 
 async function doAppTask(type = '3', id) {
+  let functionId = ``
   let body = `area=1_2953_54044_0&body=%7B%22pageClickKey%22%3A%22CouponCenter%22%2C%22shshshfpb%22%3A%22xMvLenI90G5fXNwdmMLrZ9zcRvSKKKrp3twx2gniQsgkav01VHSjwfaIlRQEYYJ4lUh7i6BmZXDIqLmrcpFgFPw%3D%3D%22%2C%22eid%22%3A%22eidI10a1812352s2f8fFJhaZRAaygJavMzzPuH%5C/HxpE9QzhNJ2Cf5aWxpC%2Bi2hshw7jujEFX%5C/JQtTGYOL2wlDjPaiPMK0KbiFPDza4sbsufvPStkf1tM%22%2C%22childActivityUrl%22%3A%22openapp.jdmobile%253a%252f%252fvirtual%253fparams%253d%257b%255c%2522category%255c%2522%253a%255c%2522jump%255c%2522%252c%255c%2522des%255c%2522%253a%255c%2522couponCenter%255c%2522%257d%22%2C%22lat%22%3A%2240.18191448804161%22%2C%22globalLat%22%3A%2240.18993%22%2C%22lng%22%3A%22117.0065653831892%22%2C%22globalLng%22%3A%22117.010071%22%7D&build=167741&client=apple&clientVersion=10.0.8&d_brand=apple&d_model=iPhone10%2C2&eid=eidI10a1812352s2f8fFJhaZRAaygJavMzzPuH/HxpE9QzhNJ2Cf5aWxpC%2Bi2hshw7jujEFX/JQtTGYOL2wlDjPaiPMK0KbiFPDza4sbsufvPStkf1tM&isBackground=N&joycious=95&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=8548106a862f1fe7b4b84d3a16f7ffdcf47390de&osVersion=14.4.2&partner=apple&rfs=0000&scope=01&screen=1242%2A2208&sign=2c33f9e1230505e54632d18706b99d5c&st=1627058018278&sv=100&uemps=0-0&uts=0f31TVRjBStnWyWKh4kj%2BvuskvWGi54eyJH5cLJVT6QoOtzNpjyhH/ToU5X7LhKoleMMycwNk8t28%2BJhe0WWPZLkED4dnpAJv9MsudkLTd%2BKR8CJOEgC4PH/IFRT8y51lwtUBXR26fHwsk4aYqBSg0uiALvjv09TMPXJwxQIQ6gEdaaN2v%2B2PBvm1Obp5Nr0RMweFYy4mc1DamSX2mqF5g%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D&wifiBssid=a19cc6de09ae7d189d19659de2c95af6`
   await getCcTaskList('getCcTaskList', body, type);
   if (id === 229) {
@@ -408,13 +409,16 @@ async function doAppTask(type = '3', id) {
   }
   console.log(`\n领券浏览任务：type:${type},id:${id}\n`);
   if (type === '4') {
+    functionId = 'reportSinkTask'
+    body = `&appid=XPMSGC2019&monitorSource=&uuid=16245525345801334814959&body=%7B%22platformType%22%3A%221%22%2C%22taskId%22%3A%22necklace_${id}%22%7D&client=m&clientVersion=4.6.0&area=16_1315_1316_59175&geo=%5Bobject%20Object%5D`
     console.log('需等待30秒')
     await $.wait(15000);
   } else {
+    functionId = 'reportCcTask'
     console.log('需等待15秒')
   }
   await $.wait(15500);
-  await getCcTaskList('reportCcTask', body, type);
+  await getCcTaskList(functionId, body, type);
 }
 function getCcTaskList(functionId, body, type = '3') {
   let url = `https://api.m.jd.com/client.action?functionId=${functionId}`;
