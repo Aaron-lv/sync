@@ -545,7 +545,7 @@ async function dealReturn(type, data) {
         }else if(data.data.result.userActBaseVO){
           console.log('结算结果')
           let res = data.data.result.userActBaseVO
-          console.log(`当前金额：${res.totalMoney}\n${JSON.stringify(res)}`);
+          console.log(`当前金额：${res.poolMoney}\n${JSON.stringify(res)}`);
         }
       } else if (data.data && data.data.bizMsg) {
         console.log(data.data.bizMsg);
