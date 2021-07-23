@@ -608,6 +608,11 @@ async function dealReturn(type, data) {
     case 'olympicgames_getFeedDetail':
       if (data.code === 0) {
         $.feedDetailInfo = data.data.result.addProductVos[0] || [];
+      } else if(data.data && data.data.bizMsg){
+        console.log(data.data.bizMsg);
+        if(data.data.bizMsg.indexOf('活动太火爆') > -1){
+          $.hotFlag = true;
+        }
       }
       break;
     case 'add_car':
@@ -677,6 +682,11 @@ async function dealReturn(type, data) {
     case 'olympicgames_shopLotteryInfo':
       if (data.code === 0) {
         $.shopResult = data.data.result;
+      } else if(data.data && data.data.bizMsg){
+        console.log(data.data.bizMsg);
+        if(data.data.bizMsg.indexOf('活动太火爆') > -1){
+          $.hotFlag = true;
+        }
       }
       break;
     case 'qryCompositeMaterials':
@@ -691,6 +701,9 @@ async function dealReturn(type, data) {
         console.log(`签到获得：${data.data.result.score}`);
       }else if(data.data && data.data.bizMsg){
         console.log(data.data.bizMsg);
+        if(data.data.bizMsg.indexOf('活动太火爆') > -1){
+          $.hotFlag = true;
+        }
       }else{
         console.log(data);
       }
@@ -715,6 +728,9 @@ async function dealReturn(type, data) {
         }
       } else if (data.data && data.data.bizMsg) {
         console.log(data.data.bizMsg);
+        if(data.data.bizMsg.indexOf('活动太火爆') > -1){
+          $.hotFlag = true;
+        }
       } else {
         console.log(JSON.stringify(data));
       }
