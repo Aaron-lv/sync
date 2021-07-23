@@ -80,14 +80,21 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 async function jd_necklace() {
   try {
     await necklace_homePage();
+    await $.wait(2000)
     await doTask();
+    await $.wait(2000)
     await sign();
+    await $.wait(2000)
     await necklace_homePage();
+    await $.wait(2000)
     await receiveBubbles();
+    await $.wait(2000)
     await necklace_homePage();
+    await $.wait(2000)
     if (formatInt($.totalScore)) {
       if (new Date().getDate() === 20 && (new Date().getMonth() + 1 === 6)) {
         //2021-06-21凌晨0点，点点券将要全部清零处理，故全部兑换
+        await $.wait(2000)
         await necklace_exchangeGift(formatInt($.totalScore));//自动兑换多少钱的无门槛红包，1000代表1元，默认兑换全部点点券
       }
     }
@@ -463,10 +470,10 @@ function getCcTaskList(functionId, body, type = '3') {
                 '',
                 `${type === '3' ? '点击首页领券图标(进入领券中心浏览15s)任务' : '点击“券后9.9”任务'}ID已变更\n请联系作者等待更新`
               )
-              if ($.isNode()) await notify.sendNotify(
-                $.name,
-                `${type === '3' ? '点击首页领券图标(进入领券中心浏览15s)任务' : '点击“券后9.9”任务'}ID已变更\n请联系作者等待更新`
-              )
+              // if ($.isNode()) await notify.sendNotify(
+              //   $.name,
+              //   `${type === '3' ? '点击首页领券图标(进入领券中心浏览15s)任务' : '点击“券后9.9”任务'}ID已变更\n请联系作者等待更新`
+              // )
             }
           }
         }
