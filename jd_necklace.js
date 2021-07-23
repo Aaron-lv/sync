@@ -125,6 +125,7 @@ async function doTask() {
       console.log(`【${item.taskName}】 任务领取成功,开始完成此任务`);
       await $.wait(1000);
       await reportTask(item);
+      await $.wait(1000);
     } else if (item.taskStage === 2) {
       console.log(`【${item.taskName}】 任务已做完,奖励未领取`);
     } else if (item.taskStage === 3) {
@@ -132,6 +133,7 @@ async function doTask() {
     } else if (item.taskStage === 1) {
       console.log(`\n【${item.taskName}】 任务已领取但未完成,开始完成此任务`);
       await reportTask(item);
+      await $.wait(1000);
     }
   }
 }
