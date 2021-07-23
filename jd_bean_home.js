@@ -228,7 +228,7 @@ async function beanTaskList(type) {
                       if (taskList.status === 1) {
                         $.doneState = false
                         console.log(`去做[${vo.taskName}]${taskList.title}`)
-                        await $.wait(1000)
+                        await $.wait(2000)
                         await beanDoTask({"actionType": 1, "taskToken": `${taskList.taskToken}`}, vo.taskType)
                         if (vo.taskType === 9) {
                           await $.wait(3000)
