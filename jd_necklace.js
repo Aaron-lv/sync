@@ -151,11 +151,15 @@ async function receiveBubbles() {
   }
 }
 async function sign() {
-  if ($.signInfo && $.signInfo.todayCurrentSceneSignStatus && $.signInfo.todayCurrentSceneSignStatus === 1) {
-    console.log(`\n开始每日签到`)
-    await necklace_sign();
+  if ($.signInfo && $.signInfo.todayCurrentSceneSignStatus) {
+    if ($.signInfo.todayCurrentSceneSignStatus === 1) {
+      console.log(`\n开始每日签到`)
+      await necklace_sign();
+    } else {
+      console.log(`已签到\n`)
+    }
   } else {
-    console.log(`已签到\n`)
+    console.log(`未获取到签到信息\n`)
   }
 }
 async function reportTask(item = {}) {
