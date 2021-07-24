@@ -121,11 +121,12 @@ async function doTask() {
     if (item.taskStage === 0) {
       console.log(`\n【${item.taskName}】 任务未领取,开始领取此任务`);
       const res = await necklace_startTask(item.id);
+      await $.wait(2000);
       if (res && res.rtn_code !== 0) continue
       console.log(`【${item.taskName}】 任务领取成功,开始完成此任务`);
-      await $.wait(1000);
+      await $.wait(2000);
       await reportTask(item);
-      await $.wait(1000);
+      await $.wait(2000);
     } else if (item.taskStage === 2) {
       console.log(`【${item.taskName}】 任务已做完,奖励未领取`);
     } else if (item.taskStage === 3) {
