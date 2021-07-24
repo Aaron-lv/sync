@@ -188,6 +188,7 @@ async function userCashOutState(type = true) {
                     if (cashOutRes.iRet === 0) {
                       $.money = vo.ddwMoney / 100
                       console.log(`提现成功获得：${$.money}元`)
+                      break
                     } else {
                       await userCashOutState()
                     }

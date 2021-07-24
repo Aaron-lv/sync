@@ -133,7 +133,7 @@ async function doTask() {
     } else if (item.taskStage === 1) {
       console.log(`\n【${item.taskName}】 任务已领取但未完成,开始完成此任务`);
       await reportTask(item);
-      await $.wait(1000);
+      await $.wait(2000);
     }
   }
 }
@@ -454,7 +454,7 @@ function getCcTaskList(functionId, body, type = '3') {
         } else {
           if (safeGet(data)) {
             if (type === '3' && functionId === 'reportCcTask') console.log(`点击首页领券图标(进入领券中心浏览15s)任务:${data}`)
-            if (type === '4' && functionId === 'reportCcTask') console.log(`点击“券后9.9”任务:${data}`)
+            if (type === '4' && functionId === 'reportSinkTask') console.log(`点击“券后9.9”任务:${data}`)
             data = JSON.parse(data);
             //异常情况：{"code":"600","echo":"signature verification failed"}
             if (data['code'] === '600' && !hasSend) {
@@ -507,7 +507,7 @@ function getToken(timeout = 0){
         headers : {
           'Content-Type' : `text/plain;charset=UTF-8`
         },
-        body : `content={"appname":"50082","whwswswws":"","jdkey":"-a45046de9fbf-0a4fc8ec9548a7f9","body":{"platform":"1"}}`
+        body : `content={"appname":"50082","whwswswws":"","jdkey":"","body":{"platform":"1"}}`
       }
       $.post(url, async (err, resp, data) => {
         try {
