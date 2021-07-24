@@ -151,7 +151,7 @@ async function receiveBubbles() {
   }
 }
 async function sign() {
-  if ($.signInfo.todayCurrentSceneSignStatus === 1) {
+  if ($.signInfo && $.signInfo.todayCurrentSceneSignStatus && $.signInfo.todayCurrentSceneSignStatus === 1) {
     console.log(`\n开始每日签到`)
     await necklace_sign();
   } else {
@@ -375,7 +375,7 @@ function necklace_homePage() {
                 $.exchangeGiftConfigs = data.data.result.exchangeGiftConfigs || [];
                 $.lastRequestTime = data.data.result.lastRequestTime;
                 $.bubbles = data.data.result.bubbles;
-                $.signInfo = data.data.result.signInfo;
+                $.signInfo = data.data.result.signInfo || {};
                 $.totalScore = data.data.result.totalScore;
                 const config = $.exchangeGiftConfigs.filter(item => item['giftType'] === 1);
                 if (config && config[0]) {
