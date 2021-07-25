@@ -129,7 +129,7 @@ async function cfd() {
     console.log(`获取提现资格`)
     await cashOutQuali()
     console.log(`提现`)
-    console.log(`提现金额：按库存轮询提现，0点场提1元以上，12点场提0.5元以上，12点后不做限制`)
+    console.log(`提现金额：按库存轮询提现，0点场提1元以上，12点场提0.5元以上，12点后不做限制\n`)
     await userCashOutState()
 
     await showMsg()
@@ -187,13 +187,13 @@ async function userCashOutState(type = true) {
                     let cashOutRes = await cashOut(vo.ddwMoney, vo.ddwPaperMoney)
                     if (cashOutRes.iRet === 0) {
                       $.money = vo.ddwMoney / 100
-                      console.log(`提现成功获得：${$.money}元`)
+                      console.log(`提现成功：获得${$.money}元`)
                       break
                     } else {
                       await userCashOutState()
                     }
                   } else {
-                    console.log(`${vo.ddwMoney / 100}元库存不足`)
+                    console.log(`提现失败：${vo.ddwMoney / 100}元库存不足`)
                   }
                 }
               } else {
@@ -221,7 +221,7 @@ async function userCashOutState(type = true) {
                   }
                   console.log(`升级建筑`)
                   console.log(`【${buildNmae}】当前等级：${vo.dwLvl}`)
-                  console.log(`【${buildNmae}】升级需要${getBuildInfoRes.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
+                  console.log(`【${buildNmae}】升级需要${getBuildInfoRes.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}金币`)
                   if(getBuildInfoRes.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= getBuildInfoRes.ddwNextLvlCostCoin) {
                     console.log(`【${buildNmae}】满足升级条件，开始升级`)
                     const body = `ddwCostCoin=${getBuildInfoRes.ddwNextLvlCostCoin}&strBuildIndex=${getBuildInfoRes.strBuildIndex}`
