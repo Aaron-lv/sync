@@ -984,14 +984,14 @@ async function getBuildInfo(body, buildList, type = true) {
             await $.wait(2000)
             await getUserInfo(false)
             console.log(`升级建筑`)
-            console.log(`【${buildNmae}】当前等级：${buildList.dwLvl} 升级获得财富：${data.ddwLvlRich}`)
-            console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}，保留三倍升级所需金币${data.ddwNextLvlCostCoin * 3}`)
+            console.log(`【${buildNmae}】当前等级：${buildList.dwLvl}`)
+            console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，保留升级需要的3倍${data.ddwNextLvlCostCoin * 3}金币，当前拥有${$.info.ddwCoinBalance}金币`)
             if(data.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= (data.ddwNextLvlCostCoin * 3)) {
               console.log(`【${buildNmae}】满足升级条件，开始升级`)
               const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
               let buildLvlUpRes = await buildLvlUp(body)
               if (buildLvlUpRes.iRet === 0) {
-                console.log(`【${buildNmae}】升级成功\n`)
+                console.log(`【${buildNmae}】升级成功：获得${data.ddwLvlRich}财富\n`)
               } else {
                 console.log(`【${buildNmae}】升级失败：${buildLvlUpRes.sErrMsg}\n`)
               }

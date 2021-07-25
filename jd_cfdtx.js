@@ -178,12 +178,12 @@ async function userCashOutState(type = true) {
                 nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
                 if (nowTimes.getHours() >= 0 && nowTimes.getHours() < 12) {
                   data.UsrCurrCashList = data.UsrCurrCashList.filter((x) => x.ddwMoney / 100 >= 1)
-                } else if (nowTimes.getHours() === 12 && nowTimes.getMinutes() <= 10) {
+                } else if (nowTimes.getHours() === 12 && nowTimes.getMinutes() <= 5) {
                   data.UsrCurrCashList = data.UsrCurrCashList.filter((x) => x.ddwMoney / 100 >= 0.5)
                 }
                 for (let key of Object.keys(data.UsrCurrCashList).reverse()) {
                   let vo = data.UsrCurrCashList[key]
-                  if (vo.dwDefault === 1) {
+                  if (vo.dwRemain > 0) {
                     let cashOutRes = await cashOut(vo.ddwMoney, vo.ddwPaperMoney)
                     if (cashOutRes.iRet === 0) {
                       $.money = vo.ddwMoney / 100
@@ -220,14 +220,14 @@ async function userCashOutState(type = true) {
                       break
                   }
                   console.log(`升级建筑`)
-                  console.log(`【${buildNmae}】当前等级：${vo.dwLvl} 升级获得财富：${getBuildInfoRes.ddwLvlRich}`)
+                  console.log(`【${buildNmae}】当前等级：${vo.dwLvl}`)
                   console.log(`【${buildNmae}】升级需要${getBuildInfoRes.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}`)
                   if(getBuildInfoRes.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= getBuildInfoRes.ddwNextLvlCostCoin) {
                     console.log(`【${buildNmae}】满足升级条件，开始升级`)
                     const body = `ddwCostCoin=${getBuildInfoRes.ddwNextLvlCostCoin}&strBuildIndex=${getBuildInfoRes.strBuildIndex}`
                     let buildLvlUpRes = await buildLvlUp(body)
                     if (buildLvlUpRes.iRet === 0) {
-                      console.log(`【${buildNmae}】升级成功\n`)
+                      console.log(`【${buildNmae}】升级成功：获得${getBuildInfoRes.ddwLvlRich}财富\n`)
                       break
                     } else {
                       console.log(`【${buildNmae}】升级失败：${buildLvlUpRes.sErrMsg}\n`)
