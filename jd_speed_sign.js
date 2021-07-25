@@ -704,7 +704,8 @@ function invite() {
   let t = +new Date()
   let inviterId = [
     "5V7vHE23qh2EkdBHXRFDuA==",
-  ][Math.floor((Math.random() * 1))]
+    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc="
+  ][Math.floor((Math.random() * 2))]
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
