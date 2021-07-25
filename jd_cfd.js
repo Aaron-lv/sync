@@ -818,7 +818,7 @@ async function getActTask(type = true) {
                 console.log(`【🐮牛牛任务】已做完，宝箱已开启`)
               }
             } else {
-              console.log(`【🐮牛牛任务】未完成\n`)
+              console.log(`【🐮牛牛任务】未全部完成，无法开启宝箱\n`)
             }
           }
         }
