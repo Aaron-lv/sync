@@ -81,7 +81,18 @@ Date.prototype.Format = function (fmt) { //author: meizz
       // console.log(`本地时间与京东服务器时间差(毫秒)：${await get_diff_time()}`);
       $.validate = '';
       $.validate = await zooFaker.injectToRequest()
-      console.log(`脚本开始请求时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+    }
+  }
+  console.log(`脚本开始请求时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      $.index = i + 1;
+      $.isLogin = true;
+      $.nickName = '' || $.UserName;
+      await TotalBean();
+      console.log(`\n*****【京东账号${$.index}】${$.nickName || $.UserName}开始兑换*****\n`);
       await joyReward();
     }
   }
@@ -101,7 +112,7 @@ async function joyReward() {
   try {
     let nowtime = new Date().Format("s.S")
     let starttime = process.env.JOY_STARTTIME ? process.env.JOY_STARTTIME : 59;
-    if(nowtime < 59) {
+    if($.index == 1 && nowtime < 59) {
       let sleeptime = (starttime - nowtime) * 1000;
       console.log(`等待时间 ${sleeptime / 1000}`);
       await zooFaker.sleep(sleeptime)
