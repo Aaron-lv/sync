@@ -4,7 +4,6 @@
 logDir="/scripts/logs"
 
 # 处理后的log文件
-preLogFile=${logDir}/preSharecodeCollection.log
 logFile=${logDir}/sharecodeCollection.log
 if [ -n "$1" ]; then
   parameter=${1}
@@ -18,37 +17,30 @@ collectSharecode() {
     echo "${1}：清理 ${preLogFile} 中的旧助力码，收集新助力码"
 
     #删除预处理旧助力码
-    if [ -f "${preLogFile}" ]; then
-      sed -i '/'"${1}"'/d' ${preLogFile}
-    fi
-
-    #收集预处理助力码
-    sed -n '/'${1}'.*/'p ${2} | sed 's/京东账号/京东账号 /g' | sed 's/（/ （/g' | sed 's/】/】 /g' | awk '{print $4,$5,$6,$7}' | sort -gk2 | awk '!a[$2" "$3]++{print}' >> $preLogFile
-
-    #删除旧助力码
     if [ -f "${logFile}" ]; then
       sed -i '/'"${1}"'/d' ${logFile}
     fi
 
+    #收集日志中的互助码
+    codes="$(sed -n '/'${1}'.*/'p ${2} | sed 's/京东账号/京东账号 /g' | sed 's/（/ （/g' | sed 's/】/】 /g'  | awk '{print $4,$5,$6,$7}' | sort -gk2 | awk '!a[$2" "$3]++{print}')"
+
+    #获取ck文件夹中的pin值集合
     if [ -f "/usr/local/bin/spnode" ]; then
       ptpins="$(awk -F "=" '{print $3}' $COOKIES_LIST | awk -F ";" '{print $1}')"
     else
       ptpins="$(echo $JD_COOKIE | sed "s/[ &]/\\n/g" | sed "/^$/d" | awk -F "=" '{print $3}' | awk -F ";" '{print $1}')"
     fi
 
-    ckcount=1
+
     #遍历pt_pin值
     for item in $ptpins; do
-      sleep 0.1
       #中文pin解码
       if [ ${#item} > 20 ]; then
         item="$(printf $(echo -n "$item" | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")"
       fi
-      #收集最终的助力码
-      sed -n '/'${1}'.*/'p ${2} | sed 's/京东账号/京东账号 /g' | sed 's/（/ （/g' | sed 's/】/】 /g' | awk '{print $4,$5,$6,$7}' | sort -gk2 | awk '!a[$2" "$3]++{print}' | grep  $item | grep "京东账号 $ckcount" >> $logFile
-      ckcount=`expr $ckcount + 1`
+		  #根据pin值匹配第一个code结果输出到文件中
+		  echo "$codes" | grep -m1 $item >> $logFile
     done
-
   else
     echo "${1}：${2} 文件不存在,不清理 ${logFile} 中的旧助力码"
   fi
@@ -84,6 +76,7 @@ exportSharecode() {
     #判断合成的助力码长度是否大于账号数，不大于，则可知没有助力码
     if [ ${#allSharecode} -gt ${cookiecount} ]; then
       echo "${1}：导出助力码"
+      echo "${3}=${allSharecode}"
       export ${3}=${allSharecode}
     else
       echo "${1}：没有助力码，不导出"
@@ -139,7 +132,7 @@ autoHelp "东东工厂好友互助码" "${logDir}/jd_jdfactory.log" "DDFACTORY_S
 autoHelp "crazyJoy任务好友互助码" "${logDir}/jd_crazy_joy.log" "JDJOY_SHARECODES"
 
 #京喜财富岛
-# autoHelp "京喜财富岛好友互助码" "${logDir}/jd_cfd.log" "JDCFD_SHARECODES"
+autoHelp "京喜财富岛好友互助码" "${logDir}/jd_cfd.log" "JDCFD_SHARECODES"
 
 #京喜农场
 autoHelp "京喜农场好友互助码" "${logDir}/jd_jxnc.log" "JXNC_SHARECODES"
