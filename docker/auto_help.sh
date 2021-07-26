@@ -38,8 +38,8 @@ collectSharecode() {
       if [ ${#item} > 20 ]; then
         item="$(printf $(echo -n "$item" | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')"\n")"
       fi
-		  #根据pin值匹配第一个code结果输出到文件中
-		  echo "$codes" | grep -m1 $item >> $logFile
+      #根据pin值匹配第一个code结果输出到文件中
+      echo "$codes" | grep -m1 $item >> $logFile
     done
   else
     echo "${1}：${2} 文件不存在,不清理 ${logFile} 中的旧助力码"
