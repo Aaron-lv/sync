@@ -361,7 +361,7 @@ function smtg_obtainPrize(prizeId, timeout = 0, functionId = 'smt_exchangePrize'
             if ($.data.data.bizCode === 400) {
               $.errBizCodeCount ++;
               console.log(`debug 兑换京豆活动火爆次数:${$.errBizCodeCount}`);
-              if ($.errBizCodeCount >= 1) return
+              if ($.errBizCodeCount >= 3) return
             }
             if ($.data.data.bizCode === 0) {
               if (`${coinToBeans}` === '1000') {
