@@ -106,7 +106,7 @@ async function cfd() {
   try {
     nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
     if ((nowTimes.getHours() === 11 || nowTimes.getHours() === 23) && nowTimes.getMinutes() === 59) {
-      let nowtime = new Date().Format("s.S")
+      let nowtime = new Date().Format("s")
       let starttime = $.isNode() ? (process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME * 1 : 59.9) : ($.getdata('CFD_STARTTIME') ? $.getdata('CFD_STARTTIME') * 1 : 59.9);
       if(nowtime < 59) {
         let sleeptime = (starttime - nowtime) * 1000;
