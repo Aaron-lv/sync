@@ -717,9 +717,9 @@ function invite() {
     'Cookie': cookie
   };
 
-  var dataString = `functionId=InviteFriendApiService&body={"method":"attendInviteActivity","data":{"inviterPin":"${encodeURIComponent(inviterId)}","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidIf3dd8121b7sdmiBLGdxRR46OlWyh62kFAZogTJFnYqqRkwgr63%2BdGmMlcv7EQJ5v0HBic81xHXzXLwKM6fh3i963zIa7Ym2v5ehnwo2B7uDN92Q0&aid=&client=ios&clientVersion=14.4&networkType=wifi&fp=-1&appid=market-task-h5&_t=${t}`;
+  var dataString = `functionId=InviteFriendChangeAssertsService&body={"method":"attendInviteActivity","data":{"inviterPin":"${encodeURIComponent(inviterId)}","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidI9b2981202fsec83iRW1nTsOVzCocWda3YHPN471AY78%2FQBhYbXeWtdg%2F3TCtVTMrE1JjM8Sqt8f2TqF1Z5P%2FRPGlzA1dERP0Z5bLWdq5N5B2VbBO&aid=&client=ios&clientVersion=14.4.2&networkType=wifi&fp=-1&uuid=ab048084b47df24880613326feffdf7eee471488&osVersion=14.4.2&d_brand=iPhone&d_model=iPhone10,2&agent=-1&pageClickKey=-1&platform=3&lang=zh_CN&appid=market-task-h5&_t=${t}`;
   var options = {
-    url: `https://api.m.jd.com/?t=${+new Date()}`,
+    url: `https://api.m.jd.com/?t=${t}`,
     headers: headers,
     body: dataString
   };
