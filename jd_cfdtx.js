@@ -395,7 +395,11 @@ function taskUrl(function_path, body = '') {
 
 function showMsg() {
   return new Promise(resolve => {
-    message += `提现成功：获得${$.money}元`
+    if ($.money > 0) {
+      message += `提现成功：获得${$.money}元`
+    } else {
+      message += `提现失败：获得空气`
+    }
     if($.money > 0) {
         allMessage += `【京东账号${$.index}】${$.nickName || $.UserName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;
     }
