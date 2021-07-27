@@ -76,9 +76,9 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       if ($.UserName === code['userName']) continue;
       console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
       await enrollFriend(code['strUserPin']);
+      await $.wait(2500);
       if ($.max) continue
       if (!$.canHelp) break
-      await $.wait(2500);
     }
     if ($.canHelp) {
       console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
@@ -86,9 +86,9 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
         if (!item) continue;
         console.log(`【${$.UserName}】去助力作者的邀请码：${item}`);
         await enrollFriend(item);
+        await $.wait(2500);
         if ($.max) continue
         if (!$.canHelp) break
-        await $.wait(2500);
       }
     }
   }
