@@ -237,7 +237,7 @@ function doubleSign() {
         } else {
           data = JSON.parse(data);
           if (data.retCode === 0){
-            console.log(`双签成功，获得${data.data.jd_amount / 100}元`)
+            console.log(`双签成功`)
           } else {
             console.log(`任务完成失败，错误信息${data.errMsg}`)
           }
