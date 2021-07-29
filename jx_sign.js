@@ -105,7 +105,7 @@ if ($.isNode()) {
             console.log(`不能助力自己`)
             continue
           }
-          console.log(`账号${$.UserName}去助力${$.shareCodes[j].use}的互助码${$.shareCodes[j].smp}`)
+          console.log(`账号 ${$.UserName} 去助力 ${$.shareCodes[j].use} 的互助码 ${$.shareCodes[j].smp}`)
           if ($.shareCodes[j].max) {
             console.log(`您的好友助力已达上限`)
             continue
