@@ -99,6 +99,8 @@ if ($.isNode()) {
       cookie = cookiesArr[i]
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ($.shareCodes && $.shareCodes.length && !$.blackInfo[$.UserName]) {
+        await signhb(false)
+        await $.wait(2000);
         console.log(`\n开始内部互助\n`)
         for (let j = 0; j < $.shareCodes.length; j++) {
           if ($.shareCodes[j].use === $.UserName) {
@@ -107,7 +109,7 @@ if ($.isNode()) {
           }
           console.log(`账号 ${$.UserName} 去助力 ${$.shareCodes[j].use} 的互助码 ${$.shareCodes[j].smp}`)
           if ($.shareCodes[j].max) {
-            console.log(`您的好友助力已达上限`)
+            console.log(`您的好友助力已满`)
             continue
           }
           await helpSignhb($.shareCodes[j].smp);
@@ -125,7 +127,7 @@ if ($.isNode()) {
   })
 
 // 签到
-function signhb() {
+function signhb(type = true) {
   return new Promise((resolve) => {
     $.get(taskUrl("fanxiantask/signhb/query", "smp=&type", "signhb_source,smp,type"), async (err, resp, data) => {
       try {
@@ -133,43 +135,45 @@ function signhb() {
           console.log(JSON.stringify(err));
           console.log(`${$.name} API请求失败，请检查网路重试`);
         } else {
-          let helpNum = 0
-          $.black = false
           data = JSON.parse(data.match(/Query\((.*)\n/)[1])
-          const {
-            smp,
-            commontask,
-            sharetask: { domax, helppic, status },
-            signlist = []
-          } = data
-          for (let key of Object.keys(signlist)) {
-            let vo = signlist[key]
-            if (vo.istoday === 1) {
-              if (vo.status === 1 && vo.tasklist.signtask.status === 1) {
-                console.log(`今日已签到`)
-              } else {
-                console.log(`此账号已黑`)
-                $.black = true
-                return
+          if (type) {
+            let helpNum = 0
+            $.black = false
+            const {
+              smp,
+              commontask,
+              sharetask: { domax, helppic, status },
+              signlist = []
+            } = data
+            for (let key of Object.keys(signlist)) {
+              let vo = signlist[key]
+              if (vo.istoday === 1) {
+                if (vo.status === 1 && vo.tasklist.signtask.status === 1) {
+                  console.log(`今日已签到`)
+                } else {
+                  console.log(`此账号已黑`)
+                  $.black = true
+                  return
+                }
               }
             }
-          }
-          console.log(`【签到互助码】${smp}`)
-          if (helppic) helpNum = helppic.split(";").length - 1
-          if (helpNum) console.log(`已有${helpNum}人助力`)
-          for (let i = 0; i < commontask.length; i++) {
-            if (commontask[i].task && commontask[i].status != 2) {
-              $.commonlist.push(commontask[i].task)
+            console.log(`【签到互助码】${smp}`)
+            if (helppic) helpNum = helppic.split(";").length - 1
+            if (helpNum) console.log(`已有${helpNum}人助力`)
+            for (let i = 0; i < commontask.length; i++) {
+              if (commontask[i].task && commontask[i].status != 2) {
+                $.commonlist.push(commontask[i].task)
+              }
             }
-          }
-          if (status === 1) {
-            let max = false
-            if (helpNum == domax) max = true
-            $.shareCodes.push({
-              'use': $.UserName,
-              'smp': smp,
-              'max': max
-            })
+            if (status === 1) {
+              let max = false
+              if (helpNum == domax) max = true
+              $.shareCodes.push({
+                'use': $.UserName,
+                'smp': smp,
+                'max': max
+              })
+            }
           }
         }
       } catch (e) {
