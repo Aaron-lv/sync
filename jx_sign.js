@@ -80,6 +80,7 @@ if ($.isNode()) {
       await signhb(false)
       await $.wait(2000);
       await signhb()
+      await $.wait(2000);
       if (!$.black) {
         if ($.commonlist && $.commonlist.length) {
           console.log("开始做红包任务")
@@ -134,7 +135,7 @@ if ($.isNode()) {
 // 签到
 function signhb(type = true) {
   return new Promise((resolve) => {
-    $.get(taskUrl("fanxiantask/signhb/query", "smp=&type", "signhb_source,smp,type"), async (err, resp, data) => {
+    $.get(taskUrl("fanxiantask/signhb/query", "signhb_source=1000&smp=&type=1", "signhb_source,smp,type"), async (err, resp, data) => {
       try {
         if (err) {
           console.log(JSON.stringify(err));
