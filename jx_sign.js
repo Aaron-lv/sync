@@ -39,7 +39,6 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 $.shareCodes = [];
 $.blackInfo = {}
-$.helpNumInfo = {}
 $.appId = 10001;
 
 if ($.isNode()) {
