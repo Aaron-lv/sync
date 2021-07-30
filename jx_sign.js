@@ -77,8 +77,9 @@ if ($.isNode()) {
         }
         continue
       }
-      await signhb()
+      await signhb(false)
       await $.wait(2000);
+      await signhb()
       if (!$.black) {
         if ($.commonlist && $.commonlist.length) {
           console.log("开始做红包任务")
@@ -99,8 +100,6 @@ if ($.isNode()) {
       cookie = cookiesArr[i]
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ($.shareCodes && $.shareCodes.length && !$.blackInfo[$.UserName]) {
-        await signhb(false)
-        await $.wait(2000);
         console.log(`\n开始内部互助\n`)
         for (let j = 0; j < $.shareCodes.length; j++) {
           if ($.shareCodes[j].num == $.domax) {
