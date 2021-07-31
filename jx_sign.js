@@ -112,7 +112,7 @@ if ($.isNode()) {
             }
             await helpSignhb($.shareCodes[j].smp)
             await $.wait(3000)
-            $.shareCodes[j].num++
+            if (!$.black) $.shareCodes[j].num++
             break
           }
         }
