@@ -198,6 +198,12 @@ async function pickshell(body) {
             case '只要诚心祈祷，愿望就会实现哦~':
               dwName = '海星'
               break
+            case '阳光下的小贝壳会像宝石一样，散发耀眼的光芒':
+              dwName = '小贝壳'
+              break
+            case '啊~我可不想被清蒸加蒜蓉':
+              dwName = '扇贝'
+              break
             default:
               break
           }
