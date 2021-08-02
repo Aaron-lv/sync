@@ -4,7 +4,7 @@
  */
 const $ = new Env('扫码获取京东cookie');
 // const JD_UA = require('./USER_AGENTS').USER_AGENT;
-const JD_UA = `jdapp;android;10.0.5;8.0.0;${randPhoneId()};network/wifi;Mozilla/5.0 (Linux; Android 8.0.0; HTC U-3w Build/OPR6.170623.013; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36`;
+const JD_UA = `Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 SP-engine/2.14.0 main%2F1.0 baiduboxapp/11.18.0.16 (Baidu; P2 13.3.1) NABar/0.0`;
 // console.info('JD_UA', JD_UA)
 const qrcode = require('qrcode-terminal');
 let s_token, cookies, guid, lsid, lstoken, okl_token, token
