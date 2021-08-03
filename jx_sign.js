@@ -289,7 +289,6 @@ function bxdraw() {
           console.log(`${$.name} bxdraw API请求失败，请检查网路重试`);
         } else {
           data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1])
-          console.log(data)
           if (data.ret === 0) {
             console.log(`开启宝箱 获得${data.sendhb}红包`);
           } else {
