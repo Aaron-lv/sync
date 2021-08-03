@@ -37,6 +37,7 @@ $.notifyTime = $.getdata("cfd_notifyTime");
 $.result = [];
 $.shareCodes = [];
 let cookiesArr = [], cookie = '', token = '';
+let nowTimes;
 
 const randomCount = $.isNode() ? 3 : 3;
 if ($.isNode()) {
@@ -121,6 +122,7 @@ $.appId = 10028;
 
 async function cfd() {
   try {
+    nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
     let beginInfo = await getUserInfo();
     if (beginInfo.Fund.ddwFundTargTm === 0) {
       console.log(`还未开通活动，尝试初始化`)
@@ -158,8 +160,10 @@ async function cfd() {
     }
 
     //合成珍珠
-    await $.wait(2000)
-    await composeGameState()
+    if (nowTimes.getHours() >= 5) {
+      await $.wait(2000)
+      await composeGameState()
+    }
 
     //接待贵宾
     console.log(`接待贵宾`)
