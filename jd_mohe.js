@@ -129,7 +129,7 @@ async function task0() {
 }
 function addShare(shareId) {
   return new Promise((resolve) => {
-    const body = {"shareId":shareId,"apiMapping":"/active/shareInfo"}
+    const body = {"shareId":shareId,"apiMapping":"/active/addShare"}
     $.get(taskurl(body), (err, resp, data) => {
       try {
         if (err) {
@@ -138,15 +138,9 @@ function addShare(shareId) {
         } else {
           data = JSON.parse(data);
           if (data['code'] === 200) {
-            if (data.data.self) {
-              console.log(`\n不能助力自己\n`);
-            } else {
-              if (data.data.hasHelp) {
-                console.log(`\n助力好友【${data.data.nickName}】成功\n`);
-              } else {
-                console.log(`\n助力好友【${data.data.nickName}】失败：好友助力已满或您没有助力次数\n`);
-              }
-            }
+            console.log(`助力好友【${data.data}】成功\n`);
+          } else {
+            console.log(`助力失败：${data.msg}`);
           }
         }
       } catch (e) {
