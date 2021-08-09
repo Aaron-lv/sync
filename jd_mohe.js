@@ -130,7 +130,7 @@ async function task0() {
 function addShare(shareId) {
   return new Promise((resolve) => {
     const body = {"shareId":shareId,"apiMapping":"/active/addShare"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -154,7 +154,7 @@ function addShare(shareId) {
 function conf() {
   return new Promise((resolve) => {
     const body = {"apiMapping":"/active/conf"};
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -168,7 +168,7 @@ function conf() {
 function homeGoBrowse(type, id) {
   return new Promise((resolve) => {
     const body = {"type":type,"id":id,"apiMapping":"/active/homeGoBrowse"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -182,7 +182,7 @@ function homeGoBrowse(type, id) {
 function taskHomeCoin(type, id) {
   return new Promise((resolve) => {
     const body = {"type":type,"id":id,"apiMapping":"/active/taskHomeCoin"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -196,7 +196,7 @@ function taskHomeCoin(type, id) {
 function getCoin() {
   return new Promise((resolve) => {
     const body = {"apiMapping":"/active/getCoin"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
         if (data.code === 1001) {
@@ -219,7 +219,7 @@ function getCoin() {
 async function taskList() {
   return new Promise(async (resolve) => {
     const body = {"apiMapping":"/active/taskList"}
-    $.get(taskurl(body), async (err, resp, data) => {
+    $.post(taskurl(body), async (err, resp, data) => {
       try {
         data = JSON.parse(data);
         if (data.code === 200) {
@@ -285,7 +285,7 @@ function browseProduct(skuId) {
 function strollActive(index) {
   return new Promise((resolve) => {
     const body = {"activeId":index,"apiMapping":"/active/strollActive"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -300,7 +300,7 @@ function strollActive(index) {
 function followShop(shopId) {
   return new Promise((resolve) => {
     const body = {"shopId":shopId,"apiMapping":"/active/followShop"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -315,7 +315,7 @@ function followShop(shopId) {
 function taskCoin(type) {
   return new Promise((resolve) => {
     const body = {"type":type,"apiMapping":"/active/taskCoin"}
-    $.get(taskurl(body), (err, resp, data) => {
+    $.post(taskurl(body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -386,7 +386,7 @@ function lottery() {
 function shareUrl() {
   return new Promise((resolve) => {
     const body = {"apiMapping":"/active/shareUrl"}
-    $.get(taskurl(body), async (err, resp, data) => {
+    $.post(taskurl(body), async (err, resp, data) => {
       try {
         data = JSON.parse(data);
         if (data['code'] === 5000) {
