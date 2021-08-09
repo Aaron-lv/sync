@@ -216,8 +216,8 @@ function getCoin() {
   })
 }
 
-function taskList() {
-  return new Promise((resolve) => {
+async function taskList() {
+  return new Promise(async (resolve) => {
     const body = {"apiMapping":"/active/taskList"}
     $.get(taskurl(body), async (err, resp, data) => {
       try {
@@ -227,17 +227,23 @@ function taskList() {
           //浏览商品
           if (task4.finishNum < task4.totalNum) {
             await browseProduct(task4.skuId);
+            await $.wait(2000)
             await taskCoin(task4.type);
+            await $.wait(2000)
           }
           //浏览会场
           if (task1.finishNum < task1.totalNum) {
             await strollActive((task1.finishNum + 1));
+            await $.wait(2000)
             await taskCoin(task1.type);
+            await $.wait(2000)
           }
           //关注或浏览店铺
           if (task2.finishNum < task2.totalNum) {
             await followShop(task2.shopId);
+            await $.wait(2000)
             await taskCoin(task2.type);
+            await $.wait(2000)
           }
           // if (task5.finishNum < task5.totalNum) {
           //   console.log(`\n\n分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
