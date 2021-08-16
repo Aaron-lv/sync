@@ -226,7 +226,7 @@ function gobotNotify(text, desp, time = 2100) {
         });
       }, time);
     } else {
-      console.log('\n\n您未提供GOBOT的GOBOT_URL和GOBOT_TOKEN和GOBOT_QQ，取消GOBOT推送消息通知🚫\n');
+      console.log('您未提供GOBOT的GOBOT_URL和GOBOT_TOKEN和GOBOT_QQ，取消GOBOT推送消息通知🚫\n');
       resolve();
     }
   });
