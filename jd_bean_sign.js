@@ -70,7 +70,7 @@ if ($.isNode()) {
       if (jrBodyArr && jrBodyArr.length) {
         for (let key in Object.keys(jrBodyArr)) {
           let vo = JSON.parse(jrBodyArr[key])
-          if (vo.pin == $.UserName) {
+          if (decodeURIComponent(vo.pin) == $.UserName) {
             jrBody = vo.body || ''
           }
         }
