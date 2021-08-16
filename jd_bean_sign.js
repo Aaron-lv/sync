@@ -66,10 +66,13 @@ if ($.isNode()) {
         }
         continue
       }
-      if (jrBodyArr[i]) {
-        jrBodyArr[i] = JSON.parse(jrBodyArr[i])
-        if (jrBodyArr[i].pin == $.UserName) {
-          jrBody = jrBodyArr[i].body || ''
+      jrBody = ''
+      if (jrBodyArr && jrBodyArr.length) {
+        for (let key in Object.keys(jrBodyArr)) {
+          let vo = JSON.parse(jrBodyArr[key])
+          if (vo.pin == $.UserName) {
+            jrBody = vo.body || ''
+          }
         }
       } else {
         jrBody = ''
