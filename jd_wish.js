@@ -164,7 +164,7 @@ async function healthyDay_getHomeData(type = true) {
                       }
                     }
                   } else if (vo.taskType === 14) {
-                    console.log(`您的助力码：${vo.assistTaskDetailVo.taskToken}`)
+                    console.log(`【京东账号${$.index}（${$.UserName}）的众筹许愿池好友互助码】${vo.assistTaskDetailVo.taskToken}\n`)
                     if (vo.times !== vo.maxTimes) {
                       $.shareCode.push({
                         "code": vo.assistTaskDetailVo.taskToken,
@@ -173,7 +173,7 @@ async function healthyDay_getHomeData(type = true) {
                     }
                   }
                 } else {
-                  console.log(`【${vo.taskName}】已完成`)
+                  console.log(`【${vo.taskName}】已完成\n`)
                 }
               }
             }
@@ -197,12 +197,11 @@ function harmony_collectScore(body = {}, taskType = '') {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            console.log(data)
             if (data && data.data && data.data.bizCode === 0) {
               if (taskType === 13) {
                 console.log(`签到成功：获得${data.data.result.score}金币\n`)
               } else if (body.taskId == 6) {
-                console.log(`助力成功：获得${data.data.result.score}金币\n`)
+                console.log(`助力成功：您的好友获得${data.data.result.score}金币\n`)
               } else {
                 console.log(`完成任务：获得${data.data.result.score}金币\n`)
               }
@@ -236,8 +235,13 @@ function interact_template_getLotteryResult() {
           console.log(`${$.name} getLotteryResul API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
-            console.log(data)
             data = JSON.parse(data);
+            let userAwardsCacheDto = data.data.result.userAwardsCacheDto
+            if (userAwardsCacheDto && userAwardsCacheDto.type === 2) {
+              console.log(`抽中：${userAwardsCacheDto.jBeanAwardVo.quantity}${userAwardsCacheDto.jBeanAwardVo.ext}`)
+            } else {
+              console.log(JSON.stringify(data))
+            }
           }
         }
       } catch (e) {
