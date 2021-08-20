@@ -78,10 +78,10 @@ if ($.isNode()) {
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.canHelp = true
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       console.log(`开始内部助力\n`)
       for (let v = 0; v < appIdArr.length; v++) {
+        $.canHelp = true
         appId = appIdArr[v]
         appName = appNameArr[v]
         console.log(`开始助力第${v + 1}个活动：${appName}\n`)
