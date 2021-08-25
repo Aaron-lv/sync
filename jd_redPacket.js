@@ -236,7 +236,7 @@ async function red() {
     if ($.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo']) {
       for (let key of Object.keys($.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'])) {
         let vo = $.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'][key]
-        $.assistants += vo.hasAssistNum || 0;
+        $.assistants += vo.hasAssistNum
         if (vo.packetStatus === 1) {
           $.waitOpenTimes += 1
         }
@@ -462,7 +462,6 @@ function h5launch() {
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          console.log(JSON.stringify(data))
           if (data && data.data && data.data['biz_code'] === 0) {
             if (data['data']['result']['redPacketId']) {
               console.log(`\n\n发起助力红包 成功：红包ID ${data['data']['result']['redPacketId']}`)
