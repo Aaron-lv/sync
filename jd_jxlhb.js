@@ -72,7 +72,7 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
       }
       continue
     }
-    UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString()};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+    UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
     await main();
     UAInfo[$.UserName] = UA
   }
@@ -328,12 +328,12 @@ function taskurl(function_path, body = '', stk) {
     }
   }
 }
-function randomString() {
-  return Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10)
+function randomString(e) {
+  e = e || 32;
+  let t = "0123456789abcdef", a = t.length, n = "";
+  for (let i = 0; i < e; i++)
+    n += t.charAt(Math.floor(Math.random() * a));
+  return n
 }
 
 function TotalBean() {
