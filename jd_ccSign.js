@@ -158,7 +158,8 @@ function getSign(functionid, body, uuid) {
       "body":body,
       "uuid":uuid,
       "client":"android",
-      "clientVersion":"10.1.2"
+      "clientVersion":"10.1.2",
+      "key":ddokey
     }
     let HostArr = ['jdsign.cf', 'jdsign.tk']
     let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
@@ -189,7 +190,8 @@ function getSign(functionid, body, uuid) {
 function getsecretPin(pin) {
   return new Promise(async resolve => {
     let data = {
-      "pt_pin": pin
+      "pt_pin": pin,
+      "key":ddokey
     }
     let HostArr = ['jdsign.cf', 'jdsign.tk']
     let Host = HostArr[Math.floor((Math.random() * HostArr.length))]

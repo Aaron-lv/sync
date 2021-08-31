@@ -445,6 +445,7 @@ function getSign(functionid, body, uuid) {
       "uuid":uuid,
       "client":"apple",
       "clientVersion":"10.1.0"
+      "key":ddokey
     }
     let HostArr = ['jdsign.cf', 'jdsign.tk']
     let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
