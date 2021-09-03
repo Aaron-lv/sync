@@ -312,8 +312,11 @@ function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
     $.get({
-      url: `https://api.sharecode.ga/api/sgmh/${randomCount}`,
-      'timeout': 10000
+      url: `https://cdn.nz.lu/api/sgmh/${randomCount}`,
+      headers: {
+        'Host':'api.sharecode.ga'
+      },
+      timeout: 10000
     }, (err, resp, data) => {
       try {
         if (err) {

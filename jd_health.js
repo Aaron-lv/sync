@@ -142,7 +142,11 @@ function getTaskDetail(taskId = '') {
                 // 报告运行次数
                 if(data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken){
                   $.get({
-                  url: `https://api.sharecode.ga/api/runTimes?activityId=health&sharecode=${data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken}`
+                  url: `https://cdn.nz.lu/api/runTimes?activityId=health&sharecode=${data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken}`,
+                  headers: {
+                    'Host': 'api.sharecode.ga'
+                  },
+                  timeout: 10000
                   }, (err, resp, data) => {
                     if (err) {
                       console.log('上报失败', err)
@@ -343,8 +347,11 @@ function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
     $.get({
-      url: `https://api.sharecode.ga/api/health/${randomCount}`,
-      'timeout': 10000
+      url: `https://cdn.nz.lu/api/health/${randomCount}`,
+      headers: {
+        'Host': 'api.sharecode.ga'
+      },
+      timeout: 10000
     }, (err, resp, data) => {
       try {
         if (err) {
