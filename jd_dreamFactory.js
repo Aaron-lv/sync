@@ -654,6 +654,22 @@ function userInfo() {
                 message += `【生产商品】${$.productName}\n`;
                 message += `【当前等级】${data.user.userIdentity} ${data.user.currentLevel}\n`;
                 message += `【生产进度】${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%\n`;
+
+                // ***************************
+                // 报告运行次数
+                $.get({
+                  url: `https://api.sharecode.ga/api/runTimes?activityId=jxfactory&sharecode=${data.user.encryptPin}`
+                }, (err, resp, data) => {
+                  if (err) {
+                    console.log('上报失败', err)
+                  } else {
+                    if (data === '1' || data === '0') {
+                      console.log('上报成功')
+                    }
+                  }
+                })
+                // ***************************
+
                 if (production.investedElectric >= production.needElectric) {
                   if (production['exchangeStatus'] === 1) $.log(`\n\n可以兑换商品了`)
                   if (production['exchangeStatus'] === 3) {
@@ -1356,7 +1372,7 @@ async function showMsg() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://share.turinglabs.net/api/v3/jxfactory/query/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://api.sharecode.ga/api/jxfactory/${randomCount}`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
