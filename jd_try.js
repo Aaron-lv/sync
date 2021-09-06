@@ -316,9 +316,7 @@ function try_feedsList(tabId, page) {
                 continue;
               }
               if (item.applyState !== null) {
-                args_xh.printLog
-                  ? console.log(`商品状态异常，未找到skuTitle`)
-                  : "";
+                args_xh.printLog ? console.log(`商品状态异常，未找到skuTitle`) : "";
                 continue;
               }
               if (args_xh.passZhongCao) {
