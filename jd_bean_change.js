@@ -159,7 +159,7 @@ async function showMsg() {
 	}
   ReturnMessage+=`${$.message}\n\n`;
   allMessage+=ReturnMessage;
-  if ($.index % 10 === 0) {
+  if ($.index % 10 === 0 || $.index === cookiesArr.length) {
     if ($.isNode() && allMessage) {
       await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
       allMessage=''
