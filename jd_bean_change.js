@@ -97,7 +97,6 @@ if ($.isNode()) {
       await showMsg();
     }
   }
-
   if ($.isNode() && allMessage) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   }
@@ -160,6 +159,12 @@ async function showMsg() {
 	}
   ReturnMessage+=`${$.message}\n\n`;
   allMessage+=ReturnMessage;
+  if ($.index % 10 === 0) {
+    if ($.isNode() && allMessage) {
+      await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
+      allMessage=''
+    }
+  }
   $.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {
