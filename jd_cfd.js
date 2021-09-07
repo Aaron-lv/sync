@@ -155,8 +155,8 @@ async function cfd() {
     let XBDetail = beginInfo.XbStatus.XBDetail.filter((x) => x.dwRemainCnt !== 1)
     if (XBDetail.length !== 0) {
       console.log(`开始寻宝`)
-      for (let key of Object.keys(beginInfo.XbStatus.XBDetail)) {
-        let vo = beginInfo.XbStatus.XBDetail[key]
+      for (let key of Object.keys(XBDetail)) {
+        let vo = XBDetail[key]
         await $.wait(2000)
         await TreasureHunt(vo.strIndex)
       }
