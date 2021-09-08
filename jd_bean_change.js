@@ -273,7 +273,6 @@ function TotalBean() {
     })
   })
 }
-
 function getJingBeanBalanceDetail(page) {
   return new Promise(async resolve => {
     const options = {
