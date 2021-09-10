@@ -340,7 +340,7 @@ async function composePearlState(type = true) {
           if (type) {
             console.log(`合成月饼`)
             if (data.iRet === 0) {
-              console.log(`当前已合成${data.dwCurProgress}颗月饼，总计获得${data.ddwVirHb}元红包\n`)
+              console.log(`当前已合成${data.dwCurProgress}颗月饼，总计获得${data.ddwVirHb / 100}元红包\n`)
               if (data.dayDrawInfo.dwIsDraw == 0) {
                 await $.wait(2000)
                 let strToken = await getPearlDailyReward().strToken
