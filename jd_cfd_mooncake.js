@@ -163,10 +163,12 @@ async function cfd() {
     let count = $.isNode() ? (process.env.JD_CFD_RUNNUM ? process.env.JD_CFD_RUNNUM * 1 : Math.floor((Math.random() * 2)) + 3) : ($.getdata('JD_CFD_RUNNUM') ? $.getdata('JD_CFD_RUNNUM') * 1 : Math.floor((Math.random() * 2)) + 3);
     console.log(`\n合成月饼`)
     console.log(`合成月饼运行次数为：${count}\n`)
-    for (let j = 0; j < count; j++) {
+    let num = 0
+    do {
       await $.wait(2000)
       await composePearlState(3)
-    }
+      num++
+    } while (!$.stop && num < count)
 
   } catch (e) {
     $.logErr(e)
@@ -239,6 +241,10 @@ async function composePearlState(type) {
                   let res = await composePearlAddProcess(data.strDT, strLT)
                   if (res.iRet === 0) {
                     console.log(`\n合成月饼成功：获得${res.ddwAwardHb / 100}元红包\n`)
+                    if (res.ddwAwardHb === 0) {
+                      $.stop = true
+                      console.log(`合成月饼没有奖励，停止运行\n`)
+                    }
                   } else {
                     console.log(`\n合成月饼失败：${res.sErrMsg}\n`)
                   }
@@ -249,11 +255,14 @@ async function composePearlState(type) {
               break
             case 4:
               data = JSON.parse(data);
+              console.log(`每日抽奖`)
               if (data.iRet === 0) {
                 if (data.dayDrawInfo.dwIsDraw === 0) {
+                  let strToken = (await getPearlDailyReward()).strToken
                   await $.wait(2000)
-                  let strToken = await getPearlDailyReward().strToken
                   await pearlDailyDraw(data.ddwSeasonStartTm, strToken)
+                } else {
+                  console.log(`无抽奖次数\n`)
                 }
               }
             default:
@@ -324,7 +333,7 @@ function getPearlDailyReward() {
 }
 function pearlDailyDraw(ddwSeasonStartTm, strToken) {
   return new Promise((resolve) => {
-    $.get(taskUrl(`user/PearlDailyDraw`, `ddwSeaonStart=${ddwSeasonStartTm}&strToken=${strToken}`), (err, resp, data) => {
+    $.get(taskUrl(`user/PearlDailyDraw`, `__t=${Date.now()}&ddwSeaonStart=${ddwSeasonStartTm}&strToken=${strToken}`), (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -332,9 +341,9 @@ function pearlDailyDraw(ddwSeasonStartTm, strToken) {
         } else {
           data = JSON.parse(data);
           if (data.iRet === 0) {
-            console.log(`抽奖成功：获得${data.strPrizeName || JSON.stringify(data)}`)
+            console.log(`抽奖成功：获得${data.strPrizeName || JSON.stringify(data)}\n`)
           } else {
-            console.log(`抽奖失败：${data.sErrMsg}`)
+            console.log(`抽奖失败：${data.sErrMsg}\n`)
           }
         }
       } catch (e) {
