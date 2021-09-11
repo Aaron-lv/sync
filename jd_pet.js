@@ -127,7 +127,7 @@ async function jdPet() {
       $.get({
         url: `https://cdn.nz.lu/api/runTimes?activityId=pet&sharecode=${$.petInfo.shareCode}`,
         headers: {
-          'Host': 'api.sharecode.ga'
+          'Host': 'api.jdsharecode.xyz'
         },
         timeout: 10000
       }, (err, resp, data) => {
@@ -472,7 +472,7 @@ async function showMsg() {
 }
 function readShareCode() {
   return new Promise(async resolve => {
-    $.get({url: `https://cdn.nz.lu/api/pet/${randomCount}`, headers:{'Host':'api.sharecode.ga'}, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `https://cdn.nz.lu/api/pet/${randomCount}`, headers:{'Host':'api.jdsharecode.xyz'}, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
