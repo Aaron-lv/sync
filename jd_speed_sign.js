@@ -676,8 +676,9 @@ function invite2() {
   let t = +new Date()
   let inviterId = [
     "5V7vHE23qh2EkdBHXRFDuA==",
-    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec="
-  ][Math.floor((Math.random() * 2))]
+    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
+    "BksRv0UXx/XluHFWxo8yaQ=="
+  ][Math.floor((Math.random() * 3))]
   let headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
@@ -705,8 +706,9 @@ function invite() {
   let t = +new Date()
   let inviterId = [
     "5V7vHE23qh2EkdBHXRFDuA==",
-    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc="
-  ][Math.floor((Math.random() * 2))]
+    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
+    "BksRv0UXx/XluHFWxo8yaQ=="
+  ][Math.floor((Math.random() * 3))]
   var headers = {
     'Host': 'api.m.jd.com',
     'accept': 'application/json, text/plain, */*',
