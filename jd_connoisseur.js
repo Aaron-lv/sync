@@ -420,7 +420,7 @@ async function getshareCode() {
               if (vo.ofn && ((vo.ofn === "16" || vo.ofn === "18" || vo.ofn === "20") && vo.template === 'customcode')) {
                 await getTaskInfo("1", vo.boardParams.projectCode, vo.boardParams.taskCode, vo.ofn)
                 await $.wait(2000)
-              } else if (vo.ofn && ((vo.ofn === "22" || vo.ofn === "24") && vo.template === 'customcode')) {
+              } else if (vo.ofn && ((vo.ofn === "20" || vo.ofn === "22" || vo.ofn === "24") && vo.template === 'customcode' && vo.materialParams)) {
                 $.projectCode = vo.boardParams.projectCode
                 $.taskCode = vo.boardParams.taskCode
                 $.helpType = vo.ofn
