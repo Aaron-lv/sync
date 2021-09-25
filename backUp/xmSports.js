@@ -61,11 +61,7 @@ function randomUUID(option={
   if (!option.formatData) option.formatData = `${"X".repeat(8)}-${"X".repeat(4)}-${"X".repeat(4)}-${"X".repeat(12)}`
   if (!option.charArr) option.charArr = [...Array(16).keys()].map(k => k.toString(16).toUpperCase())
   let { formatData: res, charArr }= option
-  const charLen = charArr.length - 1
-  while (res.indexOf("X") > -1) {
-    res = res.replace("X", charArr[randomNum(0, charLen)])
-  }
-  return res
+  return res.replace(/X/g, ()=>charArr[randomNum(0, charArr.length - 1)])
 }
 
 async function start() {
