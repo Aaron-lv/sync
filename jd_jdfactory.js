@@ -617,10 +617,10 @@ function jdfactory_getHomeData() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://cdn.nz.lu/api/ddfactory/${randomCount}`, headers:{'Host':'api.jdsharecode.xyz'}, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `http://transfer.nz.lu/ddfactory`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          console.log(JSON.stringify(err))
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
