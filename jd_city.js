@@ -26,7 +26,6 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let exchangeFlag = $.getdata('jdJxdExchange') || !!0;//是否开启自动抽奖，建议活动快结束开启，默认关闭
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -37,8 +36,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
-  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh',
-  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh'
+  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh@RtGKzOvxFAiheoeTQtcz1QWWFmT-UAQiOY1AfV1jpRHl0yfAFg@RtGKzr-hFAmqeoSSQocwhHUbaVIeaBVb6qCPKLPoQdOR9-yf8Q@RtGKzO-gRwOidtGfH4A1g_YMCFa8K3ZjPjdTE1AnTgXjeTnnBQ@Wergz-ijRAOjK4GbQtY3mhTXHhxm9F9WUH6smtCB2XWZ2Va0',
+  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh@RtGKzOvxFAiheoeTQtcz1QWWFmT-UAQiOY1AfV1jpRHl0yfAFg@RtGKzr-hFAmqeoSSQocwhHUbaVIeaBVb6qCPKLPoQdOR9-yf8Q@RtGKzO-gRwOidtGfH4A1g_YMCFa8K3ZjPjdTE1AnTgXjeTnnBQ@Wergz-ijRAOjK4GbQtY3mhTXHhxm9F9WUH6smtCB2XWZ2Va0'
 ]
 !(async () => {
   if (!cookiesArr[0]) {
