@@ -6,17 +6,17 @@
 =================================Quantumultx=========================
 [task_local]
 #城城领现金
-0 0-23/1 * * * jd_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 0-23/1 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =================================Loon===================================
 [Script]
-cron "0 0-23/1 * * *" script-path=jd_city.js,tag=城城领现金
+cron "0 0-23/1 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_city.js,tag=城城领现金
 
 ===================================Surge================================
-城城领现金 = type=cron,cronexp="0 0-23/1 * * *",wake-system=1,timeout=3600,script-path=jd_city.js
+城城领现金 = type=cron,cronexp="0 0-23/1 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_city.js
 
 ====================================小火箭=============================
-城城领现金 = type=cron,script-path=jd_city.js, cronexpr="0 0-23/1 * * *", timeout=3600, enable=true
+城城领现金 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_city.js, cronexpr="0 0-23/1 * * *", timeout=3600, enable=true
  */
 const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -37,8 +37,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
-  'xBd-HlYMlLUzqSkuz0qzAzuayqOG3FfAIeOTGLowr29_KbnH2bV4EX4@RtGKzr_wSAn2eIKZRdRm07jvOMS2zVH-g8ri6aOIZPDcI8v7CA@RtGKzr-gRAmmdoaZQdcz30FEv6dt0Mio6a5hyr9dt0vq1P8G0g@RtGKz-ygEAj2e9aYH4U10HcN_2_yeoSSOH50A7CItcn6lB6jwQ',
-  'RtGKz-ygEAj2e9aYH4U10HcN_2_yeoSSOH50A7CItcn6lB6jwQ'
+  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh',
+  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh'
 ]
 !(async () => {
   if (!cookiesArr[0]) {
@@ -252,9 +252,8 @@ function city_lotteryAward() {
   })
 }
 function readShareCode() {
-  console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://share.turinglabs.net/api/v3/city/query/10/`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `http://transfer.nz.lu/city`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
