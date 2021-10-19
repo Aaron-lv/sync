@@ -36,8 +36,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
-  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh@RtGKzOvxFAiheoeTQtcz1QWWFmT-UAQiOY1AfV1jpRHl0yfAFg@RtGKzr-hFAmqeoSSQocwhHUbaVIeaBVb6qCPKLPoQdOR9-yf8Q@RtGKzO-gRwOidtGfH4A1g_YMCFa8K3ZjPjdTE1AnTgXjeTnnBQ@Wergz-ijRAOjK4GbQtY3mhTXHhxm9F9WUH6smtCB2XWZ2Va0',
-  'Vt20l6_xHwimdoPWW5gzmq08WwCxQ6QRqDkqOmY_TVc@QNygguWtSQLvMs-aW5h_j6kjK6vPw-Et5hF3DqE@HY3myu-iSA-qfoPLW5h_1gmDVP7rvVFOoT0M1B9oQwvh@RtGKzOvxFAiheoeTQtcz1QWWFmT-UAQiOY1AfV1jpRHl0yfAFg@RtGKzr-hFAmqeoSSQocwhHUbaVIeaBVb6qCPKLPoQdOR9-yf8Q@RtGKzO-gRwOidtGfH4A1g_YMCFa8K3ZjPjdTE1AnTgXjeTnnBQ@Wergz-ijRAOjK4GbQtY3mhTXHhxm9F9WUH6smtCB2XWZ2Va0'
+  'RtGKzOimF1-gLIrJFIZm1D_wnnu47Xrv4dI7eUkH7Tax3W-O7A@RMy4z-ytRAiifM_WW9R_msS3zbvWb42158RpDNMZCw',
+  'RtGKzOimF1-gLIrJFIZm1D_wnnu47Xrv4dI7eUkH7Tax3W-O7A@RMy4z-ytRAiifM_WW9R_msS3zbvWb42158RpDNMZCw'
 ]
 !(async () => {
   if (!cookiesArr[0]) {
@@ -98,7 +98,7 @@ let inviteCodes = [
         }
       } else {
         //默认6.2开启抽奖
-        if ((new Date().getMonth()  + 1) === 6 && new Date().getDate() >= 2) {
+        if ((new Date().getMonth()  + 1) === 10 && new Date().getDate() >= 29) {
           const res = await city_lotteryAward();//抽奖
           if (res && res > 0) {
             for (let i = 0; i < new Array(res).fill('').length; i++) {
