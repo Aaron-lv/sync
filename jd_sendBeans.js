@@ -198,7 +198,7 @@ async function myReward(){
           let canReward = false
           for (let key of Object.keys(data.datas)) {
             let vo = data.datas[key]
-            if (vo.status === 3 && vo.type === 2) {
+            if (vo.status === 3 && vo.type === 1) {
               canReward = true
               $.rewardRecordId = vo.id
               await rewardBean()
