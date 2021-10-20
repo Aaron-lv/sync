@@ -109,7 +109,12 @@ let inviteCodes = []
             console.log(`助力次数已耗尽，跳出`)
             break
           }
-          if (!Object.keys(res['data']['result']['toasts']).length) {
+          if (res['data']['result']['toasts']) {
+            if (!Object.keys(res['data']['result']['toasts']).length) {
+              console.log(`未知错误，跳出`)
+              break
+            }
+          } else {
             console.log(`未知错误，跳出`)
             break
           }
@@ -132,7 +137,12 @@ let inviteCodes = []
             console.log(`助力次数已耗尽，跳出`)
             break
           }
-          if (!Object.keys(res['data']['result']['toasts']).length) {
+          if (res['data']['result']['toasts']) {
+            if (!Object.keys(res['data']['result']['toasts']).length) {
+              console.log(`未知错误，跳出`)
+              break
+            }
+          } else {
             console.log(`未知错误，跳出`)
             break
           }
