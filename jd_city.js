@@ -115,8 +115,7 @@ let inviteCodes = []
               break
             }
           } else {
-            console.log(`未知错误，跳出`)
-            break
+            console.log(`助力失败：不能助力自己`)
           }
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
             console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
@@ -143,8 +142,7 @@ let inviteCodes = []
               break
             }
           } else {
-            console.log(`未知错误，跳出`)
-            break
+            console.log(`助力失败：不能助力自己`)
           }
           if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
             console.log(`助力 【${$.newShareCodes[j]}】:${res.data.result.toasts[0].msg}`)
