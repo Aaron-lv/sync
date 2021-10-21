@@ -109,11 +109,13 @@ let inviteCodes = []
             console.log(`助力次数已耗尽，跳出`)
             break
           }
-          if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
-            console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
-          } else {
-            console.log(`未知错误，跳出`)
-            break
+          if (res['data']['result']['toasts']) {
+            if (res['data']['result']['toasts'][0]) {
+              console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
+            } else {
+              console.log(`未知错误，跳出`)
+              break
+            }
           }
         }
         if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
@@ -131,11 +133,13 @@ let inviteCodes = []
             console.log(`助力次数已耗尽，跳出`)
             break
           }
-          if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
-            console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
-          } else {
-            console.log(`未知错误，跳出`)
-            break
+          if (res['data']['result']['toasts']) {
+            if (res['data']['result']['toasts'][0]) {
+              console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
+            } else {
+              console.log(`未知错误，跳出`)
+              break
+            }
           }
         }
         if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
