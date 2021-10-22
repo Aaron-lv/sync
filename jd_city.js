@@ -69,29 +69,6 @@ let inviteCodes = []
       uuid = randomString(40)
       await getInfo('',true);
       await $.wait(1000)
-      await getInviteInfo();//雇佣
-      await $.wait(1000)
-      if (exchangeFlag) {
-        const res = await city_lotteryAward();//抽奖
-        if (res && res > 0) {
-          for (let i = 0; i < new Array(res).fill('').length; i++) {
-            await $.wait(1000)
-            await city_lotteryAward();//抽奖
-          }
-        }
-      } else {
-        //默认10.29开启抽奖
-        if ((new Date().getMonth()  + 1) === 10 && new Date().getDate() >= 29) {
-          const res = await city_lotteryAward();//抽奖
-          if (res && res > 0) {
-            for (let i = 0; i < new Array(res).fill('').length; i++) {
-              await $.wait(1000)
-              await city_lotteryAward();//抽奖
-            }
-          }
-        }
-      }
-      await $.wait(1000)
     }
   }
   await shareCodesFormat()
@@ -100,77 +77,57 @@ let inviteCodes = []
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     $.index = i + 1;
     uuid = randomString(40)
+    let shareCodes;
     if (helpPool) {
-      for (let j = 0; j < $.readShareCode.length; j++) {
-        console.log(`\n${$.UserName} 开始助力 助力池 【${$.readShareCode[j]}】`)
-        await $.wait(1000)
-        let res = await getInfo($.readShareCode[j])
-        if (res && res['data'] && res['data']['bizCode'] === 0) {
-          if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
-            console.log(`助力次数已耗尽，跳出`)
+      shareCodes = [...new Set([...inviteCodes, ...$.readShareCode])]
+    } else {
+      if (i === 0) {
+        shareCodes = [...new Set([...inviteCodes, ...$.readShareCode])]
+      } else {
+        shareCodes = [...$.newShareCodes]
+      }
+    }
+    for (let j = 0; j < shareCodes.length; j++) {
+      console.log(helpPool ? `\n${$.UserName} 开始助力 助力池 【${shareCodes[j]}】` : i === 0 ? `\nCK1 ${$.UserName} 开始助力 助力池 【${shareCodes[j]}】` : `\n${$.UserName} 开始助力 【${shareCodes[j]}】`)
+      await $.wait(1000)
+      let res = await getInfo(shareCodes[j])
+      if (res && res['data'] && res['data']['bizCode'] === 0) {
+        if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
+          console.log(`助力次数已耗尽，跳出`)
+          break
+        }
+        if (res['data']['result']['toasts']) {
+          if (res['data']['result']['toasts'][0]) {
+            console.log(`助力 【${shareCodes[j]}】:${res.data.result.toasts[0].msg}`)
+          } else {
+            console.log(`未知错误，跳出`)
             break
           }
-          if (res['data']['result']['toasts']) {
-            if (res['data']['result']['toasts'][0]) {
-              console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
-            } else {
-              console.log(`未知错误，跳出`)
-              break
-            }
-          }
         }
-        if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
-          // 助力次数耗尽 || 黑号
-          break
+      }
+      if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
+        // 助力次数耗尽 || 黑号
+        break
+      }
+    }
+    await $.wait(1000)
+    await getInviteInfo();//雇佣
+    if (exchangeFlag) {
+      const res = await city_lotteryAward();//抽奖
+      if (res && res > 0) {
+        for (let i = 0; i < new Array(res).fill('').length; i++) {
+          await $.wait(1000)
+          await city_lotteryAward();//抽奖
         }
       }
     } else {
-      if (i === 0) {
-        for (let j = 0; j < $.readShareCode.length; j++) {
-          console.log(`\nCK1 ${$.UserName} 开始助力 助力池 【${$.readShareCode[j]}】`)
-          await $.wait(1000)
-          let res = await getInfo($.readShareCode[j])
-          if (res && res['data'] && res['data']['bizCode'] === 0) {
-            if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
-              console.log(`助力次数已耗尽，跳出`)
-              break
-            }
-            if (res['data']['result']['toasts']) {
-              if (res['data']['result']['toasts'][0]) {
-                console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
-              } else {
-                console.log(`未知错误，跳出`)
-                break
-              }
-            }
-          }
-          if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
-            // 助力次数耗尽 || 黑号
-            break
-          }
-        }
-      } else {
-        for (let j = 0; j < $.newShareCodes.length; j++) {
-          console.log(`\n${$.UserName} 开始助力 【${$.newShareCodes[j]}】`)
-          await $.wait(1000)
-          let res = await getInfo($.newShareCodes[j])
-          if (res && res['data'] && res['data']['bizCode'] === 0) {
-            if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
-              console.log(`助力次数已耗尽，跳出`)
-              break
-            }
-            if (res['data']['result']['toasts']) {
-              if (res['data']['result']['toasts'][0]) {
-                console.log(`助力 【${$.readShareCode[j]}】:${res.data.result.toasts[0].msg}`)
-              } else {
-                console.log(`未知错误，跳出`)
-                break
-              }
-            }
-          }
-          if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
-            // 助力次数耗尽 || 黑号
-            break
+      //默认10.29开启抽奖
+      if ((new Date().getMonth()  + 1) === 10 && new Date().getDate() >= 29) {
+        const res = await city_lotteryAward();//抽奖
+        if (res && res > 0) {
+          for (let i = 0; i < new Array(res).fill('').length; i++) {
+            await $.wait(1000)
+            await city_lotteryAward();//抽奖
           }
         }
       }
@@ -185,7 +142,7 @@ let inviteCodes = []
   })
 
 function getInfo(inviteId, flag = false) {
-  let body = {"lbsCity":"19","realLbsCity":"1601","inviteId":inviteId,"headImg":"","userName":""}
+  let body = {"lbsCity":"19","realLbsCity":"1601","inviteId":inviteId,"headImg":"","userName":"","taskChannel":"1"}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_getHomeData",body), async (err, resp, data) => {
       try {
@@ -198,12 +155,13 @@ function getInfo(inviteId, flag = false) {
             if (data.code === 0) {
               if (data.data && data['data']['bizCode'] === 0) {
                 if (flag) {
-                  console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data && data.data.result.userActBaseInfo.inviteId}\n`);
+                  console.log(`【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.data && data.data.result.userActBaseInfo.inviteId}`);
                   if (data.data && data.data.result.userActBaseInfo.inviteId) {
                     $.shareCodes.push(data.data.result.userActBaseInfo.inviteId)
                   }
+                  console.log(`剩余金额：${data.data.result.userActBaseInfo.poolMoney}`)
                   for (let pop of data.data.result.popWindows || []) {
-                    if (pop.data.cash) {
+                    if (pop.data.cash && (pop.data.cash !== data.data.result.userActBaseInfo.poolMoney)) {
                       await receiveCash("", "2");
                     }
                   }
@@ -269,7 +227,7 @@ function getInfo(inviteId, flag = false) {
     })
   })
 }
-function receiveCash(roundNum, type) {
+function receiveCash(roundNum, type = '') {
   let body = {"cashType":1,"roundNum":roundNum}
   if (type) body = {"cashType":type}
   return new Promise((resolve) => {
