@@ -168,7 +168,7 @@ function getInfo(inviteId, flag = false) {
                   const { taskDetailResultVo } = data.data.result.taskInfo;
                   const { lotteryTaskVos, taskVos } = taskDetailResultVo;
                   for (let lotteryTask of lotteryTaskVos) {
-                    if (lotteryTask.maxTimes === lotteryTask.times && lotteryTask.times !== undefined) {
+                    if (lotteryTask.times >= lotteryTask.maxTimes && lotteryTask.times !== undefined) {
                       for (let lo of lotteryTask?.badgeAwardVos || []) {
                         if (lo.status === 3) {
                           await receiveCash("", "6");
