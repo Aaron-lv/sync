@@ -142,7 +142,7 @@ let inviteCodes = []
   })
 
 function getInfo(inviteId, flag = false) {
-  let body = {"lbsCity":"19","realLbsCity":"1601","inviteId":inviteId,"headImg":"","userName":"","taskChannel":"1"}
+  let body = {"lbsCity":"1","realLbsCity":"2953","inviteId":inviteId,"headImg":"","userName":"","taskChannel":"1"}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_getHomeData",body), async (err, resp, data) => {
       try {
@@ -176,28 +176,28 @@ function getInfo(inviteId, flag = false) {
                       }
                     }
                   }
-                  for (let task of taskVos || []) {
-                    const t = Date.now();
-                    if (task.status === 1 && t >= task.taskBeginTime && t < task.taskEndTime) {
-                      const id = task.taskId, max = task.maxTimes;
-                      const waitDuration = task.waitDuration || 0;
-                      let time = task?.times || 0;
-                      for (let ltask of task.shoppingActivityVos) {
-                        if (ltask.status === 1) {
-                          console.log(`去做任务：${ltask.title}`);
-                          if (waitDuration) {
-                            await $.wait(1500);
-                            await city_doTaskByTk(id, ltask.taskToken, 1);
-                            await $.wait(waitDuration * 1000);
-                          }
-                          await city_doTaskByTk(id, ltask.taskToken);
-                          time++;
-                          if (time >= max) break;
-                        }
-                      }
-                      await $.wait(2500);
-                    }
-                  }
+                  // for (let task of taskVos || []) {
+                  //   const t = Date.now();
+                  //   if (task.status === 1 && t >= task.taskBeginTime && t < task.taskEndTime) {
+                  //     const id = task.taskId, max = task.maxTimes;
+                  //     const waitDuration = task.waitDuration || 0;
+                  //     let time = task?.times || 0;
+                  //     for (let ltask of task.shoppingActivityVos) {
+                  //       if (ltask.status === 1) {
+                  //         console.log(`去做任务：${ltask.title}`);
+                  //         if (waitDuration) {
+                  //           await $.wait(1500);
+                  //           await city_doTaskByTk(id, ltask.taskToken, 1);
+                  //           await $.wait(waitDuration * 1000);
+                  //         }
+                  //         await city_doTaskByTk(id, ltask.taskToken);
+                  //         time++;
+                  //         if (time >= max) break;
+                  //       }
+                  //     }
+                  //     await $.wait(2500);
+                  //   }
+                  // }
                 }
                 for (let vo of data.data.result && data.data.result.mainInfos || []) {
                   if (vo && vo.remaingAssistNum === 0 && vo.status === "1") {
