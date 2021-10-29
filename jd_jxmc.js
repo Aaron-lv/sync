@@ -198,7 +198,7 @@ async function pasture() {
             msg += `${vo.currnum}张${cardinfo[vo.cardtype]}卡片 `
           }
           $.cardtype = vo.cardtype
-          for (let i = vo.neednum; i <= vo.currnum; i += vo.neednum) {
+          for (let i = vo.currnum; i >= vo.neednum; i -= vo.neednum) {
             console.log(`${cardinfo[vo.cardtype]}卡片已满${vo.neednum}张，去兑换...`)
             await takeGetRequest("Combine")
           }
