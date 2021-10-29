@@ -48,7 +48,7 @@ const petInfo = {
     price: 412 * 1e3,
     weights: 2288.889 // 每个蛋的成本
   },
-  "2": {
+  "5": {
     name: "椰子鸡",
     price: 3355 * 1e2,
     weights: 2795.833
