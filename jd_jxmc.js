@@ -164,14 +164,19 @@ async function pasture() {
         console.log(`\n温馨提示：${$.UserName} 请先手动完成【新手指导任务】再运行脚本再运行脚本\n`);
         return;
       }
-      if ($.homeInfo.maintaskId !== "pause") {
+      $.currentStep = $.homeInfo?.finishedtaskId
+      if ($.homeInfo.maintaskId !== "pause" || isNew($.currentStep)) {
         console.log(`开始初始化`)
         $.step = $.homeInfo.maintaskId
         await takeGetRequest('DoMainTask');
         for (let i = 0; i < 20; i++) {
           if ($.DoMainTask.maintaskId !== "pause") {
             await $.wait(2000)
+            $.currentStep = $.DoMainTask?.finishedtaskId
             $.step = $.DoMainTask.maintaskId
+            await takeGetRequest('DoMainTask');
+          } else if ($.DoMainTask.maintaskId === "pause" && isNew($.currentStep)) {
+            $.step = isNew($.currentStep, true)
             await takeGetRequest('DoMainTask');
           } else {
             console.log(`初始化成功\n`)
@@ -579,6 +584,23 @@ async function takeGetRequest(type) {
 function getStk(url) {
   let arr = url.split('&').map(x => x.replace(/.*\?/, "").replace(/=.*/, ""))
   return encodeURIComponent(arr.filter(x => x).sort().join(','))
+}
+
+function isNew(step, getNextStep = false) {
+  const charArr = [...Array(26).keys()].map(i => String.fromCharCode(i + 65)),
+    numArr = [...Array(12).keys()].map(i => i + 1)
+  if (getNextStep) {
+    const tempArr = step.split(`-`)
+    tempArr[0] = charArr[charArr.indexOf(tempArr[0]) + 1]
+    tempArr[1] = numArr[0]
+    return tempArr.join("-")
+  }
+  const tempArr = step.split(`-`)
+  if (tempArr.length < 2) return true
+  const num = numArr.length * (charArr.indexOf(tempArr[0])) + (+tempArr[1]),
+    orderArr = ['L', '6'] // 目标步骤
+  const numTo = numArr.length * (charArr.indexOf(orderArr[0])) + (+orderArr[1])
+  return num <= numTo
 }
 
 function dealReturn(type, data) {
