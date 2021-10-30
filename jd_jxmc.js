@@ -165,9 +165,10 @@ async function pasture() {
         return;
       }
       $.currentStep = $.homeInfo?.finishedtaskId
+      console.log(`打印新手流程进度：当前进度：${$.currentStep}，下一流程：${$.homeInfo.maintaskId}`)
       if ($.homeInfo.maintaskId !== "pause" || isNew($.currentStep)) {
         console.log(`开始初始化`)
-        $.step = $.homeInfo.maintaskId
+        $.step = isNew($.currentStep) ? isNew($.currentStep, true) : $.homeInfo.maintaskId
         await takeGetRequest('DoMainTask');
         for (let i = 0; i < 20; i++) {
           if ($.DoMainTask.maintaskId !== "pause") {
@@ -175,7 +176,7 @@ async function pasture() {
             $.currentStep = $.DoMainTask?.finishedtaskId
             $.step = $.DoMainTask.maintaskId
             await takeGetRequest('DoMainTask');
-          } else if ($.DoMainTask.maintaskId === "pause" && isNew($.currentStep)) {
+          } else if (isNew($.currentStep)) {
             $.step = isNew($.currentStep, true)
             await takeGetRequest('DoMainTask');
           } else {
@@ -600,7 +601,7 @@ function isNew(step, getNextStep = false) {
   const num = numArr.length * (charArr.indexOf(tempArr[0])) + (+tempArr[1]),
     orderArr = ['L', '6'] // 目标步骤
   const numTo = numArr.length * (charArr.indexOf(orderArr[0])) + (+orderArr[1])
-  return num <= numTo
+  return num < numTo
 }
 
 function dealReturn(type, data) {
