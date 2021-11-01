@@ -55,9 +55,17 @@ async function main() {
   $.max = false;
   $.hotFlag = false;
   const flCodeArr = ["3K9D5Kc", "3IVMKm8", "3I9UVcJ", "3IXbyRK", "3wVdViu"];
-  const flCode = $.isNode() ? process.env.FLCODE ? process.env.FLCODE : flCodeArr[Math.floor(Math.random() * flCodeArr.length)] : flCodeArr[Math.floor(Math.random() * flCodeArr.length)];
+  let flCode = flCodeArr[Math.floor(Math.random() * flCodeArr.length)];
+  let FLCODE = $.isNode() ? process.env.FLCODE ? process.env.FLCODE : '' : $.getdata("FLCODE") ? $.getdata("FLCODE") : ''
+  if (FLCODE) {
+    if ($.index === 1) {
+      flCode = FLCODE;
+    } else {
+      flCode = [flCode, FLCODE];
+      flCode = flCode[Math.floor(Math.random() * flCode.length)];
+    }
+  }
   $.code = flCode;
-  console.log($.code)
   for (let i = 0; i < 10 && !$.max; i++) {
     $.newCookie = "";
     $.url1 = "";
@@ -297,7 +305,7 @@ async function getInfo1(cookie) {
 }
 
 const navigator = {
-  userAgent: require("./USER_AGENTS").USER_AGENT,
+  userAgent: $.isNode() ? require("./USER_AGENTS").USER_AGENT : $.UA,
   plugins: { length: 0 },
   language: "zh-CN",
 };
