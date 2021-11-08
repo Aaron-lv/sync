@@ -36,11 +36,15 @@ let ReturnMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
+let pageSize = 10;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+  if (process.env.NOTIFY_PAGE_SIZE && process.env.NOTIFY_PAGE_SIZE !== '') {
+    pageSize = parseInt(process.env.NOTIFY_PAGE_SIZE);
+  }
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -157,7 +161,7 @@ async function showMsg() {
   }
   ReturnMessage+=`${$.message}\n\n`;
   allMessage+=ReturnMessage;
-  if ($.index % 10 === 0) {
+  if ($.index % pageSize === 0) {
     if ($.isNode() && allMessage) {
       await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
       allMessage=''
