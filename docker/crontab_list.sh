@@ -131,7 +131,7 @@
 # 领金贴
 5 0 * * * node /scripts/jd_jin_tie.js >> /scripts/logs/jd_jin_tie.log 2>&1
 # 京喜牧场
-15 0-23/3 * * * node /scripts/jd_jxmc.js >> /scripts/logs/jd_jxmc.log 2>&1
+15 * * * * node /scripts/jd_jxmc.js >> /scripts/logs/jd_jxmc.log 2>&1
 # 京小鸽
 30 2,20 * * * node /scripts/jd_jxg.js >> /scripts/logs/jd_jxg.log 2>&1
 # 天天加速
