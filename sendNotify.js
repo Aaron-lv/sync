@@ -299,7 +299,7 @@ function goCQhttp(text, desp) {
       }
     }
     let expire = RegExp ("重新登录");
-    let individual = RegExp ("已可领取|已可兑换|已成熟|未选择|兑换成功|提现成功|忘了|京东资产变动|东东农场|未继续|已领取"); 
+    let individual = RegExp ("已可领取|已可兑换|已成熟|未选择|兑换成功|提现成功|忘了|京东资产变动|东东农场|未继续|已领取|兑换已超时"); 
     if((expire.test(text) === true || expire.test(desp) === true) && qqnumber) {
       let msgs = (msg + '\n\n' + GO_CQHTTP_LINK)
       return new Promise(resolve => {
