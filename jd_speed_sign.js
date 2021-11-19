@@ -704,7 +704,8 @@ function invite() {
     "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
     "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
     "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
-    "w22w0sZEccp/OWxg1d20RtsryQGfghc94PsLIBqeX0E="
+    "w22w0sZEccp/OWxg1d20RtsryQGfghc94PsLIBqeX0E=",
+    "1delvHmQ1wUzTbHDYKKx2/0htnwZd1X2w46UQx5rurY="
   ]
   let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
   let options = {
