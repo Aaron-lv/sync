@@ -1279,7 +1279,7 @@ function browserTask(taskType) {
             await $.wait(2000);
           }
           //领取奖励
-          await awardTask(0, taskinfo);
+          await awardTask(0, taskinfo, bizCode);
         }
         break;
       case 1://成就任务
@@ -1327,13 +1327,13 @@ function doTask(taskId, type = 1, bizCodeXx) {
 }
 
 //领取奖励
-function awardTask(taskType, taskinfo) {
+function awardTask(taskType, taskinfo, bizCode = "jxbfd") {
   return new Promise((resolve) => {
     const {taskId, taskName} = taskinfo;
     const {ddwTaskId, strTaskName} = taskinfo;
     switch (taskType) {
       case 0://日常任务
-        $.get(taskListUrl(`Award`, `taskId=${taskId}`), (err, resp, data) => {
+        $.get(taskListUrl(`Award`, `taskId=${taskId}`, bizCode), (err, resp, data) => {
           try {
             if (err) {
               console.log(`${JSON.stringify(err)}`)
