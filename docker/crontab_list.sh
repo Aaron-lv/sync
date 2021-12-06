@@ -32,6 +32,8 @@
 20 * * * * node /scripts/jd_big_winner.js >> /scripts/logs/jd_big_winner.log 2>&1
 # 赚京豆(微信小程序)
 12 * * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
+# 金榜年终奖
+5 0,2 * * * node /scripts/jd_split.js >> /scripts/logs/jd_split.log 2>&1
 
 ##############长期活动##############
 # 签到
