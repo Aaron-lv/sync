@@ -35,7 +35,7 @@
 # 金榜年终奖
 5 0,2 * * * node /scripts/jd_split.js >> /scripts/logs/jd_split.log 2>&1
 # 京享红包
-0 0,12,18,20 * * * node /scripts/jd_redEnvelope.js >> /scripts/logs/jd_redEnvelope.log 2>&1
+0 0,12 * * * node /scripts/jd_redEnvelope.js >> /scripts/logs/jd_redEnvelope.log 2>&1
 
 ##############长期活动##############
 # 签到
