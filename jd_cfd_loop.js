@@ -76,7 +76,7 @@ if ($.isNode()) {
         await $.wait(time)
       }
     }
-  } while (count < 25)
+  } while (count < 3)
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());
@@ -168,7 +168,7 @@ async function queryshell() {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum && $.canpick; j++) {
               await pickshell(`dwType=${vo.dwType}`)
-              await $.wait(3000)
+              await $.wait(math.random()*100+4000)
             }
             if (!$.canpick) break
           }
