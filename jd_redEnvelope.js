@@ -74,10 +74,10 @@ async function main() {
     let arr = getBody($.UA, $.url2);
     await getEid(arr);
     console.log(`$.actId:` + $.actId);
-    await getcouponUrl()
-    if ($.eid) {
-      await getCoupons("");
-    }
+    // await getcouponUrl()
+    // if ($.eid) {
+    //   await getCoupons("");
+    // }
     await $.wait(2000);
   }
 }
