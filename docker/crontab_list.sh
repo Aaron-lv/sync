@@ -24,12 +24,8 @@
 1 0,11,21 * * * node /scripts/jd_jump.js >> /scripts/logs/jd_jump.log 2>&1
 # 东东世界
 25 2,10 * * * node /scripts/jd_ddworld.js >> /scripts/logs/jd_ddworld.log 2>&1
-# 京东小魔方
-10 2,8 * * * node /scripts/jd_mf.js >> /scripts/logs/jd_mf.log 2>&1
 # 省钱大赢家翻翻乐
 20 * * * * node /scripts/jd_big_winner.js >> /scripts/logs/jd_big_winner.log 2>&1
-# 赚京豆(微信小程序)
-12 * * * * node /scripts/jd_syj.js >> /scripts/logs/jd_syj.log 2>&1
 # 逛京东会场
 0 0 * * * node /scripts/jd_mall_active.js >> /scripts/logs/jd_mall_active.log 2>&1
 
