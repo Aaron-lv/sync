@@ -159,16 +159,19 @@ function pigPetUserBag() {
             data = JSON.parse(data);
             if (data.resultCode === 0) {
               if (data.resultData.resultCode === 0) {
-                if (data.resultData.resultData && data.resultData.resultData.goods) {
+                if (data.resultData.resultData && data.resultData.resultData.goods) { 
                   console.log(`\n食物名称     数量`);
                   for (let item of data.resultData.resultData.goods) {
                     console.log(`${item.goodsName}      ${item.count}g`);
                   }
                   for (let item of data.resultData.resultData.goods) {
-                    if (item.count >= 20) {
-                      console.log(`10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
+                    $.remain = item.count
+                    for (let i = 1; i < item.count/20 ; i++) {
+                      console.log(`10秒后开始喂食${item.goodsName}，当前数量为${$.remain}g`)
+                      $.remain -= 20
                       await $.wait(10000);
                       await pigPetAddFood(item.sku);
+                      if ($.result == 90) break;
                     }
                   }
                 } else {
@@ -193,7 +196,7 @@ function pigPetUserBag() {
 //喂食
 function pigPetAddFood(skuId) {
   return new Promise(async resolve => {
-    console.log(`skuId::::${skuId}`)
+    //console.log(`skuId::::${skuId}`)
     const body = {
       "source": 2,
       "channelLV":"yqs",
@@ -214,8 +217,9 @@ function pigPetAddFood(skuId) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log(`喂食结果：${data}`)
             data = JSON.parse(data);
+            $.result = data.resultData.resultData.cote.pig.currCount
+            //console.log(`${JSON.stringify(data)}`)
           } else {
             console.log(`京东服务器返回空数据`)
           }
