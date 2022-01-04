@@ -231,18 +231,16 @@ async function bean() {
   // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
 }
 function TotalBean() {
-  return new Promise(async resolve => {
+  return new Promise(resolve => {
     const options = {
-      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
+      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
       headers: {
-        Host: "wq.jd.com",
-        Accept: "*/*",
-        Connection: "keep-alive",
-        Cookie: cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-        "Accept-Language": "zh-cn",
-        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
-        "Accept-Encoding": "gzip, deflate, br"
+        "Host": "me-api.jd.com",
+        "Accept": "*/*",
+        "User-Agent": "ScriptableWidgetExtension/185 CFNetwork/1312 Darwin/21.0.0",
+        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cookie": cookie
       }
     }
     $.get(options, (err, resp, data) => {
@@ -252,14 +250,14 @@ function TotalBean() {
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === 1001) {
+            if (data['retcode'] === "1001") {
               $.isLogin = false; //cookie过期
               return;
             }
-            if (data['retcode'] === 0 && data.data && data.data.hasOwnProperty("userInfo")) {
+            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
               $.nickName = data.data.userInfo.baseInfo.nickname;
             }
-            if (data['retcode'] === 0 && data.data && data.data['assetInfo']) {
+            if (data['retcode'] === "0" && data.data && data.data['assetInfo']) {
               $.beanCount = data.data && data.data['assetInfo']['beanNum'];
             }
           } else {
@@ -267,13 +265,14 @@ function TotalBean() {
           }
         }
       } catch (e) {
-        $.logErr(e)
+        $.logErr(e, resp)
       } finally {
-        resolve();
+        resolve()
       }
     })
   })
 }
+
 function getJingBeanBalanceDetail(page) {
   return new Promise(async resolve => {
     const options = {
