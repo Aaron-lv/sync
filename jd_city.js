@@ -172,17 +172,17 @@ function getInfo(inviteId, flag = false) {
                       await receiveCash("", "2");
                     }
                   }
-                  const { taskDetailResultVo } = data.data.result.taskInfo;
-                  const { lotteryTaskVos, taskVos } = taskDetailResultVo;
-                  for (let lotteryTask of lotteryTaskVos) {
-                    if (lotteryTask.times >= lotteryTask.maxTimes && lotteryTask.times !== undefined) {
-                      for (let lo of lotteryTask?.badgeAwardVos || []) {
-                        if (lo.status === 3) {
-                          await receiveCash("", "6");
-                        }
-                      }
-                    }
-                  }
+                  // const { taskDetailResultVo } = data.data.result.taskInfo;
+                  // const { lotteryTaskVos, taskVos } = taskDetailResultVo;
+                  // for (let lotteryTask of lotteryTaskVos) {
+                  //   if (lotteryTask.times >= lotteryTask.maxTimes && lotteryTask.times !== undefined) {
+                  //     for (let lo of lotteryTask?.badgeAwardVos || []) {
+                  //       if (lo.status === 3) {
+                  //         await receiveCash("", "6");
+                  //       }
+                  //     }
+                  //   }
+                  // }
                   // for (let task of taskVos || []) {
                   //   const t = Date.now();
                   //   if (task.status === 1 && t >= task.taskBeginTime && t < task.taskEndTime) {
