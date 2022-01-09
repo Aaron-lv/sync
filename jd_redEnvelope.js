@@ -16,7 +16,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 let cookie = "";
-$.shareCode = "DH50c";
+$.shareCode = "mOzND";
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取", "https://bean.m.jd.com/bean/signIndex.action", { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -177,10 +177,10 @@ function randomString(e) {
   return n;
 }
 
-async function getCoupons(shareCode) {
+async function getCoupons(shareCode = '', type = 1) {
   return new Promise((resolve) => {
     let opts = {
-      url: `https://api.m.jd.com/api?functionId=getCoupons&appid=u&_=${Date.now()}&loginType=2&body={%22platform%22:4,%22unionActId%22:%2231134%22,%22actId%22:%22${$.actId}%22,%22d%22:%22${$.code}%22,%22unionShareId%22:%22${shareCode}%22,%22type%22:1,%22eid%22:%22${$.eid}%22}&client=apple&clientVersion=8.3.6&h5st=undefined`,
+      url: `https://api.m.jd.com/api?functionId=getCoupons&appid=u&_=${Date.now()}&loginType=2&body={%22platform%22:4,%22unionActId%22:%2231137%22,%22actId%22:%22${$.actId}%22,%22d%22:%22${$.code}%22,%22unionShareId%22:%22${shareCode}%22,%22type%22:${type},%22eid%22:%22${$.eid}%22}&client=apple&clientVersion=8.3.6&h5st=undefined`,
       headers: {
         "Accept-Language": "zh-cn",
         "Accept-Encoding": "gzip, deflate, br",
@@ -215,6 +215,15 @@ async function getCoupons(shareCode) {
               } else {
                 console.log(`获得未知${res.data.quota || ""} ${res.data.discount}`);
                 console.log(data);
+              }
+            }
+            if(shareCode && typeof res.data !== 'undefined' && typeof res.data.groupInfo !== 'undefined'){
+              for(let i of res.data.groupInfo || []){
+                if(i.status == 2){
+                  console.log(`助力满可以领取${i.info}元红包🧧`)
+                  await $.wait(500)
+                  await getCoupons('', 2)
+                }
               }
             }
           } else {
