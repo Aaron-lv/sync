@@ -77,6 +77,7 @@ if ($.isNode()) {
     })
 async function jdPigPet() {
   try {
+    $.notAddFood = false;
     await pigPetLogin();
     if (!$.hasPig) return
     await pigPetSignIndex();
@@ -86,7 +87,10 @@ async function jdPigPet() {
     await pigPetLottery();
     await pigPetMissionList();
     await missions();
-    await pigPetUserBag();
+    if ($.notAddFood) {
+      console.log(`\n猪猪已成熟，跳过喂食`)
+      await pigPetUserBag();
+    }
   } catch (e) {
     $.logErr(e)
   }
@@ -256,6 +260,7 @@ function pigPetLogin() {
                 }
                 if (data.resultData.resultData.wished) {
                   if (data.resultData.resultData.wishAward) {
+                    $.notAddFood = true;
                     allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n${data.resultData.resultData.wishAward.name}已可兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
                   }
                 }
