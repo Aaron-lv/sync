@@ -29,7 +29,7 @@
 # 东东世界兑换
 0 0 * * * node /scripts/jd_ddworld_exchange.js >> /scripts/logs/jd_ddworld_exchange.log 2>&1
 # 京享红包
-0 0,10,20,22 * * * node /scripts/jd_nhRedEnvelope.js >> /scripts/logs/jd_nhRedEnvelope.log 2>&1
+0 0,10,20 * * * node /scripts/jd_nhRedEnvelope.js >> /scripts/logs/jd_nhRedEnvelope.log 2>&1
 
 ##############长期活动##############
 # 签到
