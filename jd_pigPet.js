@@ -89,6 +89,7 @@ async function jdPigPet() {
     await missions();
     if ($.notAddFood) {
       console.log(`\n猪猪已成熟，跳过喂食`)
+    } else {
       await pigPetUserBag();
     }
   } catch (e) {
