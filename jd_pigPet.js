@@ -45,6 +45,17 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  if (process.env.PIGPETSHARECODE) {
+    shareId = process.env.PIGPETSHARECODE
+  } else {
+    let res = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/pigPet.json')
+    if (!res) {
+      $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/pigPet.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
+      await $.wait(2000)
+      res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/pigPet.json')
+    }
+    if (res && res.length) shareId = res[Math.floor((Math.random() * res.length))]
+  }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -64,13 +75,13 @@ if ($.isNode()) {
       await jdPigPet();
     }
   }
-  let res = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/pig.json')
-  if (!res) {
+  let res2 = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/pig.json')
+  if (!res2) {
     $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/pig.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
     await $.wait(2000)
-    res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/pig.json')
+    res2 = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/pig.json')
   }
-  $.shareCodes = [...new Set([...$.shareCodes, ...(res || [])])]
+  $.shareCodes = [...new Set([...$.shareCodes, ...(res2 || [])])]
   console.log($.shareCodes)
   console.log(`\n======开始大转盘助力======\n`);
   for (let j = 0; j < cookiesArr.length; j++) {
