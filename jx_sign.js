@@ -310,11 +310,8 @@ function helpSignhb(smp = '') {
           for (let key of Object.keys(signlist)) {
             let vo = signlist[key]
             if (vo.istoday === 1) {
-              // 猜测：1=已签到；3=未签到
-              if (vo.status === 1 || vo.status === 3) {
-                if (data.todaysign === 1) {
-                  // console.log(`今日已签到`)
-                }
+              if (vo.status === 1 && data.todaysign === 1) {
+                // console.log(`今日已签到`)
               } else {
                 console.log(`此账号已黑`)
                 $.black = true
