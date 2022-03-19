@@ -263,6 +263,12 @@ async function doTask() {
         const { data } = $.shopTaskListRes;
         let goodShopListARR = [], moreShopListARR = [], shopList = [];
         const { goodShopList, moreShopList } = data;
+        if (!goodShopList) {
+          goodShopList = [];
+        }
+        if (!moreShopList) {
+          moreShopList = [];
+        }
         for (let i of goodShopList) {
           if (i.taskState === '2') {
             goodShopListARR.push(i);
