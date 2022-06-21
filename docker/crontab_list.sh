@@ -4,22 +4,12 @@
 30 * * * * sh /scripts/docker/auto_help.sh collect >> /scripts/logs/auto_help_collect.log 2>&1
 
 ##############短期活动##############
-# 女装盲盒
-35 1,22 * * * node /scripts/jd_nzmh.js >> /scripts/logs/jd_nzmh.log 2>&1
 # 京东极速版红包(活动时间：2021-6-1至2021-6-30)
 45 0,23 * * * node /scripts/jd_speed_redpocke.js >> /scripts/logs/jd_speed_redpocke.log 2>&1
 # 每日抽奖(活动时间：2021-05-01至2021-05-31)
 30 1,22,23 * * * node /scripts/jd_daily_lottery.js >> /scripts/logs/jd_daily_lottery.log 2>&1
-# 金榜创造营 活动时间：2021-05-21至2021-12-31
-0 1,22 * * * node /scripts/jd_gold_creator.js >> /scripts/logs/jd_gold_creator.log 2>&1
 # 众筹许愿池
 20 0,2 * * * node /scripts/jd_wish.js >> /scripts/logs/jd_wish.log 2>&1
-# 内容鉴赏官
-15 2,5 * * * node /scripts/jd_connoisseur.js >> /scripts/logs/jd_connoisseur.log 2>&1
-# 母婴-跳跳乐
-1 0,11,21 * * * node /scripts/jd_jump.js >> /scripts/logs/jd_jump.log 2>&1
-# 京喜领88元红包
-30 1,6,12,21 * * * node /scripts/jd_jxlhb.js >> /scripts/logs/jd_jxlhb.log 2>&1
 
 ##############长期活动##############
 # 签到
@@ -48,14 +38,10 @@
 26 * * * * node /scripts/jd_jdfactory.js >> /scripts/logs/jd_jdfactory.log 2>&1
 # 京东快递签到
 47 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
-# 京东汽车(签到满500赛点可兑换500京豆)
-0 0 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
-23 1,12,22 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
+# 23 1,12,22 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 微信小程序京东赚赚
 6 0-5/1,11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
-# 京东汽车旅程赛点兑换金豆
-0 0 * * * node /scripts/jd_car_exchange.js >> /scripts/logs/jd_car_exchange.log 2>&1
 # 导到所有互助码
 23 7 * * * node /scripts/jd_get_share_code.js >> /scripts/logs/jd_get_share_code.log 2>&1
 # 签到领现金
@@ -70,8 +56,6 @@
 1 * * * * node /scripts/jd_cfd.js >> /scripts/logs/jd_cfd.log 2>&1
 # 家庭号
 # 10 6,7 * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
-# 京东直播（又回来了）
-10 12-14 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
 # 京东健康社区
 20 0,6,22 * * * node /scripts/jd_health.js >> /scripts/logs/jd_health.log 2>&1
 # 京东健康社区收集健康能量
